@@ -15,6 +15,8 @@ module.exports = {
       },
       backgroundImage: {
           'holo': "url('/img/holographic_background.png')",
+          'pattern-holo': "url('/img/pattern_holographic_faded_edge.png')",
+          'pattern-holo-inv': "url('/img/pattern_holographic_faded_edge_upside_down.png')",
       },
       boxShadow: {
         'hard-xl-red': '0 5px 0 0 rgb(127, 29, 29)',
@@ -22,6 +24,13 @@ module.exports = {
       },
       fontFamily: {
         'stretch': ['StretchPro'],
+        'neou': ['Neou-Thin'],
+      },
+      gridRow: {
+        "span-7": "span 7 / span 7",
+      },
+      gridTemplateRows: {
+        "7": "repeat(7, minmax(0, 1fr))",
       },
       colors: {
         'greyblack': "#292a2c",

@@ -3,3 +3,9 @@
     src: url('StretchPro.otf') format('opentype');
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Neou-Thin';
+    src: url('Neou-Thin.otf') format('opentype');
+    font-style: normal;
+}

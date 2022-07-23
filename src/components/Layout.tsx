@@ -31,9 +31,8 @@ const Layout = ({ children }: Props) => {
   return (
     <>
       <div className="main flex flex-col justify-around m-0 p-0 min-h-screen ">
-        <div className="h-16"></div>
-        <div className="flex-grow justify-center pt-6 bg-greyblack px-28">
-          <div className="container z-10 flex flex-col justify-between">
+        <div className="flex-grow justify-center bg-greyblack">
+          <div className="z-10 flex flex-col justify-between overflow-x-hidden overflow-y-hidden">
             {children}
           </div>
         </div>
@@ -44,7 +43,7 @@ const Layout = ({ children }: Props) => {
         </a>
       </Link>
       <Hamburger onToggle={() => menuOnClick()} color="#292a2c" />
-      <div className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 ${menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"} transition-transform duration-[400ms] ease-in-out`}>
+      <div className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 shadow-lg ${menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"} transition-transform duration-[400ms] ease-in-out`}>
       </div>
       <div className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${greyMenuOpen ? "" : "-translate-y-[100vh]"} transition-transform duration-[400ms] z-50`}>
         <div className="flex flex-col justify-between h-full p-20">

@@ -8,9 +8,16 @@
 
 .hamburger-react {
     z-index: 50;
-    position: absolute !important;
+    position: fixed !important;
     top: 0.5em;
     right: 1em;
 
     overflow: hidden;
+}
+
+.holo-panel {
+    background-image: url("/img/pattern_dark_faded_edge_L.png"), url("/img/pattern_dark_faded_edge_R.png"), url("/img/holographic_background.png");
+    background-size: 25vw 75vw, 25vw 75vw, cover;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position-x: left, right, left;
 }
