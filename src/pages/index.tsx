@@ -1,14 +1,11 @@
 import type { NextPageWithLayout } from "./_app";
 import Head from "next/head";
-import { trpc } from "../utils/trpc";
 import type { ReactElement } from "react";
 
-import Header from "../components/Header";
 import Layout from "../components/Layout";
 import FadeIn from "../components/FadeIn";
 
 const Home: NextPageWithLayout = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
 
   return (
     <>

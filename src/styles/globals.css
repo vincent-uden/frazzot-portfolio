@@ -5,3 +5,12 @@
 .container * {
     z-index: 10;
 }
+
+.hamburger-react {
+    z-index: 50;
+    position: absolute !important;
+    top: 0.2em;
+    right: 1em;
+
+    overflow: hidden;
+}

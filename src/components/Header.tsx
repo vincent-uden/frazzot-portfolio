@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Header = () => {
     return (
-        <nav className="flex flex-row justify-start bg-slate-800 p-5 flex-grow-0 shadow-lg z-10">
+        <nav className="flex flex-row justify-start bg-holo p-5 flex-grow-0 shadow-lg z-10">
             {[
                 { name: "Home", path: "/" },
                 { name: "Gallery", path: "/gallery" },
@@ -11,7 +11,7 @@ const Header = () => {
             ].map(l => {
                 return (
                     <Link href={l.path} key={l.name}>
-                        <a className="mx-6 text-purple-300 text-xl">{l.name}</a>
+                        <a className="mx-6 text-black text-xl">{l.name}</a>
                     </Link>
                 )
             })}

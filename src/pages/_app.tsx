@@ -12,6 +12,8 @@ import type { AppProps } from "next/app";
 
 import Layout from "../components/Layout";
 
+import '../../public/fonts/style.css';
+
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
 }
