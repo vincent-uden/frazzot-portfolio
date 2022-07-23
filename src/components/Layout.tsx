@@ -8,16 +8,16 @@ import { Squeeze as Hamburger } from "hamburger-react";
 import Link from "next/link";
 
 interface Props {
-    children: ReactNode
+  children: ReactNode
 }
 
 // TODO: Fix menu toggle transition and js functionality
-const Layout = ({children}: Props) => {
+const Layout = ({ children }: Props) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [greyMenuOpen, setGreyMenuOpen] = useState<boolean>(false);
 
   const menuOnClick = useCallback(async () => {
-    if ( !menuOpen ) {
+    if (menuOpen) {
       setGreyMenuOpen(!greyMenuOpen);
       await new Promise(resolve => setTimeout(resolve, 200));
       setMenuOpen(!menuOpen);
@@ -31,39 +31,43 @@ const Layout = ({children}: Props) => {
   return (
     <>
       <div className="main flex flex-col justify-around m-0 p-0 min-h-screen ">
-      <Header />
-      <img className="fixed -z-5 top-1/4 -right-1/2 w-50 h-50" src="/gggyrate.svg" alt="" />
-      <div className="flex-grow justify-center pt-6 bg-gray-900 px-28">
-        <div className="container z-10 flex flex-col justify-between">
-            { children }
+        <div className="h-16"></div>
+        <div className="flex-grow justify-center pt-6 bg-greyblack px-28">
+          <div className="container z-10 flex flex-col justify-between">
+            {children}
+          </div>
         </div>
       </div>
+      <Link href="/">
+        <a >
+          <h1 className={`fixed top-0 left-4 h-16 align-middle font-stretch text-4xl text-greyblack leading-[4rem] z-50 ${menuOpen ? "opacity-0" : "opacity-100"} transition-opacity`}>FRAZZOT</h1>
+        </a>
+      </Link>
+      <Hamburger onToggle={() => menuOnClick()} color="#292a2c" />
+      <div className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 ${menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"} transition-transform duration-[400ms] ease-in-out`}>
       </div>
-      <Hamburger onToggle={() => menuOnClick()}/>
-      <div className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 ${menuOpen ? "translate-y-[100vh]" : ""} transition-transform duration-[400ms] ease-in-out`}>
-      </div>
-      <div className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${greyMenuOpen ? "translate-y-[100vh]" : ""} transition-transform duration-[400ms] z-50`}>
+      <div className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${greyMenuOpen ? "" : "-translate-y-[100vh]"} transition-transform duration-[400ms] z-50`}>
         <div className="flex flex-col justify-between h-full p-20">
-          <MenuPageItem color="text-mint">
+          <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
               <a><span>GAL</span> <span className="relative -left-8">LERY</span></a>
             </Link>
           </MenuPageItem>
-          <MenuPageItem color="text-sky">
+          <MenuPageItem color="text-sky" onClick={() => menuOnClick()}>
             PROJECTS
           </MenuPageItem>
-          <MenuPageItem color="text-periwinkle">
+          <MenuPageItem color="text-periwinkle" onClick={() => menuOnClick()}>
             <span>COM</span> <span className="relative -left-8">MISSIONS</span>
           </MenuPageItem>
-          <MenuPageItem color="text-lilac">
+          <MenuPageItem color="text-lilac" onClick={() => menuOnClick()}>
             <Link href="/about">
               <a>ABOUT</a>
             </Link>
           </MenuPageItem>
-          <MenuPageItem color="text-pastelpink">
+          <MenuPageItem color="text-pastelpink" onClick={() => menuOnClick()}>
             CONTACT
           </MenuPageItem>
-          <MenuPageItem color="text-yellowpeach">
+          <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             SKETCHBOOK
           </MenuPageItem>
 
