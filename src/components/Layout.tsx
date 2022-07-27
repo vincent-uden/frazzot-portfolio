@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useRef, useState } from "react";
 
 import MenuPageItem from "./MenuPageItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -57,7 +57,7 @@ const Layout = ({ children }: Props) => {
           <h1 className={`fixed top-0 left-4 h-16 align-middle font-stretch text-4xl text-greyblack leading-[4rem] z-50 ${menuOpen ? "opacity-0" : "opacity-100"} transition-opacity`}>FRAZZOT</h1>
         </a>
       </Link>
-      <Hamburger onToggle={() => menuOnClick()} color="#292a2c" />
+      <Hamburger onToggle={() => menuOnClick()} color="#292a2c" toggled={menuOpen} />
       <div className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 shadow-lg ${menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"} transition-transform duration-[400ms] ease-in-out`}>
       </div>
       <div className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${greyMenuOpen ? "" : "-translate-y-[100vh]"} transition-transform duration-[400ms] z-50`}>
