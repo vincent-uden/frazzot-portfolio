@@ -9,3 +9,9 @@
     src: url('Neou-Thin.otf') format('opentype');
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Neou-Bold';
+    src: url('Neou-Bold.otf') format('opentype');
+    font-style: normal;
+}

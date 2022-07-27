@@ -25,6 +25,7 @@ module.exports = {
       fontFamily: {
         'stretch': ['StretchPro'],
         'neou': ['Neou-Thin'],
+        'neou-bold': ['Neou-Bold'],
       },
       gridRow: {
         "span-7": "span 7 / span 7",
