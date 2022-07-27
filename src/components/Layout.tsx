@@ -1,6 +1,5 @@
 import { ReactNode, useCallback, useState } from "react";
 
-import Header from "./Header";
 import MenuPageItem from "./MenuPageItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArtstation, faYoutube, faPatreon, faFacebook, faInstagram, faDeviantart } from "@fortawesome/free-brands-svg-icons";
@@ -37,6 +36,22 @@ const Layout = ({ children }: Props) => {
           </div>
         </div>
       </div>
+      <div className="bg-holo bg-cover">
+        <div className="h-24"></div>
+        <div className="flex flex-row menu-socials justify-center">
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faInstagram} />
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faYoutube} />
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faPatreon} />
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faArtstation} />
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faFacebook} />
+          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faDeviantart} />
+        </div>
+
+        <div className="h-8"></div>
+        <p className="text-center text-greyblack font-neou-bold text-lg opacity-60">© 2022 FRAZZOT</p>
+        <div className="h-16"></div>
+      </div>
+
       <Link href="/">
         <a >
           <h1 className={`fixed top-0 left-4 h-16 align-middle font-stretch text-4xl text-greyblack leading-[4rem] z-50 ${menuOpen ? "opacity-0" : "opacity-100"} transition-opacity`}>FRAZZOT</h1>
@@ -56,7 +71,9 @@ const Layout = ({ children }: Props) => {
             PROJECTS
           </MenuPageItem>
           <MenuPageItem color="text-periwinkle" onClick={() => menuOnClick()}>
-            <span>COM</span> <span className="relative -left-8">MISSIONS</span>
+            <Link href="/commissions">
+              <a href=""><span>COM</span> <span className="relative -left-8">MISSIONS</span></a>
+            </Link>
           </MenuPageItem>
           <MenuPageItem color="text-lilac" onClick={() => menuOnClick()}>
             <Link href="/about">

@@ -16,7 +16,9 @@ module.exports = {
       backgroundImage: {
           'holo': "url('/img/holographic_background.png')",
           'pattern-holo': "url('/img/pattern_holographic_faded_edge.png')",
+          'pattern-holo-short': "url('/img/pattern_holographic_faded_edge_short.png')",
           'pattern-holo-inv': "url('/img/pattern_holographic_faded_edge_upside_down.png')",
+          'pattern-holo-short-inv': "url('/img/pattern_holographic_faded_edge_upside_down_short.png')",
       },
       boxShadow: {
         'hard-xl-red': '0 5px 0 0 rgb(127, 29, 29)',

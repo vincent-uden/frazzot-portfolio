@@ -79,21 +79,6 @@ const Home: NextPageWithLayout = () => {
         </div>
       </div>
 
-      <div className="bg-holo bg-cover">
-        <div className="h-24"></div>
-        <div className="flex flex-row menu-socials justify-center">
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faInstagram} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faYoutube} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faPatreon} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faArtstation} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faFacebook} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faDeviantart} />
-        </div>
-
-        <div className="h-8"></div>
-        <p className="text-center text-greyblack font-neou-bold text-lg opacity-60">© 2022 FRAZZOT</p>
-        <div className="h-16"></div>
-      </div>
     </>
   );
 };
