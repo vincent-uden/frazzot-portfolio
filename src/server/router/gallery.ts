@@ -14,10 +14,21 @@ export const galleryRouter = createRouter()
         input: z.object({
             name: z.string(),
             path: z.string(),
+            w: z.number(),
+            h: z.number(),
+            thmb_w: z.number(),
+            thmb_h: z.number(),
         }),
         resolve: async ({ input, ctx }) => {
             return await ctx.prisma.galleryImage.create({
-                data: { name: input.name, path: input.path },
+                data: { 
+                    name: input.name, 
+                    path: input.path,
+                    w: input.w,
+                    h: input.h,
+                    thmb_w: input.thmb_w,
+                    thmb_h: input.thmb_h,
+                },
             });
         }
     }).mutation("deleteAll", {

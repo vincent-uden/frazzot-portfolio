@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import { appendFileSync, existsSync, unlinkSync } from "fs";
 
+const sharp = require("sharp");
+
 type ResponseData = {
     message: string,
 }
@@ -40,7 +42,7 @@ function addChunk(cuid: string, chunk: Chunk): boolean {
     return pendingImages[i]?.chunks.length == pendingImages[i]?.chunkAmount;
 }
 
-function saveImage(pi: PendingImage) {
+async function saveImage(pi: PendingImage): Promise<[Number, Number, Number, Number]> {
     if (existsSync(`./public/gallery/${pi.fileName}`)) {
         unlinkSync(`./public/gallery/${pi.fileName}`);
     }
@@ -49,6 +51,17 @@ function saveImage(pi: PendingImage) {
     pi.chunks.map((c) => {
         appendFileSync(`./public/gallery/${pi.fileName}`, c.data, "base64");
     })
+
+    const thumbnail = await sharp(`./public/gallery/${pi.fileName}`)
+        .resize(null, 200)
+        .toFile(`./public/thumbnail/${pi.fileName}`);
+
+    console.log("Doing stuff")
+    const img = await sharp(`./public/gallery/${pi.fileName}`).metadata();
+    const thmb = await sharp(`./public/thumbnail/${pi.fileName}`).metadata();
+    console.log("Stopping stuff")
+
+    return [img.width, img.height, thmb.width, thmb.height];
 }
 
 /** 
@@ -67,7 +80,7 @@ function saveImage(pi: PendingImage) {
  * This is to ensure data arrives from the correct source in the correct order 
  * before writing it into a file
 */
-export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>): void {
+export default async function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>): Promise<void> {
     // TODO: Enforce cheks on request data form
 
     // Is this the first request for this image?
@@ -91,11 +104,19 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Respon
         });
     }
 
+    let w,h,thmb_w,thmb_h;
     if (completed) {
         if (pi != null) {
-            saveImage(pi);
+            [w, h, thmb_w, thmb_h] = await saveImage(pi);
+            console.log(w, h, thmb_w, thmb_h);
         }
     }
 
-    res.status(200).json({ message: completed ? "Complete" : "Pending" });
+    res.status(200).json({ message: JSON.stringify({
+        completed,
+        w,
+        h,
+        thmb_w,
+        thmb_h,
+    }) });
 }
