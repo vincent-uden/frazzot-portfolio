@@ -48,7 +48,7 @@ const Layout = ({ children }: Props) => {
         </div>
 
         <div className="h-8"></div>
-        <p className="text-center text-greyblack font-neou-bold text-lg opacity-60">© 2022 FRAZZOT</p>
+        <p className="text-center text-greyblack font-cocogoose font-thin text-xl opacity-60">© 2022 FRAZZOT</p>
         <div className="h-16"></div>
       </div>
 

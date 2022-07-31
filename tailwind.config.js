@@ -28,6 +28,7 @@ module.exports = {
         'stretch': ['StretchPro'],
         'neou': ['Neou-Thin'],
         'neou-bold': ['Neou-Bold'],
+        'cocogoose': ["Cocogoose"],
       },
       gridRow: {
         "span-7": "span 7 / span 7",
@@ -43,6 +44,7 @@ module.exports = {
         'lilac': "#ceb3ea",
         'pastelpink': "#eab3c5",
         'yellowpeach': "#ead0b3",
+        'periwinkle-light': "#B3B8F9",
       },
     },
   },

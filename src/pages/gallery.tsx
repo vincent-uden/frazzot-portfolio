@@ -100,14 +100,14 @@ const Gallery = () => {
                   {row.indices.map((i, n) => {
                     return (
                       <div className='inline-block h-full' key={`space-${n}`}>
-                        <div className={`inline-block`} style={{ width: `${n == 0 ? 0 : gap}px`, height:"100%" }}></div>
-                        <div className="inline-block relative m-0 p-0 top-0 h-full gallery-row" key={n}>
+                        <div className={`inline-block`} style={{ width: `${n == 0 ? 0 : gap}px`, height: "100%" }}></div>
+                        <div className="inline-block relative m-0 p-0 top-0 h-full" key={n}>
                           <Image
                             src={`/thumbnail/${images?.at(i)?.path}`}
                             width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                             height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
                           />
-                          <div className="absolute left-0 top-0 w-full h-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 hover:opacity-80 transition-opacity">
+                          <div className="absolute left-0 top-0 w-full h-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 hover:opacity-80 transition-opacity gallery-overlay" style={{transform: `translateY(-${gap}px)`}}>
                             <p className="absolute bottom-4 left-4 text-white text-lg">{images?.at(i)?.name}</p>
                           </div>
                         </div>
