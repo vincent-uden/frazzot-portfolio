@@ -23,6 +23,7 @@ module.exports = {
       boxShadow: {
         'hard-xl-red': '0 5px 0 0 rgb(127, 29, 29)',
         'hard-xl-white': '0 5px 0 0 rgb(29, 29, 29)',
+        'left': '-5px 0px 20px -5px #00000099',
       },
       fontFamily: {
         'stretch': ['StretchPro'],

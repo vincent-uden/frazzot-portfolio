@@ -81,7 +81,9 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-pastelpink" onClick={() => menuOnClick()}>
-            CONTACT
+            <Link href="/contact">
+              CONTACT
+            </Link>
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             SKETCHBOOK
