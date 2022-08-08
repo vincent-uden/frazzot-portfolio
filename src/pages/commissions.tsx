@@ -26,9 +26,9 @@ const Comissions = () => {
           </div>
           <div className="inline-block w-[5%]"></div>
           <div className="inline-block w-[55%] border-2 border-white p-6">
-            <p className="text-periwinkle-light font-cocogoose font-thin text-xl">IN MY PATREON POST BELOW YOU WILL FIND ALL THE INFORMATION NEEDED IN ORDER TO COMMISSION ME.</p>
+            <p className="text-periwinkle-light font-cocogoose font-thin text-lg">IN MY PATREON POST BELOW YOU WILL FIND ALL THE INFORMATION NEEDED IN ORDER TO COMMISSION ME.</p>
             <div className="h-6"></div>
-            <p className="text-periwinkle-light font-cocogoose font-thin text-xl">TO THE LEFT YOU WILL FIND MY TERMS AND COMMISSIONS FOR USING MY SERVICES. PLEASE READ IT CAREFULLY BEFORE FILLING OUT THE FORM</p>
+            <p className="text-periwinkle-light font-cocogoose font-thin text-lg">TO THE LEFT YOU WILL FIND MY TERMS AND COMMISSIONS FOR USING MY SERVICES. PLEASE READ IT CAREFULLY BEFORE FILLING OUT THE FORM</p>
           </div>
         </div>
         <div className="h-12"></div>

@@ -23,10 +23,35 @@
 }
 
 .gallery-row span {
-    -webkit-box-shadow: 0px 5px 15px -3px rgba(0,0,0,1); 
-    box-shadow: 0px 5px 15px -3px rgba(0,0,0,1);
+    -webkit-box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 1);
+    box-shadow: 0px 5px 15px -3px rgba(0, 0, 0, 1);
 }
 
 .no-ligature {
     font-variant-ligatures: none;
+}
+
+.angry-shake {
+    transition: transform .1s ease-in;
+    transform-origin: bottom left;
+}
+
+.shake-activate {
+    transform: translateY(-.5em);
+    transition: transform .1s ease-out;
+}
+
+@layer components {
+    .label {
+        @apply block mb-4 text-pastelpink font-cocogoose font-thin text-lg
+    }
+
+    .text-input {
+        @apply block text-pastelpink bg-transparent border-b-2 border-pastelpink w-full text-xl font-cocogoose font-thin outline-none
+    }
+
+    .text-input:focus {
+        background: transparent;
+    }
+
 }

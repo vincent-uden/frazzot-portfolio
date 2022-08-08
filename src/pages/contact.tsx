@@ -1,6 +1,42 @@
-import React from 'react'
+import Link from 'next/link';
+import React, { useState } from 'react'
+import { trpc } from '../utils/trpc';
+import { EmailError } from '../utils/errortypes';
 
 const Contact = () => {
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("")
+  const [subject, setSubject] = useState<string>("")
+  const [errors, setErrors] = useState<EmailError[]>([])
+
+  const submitFormMut = trpc.useMutation(["email.submitContact"], {
+    onSuccess: (data) => {
+      setErrors(data.errors);
+
+      let nameLabel = document.getElementById("name");
+      if (data.errors.includes(EmailError.EmptyName)) {
+        nameLabel?.classList.toggle("shake-activate");
+        setTimeout(() => { nameLabel?.classList.toggle("shake-activate") }, 100);
+      }
+
+      setTimeout(() => {
+        let emailLabel = document.getElementById("email");
+        if (data.errors.includes(EmailError.EmptyEmail) || data.errors.includes(EmailError.InvalidEmail)) {
+          emailLabel?.classList.toggle("shake-activate");
+          setTimeout(() => { emailLabel?.classList.toggle("shake-activate") }, 100);
+        }
+      }, 100);
+
+      setTimeout(() => {
+        let messageLabel = document.getElementById("message");
+        if (data.errors.includes(EmailError.EmptyMessage)) {
+          messageLabel?.classList.toggle("shake-activate");
+          setTimeout(() => { messageLabel?.classList.toggle("shake-activate") }, 100);
+        }
+      }, 200);
+    },
+  })
+
   return (
     <>
       <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
@@ -14,39 +50,55 @@ const Contact = () => {
       </div>
       <div className="flex flex-row px-48">
         <aside>
-          <div className="border-2 p-12">
+          <div className="border-2 p-12 border-lilac">
             <h2 className="font-stretch text-2xl text-pastelpink no-ligature">COLLABORATION ?</h2>
+            <div className="h-8"></div>
             <p className="font-cocogoose font-thin text-pastelpink text-lg">IF YOU WISH TO COLLABORATE WITH ME. REACH OUT TO ME THROUGH EMAIL OR DISCORD</p>
           </div>
-          <div className="border-2 p-12 my-8">
+          <div className="border-2 p-12 my-8 border-sky">
             <h2 className="font-stretch text-2xl text-pastelpink no-ligature">ORDER PHYSICAL COPIES ?</h2>
+            <div className="h-8"></div>
             <p className="font-cocogoose font-thin text-pastelpink text-lg">SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE INTERESTED.</p>
-            <p className="font-cocogoose font-thin text-pastelpink">IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.</p>
+            <div className="h-4"></div>
+            <p className="font-cocogoose font-thin text-pastelpink text-lg">IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.</p>
           </div>
-          <div className="border-2 p-12">
+          <div className="border-2 p-12 border-mint">
             <h2 className="font-stretch text-2xl text-pastelpink"><span className='no-ligature'>COMM</span>ISSION ?</h2>
-            <p className="font-cocogoose font-thin text-pastelpink text-lg">IF YOU WISH TO COLLABORATE WITH ME. REACH OUT TO ME THROUGH EMAIL OR DISCORD</p>
+            <div className="h-8"></div>
+            <p className="font-cocogoose font-thin text-pastelpink text-lg">
+              READ MORE ABOUT MY COMMISSIONS ON THE <Link href="/commissions">
+                <span className="font-cocogoose font-normal cursor-pointer">
+                  COMMISSION PAGE.
+                </span>
+              </Link>
+            </p>
           </div>
         </aside>
         <div className="bg-holo w-8 mx-8"></div>
         <aside className="flex flex-col">
           <h2 className="font-stretch text-2xl text-pastelpink w-[20em]">EMAIL FORM</h2>
           <div className="h-8"></div>
-          <form action="" method="post" className="flex flex-col justify-between flex-grow">
+          <div className="flex flex-col justify-between flex-grow">
             <div>
-              <label htmlFor="name" className="block mb-4 text-pastelpink font-cocogoose font-thin text-lg">NAME</label>
-              <input className="block text-pastelpink bg-transparent border-b-2 border-pastelpink w-full text-xl font-cocogoose font-thin outline-none" type="text" name="" id="name" />
+              <label htmlFor="name" className="label angry-shake" id="name">
+                {!errors.includes(EmailError.EmptyName) ? "NAME" : "NAME - Can't be empty"}
+              </label>
+              <input className="text-input focus:border-lilac transition-colors" type="text" name="" id="name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="email" className="block mb-4 text-pastelpink font-cocogoose font-thin text-lg">EMAIL ADDRESS</label>
-              <input className="block text-pastelpink bg-transparent border-b-2 border-pastelpink w-full text-xl font-cocogoose font-thin outline-none" type="email" name="" id="email" />
+              <label htmlFor="email" className="label angry-shake" id="email">
+                {"EMAIL ADDRESS" + (errors.includes(EmailError.EmptyEmail) ? " - Can't be empty" : "") + (errors.includes(EmailError.InvalidEmail) ? " - Invalid email address" : "")}
+              </label>
+              <input className="text-input focus:border-lilac transition-colors" type="email" name="" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="subject" className="block mb-4 text-pastelpink font-cocogoose font-thin text-lg">SUBJECT</label>
-              <textarea className="block text-pastelpink bg-transparent border-2 border-pastelpink w-full text-lg font-cocogoose font-thin outline-none p-2 resize-none" name="" id="subject" rows={6} maxLength={500} />
+              <label htmlFor="subject" className="label angry-shake" id="message">
+                {"SUBJECT" + (errors.includes(EmailError.EmptyMessage) ? " - Can't be empty" : "")}
+              </label>
+              <textarea className="text-input border-2 p-2 resize-none text-base placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac transition-colors" name="" id="subject" rows={8} maxLength={500} value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Interested in commissions? Fill out the form on the commission page" />
             </div>
-            <button type="submit" className="block bg-pastelpink font-stretch text-2xl text-greyblack py-4 border-2 border-pastelpink hover:bg-greyblack hover:text-pastelpink transition-colors">SUBMIT</button>
-          </form>
+            <button className="block bg-pastelpink font-stretch text-2xl text-greyblack py-4 border-2 border-pastelpink hover:bg-greyblack hover:text-pastelpink transition-colors" onClick={(e) => submitFormMut.mutate({ name, email, subject })}>SUBMIT</button>
+          </div>
         </aside>
       </div>
       <div className="h-40"></div>
@@ -55,7 +107,11 @@ const Contact = () => {
           <img src="/DiscordBrand.svg" alt="" />
         </aside>
         <aside className="bg-holo bg-cover flex-grow relative shadow-left">
-          <h2 className='absolute w-full font-stretch text-center text-greyblack text-3xl no-ligature top-1/2 -translate-y-1/2'>JOIN MY COMMUNITY HERE &gt;</h2>
+          <h2 className='absolute w-full font-stretch text-center text-greyblack text-3xl no-ligature top-1/2 -translate-y-1/2 transition-transform hover:scale-110 cursor-pointer py-4'>
+            <Link href={"https://discord.gg/MAQm86a3Xw"}>
+              JOIN MY COMMUNITY HERE &gt;
+            </Link>
+          </h2>
         </aside>
       </div>
 
