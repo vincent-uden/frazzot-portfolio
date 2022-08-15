@@ -47,7 +47,7 @@
     }
 
     .text-input {
-        @apply block text-pastelpink bg-transparent border-b-2 border-pastelpink w-full text-xl font-cocogoose font-thin outline-none
+        @apply block text-pastelpink bg-transparent border-b-2 border-pastelpink w-full text-base font-cocogoose font-thin outline-none
     }
 
     .text-input:focus {

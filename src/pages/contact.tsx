@@ -13,14 +13,14 @@ const Contact = () => {
     onSuccess: (data) => {
       setErrors(data.errors);
 
-      let nameLabel = document.getElementById("name");
+      let nameLabel = document.getElementById("nameDiv");
       if (data.errors.includes(EmailError.EmptyName)) {
         nameLabel?.classList.toggle("shake-activate");
         setTimeout(() => { nameLabel?.classList.toggle("shake-activate") }, 100);
       }
 
       setTimeout(() => {
-        let emailLabel = document.getElementById("email");
+        let emailLabel = document.getElementById("emailDiv");
         if (data.errors.includes(EmailError.EmptyEmail) || data.errors.includes(EmailError.InvalidEmail)) {
           emailLabel?.classList.toggle("shake-activate");
           setTimeout(() => { emailLabel?.classList.toggle("shake-activate") }, 100);
@@ -28,7 +28,7 @@ const Contact = () => {
       }, 100);
 
       setTimeout(() => {
-        let messageLabel = document.getElementById("message");
+        let messageLabel = document.getElementById("msgDiv");
         if (data.errors.includes(EmailError.EmptyMessage)) {
           messageLabel?.classList.toggle("shake-activate");
           setTimeout(() => { messageLabel?.classList.toggle("shake-activate") }, 100);
@@ -80,21 +80,36 @@ const Contact = () => {
           <div className="h-8"></div>
           <div className="flex flex-col justify-between flex-grow">
             <div>
-              <label htmlFor="name" className="label angry-shake" id="name">
-                {!errors.includes(EmailError.EmptyName) ? "NAME" : "NAME - Can't be empty"}
-              </label>
+              <div className="angry-shake" id="nameDiv">
+                <label htmlFor="name" className="label float-left" id="name">
+                  NAME
+                </label>
+                <p className="float-right label text-base opacity-60">
+                  {errors.includes(EmailError.EmptyName) ? "Can't be empty" : ""}
+                </p>
+              </div>
               <input className="text-input focus:border-lilac transition-colors" type="text" name="" id="name" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="email" className="label angry-shake" id="email">
-                {"EMAIL ADDRESS" + (errors.includes(EmailError.EmptyEmail) ? " - Can't be empty" : "") + (errors.includes(EmailError.InvalidEmail) ? " - Invalid email address" : "")}
-              </label>
+              <div className="angry-shake" id="emailDiv">
+                <label htmlFor="email" className="label float-left" id="email">
+                  {"EMAIL ADDRESS"}
+                </label>
+                <p className='float-right label text-base opacity-60'>
+                  {(errors.includes(EmailError.EmptyEmail) ? " Can't be empty" : "") + (errors.includes(EmailError.InvalidEmail) ? " Invalid email address" : "")}
+                </p>
+              </div>
               <input className="text-input focus:border-lilac transition-colors" type="email" name="" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
-              <label htmlFor="subject" className="label angry-shake" id="message">
-                {"SUBJECT" + (errors.includes(EmailError.EmptyMessage) ? " - Can't be empty" : "")}
-              </label>
+              <div className="angry-shake" id="msgDiv">
+                <label htmlFor="subject" className="label float-left" id="message">
+                  SUBJECT
+                </label>
+                <p className="float-right label text-base opacity-60">
+                  {(errors.includes(EmailError.EmptyMessage) ? "Can't be empty" : "")}
+                </p>
+              </div>
               <textarea className="text-input border-2 p-2 resize-none text-base placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac transition-colors" name="" id="subject" rows={8} maxLength={500} value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Interested in commissions? Fill out the form on the commission page" />
             </div>
             <button className="block bg-pastelpink font-stretch text-2xl text-greyblack py-4 border-2 border-pastelpink hover:bg-greyblack hover:text-pastelpink transition-colors" onClick={(e) => submitFormMut.mutate({ name, email, subject })}>SUBMIT</button>
