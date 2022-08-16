@@ -12,7 +12,6 @@ export const emailRouter = createRouter()
             subject: z.string(),
         }).nullish(),
         resolve({ input }) {
-            // TODO: Input validation
             console.log(process.env.GMAIL_KEY)
             let client = nodemailer.createTransport({
                 service: "Gmail",

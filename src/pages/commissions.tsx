@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Comissions = () => {
+  const [name,           setName]           = useState<string>("");
+  const [email,          setEmail]          = useState<string>("");
+  const [category,       setCategory]       = useState<string>("");
+  const [charAmount,     setCharAmount]     = useState<string>("");
+  const [wishes,         setWishes]         = useState<string>("");
+  const [background,     setBackground]     = useState<string>("");
+  const [charNames,      setCharNames]      = useState<string>("");
+  const [charDesc,       setCharDesc]       = useState<string>("");
+  const [additionalInfo, setAdditionalInfo] = useState<string>("");
+
   return (
     <>
       <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
@@ -60,6 +70,8 @@ const Comissions = () => {
             type="text"
             name="name"
             id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <label htmlFor="" className="label mt-8">
             Email
@@ -67,8 +79,10 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors"
             type="text"
-            name="name"
-            id="name"
+            name="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="" className="label mt-8">
             Type/Category of commission
@@ -76,8 +90,10 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors"
             type="text"
-            name="name"
-            id="name"
+            name="category"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           />
           <label htmlFor="" className="label mt-8">
             How many characters
@@ -85,8 +101,10 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors"
             type="text"
-            name="name"
-            id="name"
+            name="charAmount"
+            id="charAmount"
+            value={charAmount}
+            onChange={(e) => setCharAmount(e.target.value)}
           />
           <label htmlFor="" className="label mt-8">
             Any specific wishes or details?
@@ -94,8 +112,10 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors"
             type="text"
-            name="name"
-            id="name"
+            name="wishes"
+            id="wishes"
+            value={wishes}
+            onChange={(e) => setWishes(e.target.value)}
           />
           <label htmlFor="" className="label mt-8">
             Background?
@@ -103,8 +123,10 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors"
             type="text"
-            name="name"
-            id="name"
+            name="background"
+            id="background"
+            value={background}
+            onChange={(e) => setBackground(e.target.value)}
           />
 
           <h2 className="font-stretch text-2xl text-mint mt-12 mb-4">
@@ -116,23 +138,33 @@ const Comissions = () => {
           <input
             className="text-input focus:border-lilac transition-colors text-mint border-mint"
             type="text"
-            name="name"
-            id="name"
+            name="charNames"
+            id="charNames"
+            value={charNames}
+            onChange={(e) => setCharNames(e.target.value)}
           />
           <label htmlFor="" className="label mt-8 text-mint">
             Character(s) personality/description
           </label>
+          <p className="font-cocogoose font-thin text-mint text-base italic mb-4">
+            Please give me everything you have on your character that you want
+            me to have in mind when drawing them - also characters from series
+            since I might not know them. You can also send me a youtube link to
+            a video portraying the characters' personalities.
+          </p>
           <input
             className="text-input focus:border-lilac transition-colors text-mint border-mint"
             type="text"
-            name="name"
-            id="name"
+            name="charDesc"
+            id="charDesc"
+            value={charDesc}
+            onChange={(e) => setCharDesc(e.target.value)}
           />
 
           <h2 className="font-stretch text-2xl text-sky no-ligature mt-12 mb-4">
             Additional info
           </h2>
-          <p className="font-cocogoose font-thin text-sky text-lg mb-4">
+          <p className="font-cocogoose font-thin text-sky text-base italic mb-4">
             This is your place for questions, clarifications and additional
             information you want me to know. If you want to commission a
             character sheet, you can provide the elements you want to include in
@@ -145,8 +177,15 @@ const Comissions = () => {
             id="additional-info"
             rows={10}
             maxLength={2500}
+            value={additionalInfo}
+            onChange={(e) => setAdditionalInfo(e.target.value)}
           ></textarea>
-          <button className="block bg-yellowpeach font-stretch text-2xl text-greyblack py-4 border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors w-full mt-12">
+          <p className="font-cocogoose font-thin text-yellowpeach text-center text-base italic my-4">
+            By sending this order I confirm that I have read and accepted the
+            terms of service for commissioning “Ida Franzén Karlsson, aka
+            Frazzot”. (See bottom of the post).
+          </p>
+          <button className="block bg-yellowpeach font-stretch text-2xl text-greyblack py-4 border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors w-full">
             SUBMIT
           </button>
         </div>
