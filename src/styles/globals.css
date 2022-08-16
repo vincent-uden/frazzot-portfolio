@@ -43,7 +43,7 @@
 
 @layer components {
     .label {
-        @apply block mb-4 text-pastelpink font-cocogoose font-thin text-lg
+        @apply block mb-2 text-pastelpink font-cocogoose font-thin text-lg
     }
 
     .text-input {
