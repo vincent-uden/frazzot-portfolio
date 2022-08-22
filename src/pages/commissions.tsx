@@ -1,15 +1,25 @@
 import React, { useState } from "react";
+import { CommissionError } from "../utils/errortypes";
+import { trpc } from "../utils/trpc";
 
 const Comissions = () => {
-  const [name,           setName]           = useState<string>("");
-  const [email,          setEmail]          = useState<string>("");
-  const [category,       setCategory]       = useState<string>("");
-  const [charAmount,     setCharAmount]     = useState<string>("");
-  const [wishes,         setWishes]         = useState<string>("");
-  const [background,     setBackground]     = useState<string>("");
-  const [charNames,      setCharNames]      = useState<string>("");
-  const [charDesc,       setCharDesc]       = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [charAmount, setCharAmount] = useState<string>("");
+  const [wishes, setWishes] = useState<string>("");
+  const [background, setBackground] = useState<string>("");
+  const [charNames, setCharNames] = useState<string>("");
+  const [charDesc, setCharDesc] = useState<string>("");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
+
+  const [errors, setErrors] = useState<CommissionError[]>([]);
+
+  const submitFormMut = trpc.useMutation(["email.submitCommission"], {
+    onSuccess: (data) => {
+      setErrors(data.errors);
+    },
+  });
 
   return (
     <>
@@ -185,7 +195,22 @@ const Comissions = () => {
             terms of service for commissioning “Ida Franzén Karlsson, aka
             Frazzot”. (See bottom of the post).
           </p>
-          <button className="block bg-yellowpeach font-stretch text-2xl text-greyblack py-4 border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors w-full">
+          <button
+            className="block bg-yellowpeach font-stretch text-2xl text-greyblack py-4 border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors w-full"
+            onClick={(e) =>
+              submitFormMut.mutate({
+                name,
+                email,
+                category,
+                charAmount,
+                wishes,
+                background,
+                charNames,
+                charDesc,
+                additionalInfo,
+              })
+            }
+          >
             SUBMIT
           </button>
         </div>
