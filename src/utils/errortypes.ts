@@ -4,11 +4,6 @@ export enum EmailError {
     EmptyName,
     EmptyMessage,
     InvalidEmail,
-};
-
-export enum CommissionError {
-    EmptyName,
-    EmptyEmail,
     EmptyCategory,
     EmptyCharAmount,
     EmptyWishes,
@@ -16,5 +11,4 @@ export enum CommissionError {
     EmptyCharNames,
     EmptyCharDesc,
     EmptyAddtionalInfo,
-    InvalidEmail,
 };

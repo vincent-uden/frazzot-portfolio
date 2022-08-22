@@ -2,7 +2,7 @@ import { createRouter } from "./context";
 import { z } from "zod";
 import nodemailer from "nodemailer";
 import validator from "email-validator";
-import { CommissionError, EmailError } from "../../utils/errortypes";
+import { EmailError } from "../../utils/errortypes";
 
 export const emailRouter = createRouter()
   .mutation("submitContact", {
@@ -82,34 +82,34 @@ export const emailRouter = createRouter()
       let errors = [];
 
       if (input?.name == "") {
-        errors.push(CommissionError.EmptyName);
+        errors.push(EmailError.EmptyName);
       }
       if (input?.category == "") {
-        errors.push(CommissionError.EmptyCategory);
+        errors.push(EmailError.EmptyCategory);
       }
       if (input?.charAmount == "") {
-        errors.push(CommissionError.EmptyCharAmount);
+        errors.push(EmailError.EmptyCharAmount);
       }
       if (input?.wishes == "") {
-        errors.push(CommissionError.EmptyWishes);
+        errors.push(EmailError.EmptyWishes);
       }
       if (input?.background == "") {
-        errors.push(CommissionError.EmptyBackground);
+        errors.push(EmailError.EmptyBackground);
       }
       if (input?.charNames == "") {
-        errors.push(CommissionError.EmptyCharNames);
+        errors.push(EmailError.EmptyCharNames);
       }
       if (input?.charDesc == "") {
-        errors.push(CommissionError.EmptyCharDesc);
+        errors.push(EmailError.EmptyCharDesc);
       }
       if (input?.additionalInfo == "") {
-        errors.push(CommissionError.EmptyAddtionalInfo);
+        errors.push(EmailError.EmptyAddtionalInfo);
       }
 
       if (input?.email == "") {
-        errors.push(CommissionError.EmptyEmail);
+        errors.push(EmailError.EmptyEmail);
       } else if (!validator.validate(input?.email ?? "")) {
-        errors.push(CommissionError.InvalidEmail);
+        errors.push(EmailError.InvalidEmail);
       }
 
       if (errors.length == 0) {

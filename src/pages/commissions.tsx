@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { CommissionError } from "../utils/errortypes";
+import { EmailError } from "../utils/errortypes";
 import { trpc } from "../utils/trpc";
+import InputLabel from "../components/InputLabel";
 
 const Comissions = () => {
   const [name, setName] = useState<string>("");
@@ -13,11 +14,12 @@ const Comissions = () => {
   const [charDesc, setCharDesc] = useState<string>("");
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
 
-  const [errors, setErrors] = useState<CommissionError[]>([]);
+  const [errors, setErrors] = useState<EmailError[]>([]);
 
   const submitFormMut = trpc.useMutation(["email.submitCommission"], {
     onSuccess: (data) => {
       setErrors(data.errors);
+      console.log(data.errors);
     },
   });
 
@@ -69,69 +71,106 @@ const Comissions = () => {
         <div className="h-8"></div>
 
         <div className="px-[20%]">
-          <h2 className="font-stretch text-2xl text-pastelpink mb-4 mt-24">
+          <h2 className="font-stretch text-2xl text-periwinkle mb-4 mt-24">
             GENERAL INFO
           </h2>
-          <label htmlFor="" className="label mt-8">
-            Name
-          </label>
+          <InputLabel
+            htmlFor="name"
+            text="YOUR NAME"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyName, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="name"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8">
-            Email
-          </label>
+          <InputLabel
+            htmlFor="email"
+            text="YOUR EMAIL"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyEmail, message: "Can't be empty" },
+              { code: EmailError.InvalidEmail, message: "Invalid email address" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8">
-            Type/Category of commission
-          </label>
+          <InputLabel
+            htmlFor="category"
+            text="TYPE/CATEGORY OF COMMISSION"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyCategory, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="category"
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8">
-            How many characters
-          </label>
+          <InputLabel
+            htmlFor="charAmount"
+            text="HOW MANY CHARACTERS?"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyCharAmount, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="charAmount"
             id="charAmount"
             value={charAmount}
             onChange={(e) => setCharAmount(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8">
-            Any specific wishes or details?
-          </label>
+          <InputLabel
+            htmlFor="wishes"
+            text="ANY SPECIFIC WISHES OR DETAILS?"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyWishes, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="wishes"
             id="wishes"
             value={wishes}
             onChange={(e) => setWishes(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8">
-            Background?
-          </label>
+          <InputLabel
+            htmlFor="background"
+            text="BACKGROUND?"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyBackground, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors"
+            className="text-input focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="background"
             id="background"
@@ -139,31 +178,44 @@ const Comissions = () => {
             onChange={(e) => setBackground(e.target.value)}
           />
 
-          <h2 className="font-stretch text-2xl text-mint mt-12 mb-4">
+          <h2 className="font-stretch text-2xl text-periwinkle mt-12 mb-4">
             CHARACTER(S) INFO
           </h2>
-          <label htmlFor="" className="label mt-8 text-mint">
-            Character(s) name(s)
-          </label>
+          <InputLabel
+            htmlFor="charNames"
+            text="CHARACTER(S) NAME(S)"
+            color="periwinkle-light"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyCharNames, message: "Can't be empty" },
+            ]}
+          />
           <input
-            className="text-input focus:border-lilac transition-colors text-mint border-mint"
+            className="text-input focus:border-lilac transition-colors text-mint border-periwinkle"
             type="text"
             name="charNames"
             id="charNames"
             value={charNames}
             onChange={(e) => setCharNames(e.target.value)}
           />
-          <label htmlFor="" className="label mt-8 text-mint">
-            Character(s) personality/description
-          </label>
-          <p className="font-cocogoose font-thin text-mint text-base italic mb-4">
-            Please give me everything you have on your character that you want
-            me to have in mind when drawing them - also characters from series
-            since I might not know them. You can also send me a youtube link to
-            a video portraying the characters' personalities.
+          <InputLabel
+            htmlFor="charDesc"
+            text="CHARACTER(S) PERSONALITY/DESCRIPTION"
+            color="periwinkle-light"
+            height="12"
+            errors={errors}
+            errorCodes={[
+              { code: EmailError.EmptyCharDesc, message: "Can't be empty" },
+            ]}
+          />
+          <p className="font-cocogoose font-thin text-periwinkle text-base italic mb-4 opacity-70">
+            PLEASE GIVE ME EVERYTHING YOU HAVE ON YOUR CHARACTER THAT YOU WANT
+            ME TO HAVE IN MIND WHEN DRAWING THEM - ALSO CHARACTERS FROM SERIES
+            SINCE I MIGHT NOT KNOW THEM. YOU CAN ALSO SEND ME A YOUTUBE LINK TO
+            A VIDEO PORTRAYING THE CHARACTERS' PERSONALITIES.
           </p>
           <input
-            className="text-input focus:border-lilac transition-colors text-mint border-mint"
+            className="text-input focus:border-lilac transition-colors text-mint border-periwinkle"
             type="text"
             name="charDesc"
             id="charDesc"
@@ -171,18 +223,18 @@ const Comissions = () => {
             onChange={(e) => setCharDesc(e.target.value)}
           />
 
-          <h2 className="font-stretch text-2xl text-sky no-ligature mt-12 mb-4">
-            Additional info
+          <h2 className="font-stretch text-2xl text-periwinkle no-ligature mt-12 mb-4">
+            ADDITIONAL INFO
           </h2>
-          <p className="font-cocogoose font-thin text-sky text-base italic mb-4">
-            This is your place for questions, clarifications and additional
-            information you want me to know. If you want to commission a
-            character sheet, you can provide the elements you want to include in
-            the sheet here. (e.g. stats, bio, expressions, weapon, item,
-            palette, icons, etc.)
+          <p className="font-cocogoose font-thin text-periwinkle text-base italic mb-4 opacity-70">
+            THIS IS YOUR PLACE FOR QUESTIONS, CLARIFICATIONS AND ADDITIONAL
+            INFORMATION YOU WANT ME TO KNOW. IF YOU WANT TO COMMISSION A
+            CHARACTER SHEET, YOU CAN PROVIDE THE ELEMENTS YOU WANT TO INCLUDE IN
+            THE SHEET HERE. (E.G. STATS, BIO, EXPRESSIONS, WEAPON, ITEM,
+            PALETTE, ICONS, ETC.)
           </p>
           <textarea
-            className="text-input border-2 p-2 border-sky resize-none text-base text-sky placeholder:text-sky placeholder:opacity-60 focus:border-lilac transition-colors"
+            className="text-input border-2 p-2 border-periwinkle resize-none text-base text-sky placeholder:text-sky placeholder:opacity-60 focus:border-lilac transition-colors"
             name="additional-info"
             id="additional-info"
             rows={10}
@@ -190,13 +242,14 @@ const Comissions = () => {
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
           ></textarea>
-          <p className="font-cocogoose font-thin text-yellowpeach text-center text-base italic my-4">
-            By sending this order I confirm that I have read and accepted the
-            terms of service for commissioning “Ida Franzén Karlsson, aka
-            Frazzot”. (See bottom of the post).
+          <p className="font-cocogoose font-thin text-mint text-center text-base italic mt-12 my-4 opacity-70">
+            {" "}
+            BY SENDING THIS ORDER I CONFIRM THAT I HAVE READ AND ACCEPTED THE
+            TERMS OF SERVICE FOR COMMISSIONING “IDA FRANZÉN KARLSSON, AKA
+            FRAZZOT”. (SEE BOTTOM OF THE POST).
           </p>
           <button
-            className="block bg-yellowpeach font-stretch text-2xl text-greyblack py-4 border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors w-full"
+            className="block bg-mint font-stretch text-2xl text-greyblack py-4 border-2 border-mint hover:bg-greyblack hover:text-mint transition-colors w-full"
             onClick={(e) =>
               submitFormMut.mutate({
                 name,
