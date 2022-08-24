@@ -19,6 +19,15 @@ const Comissions = () => {
   const submitFormMut = trpc.useMutation(["email.submitCommission"], {
     onSuccess: (data) => {
       setErrors(data.errors);
+
+      if (data.errors.length > 0) {
+        let btn = document.getElementById("submitBtn");
+        btn?.classList.toggle("shake-anim");
+        setTimeout(() => {
+          btn?.classList.toggle("shake-anim");
+        }, 300);
+      }
+
       console.log(data.errors);
     },
   });
@@ -28,7 +37,8 @@ const Comissions = () => {
       <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
         <div className="h-64"></div>
         <h1 className="font-stretch text-center text-periwinkle text-6xl pl-4">
-          <span>COM</span> <span className="relative -left-8">MISSIONS</span>
+          <span className="no-ligature">COMM</span>
+          <span>ISSIONS</span>
         </h1>
         <div className="bg-holo bg-cover mt-8 py-2">
           <h2 className="font-stretch text-center text-greyblack text-3xl">
@@ -37,40 +47,41 @@ const Comissions = () => {
         </div>
       </div>
 
-      <div className="w-screen px-[20%] pt-12 bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x bg-bottom overflow-y-hidden">
+      <div className="w-screen px-[25%] pt-12 bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x bg-bottom overflow-y-hidden">
         <div className="flex flex-row">
           <div className="inline-block w-[40%]">
             <div className="w-full h-[40%] text-center bg-periwinkle flex flex-col justify-around">
-              <h2 className="font-stretch text-xl text-greyblack">TERMS</h2>
+              <h2 className="font-stretch text-2xl text-greyblack">TERMS</h2>
             </div>
             <div className="h-[20%]"></div>
-            <div className="w-full h-[40%] text-center bg-periwinkle flex flex-col justify-around">
-              <h2 className="font-stretch text-xl text-greyblack">FORM</h2>
+            <div className="w-full h-[40%] text-center bg-mint flex flex-col justify-around">
+              <h2 className="font-stretch text-2xl text-greyblack">
+                INFORMATION
+              </h2>
             </div>
           </div>
           <div className="inline-block w-[5%]"></div>
-          <div className="inline-block w-[55%] border-2 border-white p-6">
-            <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
-              IN MY PATREON POST BELOW YOU WILL FIND ALL THE INFORMATION NEEDED
-              IN ORDER TO COMMISSION ME.
-            </p>
-            <div className="h-6"></div>
-            <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
-              TO THE LEFT YOU WILL FIND MY TERMS AND COMMISSIONS FOR USING MY
-              SERVICES. PLEASE READ IT CAREFULLY BEFORE FILLING OUT THE FORM
-            </p>
+          <div className="inline-block w-[55%] p-[2px] bg-holo">
+            <div className="bg-greyblack p-4">
+              <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
+                BELOW YOU WILL FIND THE FORM TO SUBMIT A COMMISSION. RESPONSE
+                WILL BE SENT TO THE EMAIL YOU STATE IN THE FORM.
+              </p>
+              <div className="h-6"></div>
+              <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
+                TO THE LEFT YOU CAN READ MY TERMS AND CONDITIONS FOR USING MY
+                SERVICES AS WELL AS ADDITIONAL INFORMATION ON MY PATREON.
+              </p>
+              <div className="h-6"></div>
+              <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
+                PLEASE READ THEM CAREFULLY BEFORE FILLING OUT THE FORM.
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="h-12"></div>
-        <div className="bg-mint w-full p-8">
-          <h2 className="font-stretch text-xl text-greyblack text-center">
-            READ ABOUT MY <span>COM</span>{" "}
-            <span className="relative -left-3">MISSIONS HERE</span>
-          </h2>
         </div>
         <div className="h-8"></div>
 
-        <div className="px-[20%]">
+        <div className="px-24 pb-12 border-periwinkle border-[12px]">
           <h2 className="font-stretch text-2xl text-periwinkle mb-4 mt-24">
             GENERAL INFO
           </h2>
@@ -84,7 +95,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="name"
             id="name"
@@ -98,11 +109,14 @@ const Comissions = () => {
             errors={errors}
             errorCodes={[
               { code: EmailError.EmptyEmail, message: "Can't be empty" },
-              { code: EmailError.InvalidEmail, message: "Invalid email address" },
+              {
+                code: EmailError.InvalidEmail,
+                message: "Invalid email address",
+              },
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="email"
             id="email"
@@ -119,7 +133,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="category"
             id="category"
@@ -136,7 +150,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="charAmount"
             id="charAmount"
@@ -153,7 +167,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="wishes"
             id="wishes"
@@ -170,7 +184,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors border-periwinkle"
+            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle"
             type="text"
             name="background"
             id="background"
@@ -191,7 +205,7 @@ const Comissions = () => {
             ]}
           />
           <input
-            className="text-input focus:border-lilac transition-colors text-mint border-periwinkle"
+            className="text-input focus:border-lilac transition-colors text-periwinkle-light border-periwinkle"
             type="text"
             name="charNames"
             id="charNames"
@@ -202,7 +216,7 @@ const Comissions = () => {
             htmlFor="charDesc"
             text="CHARACTER(S) PERSONALITY/DESCRIPTION"
             color="periwinkle-light"
-            height="12"
+            height="16"
             errors={errors}
             errorCodes={[
               { code: EmailError.EmptyCharDesc, message: "Can't be empty" },
@@ -215,7 +229,7 @@ const Comissions = () => {
             A VIDEO PORTRAYING THE CHARACTERS' PERSONALITIES.
           </p>
           <input
-            className="text-input focus:border-lilac transition-colors text-mint border-periwinkle"
+            className="text-input focus:border-lilac transition-colors text-periwinkle-light border-periwinkle"
             type="text"
             name="charDesc"
             id="charDesc"
@@ -234,7 +248,7 @@ const Comissions = () => {
             PALETTE, ICONS, ETC.)
           </p>
           <textarea
-            className="text-input border-2 p-2 border-periwinkle resize-none text-base text-sky placeholder:text-sky placeholder:opacity-60 focus:border-lilac transition-colors"
+            className="text-input border-2 p-2 border-periwinkle resize-none text-base text-periwinkle-light placeholder:text-sky placeholder:opacity-60 focus:border-lilac transition-colors"
             name="additional-info"
             id="additional-info"
             rows={10}
@@ -249,8 +263,9 @@ const Comissions = () => {
             FRAZZOT”. (SEE BOTTOM OF THE POST).
           </p>
           <button
-            className="block bg-mint font-stretch text-2xl text-greyblack py-4 border-2 border-mint hover:bg-greyblack hover:text-mint transition-colors w-full"
-            onClick={(e) =>
+            className="block bg-mint font-stretch text-2xl text-greyblack py-4 border-2 border-mint hover:bg-greyblack hover:text-mint transition-colors w-full angry-shake"
+            id="submitBtn"
+            onClick={(_) =>
               submitFormMut.mutate({
                 name,
                 email,

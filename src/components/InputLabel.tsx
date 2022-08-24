@@ -19,9 +19,10 @@ const InputLabel = ({
   errorCodes,
   errors,
 }: Props) => {
+  let activeErrors = errors.map((e) => errorCodes.find((ec) => ec.code == e)?.message || "");
   return (
     <div className={`mt-${marginTop} h-${height}`}>
-      <div className="angry-shake">
+      <div className={`angry-shake`}>
         <label
           htmlFor={htmlFor}
           className={`label float-left ${color ? "text-" + color : ""}`}
@@ -33,9 +34,7 @@ const InputLabel = ({
             color ? "text-" + color : ""
           }`}
         >
-          {errors
-            .map((e) => errorCodes.find((ec) => ec.code == e)?.message || "")
-            .join("")}
+          {activeErrors.join("")}
         </p>
       </div>
     </div>

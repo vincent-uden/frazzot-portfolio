@@ -32,13 +32,27 @@
 }
 
 .angry-shake {
-    transition: transform .1s ease-in;
     transform-origin: bottom left;
 }
 
 .shake-activate {
     transform: translateY(-.5em);
     transition: transform .1s ease-out;
+}
+
+.shake-anim {
+    animation-name: shake;
+    animation-duration: .3s;
+    animation-timing-function: ease-in;
+}
+
+@keyframes shake {
+    0% { -webkit-transform: translate(30px); }
+    20% { -webkit-transform: translate(-30px); }
+    40% { -webkit-transform: translate(15px); }
+    60% { -webkit-transform: translate(-15px); }
+    80% { -webkit-transform: translate(8px); }
+    100% { -webkit-transform: translate(0px); }
 }
 
 @layer components {
