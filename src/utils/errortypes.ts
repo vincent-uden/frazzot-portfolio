@@ -10,5 +10,4 @@ export enum EmailError {
     EmptyBackground,
     EmptyCharNames,
     EmptyCharDesc,
-    EmptyAddtionalInfo,
 };

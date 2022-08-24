@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { EmailError } from "../utils/errortypes";
 import { trpc } from "../utils/trpc";
 import InputLabel from "../components/InputLabel";
+import SubmitButton from "../components/SubmitButton";
 
 const Comissions = () => {
   const [name, setName] = useState<string>("");
@@ -15,6 +16,7 @@ const Comissions = () => {
   const [additionalInfo, setAdditionalInfo] = useState<string>("");
 
   const [errors, setErrors] = useState<EmailError[]>([]);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const submitFormMut = trpc.useMutation(["email.submitCommission"], {
     onSuccess: (data) => {
@@ -23,9 +25,12 @@ const Comissions = () => {
       if (data.errors.length > 0) {
         let btn = document.getElementById("submitBtn");
         btn?.classList.toggle("shake-anim");
+        setSuccess(false);
         setTimeout(() => {
           btn?.classList.toggle("shake-anim");
         }, 300);
+      } else {
+        setSuccess(true);
       }
 
       console.log(data.errors);
@@ -35,6 +40,7 @@ const Comissions = () => {
   return (
     <>
       <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
+      <div className="hidden stroke-mint text-mint hover:text-mint"></div>
         <div className="h-64"></div>
         <h1 className="font-stretch text-center text-periwinkle text-6xl pl-4">
           <span className="no-ligature">COMM</span>
@@ -47,7 +53,7 @@ const Comissions = () => {
         </div>
       </div>
 
-      <div className="w-screen px-[25%] pt-12 bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x bg-bottom overflow-y-hidden">
+      <div className="w-screen px-[20%] pt-12 bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x bg-bottom overflow-y-hidden">
         <div className="flex flex-row">
           <div className="inline-block w-[40%]">
             <div className="w-full h-[40%] text-center bg-periwinkle flex flex-col justify-around">
@@ -62,7 +68,7 @@ const Comissions = () => {
           </div>
           <div className="inline-block w-[5%]"></div>
           <div className="inline-block w-[55%] p-[2px] bg-holo">
-            <div className="bg-greyblack p-4">
+            <div className="bg-greyblack p-6">
               <p className="text-periwinkle-light font-cocogoose font-thin text-lg">
                 BELOW YOU WILL FIND THE FORM TO SUBMIT A COMMISSION. RESPONSE
                 WILL BE SENT TO THE EMAIL YOU STATE IN THE FORM.
@@ -79,7 +85,7 @@ const Comissions = () => {
             </div>
           </div>
         </div>
-        <div className="h-8"></div>
+        <div className="h-12"></div>
 
         <div className="px-24 pb-12 border-periwinkle border-[12px]">
           <h2 className="font-stretch text-2xl text-periwinkle mb-4 mt-24">
@@ -262,9 +268,9 @@ const Comissions = () => {
             TERMS OF SERVICE FOR COMMISSIONING “IDA FRANZÉN KARLSSON, AKA
             FRAZZOT”. (SEE BOTTOM OF THE POST).
           </p>
-          <button
-            className="block bg-mint font-stretch text-2xl text-greyblack py-4 border-2 border-mint hover:bg-greyblack hover:text-mint transition-colors w-full angry-shake"
-            id="submitBtn"
+          <SubmitButton
+            color="mint"
+            success= {success}
             onClick={(_) =>
               submitFormMut.mutate({
                 name,
@@ -278,9 +284,7 @@ const Comissions = () => {
                 additionalInfo,
               })
             }
-          >
-            SUBMIT
-          </button>
+          />
         </div>
         <div className="h-64"></div>
       </div>

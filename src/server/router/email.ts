@@ -102,9 +102,6 @@ export const emailRouter = createRouter()
       if (input?.charDesc == "") {
         errors.push(EmailError.EmptyCharDesc);
       }
-      if (input?.additionalInfo == "") {
-        errors.push(EmailError.EmptyAddtionalInfo);
-      }
 
       if (input?.email == "") {
         errors.push(EmailError.EmptyEmail);

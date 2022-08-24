@@ -2,53 +2,37 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { trpc } from "../utils/trpc";
 import { EmailError } from "../utils/errortypes";
+import InputLabel from "../components/InputLabel";
+import SubmitButton from "../components/SubmitButton";
 
 const Contact = () => {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [subject, setSubject] = useState<string>("");
   const [errors, setErrors] = useState<EmailError[]>([]);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const submitFormMut = trpc.useMutation(["email.submitContact"], {
     onSuccess: (data) => {
       setErrors(data.errors);
 
-      let nameLabel = document.getElementById("nameDiv");
-      if (data.errors.includes(EmailError.EmptyName)) {
-        nameLabel?.classList.toggle("shake-activate");
+      if (data.errors.length > 0) {
+        setSuccess(false);
+        let btn = document.getElementById("submitBtn");
+        btn?.classList.toggle("shake-anim");
         setTimeout(() => {
-          nameLabel?.classList.toggle("shake-activate");
-        }, 100);
+          btn?.classList.toggle("shake-anim");
+        }, 300);
+      } else {
+        setSuccess(true);
       }
-
-      setTimeout(() => {
-        let emailLabel = document.getElementById("emailDiv");
-        if (
-          data.errors.includes(EmailError.EmptyEmail) ||
-          data.errors.includes(EmailError.InvalidEmail)
-        ) {
-          emailLabel?.classList.toggle("shake-activate");
-          setTimeout(() => {
-            emailLabel?.classList.toggle("shake-activate");
-          }, 100);
-        }
-      }, 100);
-
-      setTimeout(() => {
-        let messageLabel = document.getElementById("msgDiv");
-        if (data.errors.includes(EmailError.EmptyMessage)) {
-          messageLabel?.classList.toggle("shake-activate");
-          setTimeout(() => {
-            messageLabel?.classList.toggle("shake-activate");
-          }, 100);
-        }
-      }, 200);
     },
   });
 
   return (
     <>
       <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
+        <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-64"></div>
         <h1 className="font-stretch text-center text-pastelpink text-6xl pl-4">
           CONTACT
@@ -111,16 +95,15 @@ const Contact = () => {
           <div className="h-8"></div>
           <div className="flex flex-col justify-between flex-grow">
             <div>
-              <div className="angry-shake" id="nameDiv">
-                <label htmlFor="name" className="label float-left" id="name">
-                  NAME
-                </label>
-                <p className="float-right label text-base opacity-60">
-                  {errors.includes(EmailError.EmptyName)
-                    ? "Can't be empty"
-                    : ""}
-                </p>
-              </div>
+              <InputLabel
+                htmlFor="name"
+                text="NAME"
+                color="pastelpink"
+                errors={errors}
+                errorCodes={[
+                  { code: EmailError.EmptyName, message: "Can't be empty" },
+                ]}
+              />
               <input
                 className="text-input focus:border-lilac transition-colors"
                 type="text"
@@ -131,19 +114,16 @@ const Contact = () => {
               />
             </div>
             <div>
-              <div className="angry-shake" id="emailDiv">
-                <label htmlFor="email" className="label float-left" id="email">
-                  {"EMAIL ADDRESS"}
-                </label>
-                <p className="float-right label text-base opacity-60">
-                  {(errors.includes(EmailError.EmptyEmail)
-                    ? " Can't be empty"
-                    : "") +
-                    (errors.includes(EmailError.InvalidEmail)
-                      ? " Invalid email address"
-                      : "")}
-                </p>
-              </div>
+              <InputLabel
+                htmlFor="email"
+                text="YOUR EMAIL ADDRESS"
+                color="pastelpink"
+                errors={errors}
+                errorCodes={[
+                  { code: EmailError.EmptyEmail, message: "Can't be empty" },
+                  { code: EmailError.InvalidEmail, message: "Invalid email address" },
+                ]}
+              />
               <input
                 className="text-input focus:border-lilac transition-colors"
                 type="email"
@@ -154,20 +134,15 @@ const Contact = () => {
               />
             </div>
             <div>
-              <div className="angry-shake" id="msgDiv">
-                <label
-                  htmlFor="subject"
-                  className="label float-left"
-                  id="message"
-                >
-                  SUBJECT
-                </label>
-                <p className="float-right label text-base opacity-60">
-                  {errors.includes(EmailError.EmptyMessage)
-                    ? "Can't be empty"
-                    : ""}
-                </p>
-              </div>
+              <InputLabel
+                htmlFor="subject"
+                text="MESSAGE"
+                color="pastelpink"
+                errors={errors}
+                errorCodes={[
+                  { code: EmailError.EmptyMessage, message: "Can't be empty" },
+                ]}
+              />
               <textarea
                 className="text-input border-2 p-2 resize-none text-base placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac transition-colors"
                 name=""
@@ -179,12 +154,11 @@ const Contact = () => {
                 placeholder="Interested in commissions? Fill out the form on the commission page"
               />
             </div>
-            <button
-              className="block bg-pastelpink font-stretch text-2xl text-greyblack py-4 border-2 border-pastelpink hover:bg-greyblack hover:text-pastelpink transition-colors"
-              onClick={(e) => submitFormMut.mutate({ name, email, subject })}
-            >
-              SUBMIT
-            </button>
+            <SubmitButton
+              color="pastelpink"
+              onClick={(_) => submitFormMut.mutate({ name, email, subject })}
+              success={success}
+            />
           </div>
         </aside>
       </div>

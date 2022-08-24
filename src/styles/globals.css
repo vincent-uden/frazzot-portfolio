@@ -55,6 +55,25 @@
     100% { -webkit-transform: translate(0px); }
 }
 
+@keyframes check-stroke {
+    25% {
+        stroke-dashoffset: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: check-stroke 3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
 @layer components {
     .label {
         @apply block mb-2 text-pastelpink font-cocogoose font-thin text-lg
