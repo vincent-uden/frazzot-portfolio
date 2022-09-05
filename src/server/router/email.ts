@@ -48,6 +48,29 @@ export const emailRouter = createRouter()
                 ${input?.subject}
                 `,
         });
+        client.sendMail({
+          from: "nextjsvralin@gmail.com",
+          to: input?.email,
+          subject: "Frazzot - Contact Confirmation",
+          text: `
+          Hello there,
+
+          Thank you for using the contact form, your message is now sent and I'll get back to you shortly.
+          If you have further questions, send an email to frazzoot@gmail.com with complementary details.
+          This is an auto-generated reply, please do not respond to this mail.
+
+          Kind regards,
+          Frazzot
+
+          Below follows a duplicate of the information sent by you through the contact form:
+          ---
+
+          Name: ${input?.name}
+          Email: ${input?.email}\n
+          Message:
+          ${input?.subject}
+          `,
+        });
       }
 
       return {
@@ -113,7 +136,7 @@ export const emailRouter = createRouter()
         client.sendMail({
           from: "nextjsvralin@gmail.com",
           to: "vincentuden@gmail.com",
-          subject: "Frazzot - Contact",
+          subject: "Frazzot - Commission",
           text: `
                 Name: ${input?.name}
                 Email: ${input?.email}\n
@@ -127,6 +150,35 @@ export const emailRouter = createRouter()
                 ------------------
                 Additional Info: ${input?.additionalInfo}
                 `,
+        });
+        client.sendMail({
+          from: "nextjsvralin@gmail.com",
+          to: input?.email,
+          subject: "Frazzot - Commission Confirmation",
+          text: `
+          Hello there,
+
+          Thank you for using my services, your commission is now sent and I'll get back to you shortly.
+          If you have further questions or wish to change anything in your commission, send an email to frazzoot@gmail.com with complementary details.
+          This is an auto-generated reply, please do not respond to this mail.
+
+          Kind regards,
+          Frazzot
+
+          Below follows a duplicate of the information sent by you through the commission form:
+          ---
+          Name: ${input?.name}
+          Email: ${input?.email}\n
+          Type/Category of commission: ${input?.category}
+          How many characters: ${input?.charAmount}
+          Any specific wishes or details?: ${input?.wishes}
+          Background?: ${input?.background}
+          ------------------
+          Character(s) name(s): ${input?.charNames}
+          Character(s) personality/description: ${input?.charDesc}
+          ------------------
+          Additional Info: ${input?.additionalInfo}
+          `,
         });
       }
 
