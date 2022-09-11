@@ -134,6 +134,7 @@ const Layout = ({ children }: Props) => {
             <FacebookIcon color="fuchsia-200" size="8" />
             <DeviantartIcon color="fuchsia-200" size="8" />
           </div>
+          <div className="text-fuchsia-200"></div>
         </div>
       </div>
     </>

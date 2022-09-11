@@ -7,6 +7,7 @@ import Layout from "../components/Layout";
 import FadeIn from "../components/FadeIn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArtstation, faDeviantart, faFacebook, faInstagram, faPatreon, faYoutube, faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { InstagramIcon, YoutubeIcon, PatreonIcon, ArtstationIcon, FacebookIcon, DeviantartIcon } from "../components/SocialIcons";
 
 const Home: NextPageWithLayout = () => {
 
@@ -39,12 +40,12 @@ const Home: NextPageWithLayout = () => {
         <p className="relative left-1/2 font-cocogoose font-thin text-center text-2xl max-w-[60vw] -translate-x-1/2">THIS IS MY PERSONAL CREATIVE CORNER. HERE <br /> YOU CAN FIND EVERYTHING FROM GALLERY TO COMMISSION DETAILS.</p>
         <div className="h-8"></div>
         <div className="flex flex-row menu-socials justify-center">
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faInstagram} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faYoutube} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faPatreon} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faArtstation} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faFacebook} />
-          <FontAwesomeIcon className="text-greyblack w-10 h-10 mx-4 cursor-pointer hover:scale-125 transition-transform" icon={faDeviantart} />
+            <InstagramIcon color="greyblack" size="10" />
+            <YoutubeIcon color="greyblack" size="10" />
+            <PatreonIcon color="greyblack" size="10" />
+            <ArtstationIcon color="greyblack" size="10" />
+            <FacebookIcon color="greyblack" size="10" />
+            <DeviantartIcon color="greyblack" size="10" />
         </div>
         <div className="h-8"></div>
       </div>
