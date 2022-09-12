@@ -51,7 +51,7 @@ const Home: NextPageWithLayout = () => {
       </div>
 
       <div className="h-16"></div>
-      <div className="grid grid-cols-11 grid-rows-7 gap-14 w-screen bg-pattern-holo bg-[length:1920px_640px] bg-repeat-x bg-bottom overflow-y-hidden px-16 pb-64">
+      <div className="grid grid-cols-11 grid-rows-7 gap-14 w-screen bg-pattern-holo-short bg-[length:1920px_320px] bg-repeat-x bg-bottom overflow-y-hidden px-16 pb-64">
         <div className="bg-holo col-span-2 row-span-4">
           <p className="font-cocogoose font-thin text-2xl p-6 text-center">JOIN MY <span className="font-cocogoose">DISCORD SERVER</span> AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH OTHER ARTIST.</p>
           <FontAwesomeIcon className="text-greyblack w-4/5 cursor-pointer relative left-1/2 -translate-x-1/2 mb-6" icon={faDiscord} />
@@ -71,11 +71,6 @@ const Home: NextPageWithLayout = () => {
         <div className="relative col-span-7 row-span-1 bg-mint h-1/5 top-[40%]"></div>
         <div className="col-span-5 row-span-2 border-2 p-4">
           <h1 className="font-stretch text-transparent text-4xl bg-holo bg-clip-text">SKETCHBOOK &gt; </h1>
-          <div className="flex flex-row justify-between mt-4">
-            <h2 className="bg-pastelpink flex-grow text-center font-stretch py-2 text-2xl text-greyblack border-2 border-pastelpink hover:bg-greyblack hover:text-pastelpink transition-colors">DIGITAL</h2>
-            <div className="w-6"></div>
-            <h2 className="bg-yellowpeach flex-grow text-center font-stretch py-2 text-2xl text-greyblack border-2 border-yellowpeach hover:bg-greyblack hover:text-yellowpeach transition-colors">PHYSICAL</h2>
-          </div>
           <p className="font-cocogoose font-thin text-xl text-violet-100 mt-4">FLIP THROUGH MY PHYSICAL AND DIGITAL SKETCHBOOKS HERE</p>
         </div>
         <div className="col-span-2 row-span-2">
@@ -83,7 +78,6 @@ const Home: NextPageWithLayout = () => {
           <h1 className="inline font-stretch text-transparent text-4xl bg-holo bg-clip-text">EMAIL &gt; </h1>
         </div>
       </div>
-
     </>
   );
 };
