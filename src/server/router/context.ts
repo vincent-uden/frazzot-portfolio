@@ -1,19 +1,16 @@
 // src/server/router/context.ts
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
-import { unstable_getServerSession as getServerSession } from "next-auth";
-
-import { authOptions as nextAuthOptions } from "../../pages/api/auth/[...nextauth]";
+import { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../db/client";
 
 export const createContext = async (
-  opts?: trpcNext.CreateNextContextOptions,
+  opts?: trpcNext.CreateNextContextOptions
 ) => {
   const req = opts?.req;
   const res = opts?.res;
 
-  const session =
-    req && res && (await getServerSession(req, res, nextAuthOptions));
+  const session = req && res && (await getServerSession(req, res));
 
   return {
     req,
@@ -26,3 +23,29 @@ export const createContext = async (
 type Context = trpc.inferAsyncReturnType<typeof createContext>;
 
 export const createRouter = () => trpc.router<Context>();
+
+interface Session {
+  token: string;
+}
+
+async function getServerSession(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<Session> {
+  // Does the request contain a valid token?
+  // If so, include token in session info
+  // --
+  // Get other interesting session info?
+  // --
+  // How to handle invalid tokens? Do something to the response?
+  // HTTP 403?
+
+  console.log("GETTING SERVER SESSION");
+  console.log(req.headers);
+
+  req
+
+  return {
+    token: "",
+  };
+}

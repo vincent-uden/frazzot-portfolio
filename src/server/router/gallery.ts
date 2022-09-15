@@ -21,8 +21,8 @@ export const galleryRouter = createRouter()
         }),
         resolve: async ({ input, ctx }) => {
             return await ctx.prisma.galleryImage.create({
-                data: { 
-                    name: input.name, 
+                data: {
+                    name: input.name,
                     path: input.path,
                     w: input.w,
                     h: input.h,

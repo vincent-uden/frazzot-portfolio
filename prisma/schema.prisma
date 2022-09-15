@@ -70,3 +70,8 @@ model GalleryImage {
     thmb_h    Int
     createdAt DateTime @default(now())
 }
+
+model AdminPassword {
+    id   String @id @default(cuid())
+    hash String
+}
