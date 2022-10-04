@@ -36,6 +36,7 @@
     "react-query": "^3.39.2",
     "sharp": "^0.30.7",
     "superjson": "^1.9.1",
+    "tsno": "^2.0.0",
     "universal-cookie": "^4.0.4",
     "zod": "^3.17.3"
   },
