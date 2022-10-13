@@ -73,5 +73,6 @@ model GalleryImage {
 
 model AdminPassword {
     id   String @id @default(cuid())
+    name String @unique
     hash String
 }

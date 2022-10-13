@@ -8,19 +8,31 @@ import { hash } from "argon2";
 console.log("Welcome to the database utility script!");
 console.log("---------------------------------------");
 
+const actions = {
+  newUser: "Create a new admin user",
+  listUsers: "List admin users",
+  deleteUser: "Delete an admin user",
+  deleteAll: "Delete ALL admin users",
+};
+
 inquirer
   .prompt([
     {
       name: "action",
       message: "What do you want to do?",
       type: "list",
-      choices: ["Create new admin password", "List admin password info"],
+      choices: Object.values(actions),
     },
   ])
   .then(async (actionAnswer) => {
-    if (actionAnswer.action === "Create new admin password") {
+    if (actionAnswer.action === actions.newUser) {
       inquirer
         .prompt([
+          {
+            name: "username",
+            message: "Enter the username",
+            type: "input",
+          },
           {
             name: "password",
             message: "Enter a new admin password",
@@ -41,6 +53,7 @@ inquirer
           ) {
             const hashedPw = await hash(answers.password);
             const newPassword = {
+              name: answers.username,
               hash: hashedPw,
             };
             await prisma.adminPassword.create({ data: newPassword });
@@ -48,7 +61,34 @@ inquirer
             console.log("The passwords do not match");
           }
         });
-    } else if (actionAnswer.action === "List admin password info") {
+    } else if (actionAnswer.action === actions.listUsers) {
       console.log(await prisma.adminPassword.findMany());
+    } else if (actionAnswer.action === actions.deleteUser) {
+      let users = await prisma.adminPassword.findMany();
+      let options = [];
+      for (let i = 0; i < users.length; i++) {
+        options.push(users[i]!!.name);
+      }
+      inquirer
+        .prompt([
+          {
+            name: "chosenUsers",
+            message: "Which user(s) should be deleted?",
+            type: "checkbox",
+            choices: options,
+          },
+        ])
+        .then(async (answers) => {
+          console.log(answers);
+          for (let i = 0; i < answers.chosenUsers.length; i++) {
+            await prisma.adminPassword.delete({
+              where: {
+                name: answers.chosenUsers[i],
+              }
+            })
+          }
+        });
+    } else if (actionAnswer.action === actions.deleteAll) {
+      await prisma.adminPassword.deleteMany({});
     }
   });
