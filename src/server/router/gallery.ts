@@ -10,6 +10,11 @@ export const galleryRouter = createRouter()
             return await ctx.prisma.galleryImage.findMany();
         }
     })
+    .middleware(async ({ ctx, next }) => {
+        console.log("Hello");
+        console.log(ctx.req?.headers.session_token);
+        return next();
+    })
     .mutation("insertOne", {
         input: z.object({
             name: z.string(),

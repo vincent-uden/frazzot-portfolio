@@ -1,13 +1,14 @@
-
 export enum EmailError {
-    EmptyEmail,
-    EmptyName,
-    EmptyMessage,
-    InvalidEmail,
-    EmptyCategory,
-    EmptyCharAmount,
-    EmptyWishes,
-    EmptyBackground,
-    EmptyCharNames,
-    EmptyCharDesc,
-};
+  EmptyEmail,
+  EmptyName,
+  EmptyMessage,
+  InvalidEmail,
+  EmptyCategory,
+  EmptyCharAmount,
+  EmptyWishes,
+  EmptyBackground,
+  EmptyCharNames,
+  EmptyCharDesc,
+  EmptyPassword,
+  IncorrectUserDetails
+}

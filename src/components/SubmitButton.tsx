@@ -11,7 +11,7 @@ const SubmitButton = ({ color, text, onClick, success }: Props) => {
   return (
     <div className="relative">
       <button
-        className={`block bg-${color} font-stretch text-2xl text-greyblack py-4 border-2 border-${color} hover:bg-greyblack hover:text-${color} transition-colors w-full angry-shake`}
+        className={`block bg-${color} font-stretch text-2xl text-greyblack py-4 border-2 border-${color} hover:bg-greyblack hover:text-${color} transition-colors w-full px-8 angry-shake`}
         id="submitBtn"
         onClick={onClick}
       >
