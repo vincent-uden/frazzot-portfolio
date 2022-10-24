@@ -102,23 +102,6 @@ const Admin = () => {
                 thmb_w: msg.thmb_w,
                 thmb_h: msg.thmb_h,
               });
-              if (
-                (uploadDivRef.current?.children[1] as HTMLElement).style != null
-              ) {
-                (
-                  uploadDivRef.current!!.children[1] as HTMLElement
-                ).style.opacity = "1";
-              }
-              setTimeout(() => {
-                if (
-                  (uploadDivRef.current?.children[1] as HTMLElement).style !=
-                  null
-                ) {
-                  (
-                    uploadDivRef.current!!.children[1] as HTMLElement
-                  ).style.opacity = "0";
-                }
-              }, 2000);
             }
           });
         chunkId++;
@@ -128,10 +111,11 @@ const Admin = () => {
 
   return (
     <>
+      <div className="hidden border-pastelpink"></div>
       <div className="h-16"></div>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
-        <div className="h-16"></div>
-        <div className="flex h-full flex-col items-center justify-around">
+        <div className="h-64"></div>
+        <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
           <InputLabel
             htmlFor="name"
             text="YOUR NAME"
@@ -142,7 +126,7 @@ const Admin = () => {
             ]}
           />
           <input
-            className="text-input w-64 border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
             type="text"
             name="name"
             id="name"
@@ -159,7 +143,7 @@ const Admin = () => {
             ]}
           />
           <input
-            className="text-input w-64 border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
             type="password"
             name="password"
             id="password"
@@ -178,78 +162,109 @@ const Admin = () => {
               })
             }
           />
-          <button
-            className="mt-10 block w-60 rounded-xl border-4 border-periwinkle bg-transparent p-5 font-cocogoose font-thin text-periwinkle-light transition-colors hover:bg-periwinkle hover:text-slate-900"
-            onClick={() => {
+          <div className="h-8"></div>
+          <SubmitButton
+            color="pastelpink"
+            text="LOG OUT"
+            success={loginErrors.length > 0 && jwt != null}
+            onClick={(_) => {
               setJwt(null);
               cookies.remove("session_token");
             }}
-          >
-            Log out
-          </button>
+          />
         </div>
       </div>
+
+      {/* Gallery Management */}
       {jwt != null && (
         <>
           <div className="h-32"></div>
-          <div className="flex h-full flex-col items-center justify-around">
-            <input
-              type="text"
-              name="newName"
-              id="newName"
-              className="mb-20 mt-10 block w-80 border-b-2 border-b-purple-300 bg-transparent text-lg text-white outline-none"
-              placeholder="Image Name"
-              onChange={(e) => setImageName(e.target.value)}
-              value={imageName}
-            />
-            <input
-              className="mb-10 text-white"
-              type="file"
-              onChange={(e) => {
-                setUploadData(e.target.files ? e.target.files : new FileList());
-              }}
-            />
-            <div className="relative" ref={uploadDivRef}>
-              <button
-                className="mt-10 block w-60 rounded-xl border-4 border-purple-300 bg-transparent p-5 font-bold text-purple-300 transition-colors hover:bg-purple-300 hover:text-slate-900"
-                onClick={() => bigImage()}
-              >
-                Upload Image
-              </button>
-              <FontAwesomeIcon
-                className="absolute top-1/2 left-full mx-4 h-10 w-10 cursor-pointer text-green-400 opacity-0 transition-opacity"
-                icon={faCheck}
+          <div className="w-full">
+            <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
+              <input
+                className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+                type="text"
+                name="newName"
+                id="newName"
+                placeholder="Image Name"
+                onChange={(e) => setImageName(e.target.value)}
+                value={imageName}
+              />
+              <div className="h-8"></div>
+              <input
+                className="mb-10 text-white"
+                type="file"
+                onChange={(e) => {
+                  setUploadData(
+                    e.target.files ? e.target.files : new FileList()
+                  );
+                }}
+              />
+              <div className="h-8"></div>
+              <SubmitButton
+                color="mint"
+                text="UPLOAD IMAGE"
+                success={false}
+                onClick={(_) => {
+                  bigImage();
+                }}
               />
             </div>
           </div>
+
+          {/* Image table */}
+          <div className="h-16"></div>
+          <div className="mt-8 mb-16 bg-holo bg-cover py-2">
+            <h2 className="no-ligature text-center font-stretch text-3xl text-greyblack">
+              TABLE OF GALLERY DATA_
+            </h2>
+          </div>
           <div className="z-10 mt-8 px-8">
-            <table className="w-full">
+            <table className="mx-auto">
               <tbody className="w-full">
                 <tr className="border-b-2 border-white">
-                  <th className="text-left text-white">createdAt</th>
-                  <th className="text-left text-white">id</th>
-                  <th className="text-left text-white">name</th>
-                  <th className="text-left text-white">path</th>
-                  <th className="text-left text-white">w</th>
-                  <th className="text-left text-white">h</th>
-                  <th className="text-left text-white">thmb_w</th>
-                  <th className="text-left text-white">thmb_h</th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Upload Date
+                  </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Image Name
+                  </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Src Width (px)
+                  </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Src Height (px)
+                  </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Thmb Width (px)
+                  </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Thmb Height (px)
+                  </th>
                 </tr>
                 {images?.map((img) => {
                   return (
-                    <tr className="border-b-2 border-white" key={img.id}>
+                    <tr className="" key={img.id}>
                       <td className="py-2 text-white">
                         {img.createdAt.toDateString()}
                       </td>
-                      <td className="text-white">{img.id}</td>
-                      <td className="text-white">{img.name}</td>
-                      <td className="text-white">{img.path}</td>
-                      <td className="text-white">{img.w}</td>
-                      <td className="text-white">{img.h}</td>
-                      <td className="text-white">{img.thmb_w}</td>
-                      <td className="text-white">{img.thmb_h}</td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.name}
+                      </td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.w}
+                      </td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.h}
+                      </td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.thmb_w}
+                      </td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.thmb_h}
+                      </td>
                       <td
-                        className="cursor-pointer font-bold text-red-500"
+                        className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
                         onClick={() => deleteById(img.id)}
                       >
                         Delete

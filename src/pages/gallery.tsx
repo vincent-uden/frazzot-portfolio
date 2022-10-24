@@ -61,7 +61,7 @@ const Gallery = () => {
 
   useEffect(() => {
     console.log("Hello", images);
-    if (images != null && imageTiling != []) {
+    if (images != null && imageTiling.length > 0) {
       setImageTiling(tileImages(images, imgHolderRef, gap));
     }
   }, [images]);
