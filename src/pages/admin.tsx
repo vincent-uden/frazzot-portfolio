@@ -51,6 +51,8 @@ const Admin = () => {
       } else {
         setJwt(token);
         cookies.set("session_token", token);
+
+        refetch();
       }
     },
   });
@@ -85,6 +87,7 @@ const Admin = () => {
             chunkId,
             chunkAmount,
             cuid: imageCuid,
+            token: jwt,
           }),
         })
           .then((res) => res.json())

@@ -4,6 +4,11 @@ import { EmailError } from "../../utils/errortypes";
 import { createRouter } from "./context";
 import * as jwt from "jsonwebtoken";
 
+export interface AuthJwt {
+  authLevel: number,
+  iat: number,
+};
+
 export const adminRouter = createRouter().mutation("submitLogin", {
   input: z.object({
     name: z.string(),
@@ -28,6 +33,15 @@ export const adminRouter = createRouter().mutation("submitLogin", {
         if (await argon2.verify(user.hash, input.password)) {
           console.log(process.env.SHA_SECRET);
           token = jwt.sign({ authLevel: 0 }, process.env.SHA_SECRET!!);
+
+          let expires = new Date();
+          expires.setHours(expires.getHours() + 2);
+          await ctx.prisma.sessionToken.create({
+            data: {
+              token,
+              expires,
+            },
+          });
         } else {
           errors.push(EmailError.IncorrectUserDetails);
         }

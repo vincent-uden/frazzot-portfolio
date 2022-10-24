@@ -76,3 +76,9 @@ model AdminPassword {
     name String @unique
     hash String
 }
+
+model SessionToken {
+    id String @id @default(cuid())
+    token String @unique
+    expires DateTime @default(now())
+}
