@@ -6,19 +6,24 @@ interface Props {
   onClick: () => void;
 }
 
-const MenuPageItem = ({color, children, onClick}: Props) => {
+const MenuPageItem = ({ color, children, onClick }: Props) => {
   return (
-    <div className="flex-grow hover:translate-x-6 transition-transform ease-[cubic-bezier(.37,.01,.23,1.8)] duration-300" onClick={onClick}>
-      <h1 className={`${color} font-stretch text-6xl relative top-1/2 -translate-y-1/2`}>
-        { children }
+    <div
+      className="flex-grow transition-transform duration-300 ease-[cubic-bezier(.37,.01,.23,1.8)] hover:translate-x-6"
+      onClick={onClick}
+    >
+      <h1
+        className={`${color} relative top-1/2 -translate-y-1/2 font-stretch text-6xl`}
+      >
+        {children}
       </h1>
     </div>
-  )
+  );
 };
 
 MenuPageItem.defaultProps = {
   color: "text-inherit",
   onClick: () => {},
-}
+};
 
 export default MenuPageItem;

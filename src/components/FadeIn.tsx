@@ -1,15 +1,11 @@
-import { ReactNode } from "react"
+import { ReactNode } from "react";
 
 interface Props {
-    children: ReactNode
+  children: ReactNode;
 }
 
-const FadeIn = ({children}: Props) => {
-  return (
-    <div className="animate-fadein">
-        {children}
-    </div>
-  )
-}
+const FadeIn = ({ children }: Props) => {
+  return <div className="animate-fadein">{children}</div>;
+};
 
-export default FadeIn
+export default FadeIn;

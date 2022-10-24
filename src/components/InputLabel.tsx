@@ -19,7 +19,9 @@ const InputLabel = ({
   errorCodes,
   errors,
 }: Props) => {
-  let activeErrors = errors.map((e) => errorCodes.find((ec) => ec.code == e)?.message || "");
+  let activeErrors = errors.map(
+    (e) => errorCodes.find((ec) => ec.code == e)?.message || ""
+  );
   return (
     <div className={`mt-${marginTop} h-${height}`}>
       <div className={`angry-shake`}>
@@ -30,7 +32,7 @@ const InputLabel = ({
           {text}
         </label>
         <p
-          className={`float-right label text-base opacity-70 ${
+          className={`label float-right text-base opacity-70 ${
             color ? "text-" + color : ""
           }`}
         >

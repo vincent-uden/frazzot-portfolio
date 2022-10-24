@@ -10,5 +10,5 @@ export enum EmailError {
   EmptyCharNames,
   EmptyCharDesc,
   EmptyPassword,
-  IncorrectUserDetails
+  IncorrectUserDetails,
 }

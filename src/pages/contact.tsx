@@ -31,14 +31,14 @@ const Contact = () => {
 
   return (
     <>
-      <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-64"></div>
-        <h1 className="font-stretch text-center text-pastelpink text-6xl pl-4">
+        <h1 className="pl-4 text-center font-stretch text-6xl text-pastelpink">
           CONTACT
         </h1>
-        <div className="bg-holo bg-cover mt-8 mb-16 py-2">
-          <h2 className="font-stretch text-center text-greyblack text-3xl">
+        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
+          <h2 className="text-center font-stretch text-3xl text-greyblack">
             <span>HOW TO CONTACT AND CON</span>{" "}
             <span className="relative -left-4">NECT WITH ME_</span>
           </h2>
@@ -46,54 +46,54 @@ const Contact = () => {
       </div>
       <div className="flex flex-row px-48">
         <aside>
-          <div className="border-2 p-12 border-lilac">
-            <h2 className="font-stretch text-2xl text-pastelpink no-ligature">
+          <div className="border-2 border-lilac p-12">
+            <h2 className="no-ligature font-stretch text-2xl text-pastelpink">
               COLLABORATION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose font-thin text-pastelpink text-lg">
+            <p className="font-cocogoose text-lg font-thin text-pastelpink">
               IF YOU WISH TO COLLABORATE WITH ME. REACH OUT TO ME THROUGH EMAIL
               OR DISCORD
             </p>
           </div>
-          <div className="border-2 p-12 my-8 border-sky">
-            <h2 className="font-stretch text-2xl text-pastelpink no-ligature">
+          <div className="my-8 border-2 border-sky p-12">
+            <h2 className="no-ligature font-stretch text-2xl text-pastelpink">
               ORDER PHYSICAL COPIES ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose font-thin text-pastelpink text-lg">
+            <p className="font-cocogoose text-lg font-thin text-pastelpink">
               SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL
               COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE
               INTERESTED.
             </p>
             <div className="h-4"></div>
-            <p className="font-cocogoose font-thin text-pastelpink text-lg">
+            <p className="font-cocogoose text-lg font-thin text-pastelpink">
               IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
           </div>
-          <div className="border-2 p-12 border-mint">
+          <div className="border-2 border-mint p-12">
             <h2 className="font-stretch text-2xl text-pastelpink">
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose font-thin text-pastelpink text-lg">
+            <p className="font-cocogoose text-lg font-thin text-pastelpink">
               READ MORE ABOUT MY COMMISSIONS ON THE{" "}
               <Link href="/commissions">
-                <span className="font-cocogoose font-normal cursor-pointer">
+                <span className="cursor-pointer font-cocogoose font-normal">
                   COMMISSION PAGE.
                 </span>
               </Link>
             </p>
           </div>
         </aside>
-        <div className="bg-holo w-8 mx-8"></div>
+        <div className="mx-8 w-8 bg-holo"></div>
         <aside className="flex flex-col">
-          <h2 className="font-stretch text-2xl text-pastelpink w-[20em]">
+          <h2 className="w-[20em] font-stretch text-2xl text-pastelpink">
             EMAIL FORM
           </h2>
           <div className="h-8"></div>
-          <div className="flex flex-col justify-between flex-grow">
+          <div className="flex flex-grow flex-col justify-between">
             <div>
               <InputLabel
                 htmlFor="name"
@@ -105,7 +105,7 @@ const Contact = () => {
                 ]}
               />
               <input
-                className="text-input focus:border-lilac transition-colors"
+                className="text-input transition-colors focus:border-lilac"
                 type="text"
                 name=""
                 id="name"
@@ -121,11 +121,14 @@ const Contact = () => {
                 errors={errors}
                 errorCodes={[
                   { code: EmailError.EmptyEmail, message: "Can't be empty" },
-                  { code: EmailError.InvalidEmail, message: "Invalid email address" },
+                  {
+                    code: EmailError.InvalidEmail,
+                    message: "Invalid email address",
+                  },
                 ]}
               />
               <input
-                className="text-input focus:border-lilac transition-colors"
+                className="text-input transition-colors focus:border-lilac"
                 type="email"
                 name=""
                 id="email"
@@ -144,7 +147,7 @@ const Contact = () => {
                 ]}
               />
               <textarea
-                className="text-input border-2 p-2 resize-none text-base placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac transition-colors"
+                className="text-input resize-none border-2 p-2 text-base transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac"
                 name=""
                 id="subject"
                 rows={8}
@@ -163,12 +166,12 @@ const Contact = () => {
         </aside>
       </div>
       <div className="h-40"></div>
-      <div className="w-full flex flex-row">
+      <div className="flex w-full flex-row">
         <aside className="bg-pastelpink px-24 py-12">
           <img src="/DiscordBrand.svg" alt="" />
         </aside>
-        <aside className="bg-holo bg-cover flex-grow relative shadow-left">
-          <h2 className="absolute w-full font-stretch text-center text-greyblack text-3xl no-ligature top-1/2 -translate-y-1/2 transition-transform hover:scale-110 cursor-pointer py-4">
+        <aside className="relative flex-grow bg-holo bg-cover shadow-left">
+          <h2 className="no-ligature absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-3xl text-greyblack transition-transform hover:scale-110">
             <Link href={"https://discord.gg/MAQm86a3Xw"}>
               JOIN MY COMMUNITY HERE &gt;
             </Link>
@@ -176,7 +179,7 @@ const Contact = () => {
         </aside>
       </div>
 
-      <div className="w-screen px-[20%] h-72 pt-12 bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x bg-bottom overflow-y-hidden"></div>
+      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x px-[20%] pt-12"></div>
     </>
   );
 };

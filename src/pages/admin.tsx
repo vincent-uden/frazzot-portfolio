@@ -129,9 +129,9 @@ const Admin = () => {
   return (
     <>
       <div className="h-16"></div>
-      <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-16"></div>
-        <div className="flex flex-col justify-around items-center h-full">
+        <div className="flex h-full flex-col items-center justify-around">
           <InputLabel
             htmlFor="name"
             text="YOUR NAME"
@@ -142,7 +142,7 @@ const Admin = () => {
             ]}
           />
           <input
-            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle w-64"
+            className="text-input w-64 border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
             type="text"
             name="name"
             id="name"
@@ -159,7 +159,7 @@ const Admin = () => {
             ]}
           />
           <input
-            className="text-input text-periwinkle-light focus:border-lilac transition-colors border-periwinkle w-64"
+            className="text-input w-64 border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
             type="password"
             name="password"
             id="password"
@@ -179,7 +179,7 @@ const Admin = () => {
             }
           />
           <button
-            className="text-periwinkle-light font-cocogoose font-thin bg-transparent p-5 rounded-xl border-4 border-periwinkle hover:text-slate-900 hover:bg-periwinkle transition-colors w-60 block mt-10"
+            className="mt-10 block w-60 rounded-xl border-4 border-periwinkle bg-transparent p-5 font-cocogoose font-thin text-periwinkle-light transition-colors hover:bg-periwinkle hover:text-slate-900"
             onClick={() => {
               setJwt(null);
               cookies.remove("session_token");
@@ -192,18 +192,18 @@ const Admin = () => {
       {jwt != null && (
         <>
           <div className="h-32"></div>
-          <div className="flex flex-col justify-around items-center h-full">
+          <div className="flex h-full flex-col items-center justify-around">
             <input
               type="text"
               name="newName"
               id="newName"
-              className="block w-80 mb-20 mt-10 bg-transparent border-b-purple-300 border-b-2 text-white text-lg outline-none"
+              className="mb-20 mt-10 block w-80 border-b-2 border-b-purple-300 bg-transparent text-lg text-white outline-none"
               placeholder="Image Name"
               onChange={(e) => setImageName(e.target.value)}
               value={imageName}
             />
             <input
-              className="text-white mb-10"
+              className="mb-10 text-white"
               type="file"
               onChange={(e) => {
                 setUploadData(e.target.files ? e.target.files : new FileList());
@@ -211,34 +211,34 @@ const Admin = () => {
             />
             <div className="relative" ref={uploadDivRef}>
               <button
-                className="text-purple-300 font-bold bg-transparent p-5 rounded-xl border-4 border-purple-300 hover:text-slate-900 hover:bg-purple-300 transition-colors w-60 block mt-10"
+                className="mt-10 block w-60 rounded-xl border-4 border-purple-300 bg-transparent p-5 font-bold text-purple-300 transition-colors hover:bg-purple-300 hover:text-slate-900"
                 onClick={() => bigImage()}
               >
                 Upload Image
               </button>
               <FontAwesomeIcon
-                className="absolute top-1/2 left-full text-green-400 w-10 h-10 mx-4 cursor-pointer opacity-0 transition-opacity"
+                className="absolute top-1/2 left-full mx-4 h-10 w-10 cursor-pointer text-green-400 opacity-0 transition-opacity"
                 icon={faCheck}
               />
             </div>
           </div>
-          <div className="z-10 px-8 mt-8">
+          <div className="z-10 mt-8 px-8">
             <table className="w-full">
               <tbody className="w-full">
                 <tr className="border-b-2 border-white">
-                  <th className="text-white text-left">createdAt</th>
-                  <th className="text-white text-left">id</th>
-                  <th className="text-white text-left">name</th>
-                  <th className="text-white text-left">path</th>
-                  <th className="text-white text-left">w</th>
-                  <th className="text-white text-left">h</th>
-                  <th className="text-white text-left">thmb_w</th>
-                  <th className="text-white text-left">thmb_h</th>
+                  <th className="text-left text-white">createdAt</th>
+                  <th className="text-left text-white">id</th>
+                  <th className="text-left text-white">name</th>
+                  <th className="text-left text-white">path</th>
+                  <th className="text-left text-white">w</th>
+                  <th className="text-left text-white">h</th>
+                  <th className="text-left text-white">thmb_w</th>
+                  <th className="text-left text-white">thmb_h</th>
                 </tr>
                 {images?.map((img) => {
                   return (
                     <tr className="border-b-2 border-white" key={img.id}>
-                      <td className="text-white py-2">
+                      <td className="py-2 text-white">
                         {img.createdAt.toDateString()}
                       </td>
                       <td className="text-white">{img.id}</td>
@@ -249,7 +249,7 @@ const Admin = () => {
                       <td className="text-white">{img.thmb_w}</td>
                       <td className="text-white">{img.thmb_h}</td>
                       <td
-                        className="text-red-500 font-bold cursor-pointer"
+                        className="cursor-pointer font-bold text-red-500"
                         onClick={() => deleteById(img.id)}
                       >
                         Delete

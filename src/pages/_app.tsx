@@ -31,9 +31,9 @@ const MyApp = ({
 
   return (
     <SessionProvider session={session}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </SessionProvider>
   );
 };

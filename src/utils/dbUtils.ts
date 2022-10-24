@@ -84,8 +84,8 @@ inquirer
             await prisma.adminPassword.delete({
               where: {
                 name: answers.chosenUsers[i],
-              }
-            })
+              },
+            });
           }
         });
     } else if (actionAnswer.action === actions.deleteAll) {

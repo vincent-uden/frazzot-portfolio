@@ -43,7 +43,7 @@ async function getServerSession(
   console.log("GETTING SERVER SESSION");
   console.log(req.headers);
 
-  req
+  req;
 
   return {
     token: "",

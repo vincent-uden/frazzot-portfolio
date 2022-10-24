@@ -1,17 +1,30 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 
-import Image from 'next/image';
-import { trpc } from '../utils/trpc';
+import Image from "next/image";
+import { trpc } from "../utils/trpc";
 
-import { MutableRefObject, ReactElement, ReactNode, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { GalleryImage } from '@prisma/client';
+import {
+  MutableRefObject,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { GalleryImage } from "@prisma/client";
 
 type ImageRow = {
-  indices: number[],
-  scale: number,
+  indices: number[];
+  scale: number;
 };
 
-function tileImages(imgs: GalleryImage[], cont: MutableRefObject<HTMLDivElement | null>, gap: number): ImageRow[] {
+function tileImages(
+  imgs: GalleryImage[],
+  cont: MutableRefObject<HTMLDivElement | null>,
+  gap: number
+): ImageRow[] {
   let rows = [];
   let i = 0;
   let maxHeight = 200;
@@ -34,7 +47,7 @@ function tileImages(imgs: GalleryImage[], cont: MutableRefObject<HTMLDivElement 
     row.scale = Math.min((maxW - (row.indices.length - 1) * gap) / w, 1);
     rows.push(row);
 
-    console.log(w, maxW, row.scale, w * row.scale, gap)
+    console.log(w, maxW, row.scale, w * row.scale, gap);
   }
 
   return rows;
@@ -51,20 +64,30 @@ const Gallery = () => {
     if (images != null && imageTiling != []) {
       setImageTiling(tileImages(images, imgHolderRef, gap));
     }
-  }, [images])
+  }, [images]);
 
   useEffect(() => {
     if (imgHolderRef.current != null) {
       for (let i = 0; i < imgHolderRef.current?.children.length; i++) {
         if (imageTiling != null && imageTiling[i] != null) {
-          if (imgHolderRef.current.children[i]?.classList.contains("gallery-row")) {
-            (imgHolderRef.current.children[i] as HTMLDivElement).style.height = `${(images?.at(imageTiling[i]?.indices[0] ?? 0)?.thmb_h ?? 0) * (imageTiling[i]?.scale ?? 0) + gap}px`;
-            (imgHolderRef.current.children[i] as HTMLDivElement).style.width = `${imgHolderRef.current.offsetWidth + 5}px`;
+          if (
+            imgHolderRef.current.children[i]?.classList.contains("gallery-row")
+          ) {
+            (
+              imgHolderRef.current.children[i] as HTMLDivElement
+            ).style.height = `${
+              (images?.at(imageTiling[i]?.indices[0] ?? 0)?.thmb_h ?? 0) *
+                (imageTiling[i]?.scale ?? 0) +
+              gap
+            }px`;
+            (
+              imgHolderRef.current.children[i] as HTMLDivElement
+            ).style.width = `${imgHolderRef.current.offsetWidth + 5}px`;
           }
         }
       }
     }
-  }, [images, imageTiling, imgHolderRef])
+  }, [images, imageTiling, imgHolderRef]);
 
   useEffect(() => {
     let doit: NodeJS.Timeout | undefined;
@@ -78,52 +101,65 @@ const Gallery = () => {
     }
 
     window.addEventListener("resize", handleResize);
-  })
+  });
 
   return (
     <>
-      <div className="w-screen bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x overflow-y-hidden">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
-        <h1 className='font-stretch text-center text-periwinkle text-6xl pl-4'>
+        <h1 className="pl-4 text-center font-stretch text-6xl text-periwinkle">
           <span>GAL</span> <span className="relative -left-8">LERY</span>
         </h1>
-        <div className="bg-holo bg-cover mt-8 mb-16 py-2">
-          <h2 className='font-stretch text-center text-greyblack text-3xl'>A SELECTION OF MY DIGITAL ARTWORKS_</h2>
+        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
+          <h2 className="text-center font-stretch text-3xl text-greyblack">
+            A SELECTION OF MY DIGITAL ARTWORKS_
+          </h2>
         </div>
       </div>
-      <div className='flex flex-col items-center w-full'>
+      <div className="flex w-full flex-col items-center">
         <div className="w-[80%] overflow-clip" ref={imgHolderRef}>
-          {
-            imageTiling.map((row, r) => {
-              return (
-                <div className="gallery-row" key={`row-${r}`}>
-                  {row.indices.map((i, n) => {
-                    return (
-                      <div className='inline-block h-full' key={`space-${n}`}>
-                        <div className={`inline-block`} style={{ width: `${n == 0 ? 0 : gap}px`, height: "100%" }}></div>
-                        <div className="inline-block relative m-0 p-0 top-0 h-full" key={n}>
-                          <Image
-                            src={`/thumbnail/${images?.at(i)?.path}`}
-                            width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
-                            height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
-                          />
-                          <div className="absolute left-0 top-0 w-full h-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 hover:opacity-80 transition-opacity gallery-overlay" style={{transform: `translateY(-${gap}px)`}}>
-                            <p className="absolute bottom-4 left-4 text-white text-lg">{images?.at(i)?.name}</p>
-                          </div>
+          {imageTiling.map((row, r) => {
+            return (
+              <div className="gallery-row" key={`row-${r}`}>
+                {row.indices.map((i, n) => {
+                  return (
+                    <div className="inline-block h-full" key={`space-${n}`}>
+                      <div
+                        className={`inline-block`}
+                        style={{
+                          width: `${n == 0 ? 0 : gap}px`,
+                          height: "100%",
+                        }}
+                      ></div>
+                      <div
+                        className="relative top-0 m-0 inline-block h-full p-0"
+                        key={n}
+                      >
+                        <Image
+                          src={`/thumbnail/${images?.at(i)?.path}`}
+                          width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
+                          height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
+                        />
+                        <div
+                          className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
+                          style={{ transform: `translateY(-${gap}px)` }}
+                        >
+                          <p className="absolute bottom-4 left-4 text-lg text-white">
+                            {images?.at(i)?.name}
+                          </p>
                         </div>
                       </div>
-                    )
-                  })}
-                </div>
-              )
-            })
-          }
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className="h-40">
-      </div>
+      <div className="h-40"></div>
     </>
-  )
-}
+  );
+};
 
-export default Gallery
+export default Gallery;

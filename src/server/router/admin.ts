@@ -5,9 +5,9 @@ import { createRouter } from "./context";
 import * as jwt from "jsonwebtoken";
 
 export interface AuthJwt {
-  authLevel: number,
-  iat: number,
-};
+  authLevel: number;
+  iat: number;
+}
 
 export const adminRouter = createRouter().mutation("submitLogin", {
   input: z.object({

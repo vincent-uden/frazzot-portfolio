@@ -44,7 +44,7 @@ const Layout = ({ children }: Props) => {
 
   return (
     <>
-      <div className="main flex flex-col justify-around m-0 p-0 min-h-screen ">
+      <div className="main m-0 flex min-h-screen flex-col justify-around p-0 ">
         <div className="flex-grow justify-center bg-greyblack">
           <div className="z-10 flex flex-col justify-between overflow-x-hidden overflow-y-hidden">
             {children}
@@ -53,7 +53,7 @@ const Layout = ({ children }: Props) => {
       </div>
       <div className="bg-holo bg-cover">
         <div className="h-24"></div>
-        <div className="flex flex-row menu-socials justify-center">
+        <div className="menu-socials flex flex-row justify-center">
           <InstagramIcon color="greyblack" size="10" />
           <YoutubeIcon color="greyblack" size="10" />
           <PatreonIcon color="greyblack" size="10" />
@@ -63,7 +63,7 @@ const Layout = ({ children }: Props) => {
         </div>
 
         <div className="h-8"></div>
-        <p className="text-center text-greyblack font-cocogoose font-thin text-xl opacity-60">
+        <p className="text-center font-cocogoose text-xl font-thin text-greyblack">
           © 2022 FRAZZOT
         </p>
         <div className="h-16"></div>
@@ -72,7 +72,7 @@ const Layout = ({ children }: Props) => {
       <Link href="/">
         <a>
           <h1
-            className={`fixed top-0 left-4 h-16 align-middle font-stretch text-4xl text-greyblack leading-[4rem] z-50 ${
+            className={`fixed top-0 left-4 z-50 h-16 align-middle font-stretch text-4xl leading-[4rem] text-greyblack ${
               menuOpen ? "opacity-0" : "opacity-100"
             } transition-opacity`}
           >
@@ -86,16 +86,16 @@ const Layout = ({ children }: Props) => {
         toggled={menuOpen}
       />
       <div
-        className={`fixed w-screen h-screen bg-holo bg-cover top-0 left-0 z-40 shadow-lg ${
+        className={`fixed top-0 left-0 z-40 h-screen w-screen bg-holo bg-cover shadow-lg ${
           menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"
         } transition-transform duration-[400ms] ease-in-out`}
       ></div>
       <div
         className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${
           greyMenuOpen ? "" : "-translate-y-[100vh]"
-        } transition-transform duration-[400ms] z-50`}
+        } z-50 transition-transform duration-[400ms]`}
       >
-        <div className="flex flex-col justify-between h-full p-20">
+        <div className="flex h-full flex-col justify-between p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
               <a>
@@ -126,7 +126,7 @@ const Layout = ({ children }: Props) => {
             SKETCHBOOK
           </MenuPageItem>
 
-          <div className="mt-20 flex flex-row menu-socials">
+          <div className="menu-socials mt-20 flex flex-row">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
