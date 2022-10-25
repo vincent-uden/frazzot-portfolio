@@ -1,4 +1,3 @@
-import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
 import Image from "next/image";
 import Carousel from "../components/Carousel";
 
