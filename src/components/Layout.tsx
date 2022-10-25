@@ -123,7 +123,7 @@ const Layout = ({ children }: Props) => {
             <Link href="/contact">CONTACT</Link>
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
-            SKETCHBOOK
+            <Link href="/sketchbook">SKETCHBOOK</Link>
           </MenuPageItem>
 
           <div className="menu-socials mt-20 flex flex-row">

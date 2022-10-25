@@ -101,3 +101,77 @@
     background: transparent;
   }
 }
+
+.carousel-item {
+  opacity: 0;
+  transition: 0.2s ease-in-out opacity;
+
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  display: none;
+}
+
+.carousel-item.is-active p {
+  opacity: 1;
+}
+
+.carousel-item img {
+  -webkit-box-shadow: 0px 12px 15px -3px rgba(0, 0, 0, 1);
+  box-shadow: 0px 12px 15px -3px rgba(0, 0, 0, 1);
+
+  transition: 0.2s ease-in-out transform;
+}
+
+.carousel-item.is-active, .carousel-item.is-prev, .carousel-item.is-next {
+  transition: 0.2s ease-in-out transform;
+}
+
+.carousel-item.is-active {
+  opacity: 1;
+  display: inline;
+
+  left: 50%;
+  z-index: 10;
+
+  transform: translateX(-50%);
+}
+
+.carousel-item.is-active img {
+  transform: scale(125%);
+}
+
+.carousel-item.is-prev {
+  opacity: 0.6;
+  display: inline;
+  left: 50%;
+  z-index: 1;
+
+  transform: translateX(-125%);
+}
+
+.carousel-item.is-next {
+  opacity: 0.6;
+  display: inline;
+  left: 50%;
+  z-index: 1;
+
+  transform: translateX(25%);
+}
+
+div.splide__arrows {
+  position: absolute;
+  width: 100%;
+
+  z-index: 20;
+}
+
+.splide__arrow--prev {
+  position: absolute;
+  left: 0;
+}
+
+.splide__arrow--next {
+  position: absolute;
+  right: 0;
+}
