@@ -13,6 +13,9 @@ const actions = {
   listUsers: "List admin users",
   deleteUser: "Delete an admin user",
   deleteAll: "Delete ALL admin users",
+  addCategory: "Add an image category",
+  deleteCategory: "Delete an image category",
+  listCategories: "List image categories",
 };
 
 inquirer
@@ -90,5 +93,51 @@ inquirer
         });
     } else if (actionAnswer.action === actions.deleteAll) {
       await prisma.adminPassword.deleteMany({});
+    } else if (actionAnswer.action === actions.addCategory) {
+      inquirer
+        .prompt([
+          {
+            name: "name",
+            message: "Enter the categorys name",
+            type: "input",
+          },
+        ])
+        .then(async (answers) => {
+          if (answers.name != null && answers.name != "") {
+            const newCategory = {
+              name: answers.name
+            };
+
+            await prisma.imageCategory.create({ data: newCategory });
+          } else {
+            console.log("Please enter an actual name")
+          }
+        });
+    } else if (actionAnswer.action === actions.deleteCategory) {
+      let categories = await prisma.imageCategory.findMany();
+      let options = [];
+      for (let i = 0; i < categories.length; i++) {
+        options.push(categories[i]!!.name);
+      }
+      inquirer.prompt([
+        {
+          name: "chosenCategories",
+          message: "Which category/categories should be deleted?",
+          type: "checkbox",
+          choices: options,
+        }
+      ])
+      .then(async (answers) => {
+        for (let i = 0; i < answers.chosenCategories.length; i++) {
+          await prisma.imageCategory.delete({
+            where: {
+              name: answers.chosenCategories[i],
+            }
+          })
+        }
+      })
+
+    } else if (actionAnswer.action === actions.listCategories) {
+      console.log(await prisma.imageCategory.findMany());
     }
   });

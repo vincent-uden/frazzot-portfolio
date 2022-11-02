@@ -61,21 +61,21 @@ model VerificationToken {
 }
 
 model GalleryImage {
-  id         String        @id @default(cuid())
+  id         String         @id @default(cuid())
   name       String
   path       String
   w          Int
   h          Int
   thmb_w     Int
   thmb_h     Int
-  createdAt  DateTime      @default(now())
-  categoryId String
-  category   ImageCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt  DateTime       @default(now())
+  categoryId String?
+  category   ImageCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model ImageCategory {
   id           String         @id @default(cuid())
-  name         String
+  name         String         @unique
   GalleryImage GalleryImage[]
 }
 
