@@ -16,6 +16,7 @@ const actions = {
   addCategory: "Add an image category",
   deleteCategory: "Delete an image category",
   listCategories: "List image categories",
+  setCategories: "Set all null-categories to gallery",
 };
 
 inquirer
@@ -139,5 +140,15 @@ inquirer
 
     } else if (actionAnswer.action === actions.listCategories) {
       console.log(await prisma.imageCategory.findMany());
+    } else if (actionAnswer.action === actions.setCategories) {
+      let gallery = await prisma.imageCategory.findUnique({where: {name: "Gallery"}});
+      await prisma.galleryImage.updateMany({
+        where: {
+          categoryId: null,
+        },
+        data: {
+          categoryId: gallery!!.id,
+        }
+      })
     }
   });

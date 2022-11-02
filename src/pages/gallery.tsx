@@ -54,14 +54,13 @@ function tileImages(
 }
 
 const Gallery = () => {
-  const { data: images, refetch } = trpc.useQuery(["gallery.getAll"]);
+  const { data: images, refetch } = trpc.useQuery(["gallery.getImages", {categoryName: "Gallery"}]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const gap = 8;
 
   useEffect(() => {
-    console.log("Hello", images);
-    if (images != null && imageTiling.length > 0) {
+    if (images != null ) {
       setImageTiling(tileImages(images, imgHolderRef, gap));
     }
   }, [images]);

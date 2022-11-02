@@ -8,12 +8,44 @@ import { createRouter } from "./context";
 export const galleryRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.prisma.galleryImage.findMany({include: {category: true}});
+      return await ctx.prisma.galleryImage.findMany({
+        include: { category: true },
+      });
+    },
+  })
+  .query("getImages", {
+    input: z.object({
+      categoryName: z.string(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      let category = await ctx.prisma.imageCategory.findUnique({
+        where: {
+          name: input.categoryName,
+        }
+      })
+      return await ctx.prisma.galleryImage.findMany({
+        where: {
+          categoryId: category!!.id,
+        },
+        include: {
+          category: true,
+        },
+      });
     },
   })
   .query("getAllCategories", {
     async resolve({ ctx }) {
       return await ctx.prisma.imageCategory.findMany();
+    },
+  })
+  .query("getCategory", {
+    input: z.object({
+      name: z.string(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      return await ctx.prisma.imageCategory.findUnique({
+        where: { name: input.name },
+      });
     },
   })
   .middleware(async ({ ctx, next }) => {
