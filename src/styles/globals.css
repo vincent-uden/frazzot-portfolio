@@ -107,7 +107,6 @@
   transition: 0.2s ease-in-out opacity;
 
   position: absolute;
-  pointer-events: none;
   user-select: none;
   display: none;
 }
@@ -120,7 +119,7 @@
   -webkit-box-shadow: 0px 12px 15px -3px rgba(0, 0, 0, 1);
   box-shadow: 0px 12px 15px -3px rgba(0, 0, 0, 1);
 
-  transition: 0.2s ease-in-out transform;
+  /*transition: 0.2s ease-in-out transform;*/
 }
 
 .carousel-item.is-active, .carousel-item.is-prev, .carousel-item.is-next {
@@ -134,6 +133,7 @@
   left: 50%;
   z-index: 10;
 
+  perspective: 50rem;
   transform: translateX(-50%);
 }
 

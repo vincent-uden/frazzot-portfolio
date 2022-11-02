@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +10,21 @@ interface Props {
 
 const Carousel = ({ imgPaths, imgDescs }: Props) => {
   const [activeIndex, setActiveIndex] = useState<number>(1);
+  const activeRef = useRef<HTMLImageElement>(null);
+
+  const [xRotation, setXRotation] = useState<number>(0);
+  const [yRotation, setYRotation] = useState<number>(0);
+  const [transitionActive, setTransitionActive] = useState<boolean>(false);
+
+  const rotateActive = (event: React.MouseEvent<Element, MouseEvent>) => {
+    const img = activeRef.current!;
+    const imgRect = (event.target as HTMLElement).getBoundingClientRect();
+
+    const normalizedX = (event.clientX - imgRect.x) / imgRect.width - 0.5;
+    const normalizedY = (event.clientY - imgRect.y) / imgRect.height - 0.5;
+    setXRotation(normalizedY * -7);
+    setYRotation(normalizedX * 7);
+  };
 
   return (
     <>
@@ -42,7 +57,38 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
               }`}
               key={i}
             >
-              <img src={path} alt="" className="inline h-[30rem]" />
+              <img
+                src={path}
+                alt=""
+                className="inline h-[30rem]"
+                ref={activeRef}
+                style={{
+                  transform: `${
+                    i === activeIndex ? "scale(125%)" : ""
+                  } rotateX(${i === activeIndex ? xRotation : 0}deg) rotateY(${
+                    i === activeIndex ? yRotation : 0
+                  }deg)`,
+                  transition: transitionActive
+                    ? "0.1s ease-in-out transform"
+                    : "",
+                }}
+                onMouseMove={(e) => {
+                  if (!transitionActive) {
+                    rotateActive(e);
+                  }
+                }}
+                onMouseEnter={(e) => {
+                  rotateActive(e);
+                  setTimeout(() => {
+                    setTransitionActive(false);
+                  }, 100);
+                }}
+                onMouseLeave={(e) => {
+                  setTransitionActive(true);
+                  setXRotation(0);
+                  setYRotation(0);
+                }}
+              />
               <p className="mt-28 text-center font-cocogoose text-xl font-thin text-yellowpeach opacity-0 transition-opacity">
                 {imgDescs[i]}
               </p>
