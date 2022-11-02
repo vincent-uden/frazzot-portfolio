@@ -8,7 +8,12 @@ import { createRouter } from "./context";
 export const galleryRouter = createRouter()
   .query("getAll", {
     async resolve({ ctx }) {
-      return await ctx.prisma.galleryImage.findMany();
+      return await ctx.prisma.galleryImage.findMany({include: {category: true}});
+    },
+  })
+  .query("getAllCategories", {
+    async resolve({ ctx }) {
+      return await ctx.prisma.imageCategory.findMany();
     },
   })
   .middleware(async ({ ctx, next }) => {
@@ -37,6 +42,7 @@ export const galleryRouter = createRouter()
       h: z.number(),
       thmb_w: z.number(),
       thmb_h: z.number(),
+      categoryId: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
       return await ctx.prisma.galleryImage.create({
@@ -47,6 +53,7 @@ export const galleryRouter = createRouter()
           h: input.h,
           thmb_w: input.thmb_w,
           thmb_h: input.thmb_h,
+          categoryId: input.categoryId,
         },
       });
     },

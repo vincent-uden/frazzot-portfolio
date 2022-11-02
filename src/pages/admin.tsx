@@ -11,6 +11,7 @@ import SubmitButton from "../components/SubmitButton";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [uploadData, setUploadData] = useState<FileList | null>();
   const [jwt, setJwt] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
@@ -22,6 +23,7 @@ const Admin = () => {
   const cookies = new Cookies();
 
   const { data: images, refetch } = trpc.useQuery(["gallery.getAll"]);
+  const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
 
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
     onSuccess: () => refetch(),
@@ -101,6 +103,7 @@ const Admin = () => {
                 h: msg.h,
                 thmb_w: msg.thmb_w,
                 thmb_h: msg.thmb_h,
+                categoryId: categories?.at(selectedCategory)?.id,
               });
             }
           });
@@ -200,6 +203,24 @@ const Admin = () => {
                   );
                 }}
               />
+              <h2 className="font-cocogoose text-2xl font-thin text-periwinkle-light">
+                SELECT A CATEGORY
+              </h2>
+              <ul className="border-2 border-periwinkle p-8">
+                {categories?.map((category, i) => {
+                  return (
+                    <li
+                      key={category.id}
+                      className={`cursor-pointer font-cocogoose text-lg font-thin text-mint transition-opacity ${
+                        i === selectedCategory ? "opacity-100" : "opacity-40"
+                      }`}
+                      onClick={(e) => setSelectedCategory(i)}
+                    >
+                      {category.name}
+                    </li>
+                  );
+                })}
+              </ul>
               <div className="h-8"></div>
               <SubmitButton
                 color="mint"
@@ -241,6 +262,9 @@ const Admin = () => {
                   <th className="pr-4 text-left font-cocogoose font-light text-white">
                     Thmb Height (px)
                   </th>
+                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                    Category
+                  </th>
                 </tr>
                 {images?.map((img) => {
                   return (
@@ -262,6 +286,9 @@ const Admin = () => {
                       </td>
                       <td className="font-neuo font-thin text-white">
                         {img.thmb_h}
+                      </td>
+                      <td className="font-neuo font-thin text-white">
+                        {img.category?.name}
                       </td>
                       <td
                         className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
