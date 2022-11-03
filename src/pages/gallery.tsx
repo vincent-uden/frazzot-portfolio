@@ -15,12 +15,12 @@ import {
 } from "react";
 import { GalleryImage } from "@prisma/client";
 
-type ImageRow = {
+export type ImageRow = {
   indices: number[];
   scale: number;
 };
 
-function tileImages(
+export function tileImages(
   imgs: GalleryImage[],
   cont: MutableRefObject<HTMLDivElement | null>,
   gap: number
