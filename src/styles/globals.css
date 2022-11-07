@@ -122,7 +122,9 @@
   /*transition: 0.2s ease-in-out transform;*/
 }
 
-.carousel-item.is-active, .carousel-item.is-prev, .carousel-item.is-next {
+.carousel-item.is-active,
+.carousel-item.is-prev,
+.carousel-item.is-next {
   transition: 0.2s ease-in-out transform;
 }
 

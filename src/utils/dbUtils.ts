@@ -106,12 +106,12 @@ inquirer
         .then(async (answers) => {
           if (answers.name != null && answers.name != "") {
             const newCategory = {
-              name: answers.name
+              name: answers.name,
             };
 
             await prisma.imageCategory.create({ data: newCategory });
           } else {
-            console.log("Please enter an actual name")
+            console.log("Please enter an actual name");
           }
         });
     } else if (actionAnswer.action === actions.deleteCategory) {
@@ -120,35 +120,37 @@ inquirer
       for (let i = 0; i < categories.length; i++) {
         options.push(categories[i]!!.name);
       }
-      inquirer.prompt([
-        {
-          name: "chosenCategories",
-          message: "Which category/categories should be deleted?",
-          type: "checkbox",
-          choices: options,
-        }
-      ])
-      .then(async (answers) => {
-        for (let i = 0; i < answers.chosenCategories.length; i++) {
-          await prisma.imageCategory.delete({
-            where: {
-              name: answers.chosenCategories[i],
-            }
-          })
-        }
-      })
-
+      inquirer
+        .prompt([
+          {
+            name: "chosenCategories",
+            message: "Which category/categories should be deleted?",
+            type: "checkbox",
+            choices: options,
+          },
+        ])
+        .then(async (answers) => {
+          for (let i = 0; i < answers.chosenCategories.length; i++) {
+            await prisma.imageCategory.delete({
+              where: {
+                name: answers.chosenCategories[i],
+              },
+            });
+          }
+        });
     } else if (actionAnswer.action === actions.listCategories) {
       console.log(await prisma.imageCategory.findMany());
     } else if (actionAnswer.action === actions.setCategories) {
-      let gallery = await prisma.imageCategory.findUnique({where: {name: "Gallery"}});
+      let gallery = await prisma.imageCategory.findUnique({
+        where: { name: "Gallery" },
+      });
       await prisma.galleryImage.updateMany({
         where: {
           categoryId: null,
         },
         data: {
           categoryId: gallery!!.id,
-        }
-      })
+        },
+      });
     }
   });
