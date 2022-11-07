@@ -56,9 +56,17 @@ async function saveImage(
     appendFileSync(`./public/gallery/${pi.fileName}`, c.data, "base64");
   });
 
-  const thumbnail = await sharp(`./public/gallery/${pi.fileName}`)
+  await sharp(`./public/gallery/${pi.fileName}`)
     .resize(null, 200)
     .toFile(`./public/thumbnail/${pi.fileName}`);
+
+  await sharp(`./public/gallery/${pi.fileName}`)
+    .resize(null, 400)
+    .toFile(`./public/thumbnail_md/${pi.fileName}`);
+
+  await sharp(`./public/gallery/${pi.fileName}`)
+    .resize(null, 1000)
+    .toFile(`./public/thumbnail_lg/${pi.fileName}`);
 
   const img = await sharp(`./public/gallery/${pi.fileName}`).metadata();
   const thmb = await sharp(`./public/thumbnail/${pi.fileName}`).metadata();

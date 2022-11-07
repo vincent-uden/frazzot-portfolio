@@ -143,6 +143,7 @@ const Sketchbook = () => {
       <Carousel
         imgPaths={[
           "/thumbnail/hange_zoeclip.png",
+          "/thumbnail_lg/team7.png",
           "/thumbnail/TK_red_spider_lily.png",
           "/thumbnail/gyro_zeppeli_finished.png",
           "/thumbnail/Dabi_final.png",

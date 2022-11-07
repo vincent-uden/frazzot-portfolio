@@ -39,5 +39,7 @@ jspm_packages
 
 public/gallery
 public/thumbnail
+public/thumbnail_md
+public/thumbnail_lg
 
 .vscode
