@@ -98,8 +98,8 @@ const Layout = ({ children }: Props) => {
         <div className="flex h-full flex-col justify-between p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
-              <a>
-                <span>GAL</span> <span className="relative -left-8">LERY</span>
+              <a className="no-ligature flex h-full flex-col justify-center">
+                GALLERY
               </a>
             </Link>
           </MenuPageItem>
@@ -108,22 +108,32 @@ const Layout = ({ children }: Props) => {
           </MenuPageItem>
           <MenuPageItem color="text-periwinkle" onClick={() => menuOnClick()}>
             <Link href="/commissions">
-              <a href="">
-                <span>COM</span>{" "}
-                <span className="relative -left-8">MISSIONS</span>
+              <a className="flex h-full flex-row items-center justify-start">
+                <span className="no-ligature h-fit">COMM</span>
+                <span className="h-fit">ISSIONS</span>
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-lilac" onClick={() => menuOnClick()}>
             <Link href="/about">
-              <a>ABOUT</a>
+              <a className="no-ligature flex h-full flex-col justify-center">
+                ABOUT
+              </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-pastelpink" onClick={() => menuOnClick()}>
-            <Link href="/contact">CONTACT</Link>
+            <Link href="/contact">
+              <a className="no-ligature flex h-full flex-col justify-center">
+                CONTACT
+              </a>
+            </Link>
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
-            <Link href="/sketchbook">SKETCHBOOK</Link>
+            <Link href="/sketchbook">
+              <a className="no-ligature flex h-full flex-col justify-center">
+                SKETCHBOOK
+              </a>
+            </Link>
           </MenuPageItem>
 
           <div className="menu-socials mt-20 flex flex-row">
@@ -134,7 +144,7 @@ const Layout = ({ children }: Props) => {
             <FacebookIcon color="fuchsia-200" size="8" />
             <DeviantartIcon color="fuchsia-200" size="8" />
           </div>
-          <div className="text-fuchsia-200 w-10 h-10 hidden"></div>
+          <div className="hidden h-10 w-10 text-fuchsia-200"></div>
         </div>
       </div>
     </>
