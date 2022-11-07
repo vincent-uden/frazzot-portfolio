@@ -21,8 +21,8 @@ export const galleryRouter = createRouter()
       let category = await ctx.prisma.imageCategory.findUnique({
         where: {
           name: input.categoryName,
-        }
-      })
+        },
+      });
       return await ctx.prisma.galleryImage.findMany({
         where: {
           categoryId: category!!.id,

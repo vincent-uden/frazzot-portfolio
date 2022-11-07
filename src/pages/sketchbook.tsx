@@ -96,7 +96,7 @@ const Sketchbook = () => {
         <div className="h-8"></div>
         <div className="flex w-full flex-row items-stretch justify-between">
           <div
-            className={`flex w-full flex-col justify-around border-2 border-yellowpeach transition-colors cursor-pointer ${
+            className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 0 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
             onClick={(e) => setSelectedCategory(0)}
@@ -110,7 +110,7 @@ const Sketchbook = () => {
             </h2>
           </div>
           <div
-            className={`mx-4 flex w-full flex-col justify-around border-2 border-yellowpeach transition-colors cursor-pointer ${
+            className={`mx-4 flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 1 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
             onClick={(e) => setSelectedCategory(1)}
@@ -124,7 +124,7 @@ const Sketchbook = () => {
             </h2>
           </div>
           <div
-            className={`flex w-full flex-col justify-around border-2 border-yellowpeach transition-colors cursor-pointer ${
+            className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 2 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
             onClick={(e) => setSelectedCategory(2)}
@@ -156,7 +156,11 @@ const Sketchbook = () => {
             SKETCHBOOK <span className="no-ligature">GALLERY</span>
           </h1>
           <h2 className="font-cocogoose text-4xl font-thin text-yellowpeach">
-            {selectedCategory === 0 ? "WARM-UPS // JUST FOR FUN" : (selectedCategory === 1 ? "ILLUSTRAION SKETCHES" : "STUDIES")}
+            {selectedCategory === 0
+              ? "WARM-UPS // JUST FOR FUN"
+              : selectedCategory === 1
+              ? "ILLUSTRAION SKETCHES"
+              : "STUDIES"}
           </h2>
         </div>
       </div>

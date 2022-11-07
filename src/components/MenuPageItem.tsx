@@ -13,7 +13,7 @@ const MenuPageItem = ({ color, children, onClick }: Props) => {
       onClick={onClick}
     >
       <h1
-        className={`${color} relative top-1/2 -translate-y-1/2 font-stretch text-6xl`}
+        className={`${color} relative top-1/2 flex h-full -translate-y-1/2 flex-col justify-center font-stretch text-6xl`}
       >
         {children}
       </h1>
