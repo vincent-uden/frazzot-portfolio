@@ -14,6 +14,7 @@ import {
   useState,
 } from "react";
 import { GalleryImage } from "@prisma/client";
+import Carousel from "../components/Carousel";
 
 export type ImageRow = {
   indices: number[];
@@ -31,7 +32,8 @@ export function tileImages(
   while (i < imgs.length) {
     // Build first row
     let w = 0;
-    let maxW = cont.current?.offsetWidth ?? -1;
+    // The rows are only 80% of the width
+    let maxW = 0.8 * (cont.current?.offsetWidth ?? -1);
 
     let row: ImageRow = {
       indices: [],
@@ -70,21 +72,24 @@ const Gallery = () => {
 
   useEffect(() => {
     if (imgHolderRef.current != null) {
+      let j = 0;
       for (let i = 0; i < imgHolderRef.current?.children.length; i++) {
-        if (imageTiling != null && imageTiling[i] != null) {
+        if (imageTiling != null && imageTiling[j] != null) {
           if (
             imgHolderRef.current.children[i]?.classList.contains("gallery-row")
           ) {
             (
               imgHolderRef.current.children[i] as HTMLDivElement
             ).style.height = `${
-              (images?.at(imageTiling[i]?.indices[0] ?? 0)?.thmb_h ?? 0) *
-                (imageTiling[i]?.scale ?? 0) +
+              (images?.at(imageTiling[j]?.indices[0] ?? 0)?.thmb_h ?? 0) *
+                (imageTiling[j]?.scale ?? 0) +
               gap
             }px`;
             (
               imgHolderRef.current.children[i] as HTMLDivElement
             ).style.width = `${imgHolderRef.current.offsetWidth + 5}px`;
+
+            j++;
           }
         }
       }
@@ -119,42 +124,74 @@ const Gallery = () => {
         </div>
       </div>
       <div className="flex w-full flex-col items-center">
-        <div className="w-[80%] overflow-clip" ref={imgHolderRef}>
+        <div className="w-full" ref={imgHolderRef}>
           {imageTiling.map((row, r) => {
             return (
-              <div className="gallery-row" key={`row-${r}`}>
-                {row.indices.map((i, n) => {
-                  return (
-                    <div className="inline-block h-full" key={`space-${n}`}>
+              <>
+                <div
+                  className="gallery-row w-[80%] overflow-x-clip pl-[10%]"
+                  key={`row-${r}`}
+                >
+                  {row.indices.map((i, n) => {
+                    return (
                       <div
-                        className={`inline-block`}
-                        style={{
-                          width: `${n == 0 ? 0 : gap}px`,
-                          height: "100%",
-                        }}
-                      ></div>
-                      <div
-                        className="relative top-0 m-0 inline-block h-full p-0"
-                        key={n}
+                        className="inline-block h-full"
+                        key={`space-${r}-${n}`}
                       >
-                        <Image
-                          src={`/thumbnail/${images?.at(i)?.path}`}
-                          width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
-                          height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
-                        />
                         <div
-                          className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
-                          style={{ transform: `translateY(-${gap}px)` }}
+                          className={`inline-block`}
+                          style={{
+                            width: `${n == 0 ? 0 : gap}px`,
+                            height: "100%",
+                          }}
+                        ></div>
+                        <div
+                          className="relative top-0 m-0 inline-block h-full p-0"
+                          key={n}
                         >
-                          <p className="absolute bottom-4 left-4 text-lg text-white">
-                            {images?.at(i)?.name}
-                          </p>
+                          <Image
+                            src={`/thumbnail/${images?.at(i)?.path}`}
+                            width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
+                            height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
+                            key={`img-${r}-${n}`}
+                          />
+                          <div
+                            className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
+                            style={{ transform: `translateY(-${gap}px)` }}
+                          >
+                            <p className="absolute bottom-4 left-4 text-lg text-white">
+                              {images?.at(i)?.name}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+                {r == 1 ? (
+                  <div key={`carousel-${r}`}>
+                    <Carousel
+                      imgPaths={[
+                        "/thumbnail/hange_zoeclip.png",
+                        "/thumbnail_lg/team7.png",
+                        "/thumbnail/TK_red_spider_lily.png",
+                        "/thumbnail/gyro_zeppeli_finished.png",
+                        "/thumbnail/Dabi_final.png",
+                      ]}
+                      imgDescs={[
+                        "HANGE ZOE",
+                        "Team 7",
+                        "TK",
+                        "GYRO ZEPPELI",
+                        "DABI",
+                      ]}
+                      key={`carousel-comp-${r}`}
+                    />
+                  </div>
+                ) : (
+                  <></>
+                )}
+              </>
             );
           })}
         </div>

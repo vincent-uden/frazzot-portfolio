@@ -148,8 +148,9 @@ const Sketchbook = () => {
           "/thumbnail/gyro_zeppeli_finished.png",
           "/thumbnail/Dabi_final.png",
         ]}
-        imgDescs={["HANGE ZOE", "TK", "GYRO ZEPPELI", "DABI"]}
+        imgDescs={["HANGE ZOE", "Team 7", "TK", "GYRO ZEPPELI", "DABI"]}
       />
+      <div className="h-20"></div>
 
       <div className="h-[2.65rem] bg-yellowpeach">
         <div className="mx-auto w-fit bg-greyblack px-8">
