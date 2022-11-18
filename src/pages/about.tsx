@@ -17,7 +17,7 @@ const About: NextPage = () => {
 
       <div className="h-24"></div>
       <div className="bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x">
-        <div className="grid grid-cols-7 px-[10%]">
+        <div className="grid grid-cols-7 max-w-screen-xl mx-auto">
           <div className="col-span-3 mr-16 bg-holo">
             <div className="h-[300px] w-[300px] scale-125">
               <Image
