@@ -8,6 +8,10 @@ const Projects = () => {
   const [firstRenderComplete, setFirstRenderComplete] =
     useState<boolean>(false);
   const accordionRef = useRef<HTMLDivElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+
+  const [mouseXOffset, setMouseXOffset] = useState<number>(0);
+  const [mouseYOffset, setMouseYOffset] = useState<number>(0);
 
   useEffect(() => {
     setTimeout(getHeights, 600);
@@ -31,6 +35,15 @@ const Projects = () => {
     }
   };
 
+  const calcMouseOffset = (mouseX: number, mouseY: number) => {
+    const current = imgRef.current!!;
+    const x = mouseX - current.x - current.clientWidth / 2;
+    const y = mouseY - current.y - current.clientHeight / 2;
+
+    setMouseXOffset(x * 2);
+    setMouseYOffset(y * 2);
+  };
+
   return (
     <>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
@@ -44,9 +57,9 @@ const Projects = () => {
           </h2>
         </div>
       </div>
-      <div className="flex flex-row justify-center max-w-screen-xl mx-auto">
+      <div className="mx-auto flex max-w-screen-xl flex-row justify-center">
         <div className="flex grow flex-row">
-          <div className="mr-24 grow">
+          <div className="mr-16 grow">
             <div className="inline-block w-full bg-holo p-[2px]">
               <div className="bg-greyblack p-12">
                 <h2 className="no-ligature font-stretch text-2xl text-sky">
@@ -62,15 +75,34 @@ const Projects = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-12 inline-block w-full bg-holo bg-left bg-auto p-8">
-              <div className="float-left inline-block w-2/5">
-                <img
-                  src="/img/sgs.png"
-                  alt="Saradomin Godsword"
-                  className="inline h-full w-full"
-                />
+            <div className="mt-12 inline-block w-full bg-holo bg-auto bg-left p-8">
+              <div className="float-left inline-block w-2/5 overflow-hidden">
+                <div className="bg-greyblack">
+                  <div
+                    className="bg-greyblack"
+                    style={{
+                      translate: `${mouseXOffset}px ${mouseYOffset}px`,
+                    }}
+                  >
+                    <img
+                      src="/img/sgs.png"
+                      alt="Saradomin Godsword"
+                      className="inline h-full w-full bg-greyblack transition-all"
+                      style={{
+                        scale:
+                          mouseXOffset + mouseYOffset != 0 ? "300%" : "100%",
+                      }}
+                      onMouseMove={(e) => calcMouseOffset(e.clientX, e.clientY)}
+                      onMouseLeave={(e) => {
+                        setMouseXOffset(0);
+                        setMouseYOffset(0);
+                      }}
+                      ref={imgRef}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="float-right inline-block w-3/5 pl-24 pr-24 pt-4">
+              <div className="float-right inline-block w-3/5 pl-16 pr-16 pt-4">
                 <p className="pb-4 font-cocogoose text-xl font-extralight text-greyblack">
                   &gt; WIREFRAME MODEL OF THE SARADOMIN GODSWORD FROM RUNESCAPE.
                 </p>
@@ -122,7 +154,7 @@ const Projects = () => {
                 <div
                   className={`mb-4 border-2 transition-colors border-${color} bg-${
                     openAcc[i] ? "greyblack" : color
-                  } py-8 px-16`}
+                  } py-8 px-20`}
                   key={`acc${i}`}
                   onMouseEnter={(e) => {
                     const openSections = [...openAcc];
@@ -138,7 +170,7 @@ const Projects = () => {
                   }}
                 >
                   <h3
-                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-xl text-${
+                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-2xl text-${
                       openAcc[i] ? color : "greyblack"
                     }`}
                   >
