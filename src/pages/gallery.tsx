@@ -48,8 +48,6 @@ export function tileImages(
 
     row.scale = Math.min((maxW - (row.indices.length - 1) * gap) / w, 1);
     rows.push(row);
-
-    console.log(w, maxW, row.scale, w * row.scale, gap);
   }
 
   return rows;
@@ -62,6 +60,7 @@ const Gallery = () => {
   ]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
+  const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
 
   useEffect(() => {
@@ -147,7 +146,7 @@ const Gallery = () => {
                         ></div>
                         <div
                           className="relative top-0 m-0 inline-block h-full p-0"
-                          key={n}
+                          key={`image-${n}`}
                         >
                           <Image
                             src={`/thumbnail/${images?.at(i)?.path}`}
@@ -158,6 +157,7 @@ const Gallery = () => {
                           <div
                             className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
                             style={{ transform: `translateY(-${gap}px)` }}
+                            onClick={(e) => setOpenImage(i)}
                           >
                             <p className="absolute bottom-4 left-4 text-lg text-white">
                               {images?.at(i)?.name}
@@ -197,6 +197,16 @@ const Gallery = () => {
         </div>
       </div>
       <div className="h-40"></div>
+      {openImage == null ? (
+        <></>
+      ) : (
+        <div
+          className="fixed z-50 h-full w-full bg-[#000000aa] flex justify-center items-center animate-fadein-fast"
+          onClick={(e) => setOpenImage(null)}
+        >
+          <img src={`/thumbnail_lg/${images?.at(openImage)?.path}`} className="max-w-screen-xl max-h-[80vh] z-50" />
+        </div>
+      )}
     </>
   );
 };

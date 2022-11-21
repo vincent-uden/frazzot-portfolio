@@ -12,6 +12,7 @@ module.exports = {
       },
       animation: {
         fadein: "fadein 1s",
+        "fadein-fast": "fadein .2s",
       },
       backgroundImage: {
         holo: "url('/img/holographic_background.png')",
