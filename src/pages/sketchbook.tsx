@@ -11,6 +11,7 @@ const Sketchbook = () => {
 
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
+  const [openImage, setOpenImage] = useState<number | null>(null);
   const { data: images, refetch } = trpc.useQuery([
     "gallery.getImages",
     { categoryName: categoryNames[selectedCategory]!! },
@@ -195,6 +196,7 @@ const Sketchbook = () => {
                         <div
                           className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
                           style={{ transform: `translateY(-${gap}px)` }}
+                          onClick={(e) => setOpenImage(i)}
                         >
                           <p className="absolute bottom-4 left-4 text-lg text-white">
                             {images?.at(i)?.name}
@@ -210,6 +212,19 @@ const Sketchbook = () => {
         </div>
       </div>
       <div className="h-16"></div>
+      {openImage == null ? (
+        <></>
+      ) : (
+        <div
+          className="fixed z-50 flex h-full w-full animate-fadein-fast items-center justify-center bg-[#000000aa]"
+          onClick={(e) => setOpenImage(null)}
+        >
+          <img
+            src={`/thumbnail_lg/${images?.at(openImage)?.path}`}
+            className="z-50 max-h-[80vh] max-w-screen-xl"
+          />
+        </div>
+      )}
     </>
   );
 };
