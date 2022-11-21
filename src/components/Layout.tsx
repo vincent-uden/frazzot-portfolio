@@ -72,7 +72,7 @@ const Layout = ({ children }: Props) => {
       <Link href="/">
         <a>
           <h1
-            className={`fixed top-0 left-4 z-50 h-16 align-middle font-stretch text-4xl leading-[4rem] text-greyblack ${
+            className={`fixed top-0 left-4 z-40 h-16 align-middle font-stretch text-4xl leading-[4rem] text-greyblack ${
               menuOpen ? "opacity-0" : "opacity-100"
             } transition-opacity`}
           >
@@ -86,14 +86,14 @@ const Layout = ({ children }: Props) => {
         toggled={menuOpen}
       />
       <div
-        className={`fixed top-0 left-0 z-40 h-screen w-screen bg-holo bg-cover shadow-lg ${
+        className={`fixed top-0 left-0 z-30 h-screen w-screen bg-holo bg-cover shadow-lg ${
           menuOpen ? "" : "-translate-y-[calc(100vh-4rem)]"
         } transition-transform duration-[400ms] ease-in-out`}
       ></div>
       <div
         className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${
           greyMenuOpen ? "" : "-translate-y-[100vh]"
-        } z-50 transition-transform duration-[400ms]`}
+        } z-40 transition-transform duration-[400ms]`}
       >
         <div className="flex h-full flex-col justify-between p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
