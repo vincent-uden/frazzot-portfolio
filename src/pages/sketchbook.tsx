@@ -75,18 +75,18 @@ const Sketchbook = () => {
         </div>
       </div>
       <div className="h-4"></div>
-      <div className="mx-auto max-w-screen-lg">
+      <div className="mx-auto max-w-screen-xl">
         <div className="inline-block w-full bg-holo p-[2px]">
           <div className="bg-greyblack p-6">
             <p className="font-cocogoose text-lg font-light text-yellowpeach">
               WELCOME TO MY SKETCHBOOK ARCHIVE.
             </p>
-            <div className="h-6"></div>
+            <div className="h-8"></div>
             <p className="font-cocogoose text-lg font-thin text-yellowpeach">
-              I CREATED A COLLECTION OF SKETCHE STHAT WAS EITHER SCRAPPED,
+              I CREATED A COLLECTION OF SKETCHES THAT WAS EITHER SCRAPPED,
               STUDIES OR JUST FOR FUN/WARM-UPS.
             </p>
-            <div className="h-6"></div>
+            <div className="h-8"></div>
             <p className="font-cocogoose text-lg font-thin text-yellowpeach">
               YOU CAN SORT THEM BY CATEGORY AND FLIP THROUGH SOME HIGHLIGHTS
               BELOW. IF YOU WISH TO SEE THEM ALL AT ONCE, KEEP SCROLLING!
