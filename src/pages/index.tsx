@@ -79,63 +79,68 @@ const Home: NextPageWithLayout = () => {
       </div>
 
       <div className="h-16"></div>
-      <div className="grid w-screen grid-cols-11 grid-rows-7 gap-14 overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x px-16 pb-64">
-        <div className="col-span-2 row-span-4 bg-holo">
-          <p className="p-6 text-center font-cocogoose text-2xl font-thin">
-            JOIN MY <span className="font-cocogoose">DISCORD SERVER</span> AND
-            PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH OTHER ARTIST.
-          </p>
-          <FontAwesomeIcon
-            className="relative left-1/2 mb-6 w-4/5 -translate-x-1/2 cursor-pointer text-greyblack"
-            icon={faDiscord}
-          />
-        </div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            COM{" "}
-          </h1>{" "}
-          <h1 className="relative -left-5 inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            {" "}
-            MISSIONS &gt;
-          </h1>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            ARE YOU INTERESTED IN COMMISSIONING ME?
-          </p>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            CHECK OUT THE DETAILS AND FILL OUT THE FORM HERE.
-          </p>
-        </div>
-        <div className="col-start-8 col-end-12 row-span-7 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            GAL{" "}
-          </h1>{" "}
-          <h1 className="relative -left-5 inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            {" "}
-            LERY &gt;
-          </h1>
-        </div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            PROJECTS &gt;{" "}
-          </h1>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE
-          </p>
-        </div>
-        <div className="relative top-[40%] col-span-7 row-span-1 h-1/5 bg-mint"></div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            SKETCHBOOK &gt;{" "}
-          </h1>
-          <p className="mt-4 font-cocogoose text-xl font-thin text-violet-100">
-            FLIP THROUGH MY PHYSICAL AND DIGITAL SKETCHBOOKS HERE
-          </p>
-        </div>
-        <div className="col-span-2 row-span-2">
-          <img src="/email.svg" alt="" className="w-full" />
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            EMAIL &gt;{" "}
-          </h1>
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x px-16 pb-64">
+        <div className="index-grid">
+          <div className="col-start-1 col-end-2 row-span-2 bg-holo">
+            <p className="font-cocogoose text-lg font-extralight text-greyblack">
+              JOIN MY DISCORD SERVER AND PARTICIPATE IN STREAMS. DISCUSS ART AND
+              CONNECT WITH OTHER ARTISTS
+            </p>
+          </div>
+          <div className="col-start-2 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <h3 className="text-holo mb-4 bg-cover font-stretch text-4xl">
+                <span className="no-ligature">COMM</span>ISSIONS &gt;
+              </h3>
+              <p className="font-cocogoose text-lg font-extralight text-white">
+                ARE YOU INTERESTED IN COMMISSIONING ME?
+              </p>
+              <p className="font-cocogoose text-lg font-extralight text-white">
+                CHECK OUT THE DETAILS AND FILL OUT THE FORM HERE
+              </p>
+            </div>
+          </div>
+          <div className="col-start-2 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <h3 className="text-holo mb-4 bg-cover font-stretch text-4xl">
+                PROJECTS &gt;
+              </h3>
+              <p className="font-cocogoose text-lg font-extralight text-white">
+                MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
+              </p>
+            </div>
+          </div>
+          <div className="col-start-1 col-end-3 my-auto h-8 w-full bg-mint"></div>
+          <div className="col-start-1 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <h3 className="text-holo mb-8 bg-cover font-stretch text-4xl">
+                SKETCHBOOK &gt;
+              </h3>
+              <div className="flex flex-row items-stretch">
+                <p className="no-ligature grow cursor-pointer border-2 border-periwinkle bg-periwinkle py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
+                  WARM-UPS
+                </p>
+                <p className="no-ligature mx-8 grow cursor-pointer border-2 border-pastelpink bg-pastelpink py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-pastelpink">
+                  ILLUSTRATION
+                </p>
+                <p className="no-ligature grow cursor-pointer border-2 border-yellowpeach bg-yellowpeach py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-yellowpeach">
+                  STUDIES
+                </p>
+              </div>
+              <p className="mt-8 font-cocogoose text-lg font-extralight text-white">
+                FLIP THROUGH ALL OF MY DIGITAL SKETCHBOOKS BY CHOOSING A
+                CATEGORY.
+              </p>
+            </div>
+          </div>
+          <div className="col-start-3 col-end-3 row-start-1 row-end-5 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <img src="/thumbnail_lg/gwen_final.png" alt="" />
+              <h3 className="text-holo no-ligature bg-cover font-stretch text-4xl">
+                GALLERY &gt;
+              </h3>
+            </div>
+          </div>
         </div>
       </div>
     </>

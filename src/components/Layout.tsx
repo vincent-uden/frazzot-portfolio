@@ -106,7 +106,7 @@ const Layout = ({ children }: Props) => {
           <MenuPageItem color="text-sky" onClick={() => menuOnClick()}>
             <Link href="/projects">
               <a className="no-ligature flex h-full flex-col justify-center">
-              PROJECTS
+                PROJECTS
               </a>
             </Link>
           </MenuPageItem>

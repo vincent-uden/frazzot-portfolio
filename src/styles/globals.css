@@ -178,3 +178,18 @@ div.splide__arrows {
   position: absolute;
   right: 0;
 }
+
+.text-holo {
+  background-image: url("/img/holographic_background.png");
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.index-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 480px;
+  column-gap: 32px;
+  row-gap: 32px;
+}

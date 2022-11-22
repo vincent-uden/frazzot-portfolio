@@ -169,12 +169,13 @@ const Projects = () => {
                     setOpenAcc(openSections);
                   }}
                   style={{
-                    opacity: firstRenderComplete ? 100: 0,
-                    transition: "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)"
+                    opacity: firstRenderComplete ? 100 : 0,
+                    transition:
+                      "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)",
                   }}
                 >
                   <h3
-                    className={`no-ligatures whitespace-nowrap text-center transition-colors font-stretch text-2xl text-${
+                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-2xl transition-colors text-${
                       openAcc[i] ? color : "greyblack"
                     }`}
                   >
