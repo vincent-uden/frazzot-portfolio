@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Carousel from "../components/Carousel";
 import { trpc } from "../utils/trpc";
@@ -18,6 +19,8 @@ const Sketchbook = () => {
   ]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
   const gap = 8;
+
+  const router = useRouter();
 
   useEffect(() => {
     if (images != null) {
@@ -61,6 +64,12 @@ const Sketchbook = () => {
 
     window.addEventListener("resize", handleResize);
   });
+
+  useEffect(() => {
+    if (router.query.tab != null) {
+      setSelectedCategory(parseInt(router.query.tab!! as string));
+    }
+  }, [router.query]);
 
   return (
     <>

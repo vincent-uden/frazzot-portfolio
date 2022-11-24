@@ -6,15 +6,7 @@ import Image from "next/image";
 import Layout from "../components/Layout";
 import FadeIn from "../components/FadeIn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArtstation,
-  faDeviantart,
-  faFacebook,
-  faInstagram,
-  faPatreon,
-  faYoutube,
-  faDiscord,
-} from "@fortawesome/free-brands-svg-icons";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import {
   InstagramIcon,
   YoutubeIcon,
@@ -23,6 +15,7 @@ import {
   FacebookIcon,
   DeviantartIcon,
 } from "../components/SocialIcons";
+import Link from "next/link";
 
 const Home: NextPageWithLayout = () => {
   return (
@@ -78,33 +71,57 @@ const Home: NextPageWithLayout = () => {
         <div className="h-8"></div>
       </div>
 
-      <div className="h-16"></div>
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x px-16 pb-64">
-        <div className="index-grid">
-          <div className="col-start-1 col-end-2 row-span-2 bg-holo">
-            <p className="font-cocogoose text-lg font-extralight text-greyblack">
-              JOIN MY DISCORD SERVER AND PARTICIPATE IN STREAMS. DISCUSS ART AND
-              CONNECT WITH OTHER ARTISTS
-            </p>
+      <div className="h-24"></div>
+      <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x pb-64">
+        <div className="index-grid mx-auto w-[80vw]">
+          <div className="col-start-1 col-end-2 row-span-2 bg-holo p-8">
+            <Link href={"https://discord.gg/MAQm86a3Xw"}>
+              <a>
+                <p className="mb-4 text-center font-cocogoose text-lg font-extralight text-greyblack">
+                  JOIN MY <span className="font-normal">DISCORD SERVER</span>{" "}
+                  AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH OTHER
+                  ARTISTS
+                </p>
+                <FontAwesomeIcon
+                  icon={faDiscord}
+                  className="w-full text-greyblack"
+                />
+              </a>
+            </Link>
           </div>
           <div className="col-start-2 col-end-3 bg-holo p-[2px]">
             <div className="h-full bg-greyblack p-8">
-              <h3 className="text-holo mb-4 bg-cover font-stretch text-4xl">
-                <span className="no-ligature">COMM</span>ISSIONS &gt;
-              </h3>
-              <p className="font-cocogoose text-lg font-extralight text-white">
-                ARE YOU INTERESTED IN COMMISSIONING ME?
-              </p>
-              <p className="font-cocogoose text-lg font-extralight text-white">
-                CHECK OUT THE DETAILS AND FILL OUT THE FORM HERE
-              </p>
+              <Link href="/commissions">
+                <a>
+                  <h3 className="text-holo bg-cover font-stretch text-4xl mb-6">
+                    <span className="no-ligature">COMM</span>ISSIONS &gt;
+                  </h3>
+                </a>
+              </Link>
+              <div className="">
+                  <p className="font-cocogoose text-lg font-extralight text-white">
+                    ARE YOU INTERESTED IN COMMISSIONING ME?
+                  </p>
+                  <p className="font-cocogoose text-lg font-extralight text-white">
+                    CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
+                    <Link href={"/commissions"}>
+                      <a>
+                        <span className="font-normal">HERE</span>
+                      </a>
+                    </Link>
+                  </p>
+              </div>
             </div>
           </div>
           <div className="col-start-2 col-end-3 bg-holo p-[2px]">
             <div className="h-full bg-greyblack p-8">
-              <h3 className="text-holo mb-4 bg-cover font-stretch text-4xl">
-                PROJECTS &gt;
-              </h3>
+              <Link href="/projects">
+                <a>
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
+                    PROJECTS &gt;
+                  </h3>
+                </a>
+              </Link>
               <p className="font-cocogoose text-lg font-extralight text-white">
                 MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
               </p>
@@ -113,19 +130,35 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 my-auto h-8 w-full bg-mint"></div>
           <div className="col-start-1 col-end-3 bg-holo p-[2px]">
             <div className="h-full bg-greyblack p-8">
-              <h3 className="text-holo mb-8 bg-cover font-stretch text-4xl">
-                SKETCHBOOK &gt;
-              </h3>
-              <div className="flex flex-row items-stretch">
-                <p className="no-ligature grow cursor-pointer border-2 border-periwinkle bg-periwinkle py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
-                  WARM-UPS
-                </p>
-                <p className="no-ligature mx-8 grow cursor-pointer border-2 border-pastelpink bg-pastelpink py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-pastelpink">
-                  ILLUSTRATION
-                </p>
-                <p className="no-ligature grow cursor-pointer border-2 border-yellowpeach bg-yellowpeach py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-yellowpeach">
-                  STUDIES
-                </p>
+              <Link href={"/sketchbook"}>
+                <a>
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
+                    SKETCHBOOK &gt;
+                  </h3>
+                </a>
+              </Link>
+              <div className="grid grid-cols-3 items-stretch gap-4">
+                <Link href="/sketchbook?tab=0">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-periwinkle bg-periwinkle py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
+                      WARM-UPS
+                    </p>
+                  </a>
+                </Link>
+                <Link href="/sketchbook?tab=1">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-pastelpink bg-pastelpink py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-pastelpink">
+                      ILLUSTRATION
+                    </p>
+                  </a>
+                </Link>
+                <Link href="/sketchbook?tab=2">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-yellowpeach bg-yellowpeach py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-yellowpeach">
+                      STUDIES
+                    </p>
+                  </a>
+                </Link>
               </div>
               <p className="mt-8 font-cocogoose text-lg font-extralight text-white">
                 FLIP THROUGH ALL OF MY DIGITAL SKETCHBOOKS BY CHOOSING A
@@ -134,11 +167,21 @@ const Home: NextPageWithLayout = () => {
             </div>
           </div>
           <div className="col-start-3 col-end-3 row-start-1 row-end-5 bg-holo p-[2px]">
-            <div className="h-full bg-greyblack p-8">
-              <img src="/thumbnail_lg/gwen_final.png" alt="" />
-              <h3 className="text-holo no-ligature bg-cover font-stretch text-4xl">
-                GALLERY &gt;
-              </h3>
+            <div className="flex h-full flex-col bg-greyblack p-8">
+              <div className="grow overflow-hidden">
+                <img
+                  src="/thumbnail_lg/gwen_final.png"
+                  alt=""
+                  className="h-full bg-[#00000022] object-cover"
+                />
+              </div>
+              <Link href={"/gallery"}>
+                <a>
+                  <h3 className="text-holo no-ligature mt-4 bg-cover font-stretch text-4xl">
+                    GALLERY &gt;
+                  </h3>
+                </a>
+              </Link>
             </div>
           </div>
         </div>

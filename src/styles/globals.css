@@ -189,7 +189,13 @@ div.splide__arrows {
 
 .index-grid {
   display: grid;
-  grid-template-columns: 1fr 2fr 480px;
+  grid-template-columns: 1fr 3fr 360px;
   column-gap: 32px;
   row-gap: 32px;
+}
+
+@media screen and (min-width: 1536px) {
+    .index-grid {
+        grid-template-columns: 1fr 3fr 440px;
+    }
 }
