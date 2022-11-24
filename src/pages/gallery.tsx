@@ -204,7 +204,10 @@ const Gallery = () => {
           className="fixed z-50 h-full w-full bg-[#000000aa] flex justify-center items-center animate-fadein-fast"
           onClick={(e) => setOpenImage(null)}
         >
-          <img src={`/thumbnail_lg/${images?.at(openImage)?.path}`} className="max-w-screen-xl max-h-[80vh] z-50" />
+          <img
+            src={`/thumbnail_lg/${images?.at(openImage)?.path}`}
+            className="max-w-screen-xl max-h-[80vh] z-50"
+          />
         </div>
       )}
     </>

@@ -6,15 +6,7 @@ import Image from "next/image";
 import Layout from "../components/Layout";
 import FadeIn from "../components/FadeIn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArtstation,
-  faDeviantart,
-  faFacebook,
-  faInstagram,
-  faPatreon,
-  faYoutube,
-  faDiscord,
-} from "@fortawesome/free-brands-svg-icons";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import {
   InstagramIcon,
   YoutubeIcon,
@@ -23,6 +15,7 @@ import {
   FacebookIcon,
   DeviantartIcon,
 } from "../components/SocialIcons";
+import Link from "next/link";
 
 const Home: NextPageWithLayout = () => {
   return (
@@ -78,64 +71,123 @@ const Home: NextPageWithLayout = () => {
         <div className="h-8"></div>
       </div>
 
-      <div className="h-16"></div>
-      <div className="grid w-screen grid-cols-11 grid-rows-7 gap-14 overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x px-16 pb-64">
-        <div className="col-span-2 row-span-4 bg-holo">
-          <p className="p-6 text-center font-cocogoose text-2xl font-thin">
-            JOIN MY <span className="font-cocogoose">DISCORD SERVER</span> AND
-            PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH OTHER ARTIST.
-          </p>
-          <FontAwesomeIcon
-            className="relative left-1/2 mb-6 w-4/5 -translate-x-1/2 cursor-pointer text-greyblack"
-            icon={faDiscord}
-          />
-        </div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            COM{" "}
-          </h1>{" "}
-          <h1 className="relative -left-5 inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            {" "}
-            MISSIONS &gt;
-          </h1>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            ARE YOU INTERESTED IN COMMISSIONING ME?
-          </p>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            CHECK OUT THE DETAILS AND FILL OUT THE FORM HERE.
-          </p>
-        </div>
-        <div className="col-start-8 col-end-12 row-span-7 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            GAL{" "}
-          </h1>{" "}
-          <h1 className="relative -left-5 inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            {" "}
-            LERY &gt;
-          </h1>
-        </div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            PROJECTS &gt;{" "}
-          </h1>
-          <p className="font-cocogoose text-xl font-thin text-violet-100">
-            MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE
-          </p>
-        </div>
-        <div className="relative top-[40%] col-span-7 row-span-1 h-1/5 bg-mint"></div>
-        <div className="col-span-5 row-span-2 border-2 p-4">
-          <h1 className="bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            SKETCHBOOK &gt;{" "}
-          </h1>
-          <p className="mt-4 font-cocogoose text-xl font-thin text-violet-100">
-            FLIP THROUGH MY PHYSICAL AND DIGITAL SKETCHBOOKS HERE
-          </p>
-        </div>
-        <div className="col-span-2 row-span-2">
-          <img src="/email.svg" alt="" className="w-full" />
-          <h1 className="inline bg-holo bg-clip-text font-stretch text-4xl text-transparent">
-            EMAIL &gt;{" "}
-          </h1>
+      <div className="h-24"></div>
+      <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x pb-64">
+        <div className="index-grid mx-auto w-[80vw]">
+          <div className="col-start-1 col-end-2 row-span-2 bg-holo p-8">
+            <Link href={"https://discord.gg/MAQm86a3Xw"}>
+              <a>
+                <p className="mb-4 text-center font-cocogoose text-lg font-extralight text-greyblack">
+                  JOIN MY <span className="font-normal">DISCORD SERVER</span>{" "}
+                  AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH OTHER
+                  ARTISTS
+                </p>
+                <FontAwesomeIcon
+                  icon={faDiscord}
+                  className="w-full text-greyblack"
+                />
+              </a>
+            </Link>
+          </div>
+          <div className="col-start-2 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <Link href="/commissions">
+                <a>
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
+                    <span className="no-ligature">COMM</span>ISSIONS &gt;
+                  </h3>
+                </a>
+              </Link>
+              <div className="">
+                <p className="font-cocogoose text-lg font-extralight text-white">
+                  ARE YOU INTERESTED IN COMMISSIONING ME?
+                </p>
+                <p className="font-cocogoose text-lg font-extralight text-white">
+                  CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
+                  <Link href={"/commissions"}>
+                    <a>
+                      <span className="font-normal">HERE</span>
+                    </a>
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-start-2 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <Link href="/projects">
+                <a>
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
+                    PROJECTS &gt;
+                  </h3>
+                </a>
+              </Link>
+              <p className="font-cocogoose text-lg font-extralight text-white">
+                MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
+              </p>
+            </div>
+          </div>
+          <div className="col-start-1 col-end-3 my-auto h-8 w-full bg-mint"></div>
+          <div className="col-start-1 col-end-3 bg-holo p-[2px]">
+            <div className="h-full bg-greyblack p-8">
+              <Link href={"/sketchbook"}>
+                <a>
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
+                    SKETCHBOOK &gt;
+                  </h3>
+                </a>
+              </Link>
+              <div className="grid grid-cols-3 items-stretch gap-4">
+                <Link href="/sketchbook?tab=0">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-periwinkle bg-periwinkle py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
+                      WARM-UPS
+                    </p>
+                  </a>
+                </Link>
+                <Link href="/sketchbook?tab=1">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-pastelpink bg-pastelpink py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-pastelpink">
+                      ILLUSTRATION
+                    </p>
+                  </a>
+                </Link>
+                <Link href="/sketchbook?tab=2">
+                  <a>
+                    <p className="no-ligature cursor-pointer border-2 border-yellowpeach bg-yellowpeach py-2 text-center font-stretch text-xl text-greyblack transition-colors hover:bg-greyblack hover:text-yellowpeach">
+                      STUDIES
+                    </p>
+                  </a>
+                </Link>
+              </div>
+              <p className="mt-8 font-cocogoose text-lg font-extralight text-white">
+                FLIP THROUGH ALL OF MY DIGITAL SKETCHBOOKS BY CHOOSING A
+                CATEGORY.
+              </p>
+            </div>
+          </div>
+          <div className="col-start-3 col-end-3 row-start-1 row-end-5 bg-holo p-[2px]">
+            <div className="flex h-full flex-col bg-greyblack p-8">
+              <div className="grow overflow-hidden relative top-0 left-0">
+                {[
+                  "gwen_final.png",
+                  "team7.png",
+                  "TK_red_spider_lily.png",
+                  "Dabi_final.png",
+                  "aizawa.png",
+                ].map((path, i) => {
+                  return <img src={`/thumbnail_lg/${path}`} alt={path} key={`gallery-show-${i}`} className="gallery-show-img" />;
+                })}
+              </div>
+              <Link href={"/gallery"}>
+                <a>
+                  <h3 className="text-holo no-ligature mt-4 bg-cover font-stretch text-4xl">
+                    GALLERY &gt;
+                  </h3>
+                </a>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </>

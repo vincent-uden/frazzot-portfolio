@@ -36,7 +36,10 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
             className="absolute right-1/2 h-32 w-32 -translate-x-[32rem] text-greyblack"
             icon={faAngleLeft}
             onClick={() => {
-              setActiveIndex((((activeIndex - 1) % imgPaths.length) + imgPaths.length) % imgPaths.length);
+              setActiveIndex(
+                (((activeIndex - 1) % imgPaths.length) + imgPaths.length) %
+                  imgPaths.length
+              );
             }}
           />
           <FontAwesomeIcon
@@ -52,8 +55,16 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
             <div
               className={`carousel-item absolute ${
                 i === activeIndex ? "is-active" : ""
-              } ${i % imgPaths.length === (((activeIndex - 1) % imgPaths.length) + imgPaths.length) % imgPaths.length ? "is-prev" : ""} ${
-                i % imgPaths.length === (activeIndex + 1) % imgPaths.length ? "is-next" : ""
+              } ${
+                i % imgPaths.length ===
+                (((activeIndex - 1) % imgPaths.length) + imgPaths.length) %
+                  imgPaths.length
+                  ? "is-prev"
+                  : ""
+              } ${
+                i % imgPaths.length === (activeIndex + 1) % imgPaths.length
+                  ? "is-next"
+                  : ""
               }`}
               key={`carousel-item-${i}`}
             >
