@@ -93,23 +93,23 @@ const Home: NextPageWithLayout = () => {
             <div className="h-full bg-greyblack p-8">
               <Link href="/commissions">
                 <a>
-                  <h3 className="text-holo bg-cover font-stretch text-4xl mb-6">
+                  <h3 className="text-holo mb-6 bg-cover font-stretch text-4xl">
                     <span className="no-ligature">COMM</span>ISSIONS &gt;
                   </h3>
                 </a>
               </Link>
               <div className="">
-                  <p className="font-cocogoose text-lg font-extralight text-white">
-                    ARE YOU INTERESTED IN COMMISSIONING ME?
-                  </p>
-                  <p className="font-cocogoose text-lg font-extralight text-white">
-                    CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
-                    <Link href={"/commissions"}>
-                      <a>
-                        <span className="font-normal">HERE</span>
-                      </a>
-                    </Link>
-                  </p>
+                <p className="font-cocogoose text-lg font-extralight text-white">
+                  ARE YOU INTERESTED IN COMMISSIONING ME?
+                </p>
+                <p className="font-cocogoose text-lg font-extralight text-white">
+                  CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
+                  <Link href={"/commissions"}>
+                    <a>
+                      <span className="font-normal">HERE</span>
+                    </a>
+                  </Link>
+                </p>
               </div>
             </div>
           </div>
@@ -168,12 +168,16 @@ const Home: NextPageWithLayout = () => {
           </div>
           <div className="col-start-3 col-end-3 row-start-1 row-end-5 bg-holo p-[2px]">
             <div className="flex h-full flex-col bg-greyblack p-8">
-              <div className="grow overflow-hidden">
-                <img
-                  src="/thumbnail_lg/gwen_final.png"
-                  alt=""
-                  className="h-full bg-[#00000022] object-cover"
-                />
+              <div className="grow overflow-hidden relative top-0 left-0">
+                {[
+                  "gwen_final.png",
+                  "team7.png",
+                  "TK_red_spider_lily.png",
+                  "Dabi_final.png",
+                  "aizawa.png",
+                ].map((path, i) => {
+                  return <img src={`/thumbnail_lg/${path}`} alt={path} key={`gallery-show-${i}`} className="gallery-show-img" />;
+                })}
               </div>
               <Link href={"/gallery"}>
                 <a>
