@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
+
 interface Props {
   imgPaths: string[];
   imgDescs: string[];
@@ -32,9 +34,8 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
       <div className="relative h-[30rem] w-full">
         <div className="holo-panel absolute top-36 h-48 w-full"></div>
         <div className="absolute top-44 left-0 right-0">
-          <FontAwesomeIcon
+          <IoChevronBackSharp
             className="absolute right-1/2 h-32 w-32 -translate-x-[32rem] text-greyblack"
-            icon={faAngleLeft}
             onClick={() => {
               setActiveIndex(
                 (((activeIndex - 1) % imgPaths.length) + imgPaths.length) %
@@ -42,9 +43,8 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
               );
             }}
           />
-          <FontAwesomeIcon
+          <IoChevronForwardSharp
             className="absolute left-1/2 h-32 w-32 translate-x-[32rem] text-greyblack"
-            icon={faAngleRight}
             onClick={() => {
               setActiveIndex((activeIndex + 1) % imgPaths.length);
             }}
