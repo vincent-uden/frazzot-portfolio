@@ -27,7 +27,7 @@ const Home: NextPageWithLayout = () => {
       </Head>
 
       <div className="h-screen w-screen overflow-y-hidden bg-pattern-holo-inv bg-[length:1920px_640px] bg-repeat-x">
-        <div className="absolute bottom-0 left-32 h-[80vh] w-[80vh]">
+        <div className="absolute bottom-0 md:left-32 lg:h-[80vh] lg:w-[80vh]">
           <Image
             src={"/img/moi.png"}
             layout="intrinsic"
@@ -36,8 +36,8 @@ const Home: NextPageWithLayout = () => {
           />
         </div>
         <FadeIn>
-          <aside className="absolute right-0 top-1/2 -translate-y-1/2">
-            <h1 className="my-4 mr-48 font-stretch text-7xl text-mint">
+          <aside className="absolute right-0 top-1/2 -translate-y-1/2 hidden md:block">
+            <h1 className="my-4 md:mr-30 lg:mr-48 font-stretch text-7xl text-mint">
               FRAZZOT
             </h1>
             <div className="h-8 w-full bg-holo">

@@ -25,7 +25,7 @@ export const SocialIcon = ({ color, href, icon, size }: BaseProps) => {
   return (
     <a href={href}>
       <FontAwesomeIcon
-        className={`text-${color} w-${size} h-${size} mx-4 transition-transform hover:scale-125`}
+        className={`text-${color} w-${size} h-${size} mx-2 md:mx-4 transition-transform hover:scale-125`}
         icon={icon}
       />
     </a>
