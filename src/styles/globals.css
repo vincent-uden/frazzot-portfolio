@@ -255,6 +255,14 @@ div.splide__arrows {
 
 @media screen and (min-width: 768px) {
   .index-grid {
+    grid-template-columns: 1fr 4fr;
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .index-grid {
     grid-template-columns: 1fr 3fr 360px;
     column-gap: 32px;
     row-gap: 32px;

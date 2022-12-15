@@ -134,9 +134,7 @@ const Layout = ({ children }: Props) => {
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             <Link href="/sketchbook">
-              <a className="flex h-full flex-col justify-center">
-                SKETCHBOOK
-              </a>
+              <a className="flex h-full flex-col justify-center">SKETCHBOOK</a>
             </Link>
           </MenuPageItem>
 
