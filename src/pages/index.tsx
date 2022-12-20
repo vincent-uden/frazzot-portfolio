@@ -26,7 +26,7 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="h-[90vh] md:h-screen w-screen overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:bg-[length:1920px_640px]">
+      <div className="h-[90vh] w-screen overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
         <div className="absolute bottom-0 left-[10vw] z-0 md:h-[80vh] md:w-[80vh] lg:left-32">
           <Image
             src={"/img/moi.png"}
@@ -177,7 +177,7 @@ const Home: NextPageWithLayout = () => {
             </div>
           </div>
           <div className="col-start-1 col-end-3 row-start-5 row-end-6 my-auto hidden h-2 w-full bg-mint lg:block lg:h-8 xl:hidden"></div>
-          <div className="row-end-7 col-start-1 col-end-3 row-start-6 h-[80vh] w-full bg-holo p-[2px] xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5 xl:h-auto">
+          <div className="col-start-1 col-end-3 row-start-6 row-end-7 h-[80vh] w-full bg-holo p-[2px] xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5 xl:h-auto">
             <div className="flex h-full w-full flex-col bg-greyblack p-8">
               <div className="relative top-0 left-0 grow overflow-x-hidden">
                 {[

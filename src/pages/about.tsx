@@ -4,20 +4,19 @@ import Image from "next/image";
 const About: NextPage = () => {
   return (
     <>
-      <div className="hidden stroke-mint text-mint hover:text-mint"></div>
-      <div className="h-64"></div>
-      <h1 className="pl-4 text-center font-stretch text-6xl text-periwinkle">
+      <div className="h-48 md:h-64"></div>
+      <h1 className="page-header text-periwinkle">
         ABOUT
       </h1>
-      <div className="mt-8 bg-holo bg-cover py-2">
-        <h2 className="text-center font-stretch text-3xl text-greyblack">
+      <div className="mt-2 md:mt-8 bg-holo bg-cover py-2">
+        <h2 className="page-sub-header">
           A SHORT INTRODUCTION TO THE ARTIST_
         </h2>
       </div>
 
       <div className="h-24"></div>
       <div className="bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x">
-        <div className="grid grid-cols-7 max-w-screen-xl mx-auto">
+        <div className="mx-auto grid max-w-screen-xl grid-cols-7">
           <div className="col-span-3 mr-16 bg-holo">
             <div className="h-[300px] w-[300px] scale-125">
               <Image

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-header {
+  @apply text-center font-stretch text-4xl md:text-6xl;
+}
+
+.page-sub-header {
+  @apply text-center font-stretch text-lg md:text-3xl text-greyblack
+}
+
 .container * {
   z-index: 10;
 }

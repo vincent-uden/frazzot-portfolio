@@ -91,7 +91,7 @@ const Layout = ({ children }: Props) => {
         } transition-transform duration-[400ms] ease-in-out`}
       ></div>
       <div
-        className={`fixed top-48 md:top-2 left-4 right-4 bottom-4 md:right-48 bg-greyblack ${
+        className={`fixed top-48 left-4 right-4 bottom-4 bg-greyblack md:top-2 md:right-48 ${
           greyMenuOpen ? "" : "-translate-y-[calc(100vh+10rem)]"
         } z-40 transition-transform duration-[400ms]`}
       >
@@ -138,7 +138,7 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
 
-          <div className="menu-socials mb:mt-20 mb-4 flex flex-row grow justify-around md:justify-start items-end">
+          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around md:justify-start">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
