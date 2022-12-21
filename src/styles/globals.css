@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-header {
+  @apply text-center font-stretch text-4xl md:text-6xl;
+}
+
+.page-sub-header {
+  @apply text-center font-stretch text-lg md:text-3xl text-greyblack
+}
+
 .container * {
   z-index: 10;
 }
@@ -188,63 +196,91 @@ div.splide__arrows {
 }
 
 .gallery-show-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    object-fit: cover;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  height: 100%;
 }
 
 @keyframes img-show-1 {
-    0%  { opacity: 100%; }
-    20% { opacity: 0%; }
-    40% { opacity: 0%; }
-    60% { opacity: 0%; }
-    80% { opacity: 0%; }
+  0% {
+    opacity: 100%;
+  }
+  20% {
+    opacity: 0%;
+  }
+  40% {
+    opacity: 0%;
+  }
+  60% {
+    opacity: 0%;
+  }
+  80% {
+    opacity: 0%;
+  }
 }
 .gallery-show-img:nth-child(1) {
-    animation-name: img-show-1;
-    animation-iteration-count: infinite;
-    animation-duration: 20s;
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
 }
 
 .gallery-show-img:nth-child(2) {
-    animation-name: img-show-1;
-    animation-iteration-count: infinite;
-    animation-duration: 20s;
-    animation-delay: 4s;
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 4s;
 }
 
 .gallery-show-img:nth-child(3) {
-    animation-name: img-show-1;
-    animation-iteration-count: infinite;
-    animation-duration: 20s;
-    animation-delay: 8s;
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 8s;
 }
 
 .gallery-show-img:nth-child(4) {
-    animation-name: img-show-1;
-    animation-iteration-count: infinite;
-    animation-duration: 20s;
-    animation-delay: 12s;
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 12s;
 }
 
 .gallery-show-img:nth-child(5) {
-    animation-name: img-show-1;
-    animation-iteration-count: infinite;
-    animation-duration: 20s;
-    animation-delay: 16s;
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 16s;
 }
 
 .index-grid {
   display: grid;
-  grid-template-columns: 1fr 3fr 360px;
-  column-gap: 32px;
-  row-gap: 32px;
+  grid-template-columns: 1fr 2fr;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .index-grid {
+    grid-template-columns: 1fr 4fr;
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .index-grid {
+    grid-template-columns: 1fr 3fr 360px;
+    column-gap: 32px;
+    row-gap: 32px;
+  }
 }
 
 @media screen and (min-width: 1536px) {
-    .index-grid {
-        grid-template-columns: 1fr 3fr 440px;
-    }
+  .index-grid {
+    grid-template-columns: 1fr 3fr 440px;
+    column-gap: 32px;
+    row-gap: 32px;
+  }
 }

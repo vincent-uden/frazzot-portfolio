@@ -91,11 +91,11 @@ const Layout = ({ children }: Props) => {
         } transition-transform duration-[400ms] ease-in-out`}
       ></div>
       <div
-        className={`fixed top-2 left-2 bottom-4 right-48 bg-greyblack ${
-          greyMenuOpen ? "" : "-translate-y-[100vh]"
+        className={`fixed top-48 left-4 right-4 bottom-4 bg-greyblack md:top-2 md:right-48 ${
+          greyMenuOpen ? "" : "-translate-y-[calc(100vh+10rem)]"
         } z-40 transition-transform duration-[400ms]`}
       >
-        <div className="flex h-full flex-col justify-between p-20">
+        <div className="flex h-full flex-col justify-between p-4 md:p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
               <a className="no-ligature flex h-full flex-col justify-center">
@@ -134,13 +134,11 @@ const Layout = ({ children }: Props) => {
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             <Link href="/sketchbook">
-              <a className="no-ligature flex h-full flex-col justify-center">
-                SKETCHBOOK
-              </a>
+              <a className="flex h-full flex-col justify-center">SKETCHBOOK</a>
             </Link>
           </MenuPageItem>
 
-          <div className="menu-socials mt-20 flex flex-row">
+          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around md:justify-start">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
