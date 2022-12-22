@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -28,7 +30,7 @@ module.exports = {
         "hard-xl-red": "0 5px 0 0 rgb(127, 29, 29)",
         "hard-xl-white": "0 5px 0 0 rgb(29, 29, 29)",
         left: "-5px 0px 20px -5px #00000099",
-        "panel": "rgba(0, 0, 0, 0.2) 0px 0px 29px 0px;"
+        "panel": "0px 0px 29px 0px rgba(0, 0, 0, 0.2);"
       },
       fontFamily: {
         stretch: ["StretchPro"],
