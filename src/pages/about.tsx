@@ -1,9 +1,16 @@
 import type { NextPage } from "next";
+import Head from "next/head";
 import Image from "next/image";
 
 const About: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>FRAZZOT - About</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="h-48 md:h-64"></div>
       <h1 className="page-header text-periwinkle">ABOUT</h1>
       <div className="mt-2 bg-holo bg-cover py-2 md:mt-8">

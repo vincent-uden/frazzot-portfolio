@@ -26,11 +26,11 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative h-[90vh] w-screen overflow-y-hidden overflow-x-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
+      <div className="relative h-[90vh] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
         <FadeIn>
-        <div className="absolute left-[10vw] z-0 h-[80vw] w-[80vw] bottom-0 md:h-[80vh] md:w-[80vh] lg:left-32">
-          <Image src={"/img/moi.png"} layout="fill" alt="Self portrait" />
-        </div>
+          <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[80vh] md:w-[80vh] lg:left-32">
+            <Image src={"/img/moi.png"} layout="fill" alt="Self portrait" />
+          </div>
           <aside className="absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block">
             <h1 className="md:mr-30 my-4 font-stretch text-7xl text-mint lg:mr-48">
               FRAZZOT
@@ -80,7 +80,10 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-span-1 w-full scale-x-125 overflow-x-visible bg-holo p-4 shadow-panel lg:col-end-2 lg:row-span-2 lg:scale-x-100 lg:p-8">
             <div className="scale-x-[80%] lg:scale-x-100">
               <Link href={"https://discord.gg/MAQm86a3Xw"}>
-                <a className="flex flex-row-reverse content-center lg:flex-col" aria-label="Join discord">
+                <a
+                  className="flex flex-row-reverse content-center lg:flex-col"
+                  aria-label="Join discord"
+                >
                   <p className="py-2 pl-4 text-right font-cocogoose text-sm font-extralight text-greyblack lg:mb-4 lg:py-0 lg:pl-0 lg:text-center lg:text-lg">
                     JOIN MY <span className="font-normal">DISCORD SERVER</span>{" "}
                     AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH
@@ -108,10 +111,10 @@ const Home: NextPageWithLayout = () => {
                   ARE YOU INTERESTED IN COMMISSIONING ME?
                 </p>
                 <p className="font-cocogoose text-xs font-extralight text-white md:text-lg">
-                  CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
+                  CHECK OUT THE DETAILS AND{" "}
                   <Link href={"/commissions"}>
                     <a aria-label="Commissions page">
-                      <span className="font-normal">HERE</span>
+                      <span className="font-normal">FILL OUT THE FORM</span>
                     </a>
                   </Link>
                 </p>

@@ -4,6 +4,7 @@ import { trpc } from "../utils/trpc";
 import { EmailError } from "../utils/errortypes";
 import InputLabel from "../components/InputLabel";
 import SubmitButton from "../components/SubmitButton";
+import Head from "next/head";
 
 const Contact = () => {
   const [name, setName] = useState<string>("");
@@ -31,6 +32,11 @@ const Contact = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Contact</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-64"></div>

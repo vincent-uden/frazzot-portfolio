@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
+import Head from "next/head";
 
 const Projects = () => {
   const [openAcc, setOpenAcc] = useState<boolean[]>([]);
@@ -46,6 +47,12 @@ const Projects = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Projects</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
         <h1 className="pl-4 text-center font-stretch text-6xl text-periwinkle">
@@ -85,7 +92,7 @@ const Projects = () => {
                     }}
                   >
                     <img
-                      src="/img/sgs.png"
+                      src="/img/sgs.webp"
                       alt="Saradomin Godsword"
                       className="inline h-full w-full bg-greyblack transition-all"
                       style={{

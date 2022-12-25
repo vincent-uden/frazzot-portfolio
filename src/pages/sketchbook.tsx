@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -73,6 +74,12 @@ const Sketchbook = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Sketchbook</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
         <h1 className="pl-4 text-center font-stretch text-6xl text-yellowpeach">

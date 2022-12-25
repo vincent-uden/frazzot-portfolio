@@ -90,21 +90,30 @@ const Layout = ({ children }: Props) => {
         <div className="flex h-full flex-col justify-between p-4 md:p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
-              <a className="no-ligature flex h-full flex-col justify-center" aria-label="Gallery">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Gallery"
+              >
                 GALLERY
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-sky" onClick={() => menuOnClick()}>
             <Link href="/projects">
-              <a className="no-ligature flex h-full flex-col justify-center" aria-label="Projects page">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Projects page"
+              >
                 PROJECTS
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-periwinkle" onClick={() => menuOnClick()}>
             <Link href="/commissions">
-              <a className="flex h-full flex-row items-center justify-start" aria-label="Commissions page">
+              <a
+                className="flex h-full flex-row items-center justify-start"
+                aria-label="Commissions page"
+              >
                 <span className="no-ligature h-fit">COMM</span>
                 <span className="h-fit">ISSIONS</span>
               </a>
@@ -112,21 +121,32 @@ const Layout = ({ children }: Props) => {
           </MenuPageItem>
           <MenuPageItem color="text-lilac" onClick={() => menuOnClick()}>
             <Link href="/about">
-              <a className="no-ligature flex h-full flex-col justify-center" aria-label="About page">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="About page"
+              >
                 ABOUT
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-pastelpink" onClick={() => menuOnClick()}>
             <Link href="/contact">
-              <a className="no-ligature flex h-full flex-col justify-center" aria-label="Contact page">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Contact page"
+              >
                 CONTACT
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             <Link href="/sketchbook">
-              <a className="flex h-full flex-col justify-center" aria-label="Sketchbook page">SKETCHBOOK</a>
+              <a
+                className="flex h-full flex-col justify-center"
+                aria-label="Sketchbook page"
+              >
+                SKETCHBOOK
+              </a>
             </Link>
           </MenuPageItem>
 
