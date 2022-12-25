@@ -27,7 +27,7 @@
   background-image: url("/img/pattern_dark_faded_edge_L.webp"),
     url("/img/pattern_dark_faded_edge_R.webp"),
     url("/img/holographic_background.webp");
-  background-size: 25vw 75vw, 25vw 75vw, cover;
+  background-size: 25vw 25vw, 25vw 25vw, cover;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position-x: left, right, left;
 }

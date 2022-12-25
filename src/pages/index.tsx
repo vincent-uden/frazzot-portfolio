@@ -26,11 +26,11 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="h-[90vh] w-screen overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
-        <div className="absolute bottom-[10vw] left-[10vw] z-0 h-[80vw] w-[80vw] md:bottom-0 md:h-[80vh] md:w-[80vh] lg:left-32">
+      <div className="relative h-[90vh] w-screen overflow-y-hidden overflow-x-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
+        <FadeIn>
+        <div className="absolute left-[10vw] z-0 h-[80vw] w-[80vw] bottom-0 md:h-[80vh] md:w-[80vh] lg:left-32">
           <Image src={"/img/moi.png"} layout="fill" />
         </div>
-        <FadeIn>
           <aside className="absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block">
             <h1 className="md:mr-30 my-4 font-stretch text-7xl text-mint lg:mr-48">
               FRAZZOT
