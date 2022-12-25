@@ -17,14 +17,14 @@ module.exports = {
         "fadein-fast": "fadein .2s",
       },
       backgroundImage: {
-        holo: "url('/img/holographic_background.png')",
-        "pattern-holo": "url('/img/pattern_holographic_faded_edge.png')",
+        holo: "url('/img/holographic_background.webp')",
+        "pattern-holo": "url('/img/pattern_holographic_faded_edge.webp')",
         "pattern-holo-short":
-          "url('/img/pattern_holographic_faded_edge_short.png')",
+          "url('/img/pattern_holographic_faded_edge_short.webp')",
         "pattern-holo-inv":
-          "url('/img/pattern_holographic_faded_edge_upside_down.png')",
+          "url('/img/pattern_holographic_faded_edge_upside_down.webp')",
         "pattern-holo-short-inv":
-          "url('/img/pattern_holographic_faded_edge_upside_down_short.png')",
+          "url('/img/pattern_holographic_faded_edge_upside_down_short.webp')",
       },
       boxShadow: {
         "hard-xl-red": "0 5px 0 0 rgb(127, 29, 29)",

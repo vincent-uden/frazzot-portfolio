@@ -7,7 +7,7 @@
 }
 
 .page-sub-header {
-  @apply text-center font-stretch text-lg md:text-3xl text-greyblack
+  @apply text-center font-stretch text-lg text-greyblack md:text-3xl;
 }
 
 .container * {
@@ -24,9 +24,9 @@
 }
 
 .holo-panel {
-  background-image: url("/img/pattern_dark_faded_edge_L.png"),
-    url("/img/pattern_dark_faded_edge_R.png"),
-    url("/img/holographic_background.png");
+  background-image: url("/img/pattern_dark_faded_edge_L.webp"),
+    url("/img/pattern_dark_faded_edge_R.webp"),
+    url("/img/holographic_background.webp");
   background-size: 25vw 75vw, 25vw 75vw, cover;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position-x: left, right, left;
@@ -188,7 +188,7 @@ div.splide__arrows {
 }
 
 .text-holo {
-  background-image: url("/img/holographic_background.png");
+  background-image: url("/img/holographic_background.webp");
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -220,34 +220,34 @@ div.splide__arrows {
     opacity: 0%;
   }
 }
-.gallery-show-img:nth-child(1) {
+span:nth-child(1) > .gallery-show-img {
   animation-name: img-show-1;
   animation-iteration-count: infinite;
   animation-duration: 20s;
 }
 
-.gallery-show-img:nth-child(2) {
+span:nth-child(2) > .gallery-show-img {
   animation-name: img-show-1;
   animation-iteration-count: infinite;
   animation-duration: 20s;
   animation-delay: 4s;
 }
 
-.gallery-show-img:nth-child(3) {
+span:nth-child(3) > .gallery-show-img {
   animation-name: img-show-1;
   animation-iteration-count: infinite;
   animation-duration: 20s;
   animation-delay: 8s;
 }
 
-.gallery-show-img:nth-child(4) {
+span:nth-child(4) > .gallery-show-img {
   animation-name: img-show-1;
   animation-iteration-count: infinite;
   animation-duration: 20s;
   animation-delay: 12s;
 }
 
-.gallery-show-img:nth-child(5) {
+span:nth-child(5) > .gallery-show-img {
   animation-name: img-show-1;
   animation-iteration-count: infinite;
   animation-duration: 20s;
