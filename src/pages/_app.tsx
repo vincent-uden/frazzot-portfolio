@@ -1,7 +1,6 @@
 // src/pages/_app.tsx
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/router";
-import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
@@ -56,8 +55,6 @@ export default withTRPC<AppRouter>({
      */
     const url = `${getBaseUrl()}/api/trpc`;
     const cookies = new Cookies();
-    console.log("### WITH TRPC ###");
-    console.log(cookies.get("session_token"));
 
     return {
       url,

@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       keyframes: {
@@ -15,20 +17,20 @@ module.exports = {
         "fadein-fast": "fadein .2s",
       },
       backgroundImage: {
-        holo: "url('/img/holographic_background.png')",
-        "pattern-holo": "url('/img/pattern_holographic_faded_edge.png')",
+        holo: "url('/img/holographic_background.webp')",
+        "pattern-holo": "url('/img/pattern_holographic_faded_edge.webp')",
         "pattern-holo-short":
-          "url('/img/pattern_holographic_faded_edge_short.png')",
+          "url('/img/pattern_holographic_faded_edge_short.webp')",
         "pattern-holo-inv":
-          "url('/img/pattern_holographic_faded_edge_upside_down.png')",
+          "url('/img/pattern_holographic_faded_edge_upside_down.webp')",
         "pattern-holo-short-inv":
-          "url('/img/pattern_holographic_faded_edge_upside_down_short.png')",
+          "url('/img/pattern_holographic_faded_edge_upside_down_short.webp')",
       },
       boxShadow: {
         "hard-xl-red": "0 5px 0 0 rgb(127, 29, 29)",
         "hard-xl-white": "0 5px 0 0 rgb(29, 29, 29)",
         left: "-5px 0px 20px -5px #00000099",
-        "panel": "rgba(0, 0, 0, 0.2) 0px 0px 29px 0px;"
+        "panel": "0px 0px 29px 0px rgba(0, 0, 0, 0.2);"
       },
       fontFamily: {
         stretch: ["StretchPro"],

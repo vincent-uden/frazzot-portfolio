@@ -8,6 +8,7 @@ import cuid from "cuid";
 import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
+import Head from "next/head";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
@@ -114,6 +115,12 @@ const Admin = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Admin</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="hidden border-pastelpink"></div>
       <div className="h-16"></div>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">

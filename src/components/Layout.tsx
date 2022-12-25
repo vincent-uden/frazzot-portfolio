@@ -1,15 +1,6 @@
 import { ReactNode, useCallback, useRef, useState } from "react";
 
 import MenuPageItem from "./MenuPageItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArtstation,
-  faYoutube,
-  faPatreon,
-  faFacebook,
-  faInstagram,
-  faDeviantart,
-} from "@fortawesome/free-brands-svg-icons";
 import { Squeeze as Hamburger } from "hamburger-react";
 import Link from "next/link";
 import {
@@ -70,7 +61,7 @@ const Layout = ({ children }: Props) => {
       </div>
 
       <Link href="/">
-        <a>
+        <a aria-label="Index page">
           <h1
             className={`fixed top-0 left-4 z-40 h-16 align-middle font-stretch text-4xl leading-[4rem] text-greyblack ${
               menuOpen ? "opacity-0" : "opacity-100"
@@ -84,6 +75,7 @@ const Layout = ({ children }: Props) => {
         onToggle={() => menuOnClick()}
         color="#292a2c"
         toggled={menuOpen}
+        label="Toggle menu"
       />
       <div
         className={`fixed top-0 left-0 z-30 h-screen w-screen bg-holo bg-cover shadow-lg ${
@@ -98,21 +90,30 @@ const Layout = ({ children }: Props) => {
         <div className="flex h-full flex-col justify-between p-4 md:p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
-              <a className="no-ligature flex h-full flex-col justify-center">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Gallery"
+              >
                 GALLERY
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-sky" onClick={() => menuOnClick()}>
             <Link href="/projects">
-              <a className="no-ligature flex h-full flex-col justify-center">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Projects page"
+              >
                 PROJECTS
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-periwinkle" onClick={() => menuOnClick()}>
             <Link href="/commissions">
-              <a className="flex h-full flex-row items-center justify-start">
+              <a
+                className="flex h-full flex-row items-center justify-start"
+                aria-label="Commissions page"
+              >
                 <span className="no-ligature h-fit">COMM</span>
                 <span className="h-fit">ISSIONS</span>
               </a>
@@ -120,21 +121,32 @@ const Layout = ({ children }: Props) => {
           </MenuPageItem>
           <MenuPageItem color="text-lilac" onClick={() => menuOnClick()}>
             <Link href="/about">
-              <a className="no-ligature flex h-full flex-col justify-center">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="About page"
+              >
                 ABOUT
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-pastelpink" onClick={() => menuOnClick()}>
             <Link href="/contact">
-              <a className="no-ligature flex h-full flex-col justify-center">
+              <a
+                className="no-ligature flex h-full flex-col justify-center"
+                aria-label="Contact page"
+              >
                 CONTACT
               </a>
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-yellowpeach" onClick={() => menuOnClick()}>
             <Link href="/sketchbook">
-              <a className="flex h-full flex-col justify-center">SKETCHBOOK</a>
+              <a
+                className="flex h-full flex-col justify-center"
+                aria-label="Sketchbook page"
+              >
+                SKETCHBOOK
+              </a>
             </Link>
           </MenuPageItem>
 

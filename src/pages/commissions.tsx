@@ -3,6 +3,7 @@ import { EmailError } from "../utils/errortypes";
 import { trpc } from "../utils/trpc";
 import InputLabel from "../components/InputLabel";
 import SubmitButton from "../components/SubmitButton";
+import Head from "next/head";
 
 const Comissions = () => {
   const [name, setName] = useState<string>("");
@@ -39,6 +40,12 @@ const Comissions = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Commissions</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="hidden stroke-mint text-mint hover:text-mint"></div>
         <div className="h-64"></div>

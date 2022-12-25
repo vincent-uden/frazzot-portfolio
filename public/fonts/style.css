@@ -2,18 +2,21 @@
     font-family: 'StretchPro';
     src: url('StretchPro.otf') format('opentype');
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Neou-Thin';
     src: url('Neou-Thin.otf') format('opentype');
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
     font-family: 'Neou-Bold';
     src: url('Neou-Bold.otf') format('opentype');
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -21,6 +24,7 @@
     src: url("Cocogoose\ Pro-trial.ttf") format('truetype');
     font-style: normal;
     font-weight: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -28,6 +32,7 @@
     src: url("Cocogoose\ Pro\ Italic-trial.ttf") format('truetype');
     font-style: italic;
     font-weight: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -35,6 +40,7 @@
     src: url("Cocogoose\ Pro\ Light-trial.ttf") format('truetype');
     font-style: normal;
     font-weight: 200;
+    font-display: swap;
 }
 
 @font-face {
@@ -42,6 +48,7 @@
     src: url("Cocogoose\ Pro\ Light Italic-trial.ttf") format('truetype');
     font-style: italic;
     font-weight: 200;
+    font-display: swap;
 }
 
 @font-face {
@@ -49,6 +56,7 @@
     src: url("Cocogoose\ Pro\ Semilight-trial.ttf") format('truetype');
     font-style: normal;
     font-weight: 300;
+    font-display: swap;
 }
 
 @font-face {
@@ -56,6 +64,7 @@
     src: url("Cocogoose\ Pro\ Semilight\ Italic-trial.ttf") format('truetype');
     font-style: italic;
     font-weight: 300;
+    font-display: swap;
 }
 
 @font-face {
@@ -63,6 +72,7 @@
     src: url("Cocogoose\ Pro\ Thin-trial.ttf") format('truetype');
     font-style: normal;
     font-weight: 100;
+    font-display: swap;
 }
 
 @font-face {
@@ -70,4 +80,5 @@
     src: url("Cocogoose\ Pro\ Thin Italic-trial.ttf") format('truetype');
     font-style: italic;
     font-weight: 100;
+    font-display: swap;
 }

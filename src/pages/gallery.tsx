@@ -15,6 +15,7 @@ import {
 } from "react";
 import { GalleryImage } from "@prisma/client";
 import Carousel from "../components/Carousel";
+import Head from "next/head";
 
 export type ImageRow = {
   indices: number[];
@@ -111,6 +112,12 @@ const Gallery = () => {
 
   return (
     <>
+      <Head>
+        <title>FRAZZOT - Gallery</title>
+        <meta name="description" content="Portfolio of Frazzot" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
         <h1 className="pl-4 text-center font-stretch text-6xl text-periwinkle">
@@ -153,6 +160,7 @@ const Gallery = () => {
                             width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                             height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
                             key={`img-${r}-${n}`}
+                            alt={images?.at(i)?.name ?? "Thumbnail"}
                           />
                           <div
                             className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
