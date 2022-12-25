@@ -29,7 +29,7 @@ const Home: NextPageWithLayout = () => {
       <div className="relative h-[90vh] w-screen overflow-y-hidden overflow-x-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-screen md:bg-[length:1920px_640px]">
         <FadeIn>
         <div className="absolute left-[10vw] z-0 h-[80vw] w-[80vw] bottom-0 md:h-[80vh] md:w-[80vh] lg:left-32">
-          <Image src={"/img/moi.png"} layout="fill" />
+          <Image src={"/img/moi.png"} layout="fill" alt="Self portrait" />
         </div>
           <aside className="absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block">
             <h1 className="md:mr-30 my-4 font-stretch text-7xl text-mint lg:mr-48">
@@ -46,9 +46,9 @@ const Home: NextPageWithLayout = () => {
 
       <div className="holo-panel z-10 shadow-panel">
         <div className="h-8"></div>
-        <h1 className="text-center font-stretch text-4xl text-greyblack md:text-6xl">
+        <h2 className="text-center font-stretch text-4xl text-greyblack md:text-6xl">
           WELCOME
-        </h1>
+        </h2>
         <div className="h-8"></div>
         <p className="relative left-1/2 -translate-x-1/2 text-center font-cocogoose text-lg font-thin md:max-w-[60vw] md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
@@ -80,7 +80,7 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-span-1 w-full scale-x-125 overflow-x-visible bg-holo p-4 shadow-panel lg:col-end-2 lg:row-span-2 lg:scale-x-100 lg:p-8">
             <div className="scale-x-[80%] lg:scale-x-100">
               <Link href={"https://discord.gg/MAQm86a3Xw"}>
-                <a className="flex flex-row-reverse content-center lg:flex-col">
+                <a className="flex flex-row-reverse content-center lg:flex-col" aria-label="Join discord">
                   <p className="py-2 pl-4 text-right font-cocogoose text-sm font-extralight text-greyblack lg:mb-4 lg:py-0 lg:pl-0 lg:text-center lg:text-lg">
                     JOIN MY <span className="font-normal">DISCORD SERVER</span>{" "}
                     AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH
@@ -97,7 +97,7 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-start-1 row-end-2 bg-holo p-[2px] lg:col-start-2">
             <div className="h-full bg-greyblack p-4 md:p-8">
               <Link href="/commissions">
-                <a>
+                <a aria-label="Commissions page">
                   <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
                     <span className="no-ligature">COMM</span>ISSIONS &gt;
                   </h3>
@@ -110,7 +110,7 @@ const Home: NextPageWithLayout = () => {
                 <p className="font-cocogoose text-xs font-extralight text-white md:text-lg">
                   CHECK OUT THE DETAILS AND FILL OUT THE FORM{" "}
                   <Link href={"/commissions"}>
-                    <a>
+                    <a aria-label="Commissions page">
                       <span className="font-normal">HERE</span>
                     </a>
                   </Link>
@@ -121,7 +121,7 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-start-2 row-end-3 bg-holo p-[2px] lg:col-start-2">
             <div className="h-full bg-greyblack p-4 md:p-8">
               <Link href="/projects">
-                <a>
+                <a aria-label="Projects page">
                   <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
                     PROJECTS &gt;
                   </h3>
@@ -136,7 +136,7 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-start-4 row-end-5 bg-holo p-[2px] md:col-start-1">
             <div className="grid h-full bg-greyblack p-4 md:p-8">
               <Link href={"/sketchbook"}>
-                <a className="row-span-1">
+                <a className="row-span-1" aria-label="Sketchbook page">
                   <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
                     SKETCHBOOK &gt;
                   </h3>
@@ -144,21 +144,21 @@ const Home: NextPageWithLayout = () => {
               </Link>
               <div className="row-start-3 row-end-4 grid grid-rows-3 items-stretch gap-2 md:row-start-2 md:row-end-3 md:grid-cols-3 md:grid-rows-1 lg:gap-4">
                 <Link href="/sketchbook?tab=0">
-                  <a>
+                  <a aria-label="Warm-up sketches">
                     <p className="no-ligature cursor-pointer border-2 border-periwinkle bg-periwinkle py-4 text-center font-stretch text-base text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle lg:text-xl">
                       WARM-UPS
                     </p>
                   </a>
                 </Link>
                 <Link href="/sketchbook?tab=1">
-                  <a>
+                  <a aria-label="Illustration sketches">
                     <p className="no-ligature cursor-pointer border-2 border-pastelpink bg-pastelpink py-4 text-center font-stretch text-base text-greyblack transition-colors hover:bg-greyblack hover:text-pastelpink lg:text-xl">
                       ILLUSTRATION
                     </p>
                   </a>
                 </Link>
                 <Link href="/sketchbook?tab=2">
-                  <a>
+                  <a aria-label="Studies">
                     <p className="no-ligature cursor-pointer border-2 border-yellowpeach bg-yellowpeach py-4 text-center font-stretch text-base text-greyblack transition-colors hover:bg-greyblack hover:text-yellowpeach lg:text-xl">
                       STUDIES
                     </p>
@@ -194,7 +194,7 @@ const Home: NextPageWithLayout = () => {
                 })}
               </div>
               <Link href={"/gallery"}>
-                <a className="flex-grow-0">
+                <a className="flex-grow-0" aria-label="Gallery">
                   <h3 className="text-holo no-ligature mt-4 bg-cover font-stretch text-xl md:text-4xl">
                     GALLERY &gt;
                   </h3>
