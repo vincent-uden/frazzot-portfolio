@@ -43,3 +43,4 @@ public/thumbnail_md
 public/thumbnail_lg
 
 .vscode
+.env
