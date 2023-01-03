@@ -4,6 +4,14 @@ import { TRPCError } from "@trpc/server";
 
 import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
+import { S3 } from "aws-sdk";
+
+const s3 = new S3({
+  region: process.env.S3_REGION,
+  accessKeyId: process.env.S3_ACCESS_KEY,
+  secretAccessKey: process.env.S3_SECRET_KEY,
+  signatureVersion: "v4",
+});
 
 export const galleryRouter = createRouter()
   .query("getAll", {
@@ -102,6 +110,30 @@ export const galleryRouter = createRouter()
     async resolve({ input, ctx }) {
       return await ctx.prisma.galleryImage.deleteMany({
         where: { id: { equals: input.id } },
+      });
+    },
+  })
+  .mutation("s3InsertOne", {
+    input: z.object({
+      name: z.string(),
+      type: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      const fileParams = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: input.name,
+        Expires: 600,
+        ContentType: input.type,
+      };
+
+      return await s3.createPresignedPost({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Fields: {
+          key: input.name,
+          "Content-type": input.type,
+        },
+        Expires: 60,
+        Conditions: [["content-length-range", 0, 104857600]],
       });
     },
   });

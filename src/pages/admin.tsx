@@ -38,6 +38,10 @@ const Admin = () => {
     onSuccess: () => refetch(),
   });
 
+  const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
+    onSuccess: () => {},
+  });
+
   const deleteAll = useCallback(() => {
     imageDeleteAllMut.mutate();
   }, [imageDeleteAllMut]);
@@ -238,6 +242,32 @@ const Admin = () => {
                 }}
               />
             </div>
+          </div>
+
+          <div className="mx-auto mt-8">
+            <SubmitButton
+              color="periwinkle"
+              text="FETCH S3 URL"
+              success={false}
+              onClick={async (_) => {
+                let file = uploadData!![0]!!;
+                let { url, fields } = await s3ImageInsertMut.mutateAsync({
+                  name: `gallery/${file.name}`,
+                  type: file.type,
+                });
+
+                const formData = new FormData();
+                Object.entries({ ...fields, file }).forEach(([key, value]) => {
+                  formData.append(key, value as string);
+                })
+
+                const upload = await fetch(url, {
+                  method: "POST",
+                  body: formData,
+                })
+
+              }}
+            />
           </div>
 
           {/* Image table */}
