@@ -56,6 +56,18 @@ export const galleryRouter = createRouter()
       });
     },
   })
+  .query("getS3ImageUrl", {
+    input: z.object({
+      src: z.string(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      return await s3.getSignedUrlPromise("getObject", {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: input.src,
+        Expires: 900, // Default
+      })
+    }
+  })
   .middleware(async ({ ctx, next }) => {
     let token = ctx.req?.headers.session_token;
     if (token != null && typeof token === "string") {

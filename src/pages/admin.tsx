@@ -16,6 +16,7 @@ const Admin = () => {
   const [uploadData, setUploadData] = useState<FileList | null>();
   const [jwt, setJwt] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
+  const [imgS3Key, setImgS3Key] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const uploadDivRef = useRef<HTMLDivElement | null>(null);
 
@@ -25,6 +26,10 @@ const Admin = () => {
 
   const { data: images, refetch } = trpc.useQuery(["gallery.getAll"]);
   const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
+  const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(["gallery.getS3ImageUrl", { src: imgS3Key }], {
+    enabled: false,
+    refetchOnWindowFocus: false,
+  });
 
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
     onSuccess: () => refetch(),
@@ -244,10 +249,10 @@ const Admin = () => {
             </div>
           </div>
 
-          <div className="mx-auto mt-8">
+          <div className="mx-auto mt-8 grid gap-8 max-w-screen-md">
             <SubmitButton
               color="periwinkle"
-              text="FETCH S3 URL"
+              text="UPLOAD TO S3"
               success={false}
               onClick={async (_) => {
                 let file = uploadData!![0]!!;
@@ -259,15 +264,33 @@ const Admin = () => {
                 const formData = new FormData();
                 Object.entries({ ...fields, file }).forEach(([key, value]) => {
                   formData.append(key, value as string);
-                })
+                });
 
                 const upload = await fetch(url, {
                   method: "POST",
                   body: formData,
-                })
-
+                });
               }}
             />
+            <input
+              className="text-input w-full border-mint/80 text-mint transition-colors focus:border-mint placeholder-mint/50"
+              type="text"
+              name="imgS3Key"
+              id="imgS3Key"
+              placeholder="Image Path"
+              onChange={(e) => setImgS3Key(e.target.value)}
+              value={imgS3Key}
+            />
+            <SubmitButton
+              color="mint"
+              text="FETCH S3 IMAGE URL"
+              success={false}
+              onClick={async (_) => {
+                refetchS3();
+              }}
+            />
+            <p className="text-white w-full font-mono">{getS3ImgUrl}</p>
+            <img src={getS3ImgUrl} alt="" />
           </div>
 
           {/* Image table */}
