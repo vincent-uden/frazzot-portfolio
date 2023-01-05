@@ -158,6 +158,8 @@ export const galleryRouter = createRouter()
   .mutation("s3GenThumbnails", {
     input: z.object({
       src: z.string(),
+      name: z.string(),
+      categoryId: z.string().nullish(),
     }),
     async resolve({ input, ctx }) {
       const url = await s3.getSignedUrlPromise("getObject", {
@@ -166,17 +168,15 @@ export const galleryRouter = createRouter()
         Expires: 900, // Default
       });
 
-      // TODO: Figure out a new way to do this. Readable.fromWeb is not a function
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;
       const fileStream = fs.createWriteStream(tmpPath);
 
-      const req = https.get(url, async (res) => {
-        console.log("Piping");
+      https.get(url, async (res) => {
         res.pipe(fileStream);
 
-        await new Promise(fulfill => fileStream.on("finish", fulfill))
-        console.log("DONE PIPING");
+        await new Promise((fulfill) => fileStream.on("finish", fulfill));
+        fileStream.close();
 
         await sharp(tmpPath).resize(null, 200).toFile(`/tmp/1${baseName}`);
 
@@ -184,20 +184,57 @@ export const galleryRouter = createRouter()
 
         await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
 
-        //let upFs = fs.createReadStream(`/tmp/1${baseName}`);
+        let upFs = fs.createReadStream(`/tmp/1${baseName}`);
 
-        /*let uploadParams = {
+        let uploadParams = {
           Bucket: process.env.S3_BUCKET_NAME!!,
-          Key: `/thumbnail/${baseName}`,
+          Key: `thumbnail/${baseName}`,
           Body: upFs,
-          ACL: "public-read",
         };
 
-        s3.upload(uploadParams, (err: any, data: any) => {
+        s3.upload(uploadParams, (err: any, _: any) => {
           if (err) {
             console.log(err);
           }
-        });*/
+        });
+
+        let upFs2 = fs.createReadStream(`/tmp/2${baseName}`);
+        uploadParams.Key = `thumbnail_md/${baseName}`;
+        uploadParams.Body = upFs2;
+        s3.upload(uploadParams, (err: any, _: any) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        let upFs3 = fs.createReadStream(`/tmp/3${baseName}`);
+        uploadParams.Key = `thumbnail_lg/${baseName}`;
+        uploadParams.Body = upFs3;
+        s3.upload(uploadParams, (err: any, _: any) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        const img = await sharp(tmpPath).metadata();
+        const thmb = await sharp(`/tmp/1${baseName}`).metadata();
+
+        await ctx.prisma.galleryImage.create({
+          data: {
+            name: input.name,
+            path: baseName,
+            w: img.width,
+            h: img.height,
+            thmb_w: thmb.width,
+            thmb_h: thmb.height,
+            categoryId: input.categoryId,
+          },
+        });
+
+        fs.unlink(`/tmp/1${baseName}`, () => {});
+        fs.unlink(`/tmp/2${baseName}`, () => {});
+        fs.unlink(`/tmp/3${baseName}`, () => {});
+        fs.unlink(`/tmp/${baseName}`, () => {});
       });
     },
   });

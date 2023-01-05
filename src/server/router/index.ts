@@ -21,7 +21,7 @@ console.log(
   process.env.S3_SECRET_KEY,
   process.env.S3_BUCKET_NAME,
   process.env.GMAIL_KEY,
-  process.env.SHA_SECRET,
-)
+  process.env.SHA_SECRET
+);
 // export type definition of API
 export type AppRouter = typeof appRouter;

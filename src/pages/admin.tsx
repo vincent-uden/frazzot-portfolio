@@ -1,7 +1,5 @@
 import { useCallback, useRef, useState } from "react";
 import { trpc } from "../utils/trpc";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Cookies from "universal-cookie";
 
 import cuid from "cuid";
@@ -24,7 +22,9 @@ const Admin = () => {
 
   const cookies = new Cookies();
 
-  const { data: images, refetch } = trpc.useQuery(["gallery.getAll"]);
+  const { data: images, refetch: refetchImgs } = trpc.useQuery([
+    "gallery.getAll",
+  ]);
   const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(
     ["gallery.getS3ImageUrl", { src: imgS3Key }],
@@ -35,24 +35,26 @@ const Admin = () => {
   );
 
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
-    onSuccess: () => refetch(),
+    onSuccess: () => refetchImgs(),
   });
 
   const imageDeleteAllMut = trpc.useMutation(["gallery.deleteAll"], {
-    onSuccess: () => refetch(),
+    onSuccess: () => refetchImgs(),
   });
 
   const imageDeleteOneMut = trpc.useMutation(["gallery.deleteById"], {
-    onSuccess: () => refetch(),
+    onSuccess: () => refetchImgs(),
   });
 
   const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
-    onSuccess: () => {},
+    onSuccess: () => {
+      refetchImgs();
+    },
   });
 
   const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
     onSuccess: () => {
-      console.log("HELLO");
+      refetchImgs();
     },
   });
 
@@ -73,7 +75,7 @@ const Admin = () => {
         setJwt(token);
         cookies.set("session_token", token);
 
-        refetch();
+        refetchImgs();
       }
     },
   });
@@ -130,6 +132,33 @@ const Admin = () => {
       }
     };
   }, [uploadData, imageName, imageInsertMut]);
+
+  const uploadS3 = async () => {
+    let file = uploadData!![0]!!;
+    let { url, fields } = await s3ImageInsertMut.mutateAsync({
+      name: `gallery/${file.name}`,
+      type: file.type,
+    });
+
+    const formData = new FormData();
+    Object.entries({ ...fields, file }).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    const upload = await fetch(url, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (upload.ok) {
+      // TRPC convert image mutation
+      s3GenThmbs.mutate({
+        src: `gallery/${file.name}`,
+        name: imageName,
+        categoryId: categories?.at(selectedCategory)?.id,
+      });
+    }
+  };
 
   return (
     <>
@@ -247,14 +276,6 @@ const Admin = () => {
                 })}
               </ul>
               <div className="h-8"></div>
-              <SubmitButton
-                color="mint"
-                text="UPLOAD IMAGE"
-                success={false}
-                onClick={(_) => {
-                  bigImage();
-                }}
-              />
             </div>
           </div>
 
@@ -263,28 +284,7 @@ const Admin = () => {
               color="periwinkle"
               text="UPLOAD TO S3"
               success={false}
-              onClick={async (_) => {
-                let file = uploadData!![0]!!;
-                let { url, fields } = await s3ImageInsertMut.mutateAsync({
-                  name: `gallery/${file.name}`,
-                  type: file.type,
-                });
-
-                const formData = new FormData();
-                Object.entries({ ...fields, file }).forEach(([key, value]) => {
-                  formData.append(key, value as string);
-                });
-
-                const upload = await fetch(url, {
-                  method: "POST",
-                  body: formData,
-                });
-
-                if (upload.ok) {
-                  // TRPC convert image mutation
-                  s3GenThmbs.mutate({src: `gallery/${file.name}`});
-                }
-              }}
+              onClick={(_) => uploadS3()}
             />
             <input
               className="text-input w-full border-mint/80 text-mint placeholder-mint/50 transition-colors focus:border-mint"
