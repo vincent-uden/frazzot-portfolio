@@ -26,10 +26,13 @@ const Admin = () => {
 
   const { data: images, refetch } = trpc.useQuery(["gallery.getAll"]);
   const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
-  const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(["gallery.getS3ImageUrl", { src: imgS3Key }], {
-    enabled: false,
-    refetchOnWindowFocus: false,
-  });
+  const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(
+    ["gallery.getS3ImageUrl", { src: imgS3Key }],
+    {
+      enabled: false,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
     onSuccess: () => refetch(),
@@ -45,6 +48,12 @@ const Admin = () => {
 
   const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
     onSuccess: () => {},
+  });
+
+  const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
+    onSuccess: () => {
+      console.log("HELLO");
+    },
   });
 
   const deleteAll = useCallback(() => {
@@ -249,7 +258,7 @@ const Admin = () => {
             </div>
           </div>
 
-          <div className="mx-auto mt-8 grid gap-8 max-w-screen-md">
+          <div className="mx-auto mt-8 grid max-w-screen-md gap-8">
             <SubmitButton
               color="periwinkle"
               text="UPLOAD TO S3"
@@ -270,10 +279,15 @@ const Admin = () => {
                   method: "POST",
                   body: formData,
                 });
+
+                if (upload.ok) {
+                  // TRPC convert image mutation
+                  s3GenThmbs.mutate({src: `gallery/${file.name}`});
+                }
               }}
             />
             <input
-              className="text-input w-full border-mint/80 text-mint transition-colors focus:border-mint placeholder-mint/50"
+              className="text-input w-full border-mint/80 text-mint placeholder-mint/50 transition-colors focus:border-mint"
               type="text"
               name="imgS3Key"
               id="imgS3Key"
@@ -289,7 +303,7 @@ const Admin = () => {
                 refetchS3();
               }}
             />
-            <p className="text-white w-full font-mono">{getS3ImgUrl}</p>
+            <p className="w-full font-mono text-white">{getS3ImgUrl}</p>
             <img src={getS3ImgUrl} alt="" />
           </div>
 

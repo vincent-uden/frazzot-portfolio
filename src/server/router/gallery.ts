@@ -5,6 +5,12 @@ import { TRPCError } from "@trpc/server";
 import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
 import { S3 } from "aws-sdk";
+import path from "path";
+
+import * as fs from "fs";
+import * as https from "https";
+
+const sharp = require("sharp");
 
 const s3 = new S3({
   region: process.env.S3_REGION,
@@ -65,8 +71,8 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME,
         Key: input.src,
         Expires: 900, // Default
-      })
-    }
+      });
+    },
   })
   .middleware(async ({ ctx, next }) => {
     let token = ctx.req?.headers.session_token;
@@ -146,6 +152,52 @@ export const galleryRouter = createRouter()
         },
         Expires: 60,
         Conditions: [["content-length-range", 0, 104857600]],
+      });
+    },
+  })
+  .mutation("s3GenThumbnails", {
+    input: z.object({
+      src: z.string(),
+    }),
+    async resolve({ input, ctx }) {
+      const url = await s3.getSignedUrlPromise("getObject", {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: input.src,
+        Expires: 900, // Default
+      });
+
+      // TODO: Figure out a new way to do this. Readable.fromWeb is not a function
+      const baseName = path.basename(input.src);
+      const tmpPath = `/tmp/${baseName}`;
+      const fileStream = fs.createWriteStream(tmpPath);
+
+      const req = https.get(url, async (res) => {
+        console.log("Piping");
+        res.pipe(fileStream);
+
+        await new Promise(fulfill => fileStream.on("finish", fulfill))
+        console.log("DONE PIPING");
+
+        await sharp(tmpPath).resize(null, 200).toFile(`/tmp/1${baseName}`);
+
+        await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
+
+        await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
+
+        //let upFs = fs.createReadStream(`/tmp/1${baseName}`);
+
+        /*let uploadParams = {
+          Bucket: process.env.S3_BUCKET_NAME!!,
+          Key: `/thumbnail/${baseName}`,
+          Body: upFs,
+          ACL: "public-read",
+        };
+
+        s3.upload(uploadParams, (err: any, data: any) => {
+          if (err) {
+            console.log(err);
+          }
+        });*/
       });
     },
   });
