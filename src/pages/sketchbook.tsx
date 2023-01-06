@@ -15,7 +15,7 @@ const Sketchbook = () => {
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const { data: images, refetch } = trpc.useQuery([
-    "gallery.getImages",
+    "gallery.getAllS3Thumbnails",
     { categoryName: categoryNames[selectedCategory]!! },
   ]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
@@ -204,8 +204,8 @@ const Sketchbook = () => {
                         className="relative top-0 m-0 inline-block h-full p-0"
                         key={n}
                       >
-                        <Image
-                          src={`/thumbnail/${images?.at(i)?.path}`}
+                        <img
+                          src={images?.at(i)?.url ?? ""}
                           width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                           height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
                         />
@@ -236,7 +236,7 @@ const Sketchbook = () => {
           onClick={(e) => setOpenImage(null)}
         >
           <img
-            src={`/thumbnail_lg/${images?.at(openImage)?.path}`}
+            src={images?.at(openImage)?.urlLg ?? ""}
             className="z-50 max-h-[80vh] max-w-screen-xl"
           />
         </div>

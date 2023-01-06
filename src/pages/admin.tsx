@@ -34,6 +34,8 @@ const Admin = () => {
     }
   );
 
+  const { data: allS3Urls } = trpc.useQuery(["gallery.getAllS3Thumbnails"]);
+
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
     onSuccess: () => refetchImgs(),
   });
@@ -189,6 +191,14 @@ const Admin = () => {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitLoginMut.mutate({
+                  name,
+                  password,
+                });
+              }
+            }}
           />
           <InputLabel
             htmlFor="password"
@@ -206,6 +216,14 @@ const Admin = () => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitLoginMut.mutate({
+                  name,
+                  password,
+                });
+              }
+            }}
           />
           <div className="h-8"></div>
           <SubmitButton
@@ -378,6 +396,10 @@ const Admin = () => {
 
             <div className="h-16"></div>
           </div>
+
+          {allS3Urls?.map((v, i) => {
+            return <img src={v.url!!} alt="" key={`s3img-${i}`} className="w-96 h-auto" />
+          })}
         </>
       )}
     </>

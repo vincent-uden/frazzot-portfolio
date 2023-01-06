@@ -71,6 +71,10 @@ model GalleryImage {
   createdAt  DateTime       @default(now())
   categoryId String?
   category   ImageCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  url        String?
+  urlExpires DateTime       @default(now())
+  urlLg        String?
+  urlLgExpires DateTime       @default(now())
 }
 
 model ImageCategory {
