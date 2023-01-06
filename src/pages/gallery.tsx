@@ -56,7 +56,7 @@ export function tileImages(
 
 const Gallery = () => {
   const { data: images, refetch } = trpc.useQuery([
-    "gallery.getImages",
+    "gallery.getAllS3Thumbnails",
     { categoryName: "Gallery" },
   ]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
@@ -155,17 +155,18 @@ const Gallery = () => {
                           className="relative top-0 m-0 inline-block h-full p-0"
                           key={`image-${n}`}
                         >
-                          <Image
-                            src={`/thumbnail/${images?.at(i)?.path}`}
+                          <img
+                            src={images?.at(i)?.url ?? ""}
                             width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                             height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
                             key={`img-${r}-${n}`}
                             alt={images?.at(i)?.name ?? "Thumbnail"}
+                            className="shadow-xl"
                           />
                           <div
                             className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
                             style={{ transform: `translateY(-${gap}px)` }}
-                            onClick={(e) => setOpenImage(i)}
+                            onClick={(_) => setOpenImage(i)}
                           >
                             <p className="absolute bottom-4 left-4 text-lg text-white">
                               {images?.at(i)?.name}
@@ -213,7 +214,7 @@ const Gallery = () => {
           onClick={(e) => setOpenImage(null)}
         >
           <img
-            src={`/thumbnail_lg/${images?.at(openImage)?.path}`}
+            src={images?.at(openImage)?.urlLg ?? ""}
             className="z-50 max-h-[80vh] max-w-screen-xl"
           />
         </div>
