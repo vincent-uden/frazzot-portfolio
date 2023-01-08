@@ -5,6 +5,8 @@ import { EmailError } from "../utils/errortypes";
 import InputLabel from "../components/InputLabel";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Contact = () => {
   const [name, setName] = useState<string>("");
@@ -40,50 +42,72 @@ const Contact = () => {
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-64"></div>
-        <h1 className="pl-4 text-center font-stretch text-6xl text-pastelpink">
-          CONTACT
-        </h1>
-        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
-          <h2 className="text-center font-stretch text-3xl text-greyblack">
-            <span>HOW TO CONTACT AND CON</span>{" "}
-            <span className="relative -left-4">NECT WITH ME_</span>
+        <h1 className="page-header text-pastelpink">CONTACT</h1>
+        <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
+          <h2 className="page-sub-header no-ligature">
+            CONTACT & AND CONNECT WITH ME_
           </h2>
         </div>
       </div>
-      <div className="flex flex-row px-48">
+      <div className="grid grid-cols-1 px-4 md:flex md:flex-row lg:px-48">
+        <div className="mb-24 flex w-screen -translate-x-4 flex-row md:hidden">
+          <aside className="bg-pastelpink px-6 py-4">
+            <FontAwesomeIcon
+              icon={faDiscord}
+              className="h-20 w-20 text-greyblack"
+            />
+          </aside>
+          <aside className="relative flex-grow bg-holo bg-cover shadow-left">
+            <Link href={"https://discord.gg/MAQm86a3Xw"}>
+              <h2 className="no-ligature absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-xl text-greyblack transition-transform hover:scale-110">
+                <span className="block">JOIN MY</span>
+                <span className="block">COMMUNITY</span>
+                <span className="block">HERE &gt;</span>
+              </h2>
+            </Link>
+          </aside>
+        </div>
+      <div className="h-[2.65rem] bg-pastelpink w-screen -translate-x-4 mb-24 md:hidden">
+        <div className="ml-[10%] w-fit bg-greyblack px-8">
+          <h1 className="relative -top-[.40rem] text-center font-stretch text-6xl text-pastelpink">
+            FAQ
+          </h1>
+          <p className="font-cocogoose font-extralight text-pastelpink -translate-y-3">AND ANSWERS</p>
+        </div>
+      </div>
         <aside>
-          <div className="border-2 border-lilac p-12">
-            <h2 className="no-ligature font-stretch text-2xl text-pastelpink">
+          <div className="border-2 border-lilac px-4 py-8 md:px-12 md:py-12">
+            <h2 className="no-ligature font-stretch text-xl text-pastelpink md:text-2xl">
               COLLABORATION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-lg font-thin text-pastelpink">
+            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
               IF YOU WISH TO COLLABORATE WITH ME. REACH OUT TO ME THROUGH EMAIL
               OR DISCORD
             </p>
           </div>
-          <div className="my-8 border-2 border-sky p-12">
-            <h2 className="no-ligature font-stretch text-2xl text-pastelpink">
-              ORDER PHYSICAL COPIES ?
+          <div className="my-8 border-2 border-sky px-4 py-8 md:px-12 md:py-12">
+            <h2 className="no-ligature font-stretch text-xl text-pastelpink md:text-2xl">
+              PHYSICAL COPIES ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-lg font-thin text-pastelpink">
+            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
               SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL
               COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE
               INTERESTED.
             </p>
             <div className="h-4"></div>
-            <p className="font-cocogoose text-lg font-thin text-pastelpink">
+            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
               IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
           </div>
-          <div className="border-2 border-mint p-12">
-            <h2 className="font-stretch text-2xl text-pastelpink">
+          <div className="border-2 border-mint px-4 py-8 md:px-12 md:py-12">
+            <h2 className="font-stretch text-xl text-pastelpink md:text-2xl">
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-lg font-thin text-pastelpink">
+            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
               READ MORE ABOUT MY COMMISSIONS ON THE{" "}
               <Link href="/commissions">
                 <span className="cursor-pointer font-cocogoose font-normal">
@@ -94,7 +118,7 @@ const Contact = () => {
           </div>
         </aside>
         <div className="mx-8 w-8 bg-holo"></div>
-        <aside className="flex flex-col">
+        <aside className="row-start-1 row-end-2 flex flex-col">
           <h2 className="w-[20em] font-stretch text-2xl text-pastelpink">
             EMAIL FORM
           </h2>
@@ -163,6 +187,7 @@ const Contact = () => {
                 placeholder="Interested in commissions? Fill out the form on the commission page"
               />
             </div>
+            <div className="h-8"></div>
             <SubmitButton
               color="pastelpink"
               onClick={(_) => submitFormMut.mutate({ name, email, subject })}
@@ -170,9 +195,10 @@ const Contact = () => {
             />
           </div>
         </aside>
+        <div className="row-start-2 row-end-3 h-24"></div>
       </div>
       <div className="h-40"></div>
-      <div className="flex w-full flex-row">
+      <div className="hidden w-full flex-row md:flex">
         <aside className="bg-pastelpink px-24 py-12">
           <img src="/DiscordBrand.svg" alt="" />
         </aside>

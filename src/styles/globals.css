@@ -7,7 +7,7 @@
 }
 
 .page-sub-header {
-  @apply text-center font-stretch text-lg text-greyblack md:text-3xl;
+  @apply text-center font-stretch text-xs text-greyblack md:text-3xl;
 }
 
 .container * {
@@ -98,11 +98,11 @@
 
 @layer components {
   .label {
-    @apply mb-2 block font-cocogoose text-lg font-thin text-pastelpink;
+    @apply mb-2 block font-cocogoose text-lg font-extralight text-pastelpink;
   }
 
   .text-input {
-    @apply block w-full border-b-2 border-pastelpink bg-transparent font-cocogoose text-base font-thin text-pastelpink outline-none;
+    @apply block w-full border-b-2 border-pastelpink bg-transparent font-cocogoose text-base font-extralight text-pastelpink outline-none;
   }
 
   .text-input:focus {
