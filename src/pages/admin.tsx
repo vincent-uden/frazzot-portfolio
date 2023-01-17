@@ -398,7 +398,14 @@ const Admin = () => {
           </div>
 
           {allS3Urls?.map((v, i) => {
-            return <img src={v.url!!} alt="" key={`s3img-${i}`} className="w-96 h-auto" />
+            return (
+              <img
+                src={v.url!!}
+                alt=""
+                key={`s3img-${i}`}
+                className="h-auto w-96"
+              />
+            );
           })}
         </>
       )}
