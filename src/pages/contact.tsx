@@ -77,7 +77,7 @@ const Contact = () => {
             </p>
           </div>
         </div>
-        <aside className="mr-6 lg:mr-0">
+        <aside className="mr-0 md:mr-6 lg:mr-0">
           <div className="border-2 border-lilac px-4 py-8 md:px-8 md:py-8 lg:px-12 lg:py-12">
             <h2 className="no-ligature font-stretch text-xl text-pastelpink md:text-2xl">
               COLLABORATION ?
