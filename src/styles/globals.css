@@ -7,7 +7,7 @@
 }
 
 .page-sub-header {
-  @apply text-center font-stretch text-xs text-greyblack md:text-3xl;
+  @apply text-center font-stretch text-xs text-greyblack md:text-2xl lg:text-3xl;
 }
 
 .container * {

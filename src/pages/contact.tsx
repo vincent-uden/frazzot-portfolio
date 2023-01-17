@@ -49,7 +49,7 @@ const Contact = () => {
           </h2>
         </div>
       </div>
-      <div className="grid grid-cols-1 px-4 md:flex md:flex-row lg:px-48">
+      <div className="grid grid-cols-1 px-4 md:flex md:flex-row xl:px-32 2xl:px-48">
         <div className="mb-24 flex w-screen -translate-x-4 flex-row md:hidden">
           <aside className="bg-pastelpink px-6 py-4">
             <FontAwesomeIcon
@@ -67,16 +67,18 @@ const Contact = () => {
             </Link>
           </aside>
         </div>
-      <div className="h-[2.65rem] bg-pastelpink w-screen -translate-x-4 mb-24 md:hidden">
-        <div className="ml-[10%] w-fit bg-greyblack px-8">
-          <h1 className="relative -top-[.40rem] text-center font-stretch text-6xl text-pastelpink">
-            FAQ
-          </h1>
-          <p className="font-cocogoose font-extralight text-pastelpink -translate-y-3">AND ANSWERS</p>
+        <div className="mb-24 h-[2.65rem] w-screen -translate-x-4 bg-pastelpink md:hidden">
+          <div className="ml-[10%] w-fit bg-greyblack px-8">
+            <h1 className="relative -top-[.40rem] text-center font-stretch text-6xl text-pastelpink">
+              FAQ
+            </h1>
+            <p className="-translate-y-3 font-cocogoose font-extralight text-pastelpink">
+              AND ANSWERS
+            </p>
+          </div>
         </div>
-      </div>
-        <aside>
-          <div className="border-2 border-lilac px-4 py-8 md:px-12 md:py-12">
+        <aside className="mr-6 lg:mr-0">
+          <div className="border-2 border-lilac px-4 py-8 md:px-8 md:py-8 lg:px-12 lg:py-12">
             <h2 className="no-ligature font-stretch text-xl text-pastelpink md:text-2xl">
               COLLABORATION ?
             </h2>
@@ -86,7 +88,7 @@ const Contact = () => {
               OR DISCORD
             </p>
           </div>
-          <div className="my-8 border-2 border-sky px-4 py-8 md:px-12 md:py-12">
+          <div className="my-8 border-2 border-sky px-4 py-8 md:px-8 md:py-8 lg:px-12 lg:py-12">
             <h2 className="no-ligature font-stretch text-xl text-pastelpink md:text-2xl">
               PHYSICAL COPIES ?
             </h2>
@@ -102,7 +104,7 @@ const Contact = () => {
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
           </div>
-          <div className="border-2 border-mint px-4 py-8 md:px-12 md:py-12">
+          <div className="border-2 border-mint px-4 py-8 md:px-8 md:py-8 lg:px-12 lg:py-12">
             <h2 className="font-stretch text-xl text-pastelpink md:text-2xl">
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
@@ -117,9 +119,9 @@ const Contact = () => {
             </p>
           </div>
         </aside>
-        <div className="mx-8 w-8 bg-holo"></div>
-        <aside className="row-start-1 row-end-2 flex flex-col">
-          <h2 className="w-[20em] font-stretch text-2xl text-pastelpink">
+        <div className="mx-4 hidden w-8 bg-holo lg:block xl:mx-8"></div>
+        <aside className="row-start-1 row-end-2 flex flex-col md:w-fit">
+          <h2 className="font-stretch text-2xl text-pastelpink md:w-72 lg:w-[20em]">
             EMAIL FORM
           </h2>
           <div className="h-8"></div>
@@ -197,7 +199,7 @@ const Contact = () => {
         </aside>
         <div className="row-start-2 row-end-3 h-24"></div>
       </div>
-      <div className="h-40"></div>
+      <div className="hidden h-40 md:block"></div>
       <div className="hidden w-full flex-row md:flex">
         <aside className="bg-pastelpink px-24 py-12">
           <img src="/DiscordBrand.svg" alt="" />
