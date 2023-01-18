@@ -120,7 +120,7 @@ const Contact = () => {
           </div>
         </aside>
         <div className="mx-4 hidden w-8 bg-holo lg:block xl:mx-8"></div>
-        <aside className="row-start-1 row-end-2 flex flex-col md:w-fit">
+        <aside className="row-start-1 row-end-2 flex flex-col md:w-fit p-8 border-2 border-pastelpink">
           <h2 className="font-stretch text-2xl text-pastelpink md:w-72 lg:w-[20em]">
             EMAIL FORM
           </h2>
@@ -179,7 +179,7 @@ const Contact = () => {
                 ]}
               />
               <textarea
-                className="text-input resize-none border-2 p-2 text-base transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-lilac"
+                className="w-full border-transparent font-cocogoose font-extralight text-pastelpink outline-none resize-none border-2 p-2 text-base transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-pastelpink bg-pastelpink/10"
                 name=""
                 id="subject"
                 rows={8}
