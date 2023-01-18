@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .page-header {
-  @apply text-center font-stretch text-4xl md:text-6xl;
+  @apply text-center font-stretch text-3xl md:text-4xl lg:text-6xl;
 }
 
 .page-sub-header {
@@ -98,7 +98,7 @@
 
 @layer components {
   .label {
-    @apply mb-2 block font-cocogoose text-lg font-extralight text-pastelpink;
+    @apply mb-2 block font-cocogoose text-base font-extralight text-pastelpink;
   }
 
   .text-input {
