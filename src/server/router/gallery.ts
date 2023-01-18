@@ -74,6 +74,72 @@ export const galleryRouter = createRouter()
       });
     },
   })
+  .query("getAllS3Thumbnails", {
+    input: z.object({
+      categoryName: z.string(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      const imgs = await ctx.prisma.galleryImage.findMany();
+      for (let i = 0; i < imgs.length; i++) {
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+
+        if ((imgs[i]?.urlExpires ?? 0) < now) {
+          const url = await s3.getSignedUrlPromise("getObject", {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: `thumbnail/${imgs[i]!!.path}`,
+            Expires: 604800, // 7 days, which is the max
+          });
+
+          const expires = new Date();
+          expires.setDate(expires.getDate() + 7);
+
+          await ctx.prisma.galleryImage.update({
+            where: {
+              id: imgs[i]!!.id,
+            },
+            data: {
+              url: url,
+              urlExpires: expires,
+            },
+          });
+        }
+        if ((imgs[i]?.urlLgExpires ?? 0) < now) {
+          const url = await s3.getSignedUrlPromise("getObject", {
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: `thumbnail_lg/${imgs[i]!!.path}`,
+            Expires: 604800, // 7 days, which is the max
+          });
+
+          const expires = new Date();
+          expires.setDate(expires.getDate() + 7);
+
+          await ctx.prisma.galleryImage.update({
+            where: {
+              id: imgs[i]!!.id,
+            },
+            data: {
+              urlLg: url,
+              urlLgExpires: expires,
+            },
+          });
+        }
+      }
+      let category = await ctx.prisma.imageCategory.findUnique({
+        where: {
+          name: input.categoryName,
+        },
+      });
+      return await ctx.prisma.galleryImage.findMany({
+        where: {
+          categoryId: category!!.id,
+        },
+        include: {
+          category: true,
+        },
+      });
+    },
+  })
   .middleware(async ({ ctx, next }) => {
     let token = ctx.req?.headers.session_token;
     if (token != null && typeof token === "string") {
@@ -238,69 +304,4 @@ export const galleryRouter = createRouter()
       });
     },
   })
-  .query("getAllS3Thumbnails", {
-    input: z.object({
-      categoryName: z.string(),
-    }),
-    resolve: async ({ input, ctx }) => {
-      const imgs = await ctx.prisma.galleryImage.findMany();
-      for (let i = 0; i < imgs.length; i++) {
-        const now = new Date();
-        now.setHours(now.getHours() + 1);
-
-        if ((imgs[i]?.urlExpires ?? 0) < now) {
-          const url = await s3.getSignedUrlPromise("getObject", {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: `thumbnail/${imgs[i]!!.path}`,
-            Expires: 604800, // 7 days, which is the max
-          });
-
-          const expires = new Date();
-          expires.setDate(expires.getDate() + 7);
-
-          await ctx.prisma.galleryImage.update({
-            where: {
-              id: imgs[i]!!.id,
-            },
-            data: {
-              url: url,
-              urlExpires: expires,
-            },
-          });
-        }
-        if ((imgs[i]?.urlLgExpires ?? 0) < now) {
-          const url = await s3.getSignedUrlPromise("getObject", {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: `thumbnail_lg/${imgs[i]!!.path}`,
-            Expires: 604800, // 7 days, which is the max
-          });
-
-          const expires = new Date();
-          expires.setDate(expires.getDate() + 7);
-
-          await ctx.prisma.galleryImage.update({
-            where: {
-              id: imgs[i]!!.id,
-            },
-            data: {
-              urlLg: url,
-              urlLgExpires: expires,
-            },
-          });
-        }
-      }
-      let category = await ctx.prisma.imageCategory.findUnique({
-        where: {
-          name: input.categoryName,
-        },
-      });
-      return await ctx.prisma.galleryImage.findMany({
-        where: {
-          categoryId: category!!.id,
-        },
-        include: {
-          category: true,
-        },
-      });
-    },
-  });
+  ;
