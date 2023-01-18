@@ -60,15 +60,15 @@ const Comissions = () => {
         </div>
       </div>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x px-4 md:px-[20%] pt-12">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x px-4 md:px-8 lg:px-[20%] pt-12">
         <div className="flex flex-col md:flex-row">
           <div className="block md:inline-block md:w-[40%]">
             <div className="flex h-[40%] w-full flex-col justify-around bg-periwinkle text-center">
-              <h2 className="font-stretch text-lg md:text-2xl text-greyblack py-4">TERMS</h2>
+              <h2 className="font-stretch text-lg md:text-xl lg:text-2xl text-greyblack py-4">TERMS</h2>
             </div>
             <div className="h-6 md:h-[20%]"></div>
             <div className="flex h-[40%] w-full flex-col justify-around bg-mint text-center">
-              <h2 className="font-stretch text-lg md:text-2xl text-greyblack py-4">
+              <h2 className="font-stretch text-lg md:text-xl lg:text-2xl text-greyblack py-4">
                 INFORMATION
               </h2>
             </div>
