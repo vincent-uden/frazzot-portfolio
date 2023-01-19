@@ -1,0 +1,14 @@
+.blog-post h1 {
+}
+
+.blog-post h2 {
+    @apply font-cocogoose font-bold text-sky text-xl mb-8;
+}
+
+.blog-post p {
+    @apply font-cocogoose font-extralight text-sky text-base mb-4;
+}
+
+.blog-post .date-header p {
+    @apply font-neou-bold text-sky border-b-4 border-sky;
+}

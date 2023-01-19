@@ -4,6 +4,7 @@ import type { AppRouter } from "../server/router";
 import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
+import "../styles/markdown.css";
 import Cookies from "universal-cookie";
 
 import type { ReactElement, ReactNode } from "react";

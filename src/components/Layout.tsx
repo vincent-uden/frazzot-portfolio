@@ -16,7 +16,6 @@ interface Props {
   children: ReactNode;
 }
 
-// TODO: Fix menu toggle transition and js functionality
 const Layout = ({ children }: Props) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [greyMenuOpen, setGreyMenuOpen] = useState<boolean>(false);

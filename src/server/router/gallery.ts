@@ -303,5 +303,4 @@ export const galleryRouter = createRouter()
         fs.unlink(`/tmp/${baseName}`, () => {});
       });
     },
-  })
-  ;
+  });
