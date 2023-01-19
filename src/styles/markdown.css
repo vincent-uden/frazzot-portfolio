@@ -12,3 +12,17 @@
 .blog-post .date-header p {
     @apply font-neou-bold text-sky border-b-4 border-sky;
 }
+
+.blog-post .split-stack {
+    display: flex;
+    flex-direction: row;
+}
+
+.blog-post .split-stack aside {
+    flex-basis: 0;
+}
+
+.blog-post .split-stack img {
+    width: 100%;
+    height: auto;
+}
