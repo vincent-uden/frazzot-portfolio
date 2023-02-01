@@ -50,7 +50,7 @@ const Home: NextPageWithLayout = () => {
           WELCOME
         </h2>
         <div className="h-8"></div>
-        <p className="relative left-1/2 -translate-x-1/2 text-center font-cocogoose text-lg font-thin md:max-w-[60vw] md:text-2xl">
+        <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-cocogoose text-lg font-thin md:max-w-[60vw] md:px-0 md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
           GALLERY TO COMMISSION DETAILS.
         </p>
@@ -75,7 +75,7 @@ const Home: NextPageWithLayout = () => {
       </div>
 
       <div className="h-8 md:h-24"></div>
-      <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_320px] bg-bottom bg-repeat-x pb-64">
+      <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:768px_150px] bg-bottom bg-repeat-x pb-44 md:bg-[length:1920px_320px] md:pb-64">
         <div className="index-grid mx-auto w-[90vw] md:w-[80vw]">
           <div className="col-start-1 col-end-3 row-span-1 w-full scale-x-125 overflow-x-visible bg-holo p-4 shadow-panel lg:col-end-2 lg:row-span-2 lg:scale-x-100 lg:p-8">
             <div className="scale-x-[80%] lg:scale-x-100">

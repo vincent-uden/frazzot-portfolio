@@ -10,14 +10,15 @@ const About: NextPage = () => {
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <div className="h-48 md:h-64"></div>
-      <h1 className="page-header text-periwinkle">ABOUT</h1>
-      <div className="mt-2 bg-holo bg-cover py-2 md:mt-8">
-        <h2 className="page-sub-header hidden lg:block">
-          A SHORT INTRODUCTION TO THE ARTIST_
-        </h2>
-        <h2 className="page-sub-header lg:hidden">INTRO TO THE ARTIST_</h2>
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
+        <div className="h-48 md:h-64"></div>
+        <h1 className="page-header text-periwinkle">ABOUT</h1>
+        <div className="mt-2 bg-holo bg-cover py-2 md:mt-8">
+          <h2 className="page-sub-header hidden lg:block">
+            A SHORT INTRODUCTION TO THE ARTIST_
+          </h2>
+          <h2 className="page-sub-header lg:hidden">INTRO TO THE ARTIST_</h2>
+        </div>
       </div>
 
       <div className="h-24"></div>
@@ -41,7 +42,7 @@ const About: NextPage = () => {
               <div className="h-4 md:h-8"></div>
               <p className="font-cocogoose text-xs font-extralight text-lilac md:text-lg">
                 WELCOME TO MY WEBSITE! I'M FRAZZOT A{" "}
-                <span className="font-neou-bold">21</span>-YEAR-OLD ARTIST AND
+                <span className="font-neou-bold">22</span>-YEAR-OLD ARTIST AND
                 STUDENT BASED IN GOTHENBURG, SWEDEN. I LIKE TO PLAY VIDEO GAMES,
                 WORKOUT AND CREATE STUFF.
               </p>
