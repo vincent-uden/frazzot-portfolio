@@ -20,13 +20,15 @@ export const BlogPost = ({ content, data }: any) => {
         <div className="p-8">{content}</div>
       </div>
 
-      <div className="h-8"/>
-      <div className="max-w-[920px] mx-auto">
+      <div className="h-8" />
+      <div className="mx-auto max-w-[920px]">
         <Link href="/blog">
-          <a className="inline-block float-right bg-holo text-greyblack font-stretch text-xl py-6 px-28 bg-[length:600px_600px]">BACK</a>
+          <a className="float-right inline-block bg-holo bg-[length:600px_600px] py-6 px-28 font-stretch text-xl text-greyblack">
+            BACK
+          </a>
         </Link>
       </div>
-    <div className="h-[330px] w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x"/>
+      <div className="h-[330px] w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-repeat-x" />
     </div>
   );
 };
