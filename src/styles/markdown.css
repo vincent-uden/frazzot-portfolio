@@ -2,48 +2,47 @@
 }
 
 .blog-post h2 {
-    @apply font-cocogoose font-bold text-sky text-xl mb-8;
+  @apply mb-8 font-cocogoose text-xl font-bold text-sky;
 }
 
 .blog-post h3 {
-    @apply font-cocogoose font-bold text-sky text-lg mb-8;
+  @apply mb-8 font-cocogoose text-lg font-bold text-sky;
 }
 
 .blog-post h4 {
-    @apply font-cocogoose font-bold italic text-sky text-base mb-8;
+  @apply mb-8 font-cocogoose text-base font-bold italic text-sky;
 }
 
 .blog-post h5 {
-    @apply font-cocogoose font-bold text-sky text-base mb-8;
+  @apply mb-8 font-cocogoose text-base font-bold text-sky;
 }
 
 .blog-post h6 {
-    @apply font-cocogoose font-normal text-sky text-base mb-8;
+  @apply mb-8 font-cocogoose text-base font-normal text-sky;
 }
 
-
 .blog-post p {
-    @apply font-cocogoose font-extralight text-sky text-base mb-4;
+  @apply mb-4 font-cocogoose text-base font-extralight text-sky;
 }
 
 .blog-post a {
-    @apply italic;
+  @apply italic;
 }
 
 .blog-post .date-header p {
-    @apply font-neou-bold text-sky border-b-4 border-sky;
+  @apply border-b-4 border-sky font-neou-bold text-sky;
 }
 
 .blog-post .split-stack {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .blog-post .split-stack aside {
-    flex-basis: 0;
+  flex-basis: 0;
 }
 
 .blog-post .split-stack img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }

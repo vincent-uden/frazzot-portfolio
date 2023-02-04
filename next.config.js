@@ -1,8 +1,13 @@
+const { default: dynamic } = require('next/dynamic');
+
+const StaticRecma = dynamic( () => import("recma-nextjs-static-props") );
+
 const withMDX = require('@next/mdx')({
   extension: /\.mdx?$/,
   options: {
     remarkPlugins: [],
     rehypePlugins: [],
+    recmaPlugins: [StaticRecma],
   }
 });
 

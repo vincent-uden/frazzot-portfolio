@@ -1,0 +1,49 @@
+.blog-previews .blog-container {
+  background: none;
+}
+
+.blog-previews .blog-container > div:last-child {
+  background: none;
+  display: none;
+}
+
+.blog-previews .blog-container > p {
+  display: none;
+}
+
+.blog-previews .blog-post > h1 {
+  position: absolute;
+  left: 0rem;
+  top: 2.2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1.75rem;
+  transform: none;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  width: calc(100% - 64px);
+  margin: 32px;
+
+  color: #292a2c;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: initial;
+}
+
+.blog-previews .blog-post {
+  max-height: 700px;
+  overflow-y: hidden;
+}
+
+.blog-previews .blog-post > div:nth-child(3) {
+    margin-top: 4rem;
+}
+
+.blog-previews .blog-container>div>a {
+    display: none;
+}
+
+.blog-previews .blog-content {
+     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0px, rgba(0, 0, 0, 0) 700px);
+     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0px, rgba(0, 0, 0, 0) 700px);
+}

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const BlogPost = ({ content, data }: any) => {
   return (
-    <div className="min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
+    <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
       <p className="mt-64 text-center font-stretch text-3xl text-sky md:text-4xl lg:text-6xl">
         BLOG
       </p>
@@ -17,7 +17,7 @@ export const BlogPost = ({ content, data }: any) => {
           <p className="grow">{data.date}</p>
           <p className="">{data.time}</p>
         </div>
-        <div className="p-8">{content}</div>
+        <div className="p-8 blog-content">{content}</div>
       </div>
 
       <div className="h-8" />
