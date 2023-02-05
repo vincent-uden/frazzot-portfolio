@@ -1,5 +1,6 @@
 .blog-previews .blog-container {
   background: none;
+  width: fit-content;
 }
 
 .blog-previews .blog-container > div:last-child {
@@ -36,14 +37,39 @@
 }
 
 .blog-previews .blog-post > div:nth-child(3) {
-    margin-top: 4rem;
+  margin-top: 4rem;
 }
 
-.blog-previews .blog-container>div>a {
-    display: none;
+.blog-previews .blog-container > div > a {
+  display: none;
 }
 
 .blog-previews .blog-content {
-     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0px, rgba(0, 0, 0, 0) 700px);
-     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0px, rgba(0, 0, 0, 0) 700px);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 700px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 700px
+  );
+}
+
+.timeline {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 0, 0, 1) 16rem,
+    rgba(0, 0, 0, 1) calc(100% - 16rem),
+    rgba(0, 0, 0, 0) calc(100% - 10px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 0, 0, 1) 16rem,
+    rgba(0, 0, 0, 1) calc(100% - 16rem),
+    rgba(0, 0, 0, 0) calc(100% - 10px)
+  );
 }
