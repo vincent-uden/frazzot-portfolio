@@ -1,6 +1,7 @@
 .blog-previews .blog-container {
   background: none;
   width: fit-content;
+  max-width: 768px;
 }
 
 .blog-previews .blog-container > div:last-child {

@@ -1,10 +1,11 @@
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { promises as fs } from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 //import Content, {data} from "./blog_posts/test_blog.mdx";
 //console.log(data);
@@ -42,10 +43,29 @@ const Blog = ({ posts }: Props) => {
   );
   const [months, setMonths] = useState<Date[]>([]);
   const [activeMonth, setActiveMonth] = useState<number>(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [timelineHeight, setTimelineHeight] = useState<number>(0);
+
+  const timelineContainer = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    setScrollPosition(window.scrollY);
+  };
 
   useEffect(() => {
     importPosts();
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
+
+  useEffect(() => {
+    setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
+  }, [months]);
 
   const changeActiveMonth = (i: number) => {
     if (i < 0 || i > 11) {
@@ -56,10 +76,12 @@ const Blog = ({ posts }: Props) => {
   };
 
   const importPosts = async () => {
-    const output = [];
+    const output: any[] = [];
+    const dates: Date[] = [];
     const outMonths: Date[] = [];
     for (const p of posts) {
       output.push((await import(`./blog_posts/${p.fileName}`)).default());
+      dates.push(new Date(p.date));
 
       const newDate = new Date(p.date);
       let dup = false;
@@ -73,7 +95,15 @@ const Blog = ({ posts }: Props) => {
       }
     }
 
-    outMonths.sort();
+    outMonths.sort((a, b) => {
+      return b.getTime() - a.getTime();
+    });
+    output.sort((a, b) => {
+      return (
+        dates[output.indexOf(b)]!!.getTime() -
+        dates[output.indexOf(a)]!!.getTime()
+      );
+    });
 
     setPostComponents(output);
     setMonths(outMonths);
@@ -100,36 +130,50 @@ const Blog = ({ posts }: Props) => {
       </div>
 
       <div className="grid grid-cols-[1fr_auto_1fr]">
-      <div className="col-span-1 w-72" />
-        <div className="timeline fixed mt-4 pt-56 left-20 w-72">
-          <div className="absolute top-0 right-[5.75rem] -z-10 h-full w-[0.4rem] bg-sky" />
-          {months.map((m, i) => {
-            return (
-              <div
-                className="mb-32 flex h-8 items-center pr-20 cursor-pointer"
-                key={`timeline-${i}`}
-                onClick={() => changeActiveMonth(i)}
-              >
-                <p
-                  className={`no-ligatures grow text-right font-stretch text-xl transition-colors ${
-                    i == activeMonth
-                      ? "text-sky"
-                      : "-translate-x-[0.75rem] text-[#6c8da0]"
-                  }`}
-                >{`${MONTHS[m.getMonth()]}\u00A0${m
-                  .getFullYear()
-                  .toString()
-                  .slice(2)}`}</p>
+        <div className="flex flex-row justify-end">
+          <div
+            className="timeline col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
+            style={{
+              transform: `translateY(${Math.max(0, scrollPosition - 336)}px)`,
+            }}
+            ref={timelineContainer}
+          >
+            <div
+              className="absolute top-0 right-[5.8rem] w-[0.4rem] bg-sky transition-transform"
+              style={{ height: timelineHeight }}
+            />
+            {[new Date()].concat(months, [new Date()]).map((m, i) => {
+              return (
                 <div
-                  className={`ml-8 ${
-                    i == activeMonth
-                      ? "h-8 w-8 bg-sky"
-                      : "h-[1.25rem] w-[1.25rem] -translate-x-[0.35rem] bg-[#6c8da0]"
+                  className={`mt-[calc(18.75vh-1.5rem)] mb-[calc(18.75vh-1.5rem)] flex h-8 cursor-pointer items-center pr-20 ${
+                    i == 0 || i == months.length + 1
+                      ? "pointer-events-none opacity-0"
+                      : ""
                   }`}
-                />
-              </div>
-            );
-          })}
+                  key={`timeline-${i}`}
+                  onClick={() => changeActiveMonth(i - 1)}
+                >
+                  <p
+                    className={`no-ligatures grow text-right font-stretch text-xl transition-colors ${
+                      i == activeMonth + 1
+                        ? "text-sky"
+                        : "-translate-x-[0.75rem] text-[#6c8da0]"
+                    }`}
+                  >{`${MONTHS[m.getMonth()]}\u00A0${m
+                    .getFullYear()
+                    .toString()
+                    .slice(2)}`}</p>
+                  <div
+                    className={`ml-8 ${
+                      i == activeMonth + 1
+                        ? "h-8 w-8 bg-sky"
+                        : "h-[1.25rem] w-[1.25rem] -translate-x-[0.35rem] bg-[#6c8da0]"
+                    }`}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
         <div className="blog-previews col-span-1">
           {postComponents.map((comp, i) => {
@@ -142,7 +186,7 @@ const Blog = ({ posts }: Props) => {
             );
           })}
         </div>
-        <div className="col-span-1">Hello</div>
+        <div className="col-span-1">{scrollPosition}</div>
       </div>
     </>
   );
