@@ -5,9 +5,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-
-//import Content, {data} from "./blog_posts/test_blog.mdx";
-//console.log(data);
+import { Disclosure, Transition } from "@headlessui/react";
 
 type Post = {
   title: string;
@@ -19,6 +17,12 @@ type Post = {
 
 type Props = {
   posts: Post[];
+};
+
+type AccordionProps = {
+  header: string;
+  body: string;
+  color: string;
 };
 
 const MONTHS = [
@@ -36,6 +40,29 @@ const MONTHS = [
   "DEC",
 ];
 
+const CATEGORIES = [
+  {
+    header: "THE SIMS 4 MODS",
+    body: "A COLLECTION OF MODS AND CUSTOM CONTENT CREATED FOR THE SIMS 4.",
+    color: "sky",
+  },
+  {
+    header: "GRAPHICS DESIGN",
+    body: "STYLE GUIDES AND DESIGN SHEETS FOR SOME OF MY DESIGN PROJECTS.",
+    color: "sky",
+  },
+  {
+    header: "EGROUKORA",
+    body: "A WORLDBUILDING PROJECT WITH THE AMBITION OF BECOMING A COMIC, YOU CAN READ MORE ABOUT THE CHARACTERS, WORLD AND STORY HERE.",
+    color: "sky",
+  },
+  {
+    header: "PAINTED FABRICS",
+    body: "PAINTED BAGS, JEANS, AND JACKETS FOR FUN OR BY COMMISSION. HAVE A LOOK AT SOME EXAMPLES HERE.",
+    color: "sky",
+  },
+];
+
 const Blog = ({ posts }: Props) => {
   const [postComponents, setPostComponents] = useState<React.ReactElement[]>(
     []
@@ -45,9 +72,15 @@ const Blog = ({ posts }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
 
+  const [openAcc, setOpenAcc] = useState<boolean[]>([]);
+  const [accHeights, setAccHeights] = useState<number[]>([]);
+
   const previewRef = useRef<HTMLDivElement>(null);
 
   const timelineContainer = useRef<HTMLDivElement>(null);
+
+  const accordionRef = useRef<HTMLDivElement>(null);
+  const accHeightRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
     setScrollPosition(window.scrollY);
@@ -55,6 +88,7 @@ const Blog = ({ posts }: Props) => {
 
   useEffect(() => {
     importPosts();
+    getHeights();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
@@ -67,6 +101,21 @@ const Blog = ({ posts }: Props) => {
     setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
   }, [months]);
 
+  const getHeights = async () => {
+    const container = accHeightRef.current;
+    if (container != null) {
+      const heights = [];
+      const opens = [];
+
+      for (let i = 0; i < container.childElementCount; i++) {
+        heights.push(container.children[i]!!.children[0]!!.clientHeight);
+        opens.push(false);
+      }
+      setAccHeights(heights);
+      setOpenAcc(opens);
+    }
+  };
+
   const changeActiveMonth = (i: number) => {
     if (i < 0 || i > 11) {
       return;
@@ -74,9 +123,10 @@ const Blog = ({ posts }: Props) => {
 
     const m = months[i]!!;
 
-    const timelineElem = timelineContainer.current?.children[i + 1]?.children[0];
+    const timelineElem =
+      timelineContainer.current?.children[i + 1]?.children[0];
     console.log(timelineElem);
-    timelineElem?.scrollIntoView({ behavior: "smooth", block: "start"});
+    timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     let j = 0;
     for (const p of posts) {
@@ -84,12 +134,10 @@ const Blog = ({ posts }: Props) => {
         const anchor = previewRef.current?.children[j]?.children[0];
         anchor?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-
         break;
       }
       j++;
     }
-
 
     setActiveMonth(i);
   };
@@ -150,9 +198,9 @@ const Blog = ({ posts }: Props) => {
 
       <div className="grid grid-cols-[1fr_auto_1fr]">
         <div className="flex flex-row justify-end">
-        <div className="col-span-1 w-72" />
+          <div className="col-span-1 w-72" />
           <div
-            className="fixed timeline col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
+            className="timeline fixed col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
             style={{
               top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
             }}
@@ -173,7 +221,7 @@ const Blog = ({ posts }: Props) => {
                   key={`timeline-${i}`}
                   onClick={() => changeActiveMonth(i - 1)}
                 >
-                <div className="scroll-anchor pointer-events-none translate-y-[-17vh]"/>
+                  <div className="scroll-anchor pointer-events-none translate-y-[-17vh]" />
                   <p
                     className={`no-ligatures grow text-right font-stretch text-xl transition-colors ${
                       i == activeMonth + 1
@@ -203,14 +251,93 @@ const Blog = ({ posts }: Props) => {
                 href={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
               >
                 <a className="pt-16">
-                <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
-                {comp}
+                  <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
+                  {comp}
                 </a>
               </Link>
             );
           })}
         </div>
-        <div className="col-span-1">{scrollPosition}</div>
+        <div className="col-span-1 px-8 pt-24">
+          <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
+            CATEGORIES &gt;
+          </h3>
+          <div className="flex flex-col items-center mt-8" ref={accordionRef}>
+            {CATEGORIES.map(({ header, body, color }, i) => {
+              return (
+                <div
+                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                    openAcc[i] ? "greyblack" : color
+                  } py-6 px-6 w-96`}
+                  key={`acc${i}`}
+                  onMouseEnter={(e) => {
+                    const openSections = [...openAcc];
+                    for (let j = 0; j < openSections.length; j++) {
+                      openSections[j] = i === j;
+                    }
+                    setOpenAcc(openSections);
+                  }}
+                  onMouseLeave={(e) => {
+                    const openSections = [...openAcc];
+                    openSections[i] = false;
+                    setOpenAcc(openSections);
+                  }}
+                  style={{
+                    transition:
+                      "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <h3
+                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-lg transition-colors text-${
+                      openAcc[i] ? color : "greyblack"
+                    }`}
+                  >
+                    {header}
+                  </h3>
+                  <div
+                    className={"overflow-hidden transition-all"}
+                    style={
+                        {
+                            maxHeight: `${openAcc[i] ? accHeights[i] : 0}px`,
+                            opacity: openAcc[i] ? 100 : 0,
+                          }
+                    }
+                  >
+                    <p
+                      className={`text-${
+                        openAcc[i] ? color : "greyblack"
+                      } pt-4 text-center font-cocogoose text-sm font-extralight`}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="pointer-events-none opacity-0" ref={accHeightRef}>
+            {CATEGORIES.map(({ header, body, color }, i) => {
+              return (
+                <div
+                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                    true ? "greyblack" : color
+                  } py-0 px-20`}
+                  key={`acc-hidden-${i}`}
+                >
+                  <div className={"overflow-hidden transition-all"}>
+                    <p
+                      className={`text-${
+                        true ? color : "greyblack"
+                      } pt-4 text-center font-cocogoose text-sm font-extralight pointer-events-none`}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </>
   );
