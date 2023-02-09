@@ -73,4 +73,11 @@
     rgba(0, 0, 0, 1) calc(100% - 16rem),
     rgba(0, 0, 0, 0) calc(100% - 10px)
   );
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.timeline::-webkit-scrollbar {
+    display: none;
 }

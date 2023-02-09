@@ -5,7 +5,6 @@ import { promises as fs } from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 //import Content, {data} from "./blog_posts/test_blog.mdx";
 //console.log(data);
@@ -46,6 +45,8 @@ const Blog = ({ posts }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
 
+  const previewRef = useRef<HTMLDivElement>(null);
+
   const timelineContainer = useRef<HTMLDivElement>(null);
 
   const handleScroll = () => {
@@ -56,7 +57,6 @@ const Blog = ({ posts }: Props) => {
     importPosts();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -71,6 +71,25 @@ const Blog = ({ posts }: Props) => {
     if (i < 0 || i > 11) {
       return;
     }
+
+    const m = months[i]!!;
+
+    const timelineElem = timelineContainer.current?.children[i + 1]?.children[0];
+    console.log(timelineElem);
+    timelineElem?.scrollIntoView({ behavior: "smooth", block: "start"});
+
+    let j = 0;
+    for (const p of posts) {
+      if (new Date(p.date).getTime() <= m.getTime()) {
+        const anchor = previewRef.current?.children[j]?.children[0];
+        anchor?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+
+        break;
+      }
+      j++;
+    }
+
 
     setActiveMonth(i);
   };
@@ -131,10 +150,11 @@ const Blog = ({ posts }: Props) => {
 
       <div className="grid grid-cols-[1fr_auto_1fr]">
         <div className="flex flex-row justify-end">
+        <div className="col-span-1 w-72" />
           <div
-            className="timeline col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
+            className="fixed timeline col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
             style={{
-              transform: `translateY(${Math.max(0, scrollPosition - 336)}px)`,
+              top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
             }}
             ref={timelineContainer}
           >
@@ -153,6 +173,7 @@ const Blog = ({ posts }: Props) => {
                   key={`timeline-${i}`}
                   onClick={() => changeActiveMonth(i - 1)}
                 >
+                <div className="scroll-anchor pointer-events-none translate-y-[-17vh]"/>
                   <p
                     className={`no-ligatures grow text-right font-stretch text-xl transition-colors ${
                       i == activeMonth + 1
@@ -175,13 +196,16 @@ const Blog = ({ posts }: Props) => {
             })}
           </div>
         </div>
-        <div className="blog-previews col-span-1">
+        <div className="blog-previews col-span-1" ref={previewRef}>
           {postComponents.map((comp, i) => {
             return (
               <Link
                 href={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
               >
-                <a>{comp}</a>
+                <a className="pt-16">
+                <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
+                {comp}
+                </a>
               </Link>
             );
           })}
@@ -202,6 +226,10 @@ export const getStaticProps: GetStaticProps<{ posts: Post[] }> = async () => {
     const mod = await import("./blog_posts/" + f);
     posts.push({ ...mod.data, fileName: f });
   }
+
+  posts.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   return {
     props: {
