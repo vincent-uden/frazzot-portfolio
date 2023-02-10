@@ -17,7 +17,7 @@ export const BlogPost = ({ content, data }: any) => {
           <p className="grow">{data.date}</p>
           <p className="">{data.time}</p>
         </div>
-        <div className="p-8 blog-content">{content}</div>
+        <div className="blog-content p-8">{content}</div>
       </div>
 
       <div className="h-8" />

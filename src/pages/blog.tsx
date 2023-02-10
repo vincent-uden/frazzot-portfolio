@@ -1,11 +1,16 @@
 import Head from "next/head";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { promises as fs } from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
 import Link from "next/link";
-import { Disclosure, Transition } from "@headlessui/react";
 
 type Post = {
   title: string;
@@ -19,10 +24,11 @@ type Props = {
   posts: Post[];
 };
 
-type AccordionProps = {
-  header: string;
-  body: string;
-  color: string;
+type BlogPreviewProps = {
+  path: string;
+  index: number;
+  date: string;
+  children: React.ReactNode;
 };
 
 const MONTHS = [
@@ -63,17 +69,59 @@ const CATEGORIES = [
   },
 ];
 
+function useOnScreen(
+  ref: React.RefObject<HTMLDivElement>,
+  callback: (ref: React.RefObject<HTMLDivElement> | null) => void
+) {
+  // State and setter for storing whether element is visible
+  const [isIntersecting, setIntersecting] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update our state when observer callback fires
+        if (entry) {
+          setIntersecting(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            callback(ref);
+          }
+        }
+      },
+      {
+        threshold: 0.9,
+      }
+    );
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []); // Empty array ensures that effect is only run on mount and unmount
+
+  return isIntersecting;
+}
+
+const ScrollContext = createContext({
+  intoViewCallback: (i: Date) => {},
+});
+
 const Blog = ({ posts }: Props) => {
   const [postComponents, setPostComponents] = useState<React.ReactElement[]>(
     []
   );
   const [months, setMonths] = useState<Date[]>([]);
+
   const [activeMonth, setActiveMonth] = useState<number>(0);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
-
-  const [openAcc, setOpenAcc] = useState<boolean[]>([]);
   const [accHeights, setAccHeights] = useState<number[]>([]);
+  const [categoryWidth, setCategoryWidth] = useState<number>(100);
+
+  const [autoScrolling, setAutoScrolling] = useState<boolean>(false);
+  const [openAcc, setOpenAcc] = useState<boolean[]>([]);
 
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -81,9 +129,14 @@ const Blog = ({ posts }: Props) => {
 
   const accordionRef = useRef<HTMLDivElement>(null);
   const accHeightRef = useRef<HTMLDivElement>(null);
+  const categoryRef = useRef<HTMLDivElement>(null);
 
-  const handleScroll = () => {
+  const handleScroll = async () => {
     setScrollPosition(window.scrollY);
+  };
+
+  const handleResize = async () => {
+    setCategoryWidth(categoryRef.current?.scrollWidth ?? 0);
   };
 
   useEffect(() => {
@@ -91,6 +144,7 @@ const Blog = ({ posts }: Props) => {
     getHeights();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -100,6 +154,18 @@ const Blog = ({ posts }: Props) => {
   useEffect(() => {
     setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
   }, [months]);
+
+  useEffect(() => {
+    if (!autoScrolling) {
+      const timelineElem =
+        timelineContainer.current?.children[activeMonth + 1]?.children[0];
+      timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [activeMonth, autoScrolling]);
+
+  useEffect(() => {
+    handleResize();
+  }, [postComponents]);
 
   const getHeights = async () => {
     const container = accHeightRef.current;
@@ -120,12 +186,12 @@ const Blog = ({ posts }: Props) => {
     if (i < 0 || i > 11) {
       return;
     }
+    setAutoScrolling(true);
 
     const m = months[i]!!;
 
     const timelineElem =
       timelineContainer.current?.children[i + 1]?.children[0];
-    console.log(timelineElem);
     timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
 
     let j = 0;
@@ -140,6 +206,20 @@ const Blog = ({ posts }: Props) => {
     }
 
     setActiveMonth(i);
+    setTimeout(() => {
+      setAutoScrolling(false);
+    }, 400);
+  };
+
+  const intoViewCallback = (i: Date) => {
+    let j = 0;
+    for (const m of months) {
+      if (i.getFullYear() == m.getFullYear() && i.getMonth() == m.getMonth()) {
+        setActiveMonth(j);
+        return;
+      }
+      j++;
+    }
   };
 
   const importPosts = async () => {
@@ -196,11 +276,13 @@ const Blog = ({ posts }: Props) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_auto_1fr]">
+      <div className={"grid grid-cols-[1fr_auto_1fr]"}>
         <div className="flex flex-row justify-end">
           <div className="col-span-1 w-72" />
           <div
-            className="timeline fixed col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
+            className={
+              "timeline fixed col-span-1 mt-4 h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform"
+            }
             style={{
               top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
             }}
@@ -223,20 +305,20 @@ const Blog = ({ posts }: Props) => {
                 >
                   <div className="scroll-anchor pointer-events-none translate-y-[-17vh]" />
                   <p
-                    className={`no-ligatures grow text-right font-stretch text-xl transition-colors ${
-                      i == activeMonth + 1
-                        ? "text-sky"
-                        : "-translate-x-[0.75rem] text-[#6c8da0]"
+                    className={`no-ligatures grow text-right font-stretch text-xl transition-all ${
+                      i == activeMonth + 1 && !autoScrolling
+                        ? "scale-110 text-sky"
+                        : "text-[#6c8da0]"
                     }`}
                   >{`${MONTHS[m.getMonth()]}\u00A0${m
                     .getFullYear()
                     .toString()
                     .slice(2)}`}</p>
                   <div
-                    className={`ml-8 ${
-                      i == activeMonth + 1
-                        ? "h-8 w-8 bg-sky"
-                        : "h-[1.25rem] w-[1.25rem] -translate-x-[0.35rem] bg-[#6c8da0]"
+                    className={`ml-8 h-8 w-8 transition-transform ${
+                      i == activeMonth + 1 && !autoScrolling
+                        ? "scale-100 bg-sky"
+                        : "scale-75 bg-[#6c8da0]"
                     }`}
                   />
                 </div>
@@ -245,101 +327,133 @@ const Blog = ({ posts }: Props) => {
           </div>
         </div>
         <div className="blog-previews col-span-1" ref={previewRef}>
-          {postComponents.map((comp, i) => {
-            return (
-              <Link
-                href={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
-              >
-                <a className="pt-16">
-                  <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
+          <ScrollContext.Provider value={{ intoViewCallback }}>
+            {postComponents.map((comp, i) => {
+              return (
+                <BlogPreview
+                  path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                  key={`blog-post-${i}`}
+                  date={posts[i]?.date ?? "2000-01-01"}
+                  index={i}
+                >
                   {comp}
-                </a>
-              </Link>
-            );
-          })}
+                </BlogPreview>
+              );
+            })}
+          </ScrollContext.Provider>
         </div>
-        <div className="col-span-1 px-8 pt-24">
-          <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
-            CATEGORIES &gt;
-          </h3>
-          <div className="flex flex-col items-center mt-8" ref={accordionRef}>
-            {CATEGORIES.map(({ header, body, color }, i) => {
-              return (
-                <div
-                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
-                    openAcc[i] ? "greyblack" : color
-                  } py-6 px-6 w-96`}
-                  key={`acc${i}`}
-                  onMouseEnter={(e) => {
-                    const openSections = [...openAcc];
-                    for (let j = 0; j < openSections.length; j++) {
-                      openSections[j] = i === j;
-                    }
-                    setOpenAcc(openSections);
-                  }}
-                  onMouseLeave={(e) => {
-                    const openSections = [...openAcc];
-                    openSections[i] = false;
-                    setOpenAcc(openSections);
-                  }}
-                  style={{
-                    transition:
-                      "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)",
-                  }}
-                >
-                  <h3
-                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-lg transition-colors text-${
-                      openAcc[i] ? color : "greyblack"
-                    }`}
-                  >
-                    {header}
-                  </h3>
+        <div className="col-span-1" ref={categoryRef} />
+        <div
+          className="fixed right-0 pt-24"
+          style={{
+            top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
+            width: categoryWidth,
+          }}
+        >
+          <div className="absolute left-0">
+            <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
+              CATEGORIES &gt;
+            </h3>
+            <div className="mt-8 flex flex-col items-center" ref={accordionRef}>
+              {CATEGORIES.map(({ header, body, color }, i) => {
+                return (
                   <div
-                    className={"overflow-hidden transition-all"}
-                    style={
-                        {
-                            maxHeight: `${openAcc[i] ? accHeights[i] : 0}px`,
-                            opacity: openAcc[i] ? 100 : 0,
-                          }
-                    }
+                    className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                      openAcc[i] ? "greyblack" : color
+                    } w-96 py-6 px-6`}
+                    key={`acc-main-${i}`}
+                    onMouseEnter={(e) => {
+                      const openSections = [...openAcc];
+                      for (let j = 0; j < openSections.length; j++) {
+                        openSections[j] = i === j;
+                      }
+                      setOpenAcc(openSections);
+                    }}
+                    onMouseLeave={(e) => {
+                      const openSections = [...openAcc];
+                      openSections[i] = false;
+                      setOpenAcc(openSections);
+                    }}
+                    style={{
+                      transition:
+                        "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
                   >
-                    <p
-                      className={`text-${
+                    <h3
+                      className={`no-ligatures whitespace-nowrap text-center font-stretch text-lg transition-colors text-${
                         openAcc[i] ? color : "greyblack"
-                      } pt-4 text-center font-cocogoose text-sm font-extralight`}
+                      }`}
                     >
-                      {body}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="pointer-events-none opacity-0" ref={accHeightRef}>
-            {CATEGORIES.map(({ header, body, color }, i) => {
-              return (
-                <div
-                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
-                    true ? "greyblack" : color
-                  } py-0 px-20`}
-                  key={`acc-hidden-${i}`}
-                >
-                  <div className={"overflow-hidden transition-all"}>
-                    <p
-                      className={`text-${
-                        true ? color : "greyblack"
-                      } pt-4 text-center font-cocogoose text-sm font-extralight pointer-events-none`}
+                      {header}
+                    </h3>
+                    <div
+                      className={"overflow-hidden transition-all"}
+                      style={{
+                        maxHeight: `${openAcc[i] ? accHeights[i] : 0}px`,
+                        opacity: openAcc[i] ? 100 : 0,
+                      }}
                     >
-                      {body}
-                    </p>
+                      <p
+                        className={`text-${
+                          openAcc[i] ? color : "greyblack"
+                        } pt-4 text-center font-cocogoose text-sm font-extralight`}
+                      >
+                        {body}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+            <div className="pointer-events-none opacity-0" ref={accHeightRef}>
+              {CATEGORIES.map(({ header, body, color }, i) => {
+                return (
+                  <div
+                    className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                      true ? "greyblack" : color
+                    } py-0 px-20`}
+                    key={`acc-hidden-${i}`}
+                  >
+                    <div className={"overflow-hidden transition-all"}>
+                      <p
+                        className={`text-${
+                          true ? color : "greyblack"
+                        } pointer-events-none pt-4 text-center font-cocogoose text-sm font-extralight`}
+                      >
+                        {body}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
     </>
+  );
+};
+
+const BlogPreview: React.FC<BlogPreviewProps> = ({
+  path,
+  index,
+  date,
+  children,
+}) => {
+  const anchorRef = useRef<HTMLDivElement>(null);
+  const { intoViewCallback } = useContext(ScrollContext);
+
+  const onScreen = useOnScreen(anchorRef, () => {
+    intoViewCallback(new Date(date));
+  });
+
+  return (
+    <Link href={path}>
+      <div className={"blog-link cursor-pointer pt-16"} ref={anchorRef}>
+        <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
+        {children}
+      </div>
+    </Link>
   );
 };
 
