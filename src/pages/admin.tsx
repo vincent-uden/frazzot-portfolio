@@ -278,7 +278,7 @@ const Admin = () => {
                   );
                 }}
               />
-              <h2 className="font-cocogoose text-2xl font-thin text-periwinkle-light">
+              <h2 className="font-gothic text-2xl text-periwinkle-light">
                 SELECT A CATEGORY
               </h2>
               <ul className="border-2 border-periwinkle p-8">
@@ -286,7 +286,7 @@ const Admin = () => {
                   return (
                     <li
                       key={category.id}
-                      className={`cursor-pointer font-cocogoose text-lg font-thin text-mint transition-opacity ${
+                      className={`cursor-pointer font-gothic text-lg text-mint transition-opacity ${
                         i === selectedCategory ? "opacity-100" : "opacity-40"
                       }`}
                       onClick={(e) => setSelectedCategory(i)}
@@ -339,25 +339,25 @@ const Admin = () => {
             <table className="mx-auto">
               <tbody className="w-full">
                 <tr className="border-b-2 border-white">
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Upload Date
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Image Name
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Src Width (px)
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Src Height (px)
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Thmb Width (px)
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Thmb Height (px)
                   </th>
-                  <th className="pr-4 text-left font-cocogoose font-light text-white">
+                  <th className="pr-4 text-left font-gothic text-white">
                     Category
                   </th>
                 </tr>

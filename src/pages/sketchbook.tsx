@@ -95,16 +95,16 @@ const Sketchbook = () => {
       <div className="mx-auto max-w-screen-xl">
         <div className="inline-block w-full bg-holo p-[2px]">
           <div className="bg-greyblack p-6">
-            <p className="font-cocogoose text-lg font-light text-yellowpeach">
+            <p className="font-gothic text-lg font-bold text-yellowpeach">
               WELCOME TO MY SKETCHBOOK ARCHIVE.
             </p>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-lg font-thin text-yellowpeach">
+            <p className="font-gothic text-lg text-yellowpeach">
               I CREATED A COLLECTION OF SKETCHES THAT WAS EITHER SCRAPPED,
               STUDIES OR JUST FOR FUN/WARM-UPS.
             </p>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-lg font-thin text-yellowpeach">
+            <p className="font-gothic text-lg text-yellowpeach">
               YOU CAN SORT THEM BY CATEGORY AND FLIP THROUGH SOME HIGHLIGHTS
               BELOW. IF YOU WISH TO SEE THEM ALL AT ONCE, KEEP SCROLLING!
             </p>
@@ -174,7 +174,7 @@ const Sketchbook = () => {
           <h1 className="relative -top-[.65rem] text-center font-stretch text-6xl text-yellowpeach">
             SKETCHBOOK <span className="no-ligature">GALLERY</span>
           </h1>
-          <h2 className="font-cocogoose text-4xl font-thin text-yellowpeach">
+          <h2 className="font-gothic text-4xl text-yellowpeach">
             {selectedCategory === 0
               ? "WARM-UPS // JUST FOR FUN"
               : selectedCategory === 1

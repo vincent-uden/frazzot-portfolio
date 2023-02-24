@@ -2,27 +2,27 @@
 }
 
 .blog-post h2 {
-  @apply mb-8 font-cocogoose text-xl font-bold text-sky;
+  @apply mb-8 font-gothic text-xl font-bold text-sky;
 }
 
 .blog-post h3 {
-  @apply mb-8 font-cocogoose text-lg font-bold text-sky;
+  @apply mb-8 font-gothic text-lg font-bold text-sky;
 }
 
 .blog-post h4 {
-  @apply mb-8 font-cocogoose text-base font-bold italic text-sky;
+  @apply mb-8 font-gothic text-base font-bold italic text-sky;
 }
 
 .blog-post h5 {
-  @apply mb-8 font-cocogoose text-base font-bold text-sky;
+  @apply mb-8 font-gothic text-base font-bold text-sky;
 }
 
 .blog-post h6 {
-  @apply mb-8 font-cocogoose text-base font-normal text-sky;
+  @apply mb-8 font-gothic text-base text-sky;
 }
 
 .blog-post p {
-  @apply mb-4 font-cocogoose text-base font-extralight text-sky;
+  @apply mb-4 font-gothic text-base text-sky;
 }
 
 .blog-post a {

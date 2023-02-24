@@ -100,7 +100,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
                   setYRotation(0);
                 }}
               />
-              <p className="mt-28 text-center font-cocogoose text-xl font-thin text-yellowpeach opacity-0 transition-opacity">
+              <p className="mt-28 text-center font-gothic text-xl text-yellowpeach opacity-0 transition-opacity">
                 {imgDescs[i]}
               </p>
             </div>
