@@ -91,7 +91,7 @@ const Comissions = () => {
               </p>
               <div className="h-6"></div>
               <p className="font-cocogoose text-xs font-extralight text-periwinkle-light md:text-lg">
-                PLEASE READ THEM CAREFULLY BEFORE FILLING OUT THE FORM.
+                PLEASE READ Tpy-4 HEM CAREFULLY BEFORE LING greybUackTmdHE FOR.lg:2x
               </p>
             </div>
           </div>

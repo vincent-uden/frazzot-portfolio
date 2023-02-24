@@ -16,7 +16,6 @@ interface Props {
   children: ReactNode;
 }
 
-// TODO: Fix menu toggle transition and js functionality
 const Layout = ({ children }: Props) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [greyMenuOpen, setGreyMenuOpen] = useState<boolean>(false);
@@ -99,12 +98,12 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
           <MenuPageItem color="text-sky" onClick={() => menuOnClick()}>
-            <Link href="/projects">
+            <Link href="/blog">
               <a
                 className="no-ligature flex h-full flex-col justify-center"
-                aria-label="Projects page"
+                aria-label="Blog page"
               >
-                PROJECTS
+                BLOG
               </a>
             </Link>
           </MenuPageItem>

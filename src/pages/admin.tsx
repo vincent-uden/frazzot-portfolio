@@ -34,7 +34,10 @@ const Admin = () => {
     }
   );
 
-  const { data: allS3Urls } = trpc.useQuery(["gallery.getAllS3Thumbnails"]);
+  const { data: allS3Urls } = trpc.useQuery([
+    "gallery.getAllS3Thumbnails",
+    { categoryName: null },
+  ]);
 
   const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
     onSuccess: () => refetchImgs(),
