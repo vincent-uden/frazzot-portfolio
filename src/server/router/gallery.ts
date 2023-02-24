@@ -76,7 +76,7 @@ export const galleryRouter = createRouter()
   })
   .query("getAllS3Thumbnails", {
     input: z.object({
-      categoryName: z.string(),
+      categoryName: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
       const imgs = await ctx.prisma.galleryImage.findMany();
@@ -125,19 +125,27 @@ export const galleryRouter = createRouter()
           });
         }
       }
-      let category = await ctx.prisma.imageCategory.findUnique({
-        where: {
-          name: input.categoryName,
-        },
-      });
-      return await ctx.prisma.galleryImage.findMany({
-        where: {
-          categoryId: category!!.id,
-        },
-        include: {
-          category: true,
-        },
-      });
+      if (input.categoryName == null) {
+        return await ctx.prisma.galleryImage.findMany({
+          include: {
+            category: true,
+          },
+        });
+      } else {
+        let category = await ctx.prisma.imageCategory.findUnique({
+          where: {
+            name: input.categoryName,
+          },
+        });
+        return await ctx.prisma.galleryImage.findMany({
+          where: {
+            categoryId: category!!.id,
+          },
+          include: {
+            category: true,
+          },
+        });
+      }
     },
   })
   .middleware(async ({ ctx, next }) => {
@@ -303,5 +311,4 @@ export const galleryRouter = createRouter()
         fs.unlink(`/tmp/${baseName}`, () => {});
       });
     },
-  })
-  ;
+  });

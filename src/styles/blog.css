@@ -1,0 +1,84 @@
+.blog-previews .blog-container {
+  background: none;
+  width: fit-content;
+  max-width: 768px;
+  min-height: auto;
+}
+
+.blog-previews .blog-container > div:last-child {
+  background: none;
+  display: none;
+}
+
+.blog-previews .blog-container > p {
+  display: none;
+}
+
+.blog-previews .blog-post > h1 {
+  position: absolute;
+  left: 0rem;
+  top: 2.2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1.75rem;
+  transform: none;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  width: calc(100% - 64px);
+  margin: 32px;
+
+  color: #292a2c;
+  background-clip: border-box;
+  -webkit-background-clip: border-box;
+  -webkit-text-fill-color: initial;
+}
+
+.blog-previews .blog-post {
+  max-height: 500px;
+  overflow-y: hidden;
+}
+
+.blog-previews .blog-post > div:nth-child(3) {
+  margin-top: 4rem;
+}
+
+.blog-previews .blog-container > div > a {
+  display: none;
+}
+
+.blog-previews .blog-content {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 320px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 320px
+  );
+}
+
+.timeline {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 0, 0, 1) 16rem,
+    rgba(0, 0, 0, 1) calc(100% - 16rem),
+    rgba(0, 0, 0, 0) calc(100% - 10px)
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 0, 0, 1) 16rem,
+    rgba(0, 0, 0, 1) calc(100% - 16rem),
+    rgba(0, 0, 0, 0) calc(100% - 10px)
+  );
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.timeline::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,48 @@
+.blog-post h1 {
+}
+
+.blog-post h2 {
+  @apply mb-8 font-cocogoose text-xl font-bold text-sky;
+}
+
+.blog-post h3 {
+  @apply mb-8 font-cocogoose text-lg font-bold text-sky;
+}
+
+.blog-post h4 {
+  @apply mb-8 font-cocogoose text-base font-bold italic text-sky;
+}
+
+.blog-post h5 {
+  @apply mb-8 font-cocogoose text-base font-bold text-sky;
+}
+
+.blog-post h6 {
+  @apply mb-8 font-cocogoose text-base font-normal text-sky;
+}
+
+.blog-post p {
+  @apply mb-4 font-cocogoose text-base font-extralight text-sky;
+}
+
+.blog-post a {
+  @apply italic;
+}
+
+.blog-post .date-header p {
+  @apply border-b-4 border-sky font-neou-bold text-sky;
+}
+
+.blog-post .split-stack {
+  display: flex;
+  flex-direction: row;
+}
+
+.blog-post .split-stack aside {
+  flex-basis: 0;
+}
+
+.blog-post .split-stack img {
+  width: 100%;
+  height: auto;
+}
