@@ -396,7 +396,7 @@ const Blog = ({ posts }: Props) => {
                       <p
                         className={`text-${
                           openAcc[i] ? color : "greyblack"
-                        } pt-4 text-center font-cocogoose text-sm font-extralight`}
+                        } pt-4 text-center font-gothic text-sm`}
                       >
                         {body}
                       </p>
@@ -418,7 +418,7 @@ const Blog = ({ posts }: Props) => {
                       <p
                         className={`text-${
                           true ? color : "greyblack"
-                        } pointer-events-none pt-4 text-center font-cocogoose text-sm font-extralight`}
+                        } pointer-events-none pt-4 text-center font-gothic text-sm`}
                       >
                         {body}
                       </p>

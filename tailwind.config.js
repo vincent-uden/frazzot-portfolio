@@ -37,6 +37,7 @@ module.exports = {
         neou: ["Neou-Thin"],
         "neou-bold": ["Neou-Bold"],
         cocogoose: ["Cocogoose"],
+        gothic: ["Century Gothic"],
       },
       gridRow: {
         "span-7": "span 7 / span 7",

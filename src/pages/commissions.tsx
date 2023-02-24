@@ -80,18 +80,18 @@ const Comissions = () => {
           <div className="block h-8 md:inline-block md:w-[5%]"></div>
           <div className="block bg-holo p-[2px] md:inline-block md:w-[55%]">
             <div className="bg-greyblack p-6">
-              <p className="font-cocogoose text-xs font-extralight text-periwinkle-light md:text-lg">
+              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
                 BELOW YOU WILL FIND THE FORM TO SUBMIT A COMMISSION. RESPONSE
                 WILL BE SENT TO THE EMAIL YOU STATE IN THE FORM.
               </p>
               <div className="h-6"></div>
-              <p className="font-cocogoose text-xs font-extralight text-periwinkle-light md:text-lg">
+              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
                 TO THE LEFT YOU CAN READ MY TERMS AND CONDITIONS FOR USING MY
                 SERVICES AS WELL AS ADDITIONAL INFORMATION ON MY PATREON.
               </p>
               <div className="h-6"></div>
-              <p className="font-cocogoose text-xs font-extralight text-periwinkle-light md:text-lg">
-                PLEASE READ Tpy-4 HEM CAREFULLY BEFORE LING greybUackTmdHE FOR.lg:2x
+              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
+                PLEASE READ THEM CAREFULLY BEFORE FILLING IN THE FORM.
               </p>
             </div>
           </div>
@@ -239,7 +239,7 @@ const Comissions = () => {
               { code: EmailError.EmptyCharDesc, message: "Can't be empty" },
             ]}
           />
-          <p className="mb-4 font-cocogoose text-sm font-extralight italic text-periwinkle opacity-70 md:text-base">
+          <p className="mb-4 font-gothic text-sm italic text-periwinkle opacity-70 md:text-base">
             PLEASE GIVE ME EVERYTHING YOU HAVE ON YOUR CHARACTER THAT YOU WANT
             ME TO HAVE IN MIND WHEN DRAWING THEM - ALSO CHARACTERS FROM SERIES
             SINCE I MIGHT NOT KNOW THEM. YOU CAN ALSO SEND ME A YOUTUBE LINK TO
@@ -257,7 +257,7 @@ const Comissions = () => {
           <h2 className="no-ligature mt-12 mb-4 font-stretch text-2xl text-periwinkle">
             ADDITIONAL INFO
           </h2>
-          <p className="mb-4 font-cocogoose text-sm font-extralight italic text-periwinkle opacity-70 md:text-base">
+          <p className="mb-4 font-gothic text-sm italic text-periwinkle opacity-70 md:text-base">
             THIS IS YOUR PLACE FOR QUESTIONS, CLARIFICATIONS AND ADDITIONAL
             INFORMATION YOU WANT ME TO KNOW. IF YOU WANT TO COMMISSION A
             CHARACTER SHEET, YOU CAN PROVIDE THE ELEMENTS YOU WANT TO INCLUDE IN
@@ -265,7 +265,7 @@ const Comissions = () => {
             PALETTE, ICONS, ETC.)
           </p>
           <textarea
-            className="w-full resize-none border-2 border-transparent bg-periwinkle/10 p-2 font-cocogoose text-base font-extralight text-periwinkle-light outline-none transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-periwinkle"
+            className="w-full resize-none border-2 border-transparent bg-periwinkle/10 p-2 font-gothic text-base text-periwinkle-light outline-none transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-periwinkle"
             name="additional-info"
             id="additional-info"
             rows={10}
@@ -273,7 +273,7 @@ const Comissions = () => {
             value={additionalInfo}
             onChange={(e) => setAdditionalInfo(e.target.value)}
           ></textarea>
-          <p className="my-4 mt-12 text-center font-cocogoose text-sm font-extralight italic text-mint opacity-70 md:text-base">
+          <p className="my-4 mt-12 text-center font-gothic text-sm italic text-mint opacity-70 md:text-base">
             {" "}
             BY SUBMITTING THIS ORDER I CONFIRM THAT I HAVE READ AND ACCEPTED THE
             TERMS OF SERVICE FOR COMMISSIONING “IDA FRANZÉN KARLSSON, AKA

@@ -72,7 +72,7 @@ const Contact = () => {
             <h1 className="relative -top-[.40rem] text-center font-stretch text-6xl text-pastelpink">
               FAQ
             </h1>
-            <p className="-translate-y-3 font-cocogoose font-extralight text-pastelpink">
+            <p className="-translate-y-3 font-gothic text-pastelpink">
               AND ANSWERS
             </p>
           </div>
@@ -83,7 +83,7 @@ const Contact = () => {
               COLLABORATION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
+            <p className="font-gothic text-xs text-pastelpink md:text-lg">
               IF YOU WISH TO COLLABORATE, REACH OUT TO ME THROUGH EMAIL OR
               DISCORD.
             </p>
@@ -93,13 +93,13 @@ const Contact = () => {
               PHYSICAL COPIES ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
+            <p className="font-gothic text-xs text-pastelpink md:text-lg">
               SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL
               COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE
               INTERESTED.
             </p>
             <div className="h-4"></div>
-            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
+            <p className="font-gothic text-xs text-pastelpink md:text-lg">
               IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
@@ -109,10 +109,10 @@ const Contact = () => {
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-cocogoose text-xs font-extralight text-pastelpink md:text-lg">
+            <p className="font-gothic text-xs text-pastelpink md:text-lg">
               READ MORE ABOUT MY COMMISSIONS ON THE{" "}
               <Link href="/commissions">
-                <span className="cursor-pointer font-cocogoose font-normal">
+                <span className="cursor-pointer font-gothic font-bold">
                   COMMISSION PAGE.
                 </span>
               </Link>
@@ -179,7 +179,7 @@ const Contact = () => {
                 ]}
               />
               <textarea
-                className="w-full resize-none border-2 border-transparent bg-pastelpink/10 p-2 font-cocogoose text-base font-extralight text-pastelpink outline-none transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-pastelpink"
+                className="w-full resize-none border-2 border-transparent bg-pastelpink/10 p-2 font-gothic text-base text-pastelpink outline-none transition-colors placeholder:text-pastelpink placeholder:opacity-60 focus:border-pastelpink"
                 name=""
                 id="subject"
                 rows={8}

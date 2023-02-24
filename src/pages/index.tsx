@@ -50,7 +50,7 @@ const Home: NextPageWithLayout = () => {
           WELCOME
         </h2>
         <div className="h-8"></div>
-        <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-cocogoose text-lg font-thin md:max-w-[60vw] md:px-0 md:text-2xl">
+        <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-gothic text-lg md:max-w-[60vw] md:px-0 md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
           GALLERY TO COMMISSION DETAILS.
         </p>
@@ -84,7 +84,7 @@ const Home: NextPageWithLayout = () => {
                   className="flex flex-row-reverse content-center lg:flex-col"
                   aria-label="Join discord"
                 >
-                  <p className="py-2 pl-4 text-right font-cocogoose text-sm font-extralight text-greyblack lg:mb-4 lg:py-0 lg:pl-0 lg:text-center lg:text-lg">
+                  <p className="py-2 pl-4 text-right font-gothic text-sm text-greyblack lg:mb-4 lg:py-0 lg:pl-0 lg:text-center lg:text-lg">
                     JOIN MY <span className="font-normal">DISCORD SERVER</span>{" "}
                     AND PARTICIPATE IN STREAMS. DISCUSS ART AND CONNECT WITH
                     OTHER ARTISTS
@@ -107,10 +107,10 @@ const Home: NextPageWithLayout = () => {
                 </a>
               </Link>
               <div className="">
-                <p className="font-cocogoose text-xs font-extralight text-white md:text-lg">
+                <p className="font-gothic text-xs text-white md:text-lg">
                   ARE YOU INTERESTED IN COMMISSIONING ME?
                 </p>
-                <p className="font-cocogoose text-xs font-extralight text-white md:text-lg">
+                <p className="font-gothic text-xs text-white md:text-lg">
                   CHECK OUT THE DETAILS AND{" "}
                   <Link href={"/commissions"}>
                     <a aria-label="Commissions page">
@@ -130,7 +130,7 @@ const Home: NextPageWithLayout = () => {
                   </h3>
                 </a>
               </Link>
-              <p className="font-cocogoose text-xs font-extralight text-white md:text-lg">
+              <p className="font-gothic text-xs text-white md:text-lg">
                 MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
               </p>
             </div>
@@ -168,7 +168,7 @@ const Home: NextPageWithLayout = () => {
                   </a>
                 </Link>
               </div>
-              <p className="row-start-2 row-end-3 mb-4 font-cocogoose text-xs font-extralight text-white md:row-start-3 md:row-end-4 md:mt-8 md:text-lg">
+              <p className="row-start-2 row-end-3 mb-4 font-gothic text-xs text-white md:row-start-3 md:row-end-4 md:mt-8 md:text-lg">
                 FLIP THROUGH ALL OF MY DIGITAL SKETCHBOOKS BY CHOOSING A
                 CATEGORY.
               </p>

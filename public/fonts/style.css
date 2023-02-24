@@ -82,3 +82,35 @@
     font-weight: 100;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url("GOTHIC.TTF") format('truetype');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url("GOTHICI.TTF") format('truetype');
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url("GOTHICB.TTF") format('truetype');
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Century Gothic';
+    src: url("GOTHICBI.TTF") format('truetype');
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+}

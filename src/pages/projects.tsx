@@ -72,12 +72,12 @@ const Projects = () => {
                 <h2 className="no-ligature font-stretch text-2xl text-sky">
                   MORE THAN JUST ART &gt;
                 </h2>
-                <p className="pt-4 font-cocogoose text-lg font-thin text-sky">
+                <p className="pt-4 font-gothic text-lg text-sky">
                   THIS PAGE IS DEDICATED TO ALL MY SMALL PROJECTS THAT DON'T
                   QUITE MAKE THE CUT FOR THE MAIN CAST, BUT STILL PLAY A GREAT
                   ROLE IN MY CREATIVE LIFESTYLE.
                 </p>
-                <p className="pt-4 font-cocogoose text-lg font-thin text-sky">
+                <p className="pt-4 font-gothic text-lg text-sky">
                   FEEL FREE TO BROWSE IT ALL FROM THIS PAGE!
                 </p>
               </div>
@@ -110,13 +110,13 @@ const Projects = () => {
                 </div>
               </div>
               <div className="float-right inline-block w-3/5 pl-16 pr-16 pt-4">
-                <p className="pb-4 font-cocogoose text-xl font-extralight text-greyblack">
+                <p className="pb-4 font-gothic text-xl text-greyblack">
                   &gt; WIREFRAME MODEL OF THE SARADOMIN GODSWORD FROM RUNESCAPE.
                 </p>
-                <p className="pb-4 font-cocogoose text-xl font-extralight text-greyblack">
+                <p className="pb-4 font-gothic text-xl text-greyblack">
                   MODELED IN BLENDER AND TEXTURED IN SUBSTANCE PAINTER.
                 </p>
-                <p className="pb-4 font-cocogoose text-xl font-extralight text-greyblack">
+                <p className="pb-4 font-gothic text-xl text-greyblack">
                   YOU CAN FIND MORE IMAGES AND VIDEO FROM THE POST ON MY{" "}
                   <span>ARTSTATION</span>. THERE YOU WILL ALSO FIND MY OTHER
                   MODELLING PROJECTS.
@@ -202,7 +202,7 @@ const Projects = () => {
                     <p
                       className={`text-${
                         openAcc[i] ? color : "greyblack"
-                      } pt-8 text-center font-cocogoose text-lg font-thin`}
+                      } pt-8 text-center font-gothic text-lg `}
                     >
                       {body}
                     </p>
