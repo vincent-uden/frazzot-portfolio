@@ -24,7 +24,7 @@ const About: NextPage = () => {
       <div className="h-24"></div>
       <div className="bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x">
         <div className="relative mx-auto grid max-w-screen-xl grid-cols-7 gap-x-2 px-8 md:px-16">
-          <div className="absolute top-32 right-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
+          <div className="absolute top-24 left-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
             <div className="w-[30vw] scale-125 md:h-[300px] md:w-[300px]">
               <Image
                 src="/img/moi2.png"
@@ -47,12 +47,12 @@ const About: NextPage = () => {
                 WORKOUT AND CREATE STUFF.
               </p>
               <div className="h-4"></div>
-              <p className="w-[calc(60%-48px)] font-gothic text-xs text-lilac md:w-full md:text-lg">
+              <p className="pl-[calc(40%+48px)] font-gothic text-xs text-lilac md:pl-0 md:text-lg">
                 ON THIS SITE YOU CAN FIND SOME OF MY WORKS, WAYS TO SUPPORT AND
                 HOW TO GET IN TOUCH WITH ME.
               </p>
               <div className="h-4"></div>
-              <p className="w-[calc(60%-48px)] font-gothic text-xs text-lilac md:w-full md:text-lg">
+              <p className="pl-[calc(40%+48px)] font-gothic text-xs text-lilac md:pl-0 md:text-lg">
                 THANK YOU FOR STOPPING BY!
               </p>
               <div className="hidden h-32 md:block"></div>
