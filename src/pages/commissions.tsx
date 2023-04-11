@@ -46,7 +46,7 @@ const Comissions = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
         <div className="hidden stroke-mint text-mint hover:text-mint"></div>
         <div className="h-64"></div>
         <h1 className="page-header text-periwinkle">
@@ -58,7 +58,7 @@ const Comissions = () => {
         </div>
       </div>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x px-4 pt-12 md:px-8 lg:px-[20%]">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-bottom bg-repeat-x px-4 pt-12 md:px-8 lg:px-[20%]">
         <div className="flex flex-col md:flex-row">
           <div className="block md:inline-block md:w-[40%]">
             <a href="/Terms_of_Service-Frazzots_Art_Commissions.pdf">

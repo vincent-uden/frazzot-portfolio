@@ -60,10 +60,11 @@ const Layout = ({ children }: Props) => {
         <div className="h-16"></div>
       </div>
 
+      <div className="fixed grid top-0 left-4 z-40 h-16 items-center">
       <Link href="/">
         <a aria-label="Index page">
           <h1
-            className={`fixed top-0 left-4 z-40 h-16 align-middle font-stretch text-4xl leading-[4rem] text-greyblack ${
+            className={`font-stretch text-3xl md:text-4xl leading-[4rem] text-greyblack ${
               menuOpen ? "opacity-0" : "opacity-100"
             } transition-opacity`}
           >
@@ -71,11 +72,14 @@ const Layout = ({ children }: Props) => {
           </h1>
         </a>
       </Link>
+      </div>
       <Hamburger
         onToggle={() => menuOnClick()}
         color="#292a2c"
         toggled={menuOpen}
         label="Toggle menu"
+        size={48}
+        distance="sm"
       />
       <div
         className={`fixed top-0 left-0 z-30 h-screen w-screen bg-holo bg-cover shadow-lg ${
