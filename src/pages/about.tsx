@@ -10,7 +10,7 @@ const About: NextPage = () => {
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-periwinkle">ABOUT</h1>
         <div className="mt-2 bg-holo bg-cover py-2 md:mt-8">
@@ -22,7 +22,7 @@ const About: NextPage = () => {
       </div>
 
       <div className="h-24"></div>
-      <div className="bg-pattern-holo-short bg-[length:1920px_330px] bg-bottom bg-repeat-x">
+      <div className="bg-pattern-holo-short bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-bottom bg-repeat-x">
         <div className="relative mx-auto grid max-w-screen-xl grid-cols-7 gap-x-2 px-8 md:px-16">
           <div className="absolute top-24 left-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
             <div className="w-[30vw] scale-125 md:h-[300px] md:w-[300px]">
