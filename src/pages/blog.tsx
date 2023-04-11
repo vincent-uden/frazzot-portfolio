@@ -53,7 +53,7 @@ const CATEGORIES = [
     color: "sky",
   },
   {
-    header: "GRAPHICS DESIGN",
+    header: "GRAPHIC DESIGN",
     body: "STYLE GUIDES AND DESIGN SHEETS FOR SOME OF MY DESIGN PROJECTS.",
     color: "sky",
   },
