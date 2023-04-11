@@ -261,6 +261,59 @@ span:nth-child(5) > .gallery-show-img {
   row-gap: 20px;
 }
 
+@keyframes img-show-2 {
+  0% {
+    opacity: 0%;
+  }
+  1.5% {
+    opacity: 0%;
+  }
+  3.5% {
+    opacity: 100%;
+  }
+  25% {
+    opacity: 100%;
+  }
+  27% {
+    opacity: 0%;
+  }
+}
+
+span:nth-child(1) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(2) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 5s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(3) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 10s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(4) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: 15s;
+  animation-timing-function: ease-in-out;
+}
+
+.menu-show-img {
+  opacity: 0;
+}
+
 @media screen and (min-width: 768px) {
   .index-grid {
     grid-template-columns: 1fr 4fr;

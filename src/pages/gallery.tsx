@@ -120,7 +120,7 @@ const Gallery = () => {
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
-        <h1 className="pl-4 text-center font-stretch text-6xl text-periwinkle no-ligature">
+        <h1 className="no-ligature pl-4 text-center font-stretch text-6xl text-periwinkle">
           GALLERY
         </h1>
         <div className="mt-8 mb-16 bg-holo bg-cover py-2">
