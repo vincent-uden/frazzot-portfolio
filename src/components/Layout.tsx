@@ -1,4 +1,5 @@
 import { ReactNode, useCallback, useRef, useState } from "react";
+import Image from "next/image";
 
 import MenuPageItem from "./MenuPageItem";
 import { Squeeze as Hamburger } from "hamburger-react";
@@ -158,6 +159,21 @@ const Layout = ({ children }: Props) => {
             <DeviantartIcon color="fuchsia-200" size="8" />
           </div>
           <div className="hidden h-10 w-10 text-fuchsia-200"></div>
+        </div>
+
+        <div className="absolute top-20 right-16 hidden h-[calc(100vh-10rem)] w-[calc((100vh-10rem)*0.58333)] 2xl:block">
+          {["penelope", "izabelle", "winter", "hannah"].map((name, i) => {
+            return (
+              <Image
+                className="menu-show-img"
+                src={`/img/${name}.png`}
+                key={`menuSlideShow-${i}`}
+                width="3500px"
+                height="6000px"
+                layout="fill"
+              />
+            );
+          })}
         </div>
       </div>
     </>
