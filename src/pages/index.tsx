@@ -26,9 +26,9 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative h-[150vw] md:h-[80vh] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x lg:h-[50vw] md:bg-[length:1920px_640px]">
+      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:h-[50vw]">
         <FadeIn>
-          <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:h-[40vw] lg:w-[40vw] lg:left-32">
+          <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:left-32 lg:h-[40vw] lg:w-[40vw]">
             <Image src={"/img/moi3.png"} layout="fill" alt="Self portrait" />
           </div>
           <aside className="absolute right-0 top-1/2 hidden -translate-y-1/2 xl:block">
@@ -43,8 +43,7 @@ const Home: NextPageWithLayout = () => {
           </aside>
         </FadeIn>
 
-        <div>
-        </div>
+        <div></div>
       </div>
 
       <div className="holo-panel z-10 shadow-panel">

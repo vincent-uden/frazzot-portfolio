@@ -2,28 +2,34 @@ import Link from "next/link";
 
 export const BlogPost = ({ content, data }: any) => {
   return (
-    <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
-      <p className="mt-64 text-center font-stretch text-3xl text-sky md:text-4xl lg:text-6xl">
+    <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
+      <div className="h-48 md:h-64" />
+      <p className="text-center font-stretch text-3xl text-sky md:text-4xl lg:text-6xl">
         BLOG
       </p>
-      <p className="bg-holo text-center font-stretch text-xs text-greyblack md:text-2xl lg:text-3xl">
-        PROJECT ARCHIVE AND POSTS_
-      </p>
-      <div className="blog-post relative mx-auto mt-8 max-w-[920px] border-[16px] border-sky bg-pattern-holo-short-inv bg-contain bg-no-repeat">
-        <h1 className="text-holo absolute top-0 -left-16 w-fit origin-top-right -translate-x-full rotate-[270deg] font-stretch text-4xl">
+      <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
+        <p className="page-sub-header no-ligature">ARCHIVE AND POSTS_</p>
+      </div>
+      <div className="blog-post relative mx-auto mt-8 max-w-[920px] border-sky bg-contain bg-no-repeat lg:border-[16px] lg:bg-pattern-holo-short-inv">
+        <h1 className="text-holo absolute top-0 -left-16 hidden w-fit origin-top-right -translate-x-full rotate-[270deg] font-stretch text-4xl lg:block">
           {data.title.toUpperCase()}
         </h1>
-        <div className="date-header mt-8 flex w-full flex-row px-8">
-          <p className="grow">{data.date}</p>
-          <p className="">{data.time}</p>
+        <div className="mb-8 pt-2 pb-8 shadow-blog-panel lg:mb-0 lg:pb-0 lg:shadow-none">
+          <div className="date-header mt-8 flex w-full flex-row px-8">
+            <p className="grow">{data.date}</p>
+            <p className="">{data.time}</p>
+          </div>
+          <h1 className="text-holo no-ligature px-8 text-center font-stretch text-xl md:text-left md:text-2xl lg:hidden">
+            {data.title.toUpperCase()}
+          </h1>
         </div>
         <div className="blog-content p-8">{content}</div>
       </div>
 
       <div className="h-8" />
-      <div className="mx-auto max-w-[920px]">
+      <div className="mx-auto grid max-w-[920px] justify-center px-32 md:block lg:px-0">
         <Link href="/blog">
-          <a className="float-right inline-block bg-holo bg-[length:600px_600px] py-6 px-28 font-stretch text-xl text-greyblack">
+          <a className="inline-block w-full bg-holo bg-[length:800px_600px] py-6 px-28 text-center font-stretch text-xl text-greyblack md:text-2xl lg:float-right lg:w-fit">
             BACK
           </a>
         </Link>

@@ -2,23 +2,23 @@
 }
 
 .blog-post h2 {
-  @apply mb-8 font-gothic text-xl font-bold text-sky;
+  @apply mb-8 font-gothic text-2xl font-bold text-periwinkle;
 }
 
 .blog-post h3 {
-  @apply mb-8 font-gothic text-lg font-bold text-sky;
+  @apply mb-8 font-gothic text-xl font-bold text-periwinkle;
 }
 
 .blog-post h4 {
-  @apply mb-8 font-gothic text-base font-bold italic text-sky;
+  @apply mb-8 font-gothic text-lg font-bold text-periwinkle;
 }
 
 .blog-post h5 {
-  @apply mb-8 font-gothic text-base font-bold text-sky;
+  @apply mb-8 font-gothic text-base font-bold italic text-periwinkle;
 }
 
 .blog-post h6 {
-  @apply mb-8 font-gothic text-base text-sky;
+  @apply mb-8 font-gothic text-base font-bold text-periwinkle;
 }
 
 .blog-post p {
@@ -26,16 +26,17 @@
 }
 
 .blog-post a {
-  @apply italic;
+  @apply font-bold text-lilac underline;
 }
 
 .blog-post .date-header p {
-  @apply border-b-4 border-sky font-neou-bold text-sky;
+  @apply border-b-4 border-sky font-gothic text-base text-sky;
 }
 
 .blog-post .split-stack {
-  display: flex;
-  flex-direction: row;
+  /* There is a bug on chrome for android where the text in flexbox is rendered
+   * slightly smaller than it should be. */
+  display: block;
 }
 
 .blog-post .split-stack aside {
@@ -45,4 +46,12 @@
 .blog-post .split-stack img {
   width: 100%;
   height: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .blog-post .split-stack {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
 }

@@ -118,7 +118,7 @@ const Gallery = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-64"></div>
         <h1 className="no-ligature pl-4 text-center font-stretch text-6xl text-periwinkle">
           GALLERY

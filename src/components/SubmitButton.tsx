@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 interface Props {
   color?: string;
   text?: string;
@@ -11,7 +9,7 @@ const SubmitButton = ({ color, text, onClick, success }: Props) => {
   return (
     <div className="relative">
       <button
-        className={`block bg-${color} border-2 py-4 font-stretch text-2xl text-greyblack border-${color} hover:bg-greyblack hover:text-${color} angry-shake w-full px-8 transition-colors`}
+        className={`block bg-${color} border-2 py-4 font-stretch text-xl text-greyblack md:text-2xl border-${color} hover:bg-greyblack hover:text-${color} angry-shake w-full px-8 transition-colors`}
         id="submitBtn"
         onClick={onClick}
       >
