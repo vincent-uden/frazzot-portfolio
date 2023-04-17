@@ -60,18 +60,18 @@ const Layout = ({ children }: Props) => {
         <div className="h-16"></div>
       </div>
 
-      <div className="fixed grid top-0 left-4 z-40 h-16 items-center">
-      <Link href="/">
-        <a aria-label="Index page">
-          <h1
-            className={`font-stretch text-3xl md:text-4xl leading-[4rem] text-greyblack ${
-              menuOpen ? "opacity-0" : "opacity-100"
-            } transition-opacity`}
-          >
-            FRAZZOT
-          </h1>
-        </a>
-      </Link>
+      <div className="fixed top-0 left-4 z-40 grid h-16 items-center">
+        <Link href="/">
+          <a aria-label="Index page">
+            <h1
+              className={`font-stretch text-3xl leading-[4rem] text-greyblack md:text-4xl ${
+                menuOpen ? "opacity-0" : "opacity-100"
+              } origin-left transition-all hover:scale-105`}
+            >
+              FRAZZOT
+            </h1>
+          </a>
+        </Link>
       </div>
       <Hamburger
         onToggle={() => menuOnClick()}
