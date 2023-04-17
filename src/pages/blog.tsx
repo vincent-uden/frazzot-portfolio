@@ -182,33 +182,37 @@ const Blog = ({ posts }: Props) => {
     }
   };
 
-  const changeActiveMonth = (i: number) => {
+  const changeActiveMonth = (i: number, onMobile = false) => {
     if (i < 0 || i > 11) {
       return;
     }
-    setAutoScrolling(true);
+    if (!onMobile) {
+      setAutoScrolling(true);
 
-    const m = months[i]!!;
+      const m = months[i]!!;
 
-    const timelineElem =
-      timelineContainer.current?.children[i + 1]?.children[0];
-    timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const timelineElem =
+        timelineContainer.current?.children[i + 1]?.children[0];
+      timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-    let j = 0;
-    for (const p of posts) {
-      if (new Date(p.date).getTime() <= m.getTime()) {
-        const anchor = previewRef.current?.children[j]?.children[0];
-        anchor?.scrollIntoView({ behavior: "smooth", block: "start" });
+      let j = 0;
+      for (const p of posts) {
+        if (new Date(p.date).getTime() <= m.getTime()) {
+          const anchor = previewRef.current?.children[j]?.children[0];
+          anchor?.scrollIntoView({ behavior: "smooth", block: "start" });
 
-        break;
+          break;
+        }
+        j++;
       }
-      j++;
-    }
 
-    setActiveMonth(i);
-    setTimeout(() => {
-      setAutoScrolling(false);
-    }, 400);
+      setActiveMonth(i);
+      setTimeout(() => {
+        setAutoScrolling(false);
+      }, 400);
+    } else {
+      setActiveMonth(i);
+    }
   };
 
   const intoViewCallback = (i: Date) => {
@@ -266,17 +270,19 @@ const Blog = ({ posts }: Props) => {
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-64"></div>
-        <h1 className="pl-4 text-center font-stretch text-6xl text-sky">
-          BLOG
-        </h1>
+        <h1 className="page-header text-sky">BLOG</h1>
         <div className="mt-8 mb-16 bg-holo bg-cover py-2">
-          <h2 className="text-center font-stretch text-3xl text-greyblack">
+          <h2 className="page-sub-header hidden text-greyblack lg:block">
             PROJECT ARCHIVE AND POSTS_
+          </h2>
+          <h2 className="page-sub-header text-greyblack lg:hidden">
+            ARCHIVE AND POSTS_
           </h2>
         </div>
       </div>
 
-      <div className={"grid grid-cols-[1fr_auto_1fr]"}>
+      {/* Desktop */}
+      <div className={"hidden grid-cols-[1fr_auto_1fr] lg:grid"}>
         <div className="flex flex-row justify-end">
           <div className="col-span-1 w-72" />
           <div
@@ -428,6 +434,145 @@ const Blog = ({ posts }: Props) => {
               })}
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Mobile */}
+      <div className="lg:hidden">
+        <div className="mx-4 border-4 border-sky p-4 pb-0">
+          <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
+            CATEGORIES &gt;
+          </h3>
+          <div className="mt-8 flex flex-col items-center" ref={accordionRef}>
+            {CATEGORIES.map(({ header, body, color }, i) => {
+              return (
+                <div
+                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                    openAcc[i] ? "greyblack" : color
+                  } w-full py-2 px-4`}
+                  key={`acc-main-${i}`}
+                  onMouseEnter={(_) => {
+                    const openSections = [...openAcc];
+                    for (let j = 0; j < openSections.length; j++) {
+                      openSections[j] = i === j;
+                    }
+                    setOpenAcc(openSections);
+                  }}
+                  onMouseLeave={(_) => {
+                    const openSections = [...openAcc];
+                    openSections[i] = false;
+                    setOpenAcc(openSections);
+                  }}
+                  style={{
+                    transition:
+                      "background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 1s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  <h3
+                    className={`no-ligatures whitespace-nowrap text-center font-stretch text-base transition-colors text-${
+                      openAcc[i] ? color : "greyblack"
+                    }`}
+                  >
+                    {header}
+                  </h3>
+                  <div
+                    className={"overflow-hidden transition-all"}
+                    style={{
+                      maxHeight: `${openAcc[i] ? accHeights[i] : 0}px`,
+                      opacity: openAcc[i] ? 100 : 0,
+                    }}
+                  >
+                    <p
+                      className={`text-${
+                        openAcc[i] ? color : "greyblack"
+                      } pt-4 text-center font-gothic text-xs lg:text-sm`}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div
+            className="pointer-events-none fixed opacity-0"
+            ref={accHeightRef}
+          >
+            {CATEGORIES.map(({ header, body, color }, i) => {
+              return (
+                <div
+                  className={`mb-4 border-2 border-${color} cursor-pointer bg-${
+                    true ? "greyblack" : color
+                  } py-0 px-20`}
+                  key={`acc-hidden-${i}`}
+                >
+                  <div className={"overflow-hidden transition-all"}>
+                    <p
+                      className={`text-${
+                        true ? color : "greyblack"
+                      } pointer-events-none pt-4 text-center font-gothic text-sm`}
+                    >
+                      {body}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="timeline-mobile px-4">
+          <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
+          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll">
+            {[new Date()].concat(months, [new Date()]).map((m, i) => {
+              return (
+                <div
+                  className={`flex cursor-pointer select-none flex-col items-center gap-2 ${
+                    i == 0 || i == months.length + 1
+                      ? "pointer-events-none opacity-0"
+                      : ""
+                  }`}
+                  key={`timeline-${i}`}
+                  onClick={() => changeActiveMonth(i - 1, true)}
+                >
+                  <div
+                    className={`h-8 w-8 select-none transition-transform ${
+                      i == activeMonth + 1 && !autoScrolling
+                        ? "scale-100 bg-sky"
+                        : "scale-75 bg-[#6c8da0]"
+                    }`}
+                  />
+                  <p
+                    className={`no-ligatures grow select-none text-right font-stretch text-base transition-all ${
+                      i == activeMonth + 1 && !autoScrolling
+                        ? "scale-110 text-sky"
+                        : "text-[#6c8da0]"
+                    }`}
+                  >{`${MONTHS[m.getMonth()]}\u00A0${m
+                    .getFullYear()
+                    .toString()
+                    .slice(2)}`}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="blog-previews-mobile">
+          <ScrollContext.Provider value={{ intoViewCallback }}>
+            {postComponents.map((comp, i) => {
+              return (
+                <BlogPreview
+                  path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                  key={`blog-post-${i}`}
+                  date={posts[i]?.date ?? "2000-01-01"}
+                  index={i}
+                >
+                  {comp}
+                </BlogPreview>
+              );
+            })}
+          </ScrollContext.Provider>
         </div>
       </div>
     </>
