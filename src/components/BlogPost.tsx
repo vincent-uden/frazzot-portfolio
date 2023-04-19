@@ -11,7 +11,7 @@ export const BlogPost = ({ content, data }: any) => {
         <p className="page-sub-header no-ligature">ARCHIVE AND POSTS_</p>
       </div>
       <div className="blog-post relative mx-auto mt-8 max-w-[920px] border-sky bg-contain bg-no-repeat lg:border-[16px] lg:bg-pattern-holo-short-inv">
-        <h1 className="text-holo absolute top-0 -left-16 hidden w-fit origin-top-right -translate-x-full rotate-[270deg] font-stretch text-4xl lg:block">
+        <h1 className="text-holo absolute top-0 -left-16 hidden w-max origin-top-right -translate-x-full rotate-[270deg] font-stretch text-4xl lg:block">
           {data.title.toUpperCase()}
         </h1>
         <div className="mb-8 pt-2 pb-8 shadow-blog-panel lg:mb-0 lg:pb-0 lg:shadow-none">
