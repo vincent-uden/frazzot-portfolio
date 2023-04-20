@@ -35,7 +35,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
         <div className="holo-panel absolute top-36 h-48 w-full"></div>
         <div className="absolute top-44 left-0 right-0">
           <IoChevronBackSharp
-            className="absolute right-1/2 h-32 w-32 -translate-x-[32rem] text-greyblack"
+            className="absolute right-1/2 h-32 w-32 -translate-x-[32rem] cursor-pointer text-greyblack transition-transform hover:scale-110"
             onClick={() => {
               setActiveIndex(
                 (((activeIndex - 1) % imgPaths.length) + imgPaths.length) %
@@ -44,7 +44,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
             }}
           />
           <IoChevronForwardSharp
-            className="absolute left-1/2 h-32 w-32 translate-x-[32rem] text-greyblack"
+            className="absolute left-1/2 h-32 w-32 translate-x-[32rem] cursor-pointer text-greyblack transition-transform hover:scale-110"
             onClick={() => {
               setActiveIndex((activeIndex + 1) % imgPaths.length);
             }}

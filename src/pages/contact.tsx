@@ -39,13 +39,13 @@ const Contact = () => {
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-64"></div>
         <h1 className="page-header text-pastelpink">CONTACT</h1>
         <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
           <h2 className="page-sub-header no-ligature">
-            CONTACT & AND CONNECT WITH ME_
+            CONTACT & CONNECT WITH ME_
           </h2>
         </div>
       </div>
@@ -213,7 +213,7 @@ const Contact = () => {
         </aside>
       </div>
 
-      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-bottom bg-repeat-x px-[20%] pt-12"></div>
+      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
     </>
   );
 };

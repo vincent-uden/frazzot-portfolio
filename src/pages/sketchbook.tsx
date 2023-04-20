@@ -80,7 +80,7 @@ const Sketchbook = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-64"></div>
         <h1 className="pl-4 text-center font-stretch text-6xl text-yellowpeach">
           SKETCHBOOK
@@ -119,7 +119,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(0)}
           >
             <h2
-              className={`my-auto py-8 text-center font-stretch text-2xl ${
+              className={`my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 0 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -133,7 +133,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(1)}
           >
             <h2
-              className={`no-ligature my-auto py-8 text-center font-stretch text-2xl ${
+              className={`no-ligature my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 1 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -147,7 +147,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(2)}
           >
             <h2
-              className={`my-auto py-8 text-center font-stretch text-2xl ${
+              className={`my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 2 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -201,7 +201,7 @@ const Sketchbook = () => {
                         }}
                       ></div>
                       <div
-                        className="relative top-0 m-0 inline-block h-full p-0"
+                        className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
                         key={n}
                       >
                         <img

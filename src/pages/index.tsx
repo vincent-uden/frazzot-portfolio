@@ -26,9 +26,9 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative h-[150vw] md:h-[80vh] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x lg:h-[50vw] md:bg-[length:1920px_640px]">
+      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:h-[50vw]">
         <FadeIn>
-          <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:h-[40vw] lg:w-[40vw] lg:left-32">
+          <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:left-32 lg:h-[40vw] lg:w-[40vw]">
             <Image src={"/img/moi3.png"} layout="fill" alt="Self portrait" />
           </div>
           <aside className="absolute right-0 top-1/2 hidden -translate-y-1/2 xl:block">
@@ -43,8 +43,7 @@ const Home: NextPageWithLayout = () => {
           </aside>
         </FadeIn>
 
-        <div>
-        </div>
+        <div></div>
       </div>
 
       <div className="holo-panel z-10 shadow-panel">
@@ -94,7 +93,7 @@ const Home: NextPageWithLayout = () => {
                   </p>
                   <FontAwesomeIcon
                     icon={faDiscord}
-                    className="h-auto max-h-20 w-full self-center text-greyblack lg:max-h-max"
+                    className="h-auto max-h-20 w-full self-center text-greyblack transition-transform hover:scale-110 lg:max-h-max"
                   />
                 </a>
               </Link>
@@ -104,7 +103,7 @@ const Home: NextPageWithLayout = () => {
             <div className="h-full bg-greyblack p-4 md:p-8">
               <Link href="/commissions">
                 <a aria-label="Commissions page">
-                  <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
+                  <h3 className="text-holo mb-2 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:mb-6 md:text-4xl">
                     <span className="no-ligature">COMM</span>ISSIONS &gt;
                   </h3>
                 </a>
@@ -128,7 +127,7 @@ const Home: NextPageWithLayout = () => {
             <div className="h-full bg-greyblack p-4 md:p-8">
               <Link href="/projects">
                 <a aria-label="Projects page">
-                  <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
+                  <h3 className="text-holo mb-2 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:mb-6 md:text-4xl">
                     PROJECTS &gt;
                   </h3>
                 </a>
@@ -143,7 +142,7 @@ const Home: NextPageWithLayout = () => {
             <div className="grid h-full bg-greyblack p-4 md:p-8">
               <Link href={"/sketchbook"}>
                 <a className="row-span-1" aria-label="Sketchbook page">
-                  <h3 className="text-holo mb-2 bg-cover font-stretch text-xl md:mb-6 md:text-4xl">
+                  <h3 className="text-holo mb-2 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:mb-6 md:text-4xl">
                     SKETCHBOOK &gt;
                   </h3>
                 </a>
@@ -178,36 +177,39 @@ const Home: NextPageWithLayout = () => {
             </div>
           </div>
           <div className="col-start-1 col-end-3 row-start-5 row-end-6 my-auto hidden h-2 w-full bg-mint lg:block lg:h-8 xl:hidden"></div>
-          <div className="col-start-1 col-end-3 row-start-6 row-end-7 h-[80vh] w-full bg-holo p-[2px] xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5 xl:h-auto">
-            <div className="flex h-full w-full flex-col bg-greyblack p-8">
-              <div className="relative top-0 left-0 grow overflow-x-hidden">
-                {[
-                  "gwen_final.png",
-                  "team7.png",
-                  "TK_red_spider_lily.png",
-                  "Dabi_final.png",
-                  "aizawa.png",
-                ].map((path, i) => {
-                  return (
-                    <Image
-                      src={`/thumbnail_lg/${path}`}
-                      alt={path}
-                      key={`gallery-show-${i}`}
-                      className="gallery-show-img grow"
-                      layout="fill"
-                    />
-                  );
-                })}
-              </div>
-              <Link href={"/gallery"}>
-                <a className="flex-grow-0" aria-label="Gallery">
-                  <h3 className="text-holo no-ligature mt-4 bg-cover font-stretch text-xl md:text-4xl">
+          <Link href={"/gallery"}>
+            <a
+              className="col-start-1 col-end-3 row-start-6 row-end-7 flex xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5"
+              aria-label="Gallery"
+            >
+              <div className="h-[80vh] w-full bg-holo p-[2px] xl:h-auto">
+                <div className="flex h-full w-full flex-col bg-greyblack p-8">
+                  <div className="relative top-0 left-0 grow overflow-x-hidden">
+                    {[
+                      "gwen_final.png",
+                      "team7.png",
+                      "TK_red_spider_lily.png",
+                      "Dabi_final.png",
+                      "aizawa.png",
+                    ].map((path, i) => {
+                      return (
+                        <Image
+                          src={`/thumbnail_lg/${path}`}
+                          alt={path}
+                          key={`gallery-show-${i}`}
+                          className="gallery-show-img grow"
+                          layout="fill"
+                        />
+                      );
+                    })}
+                  </div>
+                  <h3 className="text-holo no-ligature mt-4 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:text-4xl">
                     GALLERY &gt;
                   </h3>
-                </a>
-              </Link>
-            </div>
-          </div>
+                </div>
+              </div>
+            </a>
+          </Link>
         </div>
       </div>
     </>

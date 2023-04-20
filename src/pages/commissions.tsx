@@ -46,7 +46,7 @@ const Comissions = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[center_top_4rem] bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-repeat-x">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="hidden stroke-mint text-mint hover:text-mint"></div>
         <div className="h-64"></div>
         <h1 className="page-header text-periwinkle">
@@ -58,20 +58,20 @@ const Comissions = () => {
         </div>
       </div>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] md:bg-[length:1920px_330px] bg-bottom bg-repeat-x px-4 pt-12 md:px-8 lg:px-[20%]">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-4 pt-12 md:bg-[length:1920px_330px] md:px-8 lg:px-[20%]">
         <div className="flex flex-col md:flex-row">
           <div className="block md:inline-block md:w-[40%]">
             <a href="/Terms_of_Service-Frazzots_Art_Commissions.pdf">
-              <div className="flex h-[40%] w-full flex-col justify-around bg-periwinkle text-center">
-                <h2 className="py-4 font-stretch text-lg text-greyblack md:text-xl lg:text-2xl">
+              <div className="flex h-[40%] w-full flex-col justify-around border-2 border-periwinkle bg-periwinkle text-center text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
+                <h2 className="py-4 font-stretch text-lg md:text-xl lg:text-2xl">
                   TERMS
                 </h2>
               </div>
             </a>
             <div className="h-6 md:h-[20%]"></div>
             <a href="https://www.patreon.com/posts/67507209">
-              <div className="flex h-[40%] w-full flex-col justify-around bg-mint text-center">
-                <h2 className="py-4 font-stretch text-lg text-greyblack md:text-xl lg:text-2xl">
+              <div className="flex h-[40%] w-full flex-col justify-around border-2 border-mint bg-mint text-center text-greyblack transition-colors hover:bg-greyblack hover:text-mint">
+                <h2 className="py-4 font-stretch text-lg md:text-xl lg:text-2xl">
                   INFORMATION
                 </h2>
               </div>
