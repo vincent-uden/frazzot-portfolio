@@ -45,7 +45,7 @@ const Contact = () => {
         <h1 className="page-header text-pastelpink">CONTACT</h1>
         <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
           <h2 className="page-sub-header no-ligature">
-            CONTACT & AND CONNECT WITH ME_
+            CONTACT & CONNECT WITH ME_
           </h2>
         </div>
       </div>
