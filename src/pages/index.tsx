@@ -52,7 +52,7 @@ const Home: NextPageWithLayout = () => {
           WELCOME
         </h2>
         <div className="h-8"></div>
-        <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-gothic text-lg md:max-w-[60vw] md:px-0 md:text-2xl">
+        <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center text-greyblack font-gothic text-lg md:max-w-[60vw] md:px-0 md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
           GALLERY TO COMMISSION DETAILS.
         </p>
