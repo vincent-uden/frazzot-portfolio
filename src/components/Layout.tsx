@@ -66,7 +66,7 @@ const Layout = ({ children }: Props) => {
             <h1
               className={`font-stretch text-3xl leading-[4rem] text-greyblack md:text-4xl ${
                 menuOpen ? "opacity-0" : "opacity-100"
-              } transition-opacity`}
+              } origin-left transition-all hover:scale-105`}
             >
               FRAZZOT
             </h1>

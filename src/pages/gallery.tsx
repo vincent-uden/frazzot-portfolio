@@ -152,7 +152,7 @@ const Gallery = () => {
                           }}
                         ></div>
                         <div
-                          className="relative top-0 m-0 inline-block h-full p-0"
+                          className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
                           key={`image-${n}`}
                         >
                           <img

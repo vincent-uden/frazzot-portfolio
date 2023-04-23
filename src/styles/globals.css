@@ -314,6 +314,10 @@ span:nth-child(4) > .menu-show-img {
   opacity: 0;
 }
 
+:root {
+  color-scheme: dark;
+}
+
 @media screen and (min-width: 768px) {
   .index-grid {
     grid-template-columns: 1fr 4fr;

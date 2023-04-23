@@ -119,7 +119,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(0)}
           >
             <h2
-              className={`my-auto py-8 text-center font-stretch text-2xl ${
+              className={`my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 0 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -133,7 +133,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(1)}
           >
             <h2
-              className={`no-ligature my-auto py-8 text-center font-stretch text-2xl ${
+              className={`no-ligature my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 1 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -147,7 +147,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(2)}
           >
             <h2
-              className={`my-auto py-8 text-center font-stretch text-2xl ${
+              className={`my-auto py-8 text-center font-stretch text-2xl transition-transform hover:scale-110 ${
                 selectedCategory === 2 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -201,7 +201,7 @@ const Sketchbook = () => {
                         }}
                       ></div>
                       <div
-                        className="relative top-0 m-0 inline-block h-full p-0"
+                        className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
                         key={n}
                       >
                         <img
