@@ -175,6 +175,7 @@ const Layout = ({ children }: Props) => {
                 width="3500px"
                 height="6000px"
                 layout="fill"
+                priority={true}
               />
             );
           })}

@@ -263,16 +263,17 @@ const Blog = ({ posts }: Props) => {
         </div>
       </div>
 
+      <div className="bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x md:bg-[length:1920px_330px]">
       {/* Mobile */}
       <div className="2xl:hidden">
-        <div className="mx-4 border-4 border-sky p-4 pb-0">
+        <div className="border-4 border-sky p-4 pb-0  max-w-screen-md mx-auto">
           <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
             CATEGORIES &gt;
           </h3>
           <CategoriesFilter />
         </div>
 
-        <div className="timeline-mobile px-4">
+        <div className="timeline-mobile px-4 max-w-screen-md mx-auto">
           <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
           <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll">
             {[new Date()].concat(months, [new Date()]).map((m, i) => {
@@ -412,6 +413,8 @@ const Blog = ({ posts }: Props) => {
           </div>
         </div>
       </div>
+      <div className="h-64" />
+      </div>
     </>
   );
 };
@@ -431,7 +434,7 @@ const BlogPreview: React.FC<BlogPreviewProps> = ({
 
   return (
     <Link href={path}>
-      <div className={"blog-link cursor-pointer pt-16"} ref={anchorRef}>
+      <div className={"blog-link cursor-pointer pt-0"} ref={anchorRef}>
         <div className="scroll-anchor pointer-events-none translate-y-[-100px]" />
         {children}
       </div>
