@@ -14,6 +14,18 @@
   display: none;
 }
 
+.blog-previews .blog-container > div:first-of-type {
+  display: none;
+}
+
+.blog-previews .blog-container > p:first-of-type {
+  display: none;
+}
+
+.blog-previews .blog-container > div:nth-of-type(2) {
+  display: none;
+}
+
 .blog-previews .blog-post > h1 {
   position: absolute;
   left: 0rem;
@@ -45,7 +57,6 @@
 .blog-previews .blog-container > div > a {
   display: none;
 }
-
 .blog-previews .blog-content {
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -81,4 +92,92 @@
 
 .timeline::-webkit-scrollbar {
   display: none;
+}
+
+.timeline-mobile {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 32px,
+    rgba(0, 0, 0, 1) 72px,
+    rgba(0, 0, 0, 1) calc(100% - 72px),
+    rgba(0, 0, 0, 0) calc(100% - 32px)
+  );
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 32px,
+    rgba(0, 0, 0, 1) 72px,
+    rgba(0, 0, 0, 1) calc(100% - 72px),
+    rgba(0, 0, 0, 0) calc(100% - 32px)
+  );
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.timeline-mobile::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.blog-previews-mobile .blog-post {
+  max-height: 400px;
+  overflow-y: hidden;
+  box-shadow: 0px 0px 29px 0px rgba(0, 0, 0, 0.5);
+}
+
+.blog-previews-mobile .blog-post > div:first-of-type {
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+.blog-previews-mobile .blog-content {
+  box-shadow: none;
+  padding-top: 0;
+  max-height: 180px;
+}
+
+.blog-previews-mobile .blog-container > div > a {
+  display: none;
+}
+
+.blog-previews-mobile .blog-container {
+  background: none;
+  min-height: auto;
+}
+
+.blog-previews-mobile .blog-link {
+  padding-top: 0;
+}
+
+.blog-previews-mobile .blog-container > div:first-of-type {
+  display: none;
+}
+
+.blog-previews-mobile .blog-container > p:first-of-type {
+  display: none;
+}
+
+.blog-previews-mobile .blog-container > div:nth-of-type(2) {
+  display: none;
+}
+
+.blog-previews-mobile .blog-container > div:last-child {
+  background: none;
+  display: none;
+}
+
+.blog-previews-mobile .blog-content {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 160px
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0px,
+    rgba(0, 0, 0, 0) 160px
+  );
 }
