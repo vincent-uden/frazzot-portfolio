@@ -12,7 +12,7 @@ const About: NextPage = () => {
       </Head>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-48 md:h-64"></div>
-        <h1 className="page-header text-periwinkle">ABOUT</h1>
+        <h1 className="page-header text-lilac">ABOUT</h1>
         <div className="mt-2 bg-holo bg-cover py-2 md:mt-8">
           <h2 className="page-sub-header hidden lg:block">
             A SHORT INTRODUCTION TO THE ARTIST_
