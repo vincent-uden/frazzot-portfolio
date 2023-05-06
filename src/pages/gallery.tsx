@@ -29,12 +29,16 @@ export function tileImages(
 ): ImageRow[] {
   let rows = [];
   let i = 0;
-  let maxHeight = 200;
+  let marginMod = 0.9;
+  let imgMod = 1.0;
+  if (window.innerWidth >= 768) {
+    marginMod = 0.8;
+  }
+
   while (i < imgs.length) {
     // Build first row
     let w = 0;
-    // The rows are only 80% of the width
-    let maxW = 0.8 * (cont.current?.offsetWidth ?? -1);
+    let maxW = marginMod * (cont.current?.offsetWidth ?? -1);
 
     let row: ImageRow = {
       indices: [],
@@ -43,11 +47,11 @@ export function tileImages(
 
     while (w < maxW && i < imgs.length) {
       row.indices.push(i);
-      w += imgs[i]?.thmb_w ?? 0;
+      w += (imgs[i]?.thmb_w ?? 0) * imgMod;
       i++;
     }
 
-    row.scale = Math.min((maxW - (row.indices.length - 1) * gap) / w, 1);
+    row.scale = Math.min((maxW - (row.indices.length - 1) * gap) / w, 1) * imgMod;
     rows.push(row);
   }
 
@@ -120,11 +124,11 @@ const Gallery = () => {
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-64"></div>
-        <h1 className="no-ligature pl-4 text-center font-stretch text-6xl text-periwinkle">
+        <h1 className="page-header no-ligature text-periwinkle">
           GALLERY
         </h1>
-        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
-          <h2 className="text-center font-stretch text-3xl text-greyblack">
+        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+          <h2 className="page-sub-header">
             A SELECTION OF MY DIGITAL ARTWORKS_
           </h2>
         </div>
@@ -135,7 +139,7 @@ const Gallery = () => {
             return (
               <>
                 <div
-                  className="gallery-row w-[80%] overflow-x-clip pl-[10%]"
+                  className="gallery-row w-[90%] md:w-[80%] overflow-x-clip pl-[5%] md:pl-[10%]"
                   key={`row-${r}`}
                 >
                   {row.indices.map((i, n) => {
@@ -215,7 +219,7 @@ const Gallery = () => {
         >
           <img
             src={images?.at(openImage)?.urlLg ?? ""}
-            className="z-50 max-h-[80vh] max-w-screen-xl"
+            className="z-50 max-h-[80vh] max-w-[90vw] xl:max-w-screen-xl"
           />
         </div>
       )}
