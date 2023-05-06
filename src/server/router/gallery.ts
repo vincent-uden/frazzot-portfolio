@@ -252,7 +252,7 @@ export const galleryRouter = createRouter()
         await new Promise((fulfill) => fileStream.on("finish", fulfill));
         fileStream.close();
 
-        await sharp(tmpPath).resize(null, 200).toFile(`/tmp/1${baseName}`);
+        await sharp(tmpPath).resize(null, 240).toFile(`/tmp/1${baseName}`);
 
         await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
 
