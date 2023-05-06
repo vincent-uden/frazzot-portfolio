@@ -123,7 +123,7 @@ const Gallery = () => {
       </Head>
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
-        <div className="h-64"></div>
+        <div className="h-48 md:h-64"></div>
         <h1 className="page-header no-ligature text-periwinkle">
           GALLERY
         </h1>
