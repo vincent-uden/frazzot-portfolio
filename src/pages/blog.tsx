@@ -104,6 +104,23 @@ function useOnScreen(
   return isIntersecting;
 }
 
+function scrollTo(el: HTMLDivElement) {
+  const elLeft = el.offsetLeft + el.offsetWidth / 2;
+  // @ts-ignore: next-line
+  el.parentNode.scroll({ left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft, behavior: "smooth"});
+}
+
+function bottomPadding(bottomEl: HTMLDivElement) {
+  let topOfBottom = bottomEl.getBoundingClientRect().bottom - 100;
+  if (topOfBottom > window.innerHeight) {
+    return 100;
+  } else {
+    return 100 + (topOfBottom - window.innerHeight);
+  }
+  console.log(topOfBottom, window.innerHeight);
+  return topOfBottom;
+}
+
 const ScrollContext = createContext({
   intoViewCallback: (i: Date) => {},
 });
@@ -124,9 +141,10 @@ const Blog = ({ posts }: Props) => {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const timelineContainer = useRef<HTMLDivElement>(null);
+  const mobileTimelineContainer = useRef<HTMLDivElement>(null);
 
-  const accHeightRef = useRef<HTMLDivElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   const handleScroll = async () => {
     setScrollPosition(window.scrollY);
@@ -168,10 +186,11 @@ const Blog = ({ posts }: Props) => {
     if (i < 0 || i > 11) {
       return;
     }
+    const m = months[i]!!;
+
+
     if (!onMobile) {
       setAutoScrolling(true);
-
-      const m = months[i]!!;
 
       const timelineElem =
         timelineContainer.current?.children[i + 1]?.children[0];
@@ -193,6 +212,10 @@ const Blog = ({ posts }: Props) => {
         setAutoScrolling(false);
       }, 400);
     } else {
+      const timelineElem: any =
+        mobileTimelineContainer.current?.children[i + 1];
+      scrollTo(timelineElem);
+
       setActiveMonth(i);
     }
   };
@@ -273,9 +296,12 @@ const Blog = ({ posts }: Props) => {
           <CategoriesFilter />
         </div>
 
-        <div className="timeline-mobile px-4 max-w-screen-md mx-auto">
+        <div className="timeline-mobile px-4 max-w-screen-md mx-auto"
+        >
           <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
-          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll">
+          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
+            ref={mobileTimelineContainer}
+          >
             {[new Date()].concat(months, [new Date()]).map((m, i) => {
               return (
                 <div
@@ -337,7 +363,7 @@ const Blog = ({ posts }: Props) => {
               "timeline fixed col-span-1 mt-4 hidden h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform 2xl:block"
             }
             style={{
-              top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
+              top: scrollPosition > 336 ? bottomPadding(bottomRef.current!!) : 336 + 100 - scrollPosition,
             }}
             ref={timelineContainer}
           >
@@ -399,7 +425,7 @@ const Blog = ({ posts }: Props) => {
         <div
           className="fixed right-0 pt-24"
           style={{
-            top: scrollPosition > 336 ? 100 : 336 + 100 - scrollPosition,
+            top: scrollPosition > 336 ? bottomPadding(bottomRef.current!!) : 336 + 100 - scrollPosition,
             width: categoryWidth,
           }}
         >
@@ -413,7 +439,7 @@ const Blog = ({ posts }: Props) => {
           </div>
         </div>
       </div>
-      <div className="h-64" />
+      <div className="h-72" ref={bottomRef}/>
       </div>
     </>
   );

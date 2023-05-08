@@ -169,7 +169,7 @@ const Layout = ({ children }: Props) => {
           {["penelope", "izabelle", "winter", "hannah"].map((name, i) => {
             return (
               <Image
-                className="menu-show-img"
+                className="menu-show-img pointer-events-none"
                 src={`/img/${name}.png`}
                 key={`menuSlideShow-${i}`}
                 width="3500px"
