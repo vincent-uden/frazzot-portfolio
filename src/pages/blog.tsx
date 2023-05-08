@@ -104,6 +104,12 @@ function useOnScreen(
   return isIntersecting;
 }
 
+function scrollTo(el: HTMLDivElement) {
+  const elLeft = el.offsetLeft + el.offsetWidth / 2;
+  // @ts-ignore: next-line
+  el.parentNode.scroll({ left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft, behavior: "smooth"});
+}
+
 const ScrollContext = createContext({
   intoViewCallback: (i: Date) => {},
 });
@@ -124,6 +130,7 @@ const Blog = ({ posts }: Props) => {
   const previewRef = useRef<HTMLDivElement>(null);
 
   const timelineContainer = useRef<HTMLDivElement>(null);
+  const mobileTimelineContainer = useRef<HTMLDivElement>(null);
 
   const accHeightRef = useRef<HTMLDivElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
@@ -168,10 +175,11 @@ const Blog = ({ posts }: Props) => {
     if (i < 0 || i > 11) {
       return;
     }
+    const m = months[i]!!;
+
+
     if (!onMobile) {
       setAutoScrolling(true);
-
-      const m = months[i]!!;
 
       const timelineElem =
         timelineContainer.current?.children[i + 1]?.children[0];
@@ -193,6 +201,12 @@ const Blog = ({ posts }: Props) => {
         setAutoScrolling(false);
       }, 400);
     } else {
+      const timelineElem =
+        mobileTimelineContainer.current?.children[i + 1];
+      console.log(timelineElem);
+      //timelineElem?.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollTo(timelineElem);
+
       setActiveMonth(i);
     }
   };
@@ -273,9 +287,12 @@ const Blog = ({ posts }: Props) => {
           <CategoriesFilter />
         </div>
 
-        <div className="timeline-mobile px-4 max-w-screen-md mx-auto">
+        <div className="timeline-mobile px-4 max-w-screen-md mx-auto"
+        >
           <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
-          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll">
+          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
+            ref={mobileTimelineContainer}
+          >
             {[new Date()].concat(months, [new Date()]).map((m, i) => {
               return (
                 <div
