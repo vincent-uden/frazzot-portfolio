@@ -209,7 +209,7 @@ const Gallery = () => {
           })}
         </div>
       </div>
-      <div className="h-40"></div>
+      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
       {openImage == null ? (
         <></>
       ) : (
