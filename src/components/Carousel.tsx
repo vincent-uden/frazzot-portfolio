@@ -1,10 +1,37 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 
 interface Props {
   imgPaths: string[];
   imgDescs: string[];
+}
+
+function getWindowDimensions() {
+  if (typeof window !== "undefined") {
+    const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+  }
+
+  return {width:  0, height: 0};
+}
+
+function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
 }
 
 const Carousel = ({ imgPaths, imgDescs }: Props) => {
@@ -16,6 +43,8 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
   const [touchStart, setTouchStart] = useState<[number, number] | null>(null);
   const [touchEnd, setTouchEnd] = useState<[number, number] | null>(null);
   const [transitionActive, setTransitionActive] = useState<boolean>(false);
+
+  const { width, height } = useWindowDimensions();
 
   const rotateActive = (event: React.MouseEvent<Element, MouseEvent>) => {
     const img = activeRef.current!;
@@ -113,9 +142,9 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
                 style={{
                   transform: `${
                     i === activeIndex ? "scale(125%)" : ""
-                  } md:rotateX(${
-                    i === activeIndex ? xRotation : 0
-                  }deg) md:rotateY(${i === activeIndex ? yRotation : 0}deg)`,
+                  } rotateX(${
+                    (i === activeIndex && width > 768) ? xRotation : 0
+                  }deg) rotateY(${(i === activeIndex && width > 768) ? yRotation : 0}deg)`,
                   transition: transitionActive
                     ? "0.1s ease-in-out transform"
                     : "",
