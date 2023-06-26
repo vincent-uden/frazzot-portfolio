@@ -51,7 +51,8 @@ export function tileImages(
       i++;
     }
 
-    row.scale = Math.min((maxW - (row.indices.length - 1) * gap) / w, 1) * imgMod;
+    row.scale =
+      Math.min((maxW - (row.indices.length - 1) * gap) / w, 1) * imgMod;
     rows.push(row);
   }
 
@@ -124,10 +125,8 @@ const Gallery = () => {
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-48 md:h-64"></div>
-        <h1 className="page-header no-ligature text-mint">
-          GALLERY
-        </h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <h1 className="page-header no-ligature text-mint">GALLERY</h1>
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header">
             A SELECTION OF MY DIGITAL ARTWORKS_
           </h2>
@@ -139,7 +138,7 @@ const Gallery = () => {
             return (
               <>
                 <div
-                  className="gallery-row w-[90%] md:w-[80%] overflow-x-clip pl-[5%] md:pl-[10%]"
+                  className="gallery-row w-[90%] overflow-x-clip pl-[5%] md:w-[80%] md:pl-[10%]"
                   key={`row-${r}`}
                 >
                   {row.indices.map((i, n) => {

@@ -1,8 +1,7 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { trpc } from "../utils/trpc";
 import Cookies from "universal-cookie";
 
-import cuid from "cuid";
 import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
@@ -20,15 +19,25 @@ const Admin = () => {
   const [hoveredImage, setHoveredImage] = useState<GalleryImage | null>(null);
   const [hoveredImageX, setHoveredImageX] = useState(0);
   const [hoveredImageY, setHoveredImageY] = useState(0);
-  const uploadDivRef = useRef<HTMLDivElement | null>(null);
+  const [uiImageNames, setUiImagesNames] = useState<string[]>([]);
 
   const [loginErrors, setLoginErrors] = useState<EmailError[]>([]);
 
   const cookies = new Cookies();
 
-  const { data: images, refetch: refetchImgs } = trpc.useQuery([
-    "gallery.getAll",
-  ]);
+  const { data: images, refetch: refetchImgs } = trpc.useQuery(
+    ["gallery.getAll"],
+    {
+      onSuccess: (data) => {
+        const names = [];
+        for (const _ of data) {
+          names.push("");
+        }
+        setUiImagesNames(names);
+      },
+    }
+  );
+
   const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(
     ["gallery.getS3ImageUrl", { src: imgS3Key }],
@@ -37,39 +46,6 @@ const Admin = () => {
       refetchOnWindowFocus: false,
     }
   );
-
-  const { data: allS3Urls } = trpc.useQuery([
-    "gallery.getAllS3Thumbnails",
-    { categoryName: null },
-  ]);
-
-  const imageInsertMut = trpc.useMutation(["gallery.insertOne"], {
-    onSuccess: () => refetchImgs(),
-  });
-
-  const imageDeleteAllMut = trpc.useMutation(["gallery.deleteAll"], {
-    onSuccess: () => refetchImgs(),
-  });
-
-  const imageDeleteOneMut = trpc.useMutation(["gallery.deleteById"], {
-    onSuccess: () => refetchImgs(),
-  });
-
-  const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
-    onSuccess: () => {
-      refetchImgs();
-    },
-  });
-
-  const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
-    onSuccess: () => {
-      refetchImgs();
-    },
-  });
-
-  const deleteAll = useCallback(() => {
-    imageDeleteAllMut.mutate();
-  }, [imageDeleteAllMut]);
 
   const submitLoginMut = trpc.useMutation(["admin.submitLogin"], {
     onSuccess: ({ errors, token }) => {
@@ -89,11 +65,43 @@ const Admin = () => {
     },
   });
 
+  const imageDeleteOneMut = trpc.useMutation(["gallery.deleteById"], {
+    onSuccess: () => refetchImgs(),
+  });
+
+  const imageUpdateOneMut = trpc.useMutation(["gallery.updateOne"], {
+    onSuccess: () => refetchImgs(),
+  });
+
+  const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
+    onSuccess: () => {
+      refetchImgs();
+    },
+  });
+
+  const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
+    onSuccess: () => {
+      refetchImgs();
+    },
+  });
+
   const deleteById = useCallback((id: string) => {
     imageDeleteOneMut.mutate({
       id: id,
     });
   }, []);
+
+  const updateImageNames = useCallback(() => {
+    for (let i = 0; i < uiImageNames.length; i++) {
+      if (uiImageNames[i] != "") {
+        //images[i]!!.name = uiImageNames[i];
+        imageUpdateOneMut.mutate({
+          id: images!![i]!!.id,
+          name: uiImageNames[i],
+        });
+      }
+    }
+  }, [uiImageNames, images]);
 
   const uploadS3 = async () => {
     let file = uploadData!![0]!!;
@@ -318,7 +326,7 @@ const Admin = () => {
                     Category
                   </th>
                 </tr>
-                {images?.map((img) => {
+                {images?.map((img, i) => {
                   return (
                     <tr
                       className=""
@@ -330,22 +338,43 @@ const Admin = () => {
                         setHoveredImageY(e.clientY);
                       }}
                     >
-                      <td className="py-2 text-white">
+                      <td className="py-4 text-white">
                         {img.createdAt.toDateString()}
                       </td>
-                      <td className="font-neuo font-thin text-white">
-                        {img.name}
+                      <td className="font-neuo px-2 font-thin text-white">
+                        <input
+                          className="text-input transition-colors focus:border-lilac"
+                          type="text"
+                          placeholder={img.name}
+                          value={uiImageNames[i]}
+                          onChange={(e) => {
+                            const imgNames = uiImageNames.map((name, j) => {
+                              if (i === j) {
+                                return e.target.value;
+                              } else {
+                                return name;
+                              }
+                            });
+                            setUiImagesNames(imgNames);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              console.log("ALSKJD");
+                              updateImageNames();
+                            }
+                          }}
+                        />
                       </td>
-                      <td className="font-neuo font-thin text-white">
+                      <td className="font-neuo px-2 font-thin text-white">
                         {img.w}
                       </td>
-                      <td className="font-neuo font-thin text-white">
+                      <td className="font-neuo px-2 font-thin text-white">
                         {img.h}
                       </td>
-                      <td className="font-neuo font-thin text-white">
+                      <td className="font-neuo px-2 font-thin text-white">
                         {img.thmb_w}
                       </td>
-                      <td className="font-neuo font-thin text-white">
+                      <td className="font-neuo px-2 font-thin text-white">
                         {img.thmb_h}
                       </td>
                       <td className="font-neuo font-thin text-white">

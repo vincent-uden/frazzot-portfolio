@@ -24,6 +24,7 @@ export const galleryRouter = createRouter()
     async resolve({ ctx }) {
       return await ctx.prisma.galleryImage.findMany({
         include: { category: true },
+        orderBy: { createdAt: "asc" },
       });
     },
   })
@@ -187,6 +188,47 @@ export const galleryRouter = createRouter()
           thmb_h: input.thmb_h,
           categoryId: input.categoryId,
         },
+      });
+    },
+  })
+  .mutation("updateOne", {
+    input: z.object({
+      id: z.string(),
+      name: z.string().optional(),
+      path: z.string().optional(),
+      w: z.number().optional(),
+      h: z.number().optional(),
+      thmb_w: z.number().optional(),
+      thmb_h: z.number().optional(),
+      categoryId: z.string().nullish().optional(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      const data: Record<string, any> = {};
+      if (input.name != null) {
+        data.name = input.name;
+      }
+      if (input.path != null) {
+        data.path = input.path;
+      }
+      if (input.w != null) {
+        data.w = input.w;
+      }
+      if (input.h != null) {
+        data.h = input.h;
+      }
+      if (input.thmb_w != null) {
+        data.thmb_w = input.thmb_w;
+      }
+      if (input.thmb_h != null) {
+        data.thmb_h = input.thmb_h;
+      }
+      if (input.categoryId != null) {
+        data.categoryId = input.categoryId;
+      }
+
+      return await ctx.prisma.galleryImage.update({
+        data,
+        where: { id: input.id },
       });
     },
   })

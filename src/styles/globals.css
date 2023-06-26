@@ -172,7 +172,7 @@
 
 @media (max-width: 768px) {
   .carousel-item.is-prev {
-  transform: translateX(-95%);
+    transform: translateX(-95%);
   }
   .carousel-item.is-next {
     transform: translateX(-5%);
