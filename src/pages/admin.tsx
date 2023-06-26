@@ -7,6 +7,7 @@ import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
+import { GalleryImage } from "@prisma/client";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
@@ -16,6 +17,9 @@ const Admin = () => {
   const [name, setName] = useState<string>("");
   const [imgS3Key, setImgS3Key] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [hoveredImage, setHoveredImage] = useState<GalleryImage | null>(null);
+  const [hoveredImageX, setHoveredImageX] = useState(0);
+  const [hoveredImageY, setHoveredImageY] = useState(0);
   const uploadDivRef = useRef<HTMLDivElement | null>(null);
 
   const [loginErrors, setLoginErrors] = useState<EmailError[]>([]);
@@ -90,53 +94,6 @@ const Admin = () => {
       id: id,
     });
   }, []);
-
-  const bigImage = useCallback(() => {
-    const chunkSize = 500_000;
-    let chunkId = 0;
-    let imageCuid = cuid();
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadData!![0]!!);
-    reader.onload = () => {
-      let chunkAmount = Math.ceil((reader.result as string).length / chunkSize);
-      console.log(chunkAmount);
-      for (let i = 22; i < (reader.result as string).length; i += chunkSize) {
-        let chunk = (reader.result as string).slice(i, i + chunkSize);
-        fetch("/api/bigfile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          redirect: "follow",
-          body: JSON.stringify({
-            title: imageName,
-            fileName: uploadData!![0]!!.name,
-            data: chunk,
-            chunkId,
-            chunkAmount,
-            cuid: imageCuid,
-            token: jwt,
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            let msg = JSON.parse(data.message);
-            if (msg.completed) {
-              imageInsertMut.mutate({
-                name: imageName,
-                path: `${uploadData!![0]!!.name}`,
-                w: msg.w,
-                h: msg.h,
-                thmb_w: msg.thmb_w,
-                thmb_h: msg.thmb_h,
-                categoryId: categories?.at(selectedCategory)?.id,
-              });
-            }
-          });
-        chunkId++;
-      }
-    };
-  }, [uploadData, imageName, imageInsertMut]);
 
   const uploadS3 = async () => {
     let file = uploadData!![0]!!;
@@ -363,7 +320,16 @@ const Admin = () => {
                 </tr>
                 {images?.map((img) => {
                   return (
-                    <tr className="" key={img.id}>
+                    <tr
+                      className=""
+                      key={img.id}
+                      onMouseEnter={(_) => setHoveredImage(img)}
+                      onMouseLeave={(_) => setHoveredImage(null)}
+                      onMouseMove={(e) => {
+                        setHoveredImageX(e.clientX);
+                        setHoveredImageY(e.clientY);
+                      }}
+                    >
                       <td className="py-2 text-white">
                         {img.createdAt.toDateString()}
                       </td>
@@ -400,16 +366,12 @@ const Admin = () => {
             <div className="h-16"></div>
           </div>
 
-          {allS3Urls?.map((v, i) => {
-            return (
-              <img
-                src={v.url!!}
-                alt=""
-                key={`s3img-${i}`}
-                className="h-auto w-96"
-              />
-            );
-          })}
+          <div
+            className="pointer-events-none fixed top-0 left-0 z-10 h-fit w-fit shadow-lg"
+            style={{ top: hoveredImageY + 10, left: hoveredImageX }}
+          >
+            <img src={hoveredImage?.url ?? ""} alt="" className="h-auto w-48" />
+          </div>
         </>
       )}
     </>
