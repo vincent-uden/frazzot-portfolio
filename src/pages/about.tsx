@@ -39,19 +39,19 @@ const About: NextPage = () => {
                 HEY THERE!
               </h2>
               <div className="h-4 md:h-8"></div>
-              <p className="font-gothic text-xs text-lilac md:text-lg">
+              <p className="font-gothic text-sm text-lilac md:text-lg">
                 WELCOME TO MY WEBSITE! I'M FRAZZOT A{" "}
                 <span className="font-neou-bold">22</span>-YEAR-OLD ARTIST AND
                 STUDENT BASED IN GOTHENBURG, SWEDEN. I LIKE TO PLAY VIDEO GAMES,
                 WORKOUT AND CREATE STUFF.
               </p>
               <div className="h-4"></div>
-              <p className="pl-[calc(40%+48px)] font-gothic text-xs text-lilac md:pl-0 md:text-lg">
+              <p className="pl-[calc(40%+48px)] font-gothic text-sm text-lilac md:pl-0 md:text-lg">
                 ON THIS SITE YOU CAN FIND SOME OF MY WORKS, WAYS TO SUPPORT AND
                 HOW TO GET IN TOUCH WITH ME.
               </p>
               <div className="h-4"></div>
-              <p className="pl-[calc(40%+48px)] font-gothic text-xs text-lilac md:pl-0 md:text-lg">
+              <p className="pl-[calc(40%+48px)] font-gothic text-sm text-lilac md:pl-0 md:text-lg">
                 THANK YOU FOR STOPPING BY!
               </p>
               <div className="hidden h-32 md:block"></div>

@@ -80,17 +80,17 @@ const Comissions = () => {
           <div className="block h-8 md:inline-block md:w-[5%]"></div>
           <div className="block bg-holo p-[2px] md:inline-block md:w-[55%]">
             <div className="bg-greyblack p-6">
-              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
+              <p className="font-gothic text-sm text-periwinkle-light md:text-lg">
                 BELOW YOU WILL FIND THE FORM TO SUBMIT A COMMISSION. RESPONSE
                 WILL BE SENT TO THE EMAIL YOU STATE IN THE FORM.
               </p>
               <div className="h-6"></div>
-              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
+              <p className="font-gothic text-sm text-periwinkle-light md:text-lg">
                 TO THE LEFT YOU CAN READ MY TERMS AND CONDITIONS FOR USING MY
                 SERVICES AS WELL AS ADDITIONAL INFORMATION ON MY PATREON.
               </p>
               <div className="h-6"></div>
-              <p className="font-gothic text-xs text-periwinkle-light md:text-lg">
+              <p className="font-gothic text-sm text-periwinkle-light md:text-lg">
                 PLEASE READ THEM CAREFULLY BEFORE FILLING IN THE FORM.
               </p>
             </div>
@@ -254,7 +254,7 @@ const Comissions = () => {
             onChange={(e) => setCharDesc(e.target.value)}
           />
 
-          <h2 className="no-ligature mt-12 mb-4 font-stretch text-2xl text-periwinkle">
+          <h2 className="no-ligature mt-12 mb-4 font-stretch text-xl md:text-2xl text-periwinkle">
             ADDITIONAL INFO
           </h2>
           <p className="mb-4 font-gothic text-sm italic text-periwinkle opacity-70 md:text-base">

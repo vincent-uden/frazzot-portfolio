@@ -97,16 +97,16 @@ const Sketchbook = () => {
       <div className="mx-4 xl:mx-auto xl:max-w-[calc(1280px-4rem)]">
         <div className="inline-block w-full bg-holo p-[2px]">
           <div className="bg-greyblack p-4 md:p-6">
-            <p className="font-gothic text-xs md:text-lg font-bold text-yellowpeach">
+            <p className="font-gothic text-sm md:text-lg font-bold text-yellowpeach">
               WELCOME TO MY SKETCHBOOK ARCHIVE.
             </p>
             <div className="h-4 md:h-8"></div>
-            <p className="font-gothic text-xs md:text-lg text-yellowpeach">
+            <p className="font-gothic text-sm md:text-lg text-yellowpeach">
               I CREATED A COLLECTION OF SKETCHES THAT WAS EITHER SCRAPPED,
               STUDIES OR JUST FOR FUN/WARM-UPS.
             </p>
             <div className="h-4 md:h-8"></div>
-            <p className="font-gothic text-xs md:text-lg text-yellowpeach">
+            <p className="font-gothic text-sm md:text-lg text-yellowpeach">
               YOU CAN SORT THEM BY CATEGORY AND FLIP THROUGH SOME HIGHLIGHTS
               BELOW. IF YOU WISH TO SEE THEM ALL AT ONCE, KEEP SCROLLING!
             </p>

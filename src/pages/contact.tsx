@@ -86,7 +86,7 @@ const Contact = () => {
               COLLABORATION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               IF YOU WISH TO COLLABORATE, REACH OUT TO ME THROUGH EMAIL OR
               DISCORD.
             </p>
@@ -96,13 +96,13 @@ const Contact = () => {
               PHYSICAL COPIES ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL
               COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE
               INTERESTED.
             </p>
             <div className="h-4"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
@@ -112,7 +112,7 @@ const Contact = () => {
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               READ MORE ABOUT MY COMMISSIONS ON THE{" "}
               <Link href="/commissions">
                 <span className="cursor-pointer font-gothic font-bold">

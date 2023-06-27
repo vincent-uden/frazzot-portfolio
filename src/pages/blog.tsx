@@ -543,7 +543,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     openAcc[i] ? color : "greyblack"
-                  } pt-4 text-center font-gothic text-xs lg:text-sm`}
+                  } pt-4 text-center font-gothic text-sm lg:text-sm`}
                 >
                   {body}
                 </p>
