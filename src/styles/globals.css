@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 .page-header {
-  @apply text-center font-stretch text-3xl md:text-4xl lg:text-6xl;
+  @apply text-center font-stretch text-3xl md:text-5xl lg:text-6xl;
 }
 
 .page-sub-header {
-  @apply text-center font-stretch text-xs text-greyblack md:text-2xl lg:text-3xl;
+  @apply text-center font-stretch text-base text-greyblack md:text-2xl lg:text-3xl;
 }
 
 .container * {

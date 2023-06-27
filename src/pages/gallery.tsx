@@ -1,15 +1,8 @@
-import type { NextPage } from "next";
-
-import Image from "next/image";
 import { trpc } from "../utils/trpc";
 
 import {
   MutableRefObject,
-  ReactElement,
-  ReactNode,
-  useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -128,8 +121,11 @@ const Gallery = () => {
           GALLERY
         </h1>
         <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
-          <h2 className="page-sub-header">
+          <h2 className="page-sub-header hidden lg:block">
             A SELECTION OF MY DIGITAL ARTWORKS_
+          </h2>
+          <h2 className="page-sub-header lg:hidden">
+            MY DIGITAL ARTWORKS_
           </h2>
         </div>
       </div>
@@ -209,7 +205,7 @@ const Gallery = () => {
           })}
         </div>
       </div>
-      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
+      <div className="h-40 lg:h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
       {openImage == null ? (
         <></>
       ) : (

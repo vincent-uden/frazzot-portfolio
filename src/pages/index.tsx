@@ -109,10 +109,10 @@ const Home: NextPageWithLayout = () => {
                 </a>
               </Link>
               <div className="">
-                <p className="font-gothic text-xs text-white md:text-lg">
+                <p className="font-gothic text-sm text-white md:text-lg">
                   ARE YOU INTERESTED IN COMMISSIONING ME?
                 </p>
-                <p className="font-gothic text-xs text-white md:text-lg">
+                <p className="font-gothic text-sm text-white md:text-lg">
                   CHECK OUT THE DETAILS AND{" "}
                   <Link href={"/commissions"}>
                     <a aria-label="Commissions page">
@@ -132,7 +132,7 @@ const Home: NextPageWithLayout = () => {
                   </h3>
                 </a>
               </Link>
-              <p className="font-gothic text-xs text-white md:text-lg">
+              <p className="font-gothic text-sm text-white md:text-lg">
                 MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
               </p>
             </div>
@@ -170,7 +170,7 @@ const Home: NextPageWithLayout = () => {
                   </a>
                 </Link>
               </div>
-              <p className="row-start-2 row-end-3 mb-4 font-gothic text-xs text-white md:row-start-3 md:row-end-4 md:mt-8 md:text-lg">
+              <p className="row-start-2 row-end-3 mb-4 font-gothic text-sm text-white md:row-start-3 md:row-end-4 md:mt-8 md:text-lg">
                 FLIP THROUGH ALL OF MY DIGITAL SKETCHBOOKS BY CHOOSING A
                 CATEGORY.
               </p>
