@@ -64,7 +64,7 @@ const Layout = ({ children }: Props) => {
         <Link href="/">
           <a aria-label="Index page">
             <h1
-              className={`font-stretch text-3xl leading-[4rem] text-greyblack md:text-4xl ${
+              className={`font-stretch text-3xl leading-[4rem] text-greyblack lg:text-4xl ${
                 menuOpen ? "opacity-0" : "opacity-100"
               } origin-left transition-all hover:scale-105`}
             >
@@ -87,11 +87,11 @@ const Layout = ({ children }: Props) => {
         } transition-transform duration-[400ms] ease-in-out`}
       ></div>
       <div
-        className={`fixed top-48 left-4 right-4 bottom-4 bg-greyblack md:top-2 md:right-48 ${
+        className={`fixed top-48 left-4 right-4 bottom-4 bg-greyblack lg:top-2 lg:right-48 ${
           greyMenuOpen ? "" : "-translate-y-[calc(100vh+10rem)]"
         } z-40 transition-transform duration-[400ms]`}
       >
-        <div className="flex h-full flex-col justify-between p-4 md:p-20">
+        <div className="flex h-full flex-col justify-between p-4 md:p-12 2xl:p-20 md:gap-8 2xl:gap-0">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
               <a
@@ -154,7 +154,23 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
 
-          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around md:justify-start">
+          <div className="menu-socials mb:mt-20 mb-4 grow flex-row items-end justify-around lg:justify-start hidden lg:flex">
+            <InstagramIcon color="fuchsia-200" size="8" />
+            <YoutubeIcon color="fuchsia-200" size="8" />
+            <PatreonIcon color="fuchsia-200" size="8" />
+            <ArtstationIcon color="fuchsia-200" size="8" />
+            <FacebookIcon color="fuchsia-200" size="8" />
+            <DeviantartIcon color="fuchsia-200" size="8" />
+          </div>
+          <div className="menu-socials mb:mt-20 mb-4 hidden grow flex-row items-end justify-around lg:justify-start md:flex lg:hidden">
+            <InstagramIcon color="fuchsia-200" size="12" />
+            <YoutubeIcon color="fuchsia-200" size="12" />
+            <PatreonIcon color="fuchsia-200" size="12" />
+            <ArtstationIcon color="fuchsia-200" size="12" />
+            <FacebookIcon color="fuchsia-200" size="12" />
+            <DeviantartIcon color="fuchsia-200" size="12" />
+          </div>
+          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around lg:justify-start md:hidden">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
