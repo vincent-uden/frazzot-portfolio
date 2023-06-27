@@ -48,17 +48,17 @@ const Comissions = () => {
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="hidden stroke-mint text-mint hover:text-mint"></div>
-        <div className="h-64"></div>
+        <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-periwinkle">
           <span className="no-ligature">COMM</span>
           <span>ISSIONS</span>
         </h1>
-        <div className="mt-8 bg-holo bg-cover py-2">
+        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
           <h2 className="page-sub-header">INFORMATION AND FORM_</h2>
         </div>
       </div>
 
-      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-4 pt-12 md:bg-[length:1920px_330px] md:px-8 lg:px-[20%]">
+      <div className="w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-4 md:bg-[length:1920px_330px] md:px-8 lg:px-[20%]">
         <div className="flex flex-col md:flex-row">
           <div className="block md:inline-block md:w-[40%]">
             <a href="/Terms_of_Service-Frazzots_Art_Commissions.pdf">
@@ -297,7 +297,7 @@ const Comissions = () => {
             }
           />
         </div>
-        <div className="h-64"></div>
+        <div className="h-40 lg:h-72"/>
       </div>
     </>
   );

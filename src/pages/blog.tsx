@@ -274,9 +274,9 @@ const Blog = ({ posts }: Props) => {
       </Head>
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
-        <div className="h-64"></div>
+        <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-sky">BLOG</h1>
-        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
           <h2 className="page-sub-header hidden text-greyblack lg:block">
             PROJECT ARCHIVE AND POSTS_
           </h2>
@@ -439,7 +439,7 @@ const Blog = ({ posts }: Props) => {
           </div>
         </div>
       </div>
-      <div className="h-72" ref={bottomRef}/>
+      <div className="h-40 lg:h-72" ref={bottomRef}/>
       </div>
     </>
   );

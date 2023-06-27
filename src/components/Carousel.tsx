@@ -96,7 +96,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
 
   return (
     <>
-      <div className="h-28 md:h-44"></div>
+      <div className="h-20 md:h-36"></div>
       <div className="relative h-[15rem] w-full md:h-[25rem] lg:h-[30rem]" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} >
         <div className="holo-panel absolute top-6 hidden h-48 w-full md:top-[6.5rem] md:block lg:top-36"></div>
         <div className="absolute top-20 left-0 right-0 hidden md:top-44 xl:block">
@@ -176,14 +176,14 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
                   }
                 }}
               />
-              <p className="mt-14 text-center font-gothic text-xl text-yellowpeach opacity-0 transition-opacity md:mt-28">
+              <p className="mt-14 text-center font-gothic text-xl text-yellowpeach opacity-0 transition-opacity md:mt-20 md:text-2xl xl:mt-28">
                 {imgDescs[i]}
               </p>
             </div>
           );
         })}
       </div>
-      <div className="h-36 md:h-44"></div>
+      <div className="h-28 md:h-44"></div>
     </>
   );
 };
