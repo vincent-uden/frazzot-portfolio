@@ -107,7 +107,10 @@ function useOnScreen(
 function scrollTo(el: HTMLDivElement) {
   const elLeft = el.offsetLeft + el.offsetWidth / 2;
   // @ts-ignore: next-line
-  el.parentNode.scroll({ left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft, behavior: "smooth"});
+  el.parentNode.scroll({
+    left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft,
+    behavior: "smooth",
+  });
 }
 
 function bottomPadding(bottomEl: HTMLDivElement) {
@@ -189,7 +192,6 @@ const Blog = ({ posts }: Props) => {
       return;
     }
     const m = months[i]!!;
-
 
     if (!onMobile) {
       setAutoScrolling(true);
@@ -278,7 +280,7 @@ const Blog = ({ posts }: Props) => {
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-sky">BLOG</h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header hidden text-greyblack lg:block">
             PROJECT ARCHIVE AND POSTS_
           </h2>
@@ -289,139 +291,70 @@ const Blog = ({ posts }: Props) => {
       </div>
 
       <div className="bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x md:bg-[length:1920px_330px]">
-      {/* Mobile */}
-      <div className="2xl:hidden">
-        <div className="border-4 border-sky p-4 pb-0  max-w-screen-md mx-auto">
-          <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
-            CATEGORIES &gt;
-          </h3>
-          <CategoriesFilter />
-        </div>
-
-        <div className="timeline-mobile px-4 max-w-screen-md mx-auto"
-        >
-          <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
-          <div className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
-            ref={mobileTimelineContainer}
-          >
-            {[new Date()].concat(months, [new Date()]).map((m, i) => {
-              return (
-                <div
-                  className={`flex cursor-pointer select-none flex-col items-center gap-2 ${
-                    i == 0 || i == months.length + 1
-                      ? "pointer-events-none opacity-0"
-                      : ""
-                  }`}
-                  key={`timeline-${i}`}
-                  onClick={() => changeActiveMonth(i - 1, true)}
-                >
-                  <div
-                    className={`h-8 w-8 select-none transition-transform ${
-                      i == activeMonth + 1 && !autoScrolling
-                        ? "scale-100 bg-sky"
-                        : "scale-75 bg-[#6c8da0]"
-                    }`}
-                  />
-                  <p
-                    className={`no-ligatures grow select-none text-right font-stretch text-base transition-all ${
-                      i == activeMonth + 1 && !autoScrolling
-                        ? "scale-110 text-sky"
-                        : "text-[#6c8da0]"
-                    }`}
-                  >{`${MONTHS[m.getMonth()]}\u00A0${m
-                    .getFullYear()
-                    .toString()
-                    .slice(2)}`}</p>
-                </div>
-              );
-            })}
+        {/* Mobile */}
+        <div className="2xl:hidden">
+          <div className="mx-auto max-w-screen-md border-4 border-sky  p-4 pb-0">
+            <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
+              CATEGORIES &gt;
+            </h3>
+            <CategoriesFilter />
           </div>
-        </div>
 
-        <div className="blog-previews-mobile lg:hidden">
-          <ScrollContext.Provider value={{ intoViewCallback }}>
-            {postComponents.map((comp, i) => {
-              const postDate = new Date(posts[i]?.date ?? "2000-01-01");
-              const activeDate = months[activeMonth];
-
-              if (postDate.getUTCFullYear() == activeDate?.getUTCFullYear() && postDate.getMonth() == activeDate.getMonth()) {
-                return (
-                  <BlogPreview
-                    path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
-                    key={`blog-post-${i}`}
-                    date={posts[i]?.date ?? "2000-01-01"}
-                    index={i}
-                  >
-                    {comp}
-                  </BlogPreview>
-                );
-              }
-            })}
-          </ScrollContext.Provider>
-        </div>
-      </div>
-
-      {/* Desktop */}
-      <div className={"hidden grid-cols-[1fr_auto_1fr] lg:grid"}>
-        <div className="flex flex-row justify-end">
-          <div className="col-span-1 hidden w-72 2xl:block" />
-          <div
-            className={
-              "timeline fixed col-span-1 mt-4 hidden h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform 2xl:block"
-            }
-            style={{
-              top: scrollPosition > 336 ? bottomPadding(bottomRef.current!!) : 336 + 100 - scrollPosition,
-            }}
-            ref={timelineContainer}
-          >
+          <div className="timeline-mobile mx-auto max-w-screen-md px-4">
+            <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
             <div
-              className="absolute top-0 right-[5.8rem] w-[0.4rem] bg-sky transition-transform"
-              style={{ height: timelineHeight }}
-            />
-            {[new Date()].concat(months, [new Date()]).map((m, i) => {
-              return (
-                <div
-                  className={`mt-[calc(18.75vh-1.5rem)] mb-[calc(18.75vh-1.5rem)] flex h-8 cursor-pointer items-center pr-20 ${
-                    i == 0 || i == months.length + 1
-                      ? "pointer-events-none opacity-0"
-                      : ""
-                  }`}
-                  key={`timeline-${i}`}
-                  onClick={() => changeActiveMonth(i - 1)}
-                >
-                  <div className="scroll-anchor pointer-events-none translate-y-[-17vh]" />
-                  <p
-                    className={`no-ligatures grow text-right font-stretch text-xl transition-all ${
-                      i == activeMonth + 1 && !autoScrolling
-                        ? "scale-110 text-sky"
-                        : "text-[#6c8da0]"
-                    }`}
-                  >{`${MONTHS[m.getMonth()]}\u00A0${m
-                    .getFullYear()
-                    .toString()
-                    .slice(2)}`}</p>
+              className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
+              ref={mobileTimelineContainer}
+            >
+              {[new Date()].concat(months, [new Date()]).map((m, i) => {
+                return (
                   <div
-                    className={`ml-8 h-8 w-8 transition-transform ${
-                      i == activeMonth + 1 && !autoScrolling
-                        ? "scale-100 bg-sky"
-                        : "scale-75 bg-[#6c8da0]"
+                    className={`flex cursor-pointer select-none flex-col items-center gap-2 ${
+                      i == 0 || i == months.length + 1
+                        ? "pointer-events-none opacity-0"
+                        : ""
                     }`}
-                  />
-                </div>
-              );
-            })}
+                    key={`timeline-${i}`}
+                    onClick={() => changeActiveMonth(i - 1, true)}
+                  >
+                    <div
+                      className={`h-8 w-8 select-none transition-transform ${
+                        i == activeMonth + 1 && !autoScrolling
+                          ? "scale-100 bg-sky"
+                          : "scale-75 bg-[#6c8da0]"
+                      }`}
+                    />
+                    <p
+                      className={`no-ligatures grow select-none text-right font-stretch text-base transition-all ${
+                        i == activeMonth + 1 && !autoScrolling
+                          ? "scale-110 text-sky"
+                          : "text-[#6c8da0]"
+                      }`}
+                    >{`${MONTHS[m.getMonth()]}\u00A0${m
+                      .getFullYear()
+                      .toString()
+                      .slice(2)}`}</p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className="blog-previews col-span-1" ref={previewRef}>
-          <ScrollContext.Provider value={{ intoViewCallback }}>
-            {postComponents.map((comp, i) => {
-              if (viewportWidth < 1536) {
+
+          <div className="blog-previews-mobile lg:hidden">
+            <ScrollContext.Provider value={{ intoViewCallback }}>
+              {postComponents.map((comp, i) => {
                 const postDate = new Date(posts[i]?.date ?? "2000-01-01");
                 const activeDate = months[activeMonth];
-                if (postDate.getUTCFullYear() == activeDate?.getUTCFullYear() && postDate.getMonth() == activeDate.getMonth()) {
+
+                if (
+                  postDate.getUTCFullYear() == activeDate?.getUTCFullYear() &&
+                  postDate.getMonth() == activeDate.getMonth()
+                ) {
                   return (
                     <BlogPreview
-                      path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                      path={`/blog_posts/${
+                        posts[i]?.fileName.split(".")[0] ?? ""
+                      }`}
                       key={`blog-post-${i}`}
                       date={posts[i]?.date ?? "2000-01-01"}
                       index={i}
@@ -430,10 +363,94 @@ const Blog = ({ posts }: Props) => {
                     </BlogPreview>
                   );
                 }
-              } else {
+              })}
+            </ScrollContext.Provider>
+          </div>
+        </div>
+
+        {/* Desktop */}
+        <div className={"hidden grid-cols-[1fr_auto_1fr] lg:grid"}>
+          <div className="flex flex-row justify-end">
+            <div className="col-span-1 hidden w-72 2xl:block" />
+            <div
+              className={
+                "timeline fixed col-span-1 mt-4 hidden h-[75vh] w-72 overflow-y-scroll pt-0 transition-transform 2xl:block"
+              }
+              style={{
+                top:
+                  scrollPosition > 336
+                    ? bottomPadding(bottomRef.current!!)
+                    : 336 + 100 - scrollPosition,
+              }}
+              ref={timelineContainer}
+            >
+              <div
+                className="absolute top-0 right-[5.8rem] w-[0.4rem] bg-sky transition-transform"
+                style={{ height: timelineHeight }}
+              />
+              {[new Date()].concat(months, [new Date()]).map((m, i) => {
+                return (
+                  <div
+                    className={`mt-[calc(18.75vh-1.5rem)] mb-[calc(18.75vh-1.5rem)] flex h-8 cursor-pointer items-center pr-20 ${
+                      i == 0 || i == months.length + 1
+                        ? "pointer-events-none opacity-0"
+                        : ""
+                    }`}
+                    key={`timeline-${i}`}
+                    onClick={() => changeActiveMonth(i - 1)}
+                  >
+                    <div className="scroll-anchor pointer-events-none translate-y-[-17vh]" />
+                    <p
+                      className={`no-ligatures grow text-right font-stretch text-xl transition-all ${
+                        i == activeMonth + 1 && !autoScrolling
+                          ? "scale-110 text-sky"
+                          : "text-[#6c8da0]"
+                      }`}
+                    >{`${MONTHS[m.getMonth()]}\u00A0${m
+                      .getFullYear()
+                      .toString()
+                      .slice(2)}`}</p>
+                    <div
+                      className={`ml-8 h-8 w-8 transition-transform ${
+                        i == activeMonth + 1 && !autoScrolling
+                          ? "scale-100 bg-sky"
+                          : "scale-75 bg-[#6c8da0]"
+                      }`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="blog-previews col-span-1" ref={previewRef}>
+            <ScrollContext.Provider value={{ intoViewCallback }}>
+              {postComponents.map((comp, i) => {
+                if (viewportWidth < 1536) {
+                  const postDate = new Date(posts[i]?.date ?? "2000-01-01");
+                  const activeDate = months[activeMonth];
+                  if (
+                    postDate.getUTCFullYear() == activeDate?.getUTCFullYear() &&
+                    postDate.getMonth() == activeDate.getMonth()
+                  ) {
+                    return (
+                      <BlogPreview
+                        path={`/blog_posts/${
+                          posts[i]?.fileName.split(".")[0] ?? ""
+                        }`}
+                        key={`blog-post-${i}`}
+                        date={posts[i]?.date ?? "2000-01-01"}
+                        index={i}
+                      >
+                        {comp}
+                      </BlogPreview>
+                    );
+                  }
+                } else {
                   return (
                     <BlogPreview
-                      path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                      path={`/blog_posts/${
+                        posts[i]?.fileName.split(".")[0] ?? ""
+                      }`}
                       key={`blog-post-${i}`}
                       date={posts[i]?.date ?? "2000-01-01"}
                       index={i}
@@ -441,29 +458,32 @@ const Blog = ({ posts }: Props) => {
                       {comp}
                     </BlogPreview>
                   );
-              }
-            })}
-          </ScrollContext.Provider>
-        </div>
-        <div className="col-span-1" ref={categoryRef} />
-        <div
-          className="fixed right-0 pt-24"
-          style={{
-            top: scrollPosition > 336 ? bottomPadding(bottomRef.current!!) : 336 + 100 - scrollPosition,
-            width: categoryWidth,
-          }}
-        >
-          <div className="absolute left-0 hidden w-full 2xl:block">
-            <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
-              CATEGORIES &gt;
-            </h3>
+                }
+              })}
+            </ScrollContext.Provider>
           </div>
-          <div className="hidden 2xl:block">
-            <CategoriesFilter />
+          <div className="col-span-1" ref={categoryRef} />
+          <div
+            className="fixed right-0 pt-24"
+            style={{
+              top:
+                scrollPosition > 336
+                  ? bottomPadding(bottomRef.current!!)
+                  : 336 + 100 - scrollPosition,
+              width: categoryWidth,
+            }}
+          >
+            <div className="absolute left-0 hidden w-full 2xl:block">
+              <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
+                CATEGORIES &gt;
+              </h3>
+            </div>
+            <div className="hidden 2xl:block">
+              <CategoriesFilter />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="h-40 lg:h-72" ref={bottomRef}/>
+        <div className="h-40 lg:h-72" ref={bottomRef} />
       </div>
     </>
   );

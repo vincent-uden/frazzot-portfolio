@@ -91,7 +91,7 @@ const Layout = ({ children }: Props) => {
           greyMenuOpen ? "" : "-translate-y-[calc(100vh+10rem)]"
         } z-40 transition-transform duration-[400ms]`}
       >
-        <div className="flex h-full flex-col justify-between p-4 md:p-12 2xl:p-20 md:gap-8 2xl:gap-0">
+        <div className="flex h-full flex-col justify-between p-4 md:gap-8 md:p-12 2xl:gap-0 2xl:p-20">
           <MenuPageItem color="text-mint" onClick={() => menuOnClick()}>
             <Link href="/gallery">
               <a
@@ -154,7 +154,7 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
 
-          <div className="menu-socials mb:mt-20 mb-4 grow flex-row items-end justify-around lg:justify-start hidden lg:flex">
+          <div className="menu-socials mb:mt-20 mb-4 hidden grow flex-row items-end justify-around lg:flex lg:justify-start">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
@@ -162,7 +162,7 @@ const Layout = ({ children }: Props) => {
             <FacebookIcon color="fuchsia-200" size="8" />
             <DeviantartIcon color="fuchsia-200" size="8" />
           </div>
-          <div className="menu-socials mb:mt-20 mb-4 hidden grow flex-row items-end justify-around lg:justify-start md:flex lg:hidden">
+          <div className="menu-socials mb:mt-20 mb-4 hidden grow flex-row items-end justify-around md:flex lg:hidden lg:justify-start">
             <InstagramIcon color="fuchsia-200" size="12" />
             <YoutubeIcon color="fuchsia-200" size="12" />
             <PatreonIcon color="fuchsia-200" size="12" />
@@ -170,7 +170,7 @@ const Layout = ({ children }: Props) => {
             <FacebookIcon color="fuchsia-200" size="12" />
             <DeviantartIcon color="fuchsia-200" size="12" />
           </div>
-          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around lg:justify-start md:hidden">
+          <div className="menu-socials mb:mt-20 mb-4 flex grow flex-row items-end justify-around md:hidden lg:justify-start">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
@@ -188,8 +188,6 @@ const Layout = ({ children }: Props) => {
                 className="menu-show-img pointer-events-none"
                 src={`/img/${name}.png`}
                 key={`menuSlideShow-${i}`}
-                width="3500px"
-                height="6000px"
                 layout="fill"
                 priority={true}
               />

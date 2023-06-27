@@ -13,7 +13,7 @@ const About: NextPage = () => {
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-lilac">ABOUT</h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header hidden lg:block">
             A SHORT INTRODUCTION TO THE ARTIST_
           </h2>
@@ -34,7 +34,7 @@ const About: NextPage = () => {
             </div>
           </div>
           <div className="col-span-7 bg-holo p-[2px] md:col-span-4">
-            <div className="h-full w-full bg-greyblack p-8 pb-16 md:pb-12 md:p-12">
+            <div className="h-full w-full bg-greyblack p-8 pb-16 md:p-12 md:pb-12">
               <h2 className="font-stretch text-base text-lilac md:text-3xl">
                 HEY THERE!
               </h2>

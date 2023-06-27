@@ -43,7 +43,7 @@ const Contact = () => {
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
         <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-pastelpink">CONTACT</h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header no-ligature hidden lg:block">
             CONTACT & CONNECT WITH ME_
           </h2>
@@ -216,7 +216,7 @@ const Contact = () => {
         </aside>
       </div>
 
-      <div className="h-40 lg:h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
+      <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
     </>
   );
 };

@@ -53,7 +53,7 @@ const Comissions = () => {
           <span className="no-ligature">COMM</span>
           <span>ISSIONS</span>
         </h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header">INFORMATION AND FORM_</h2>
         </div>
       </div>
@@ -254,7 +254,7 @@ const Comissions = () => {
             onChange={(e) => setCharDesc(e.target.value)}
           />
 
-          <h2 className="no-ligature mt-12 mb-4 font-stretch text-xl md:text-2xl text-periwinkle">
+          <h2 className="no-ligature mt-12 mb-4 font-stretch text-xl text-periwinkle md:text-2xl">
             ADDITIONAL INFO
           </h2>
           <p className="mb-4 font-gothic text-sm italic text-periwinkle opacity-70 md:text-base">
@@ -297,7 +297,7 @@ const Comissions = () => {
             }
           />
         </div>
-        <div className="h-40 lg:h-72"/>
+        <div className="h-40 lg:h-72" />
       </div>
     </>
   );
