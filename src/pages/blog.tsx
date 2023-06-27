@@ -294,13 +294,13 @@ const Blog = ({ posts }: Props) => {
         {/* Mobile */}
         <div className="2xl:hidden">
           <div className="mx-auto max-w-screen-md border-4 border-sky  p-4 pb-0">
-            <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
+            <h3 className="no-ligatures text-center font-stretch text-2xl text-sky lg:text-3xl">
               CATEGORIES &gt;
             </h3>
             <CategoriesFilter />
           </div>
 
-          <div className="timeline-mobile mx-auto max-w-screen-md px-4">
+          <div className="timeline-mobile mx-auto max-w-screen-md px-4 my-8">
             <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
             <div
               className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
@@ -462,15 +462,16 @@ const Blog = ({ posts }: Props) => {
               })}
             </ScrollContext.Provider>
           </div>
-          <div className="col-span-1" ref={categoryRef} />
+          <div className="col-span-1 w-96" ref={categoryRef} />
           <div
-            className="fixed right-0 pt-24"
+            className="fixed pt-24"
             style={{
               top:
                 scrollPosition > 336
                   ? bottomPadding(bottomRef.current!!)
                   : 336 + 100 - scrollPosition,
               width: categoryWidth,
+              left: categoryRef.current?.getBoundingClientRect().x,
             }}
           >
             <div className="absolute left-0 hidden w-full 2xl:block">
@@ -551,7 +552,7 @@ const CategoriesFilter = () => {
             <div
               className={`mb-4 border-2 border-${color} cursor-pointer bg-${
                 openAcc[i] ? "greyblack" : color
-              } w-full py-2 px-4 2xl:py-4`}
+              } w-full py-4 px-4 2xl:py-4`}
               key={`acc-main-${i}`}
               onMouseEnter={(_) => {
                 const openSections = [...openAcc];
@@ -571,7 +572,7 @@ const CategoriesFilter = () => {
               }}
             >
               <h3
-                className={`no-ligatures whitespace-nowrap text-center font-stretch text-base transition-colors text-${
+                className={`no-ligatures whitespace-nowrap text-center font-stretch text-lg transition-colors text-${
                   openAcc[i] ? color : "greyblack"
                 }`}
               >
@@ -587,7 +588,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     openAcc[i] ? color : "greyblack"
-                  } pt-4 text-center font-gothic text-sm lg:text-sm`}
+                  } pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
                 >
                   {body}
                 </p>
@@ -609,7 +610,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     true ? color : "greyblack"
-                  } pointer-events-none pt-4 text-center font-gothic text-sm`}
+                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg`}
                 >
                   {body}
                 </p>

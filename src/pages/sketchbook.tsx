@@ -133,7 +133,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(1)}
           >
             <h2
-              className={`no-ligature my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
+              className={`no-ligature my-auto py-4 text-center font-stretch text-base transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
                 selectedCategory === 1 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >

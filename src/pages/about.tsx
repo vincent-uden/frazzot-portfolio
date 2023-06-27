@@ -23,7 +23,7 @@ const About: NextPage = () => {
 
       <div className="bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="relative mx-auto grid max-w-screen-xl grid-cols-7 gap-x-2 px-8 md:px-16">
-          <div className="absolute top-24 left-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
+          <div className="absolute top-32 left-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
             <div className="w-[30vw] scale-125 md:h-[300px] md:w-[300px]">
               <Image
                 src="/img/moi2.png"

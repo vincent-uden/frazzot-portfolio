@@ -62,16 +62,16 @@ const Comissions = () => {
         <div className="flex flex-col md:flex-row">
           <div className="block md:inline-block md:w-[40%]">
             <a href="/Terms_of_Service-Frazzots_Art_Commissions.pdf">
-              <div className="flex h-[40%] w-full flex-col justify-around border-2 border-periwinkle bg-periwinkle text-center text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
-                <h2 className="py-4 font-stretch text-lg md:text-xl lg:text-2xl">
+              <div className="flex h-[45%] w-full flex-col justify-around border-2 border-periwinkle bg-periwinkle text-center text-greyblack transition-colors hover:bg-greyblack hover:text-periwinkle">
+                <h2 className="py-4 font-stretch text-lg md:text-2xl lg:text-2xl">
                   TERMS
                 </h2>
               </div>
             </a>
-            <div className="h-6 md:h-[20%]"></div>
+            <div className="h-6 md:h-[10%]"></div>
             <a href="https://www.patreon.com/posts/67507209">
-              <div className="flex h-[40%] w-full flex-col justify-around border-2 border-mint bg-mint text-center text-greyblack transition-colors hover:bg-greyblack hover:text-mint">
-                <h2 className="py-4 font-stretch text-lg md:text-xl lg:text-2xl">
+              <div className="flex h-[45%] w-full flex-col justify-around border-2 border-mint bg-mint text-center text-greyblack transition-colors hover:bg-greyblack hover:text-mint">
+                <h2 className="py-4 font-stretch text-lg md:text-2xl lg:text-2xl">
                   INFORMATION
                 </h2>
               </div>
