@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 
@@ -10,25 +15,27 @@ interface Props {
 function getWindowDimensions() {
   if (typeof window !== "undefined") {
     const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
+    return {
+      width,
+      height,
+    };
   }
 
-  return {width:  0, height: 0};
+  return { width: 0, height: 0 };
 }
 
 function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
 
   useEffect(() => {
     function handleResize() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return windowDimensions;
@@ -97,7 +104,12 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
   return (
     <>
       <div className="h-20 md:h-36"></div>
-      <div className="relative h-[15rem] w-full md:h-[25rem] lg:h-[30rem]" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd} >
+      <div
+        className="relative h-[15rem] w-full md:h-[25rem] lg:h-[30rem]"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <div className="holo-panel absolute top-6 hidden h-48 w-full md:top-[6.5rem] md:block lg:top-36"></div>
         <div className="absolute top-20 left-0 right-0 hidden md:top-44 xl:block">
           <IoChevronBackSharp
@@ -143,8 +155,10 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
                   transform: `${
                     i === activeIndex ? "scale(125%)" : ""
                   } rotateX(${
-                    (i === activeIndex && width > 768) ? xRotation : 0
-                  }deg) rotateY(${(i === activeIndex && width > 768) ? yRotation : 0}deg)`,
+                    i === activeIndex && width > 768 ? xRotation : 0
+                  }deg) rotateY(${
+                    i === activeIndex && width > 768 ? yRotation : 0
+                  }deg)`,
                   transition: transitionActive
                     ? "0.1s ease-in-out transform"
                     : "",

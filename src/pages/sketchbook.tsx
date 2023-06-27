@@ -81,11 +81,9 @@ const Sketchbook = () => {
       </Head>
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
-        <div className="h-48 md:h-64"/>
-        <h1 className="page-header text-yellowpeach">
-          SKETCHBOOK
-        </h1>
-        <div className="mt-2 md:mt-8 mb-8 md:mb-16 bg-holo bg-cover py-2">
+        <div className="h-48 md:h-64" />
+        <h1 className="page-header text-yellowpeach">SKETCHBOOK</h1>
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header no-ligature hidden md:block">
             A COLLECTION OF SKETCHES_
           </h2>
@@ -97,23 +95,23 @@ const Sketchbook = () => {
       <div className="mx-4 xl:mx-auto xl:max-w-[calc(1280px-4rem)]">
         <div className="inline-block w-full bg-holo p-[2px]">
           <div className="bg-greyblack p-4 md:p-6">
-            <p className="font-gothic text-sm md:text-lg font-bold text-yellowpeach">
+            <p className="font-gothic text-sm font-bold text-yellowpeach md:text-lg">
               WELCOME TO MY SKETCHBOOK ARCHIVE.
             </p>
             <div className="h-4 md:h-8"></div>
-            <p className="font-gothic text-sm md:text-lg text-yellowpeach">
+            <p className="font-gothic text-sm text-yellowpeach md:text-lg">
               I CREATED A COLLECTION OF SKETCHES THAT WAS EITHER SCRAPPED,
               STUDIES OR JUST FOR FUN/WARM-UPS.
             </p>
             <div className="h-4 md:h-8"></div>
-            <p className="font-gothic text-sm md:text-lg text-yellowpeach">
+            <p className="font-gothic text-sm text-yellowpeach md:text-lg">
               YOU CAN SORT THEM BY CATEGORY AND FLIP THROUGH SOME HIGHLIGHTS
               BELOW. IF YOU WISH TO SEE THEM ALL AT ONCE, KEEP SCROLLING!
             </p>
           </div>
         </div>
         <div className="h-8"></div>
-        <div className="flex w-full flex-col gap-4 lg:flex-row items-stretch justify-between">
+        <div className="flex w-full flex-col items-stretch justify-between gap-4 lg:flex-row">
           <div
             className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 0 ? "bg-greyblack" : "bg-yellowpeach"
@@ -121,7 +119,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(0)}
           >
             <h2
-              className={`my-auto py-4 lg:py-8 text-center font-stretch text-lg md:text-2xl transition-transform hover:scale-110 ${
+              className={`my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
                 selectedCategory === 0 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -135,7 +133,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(1)}
           >
             <h2
-              className={`no-ligature my-auto py-4 lg:py-8 text-center font-stretch text-lg md:text-2xl transition-transform hover:scale-110 ${
+              className={`no-ligature my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
                 selectedCategory === 1 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -149,7 +147,7 @@ const Sketchbook = () => {
             onClick={(e) => setSelectedCategory(2)}
           >
             <h2
-              className={`my-auto py-4 lg:py-8 text-center font-stretch text-lg md:text-2xl transition-transform hover:scale-110 ${
+              className={`my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
                 selectedCategory === 2 ? "text-yellowpeach" : "text-greyblack"
               }`}
             >
@@ -172,23 +170,26 @@ const Sketchbook = () => {
       <div className="h-20"></div>
 
       <div className="bg-yellowpeach">
-        <div className="ml-8 md:mx-auto w-fit">
-          <h1 className="relative text-left md:text-center font-stretch text-2xl md:text-3xl lg:text-4xl xl:text-6xl text-yellowpeach w-auto grid grid-rows-2 grid-cols-1 md:block md:bg-greyblack">
-            <span className="bg-greyblack pl-4 pr-4 md:pr-0">SKETCHBOOK</span> <span className="no-ligature bg-greyblack px-4 md:px-0 md:pr-4">GALLERY</span>
+        <div className="ml-8 w-fit md:mx-auto">
+          <h1 className="relative grid w-auto grid-cols-1 grid-rows-2 text-left font-stretch text-2xl text-yellowpeach md:block md:bg-greyblack md:text-center md:text-3xl lg:text-4xl xl:text-6xl">
+            <span className="bg-greyblack pl-4 pr-4 md:pr-0">SKETCHBOOK</span>{" "}
+            <span className="no-ligature bg-greyblack px-4 md:px-0 md:pr-4">
+              GALLERY
+            </span>
           </h1>
-      <h2 className="h-0 font-gothic text-lg lg:text-2xl xl:text-4xl text-yellowpeach pl-4">
-        {selectedCategory === 0
-          ? "WARM-UPS // JUST FOR FUN"
-          : selectedCategory === 1
-          ? "ILLUSTRATION SKETCHES"
-          : "STUDIES"}
-      </h2>
+          <h2 className="h-0 pl-4 font-gothic text-lg text-yellowpeach lg:text-2xl xl:text-4xl">
+            {selectedCategory === 0
+              ? "WARM-UPS // JUST FOR FUN"
+              : selectedCategory === 1
+              ? "ILLUSTRATION SKETCHES"
+              : "STUDIES"}
+          </h2>
         </div>
       </div>
       <div className="h-32"></div>
 
       <div className="flex w-full flex-col items-center">
-        <div className="w-[90%] md:w-[80%] overflow-clip" ref={imgHolderRef}>
+        <div className="w-[90%] overflow-clip md:w-[80%]" ref={imgHolderRef}>
           {imageTiling.map((row, r) => {
             return (
               <div className="gallery-row" key={`row-${r}`}>
@@ -229,7 +230,7 @@ const Sketchbook = () => {
           })}
         </div>
       </div>
-      <div className="h-40 lg:h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
+      <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
       {openImage == null ? (
         <></>
       ) : (
