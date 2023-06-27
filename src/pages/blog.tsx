@@ -117,8 +117,6 @@ function bottomPadding(bottomEl: HTMLDivElement) {
   } else {
     return 100 + (topOfBottom - window.innerHeight);
   }
-  console.log(topOfBottom, window.innerHeight);
-  return topOfBottom;
 }
 
 const ScrollContext = createContext({
@@ -135,6 +133,7 @@ const Blog = ({ posts }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
   const [categoryWidth, setCategoryWidth] = useState<number>(100);
+  const [viewportWidth, setViewportWidth] = useState<number>(0);
 
   const [autoScrolling, setAutoScrolling] = useState<boolean>(false);
 
@@ -153,6 +152,7 @@ const Blog = ({ posts }: Props) => {
   const handleResize = async () => {
     setCategoryWidth(categoryRef.current?.scrollWidth ?? 0);
     setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
+    setViewportWidth(window.innerWidth);
   };
 
   useEffect(() => {
@@ -160,6 +160,8 @@ const Blog = ({ posts }: Props) => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
+
+    handleResize();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -339,16 +341,21 @@ const Blog = ({ posts }: Props) => {
         <div className="blog-previews-mobile lg:hidden">
           <ScrollContext.Provider value={{ intoViewCallback }}>
             {postComponents.map((comp, i) => {
-              return (
-                <BlogPreview
-                  path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
-                  key={`blog-post-${i}`}
-                  date={posts[i]?.date ?? "2000-01-01"}
-                  index={i}
-                >
-                  {comp}
-                </BlogPreview>
-              );
+              const postDate = new Date(posts[i]?.date ?? "2000-01-01");
+              const activeDate = months[activeMonth];
+
+              if (postDate.getUTCFullYear() == activeDate?.getUTCFullYear() && postDate.getMonth() == activeDate.getMonth()) {
+                return (
+                  <BlogPreview
+                    path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                    key={`blog-post-${i}`}
+                    date={posts[i]?.date ?? "2000-01-01"}
+                    index={i}
+                  >
+                    {comp}
+                  </BlogPreview>
+                );
+              }
             })}
           </ScrollContext.Provider>
         </div>
@@ -408,16 +415,33 @@ const Blog = ({ posts }: Props) => {
         <div className="blog-previews col-span-1" ref={previewRef}>
           <ScrollContext.Provider value={{ intoViewCallback }}>
             {postComponents.map((comp, i) => {
-              return (
-                <BlogPreview
-                  path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
-                  key={`blog-post-${i}`}
-                  date={posts[i]?.date ?? "2000-01-01"}
-                  index={i}
-                >
-                  {comp}
-                </BlogPreview>
-              );
+              if (viewportWidth < 1536) {
+                const postDate = new Date(posts[i]?.date ?? "2000-01-01");
+                const activeDate = months[activeMonth];
+                if (postDate.getUTCFullYear() == activeDate?.getUTCFullYear() && postDate.getMonth() == activeDate.getMonth()) {
+                  return (
+                    <BlogPreview
+                      path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                      key={`blog-post-${i}`}
+                      date={posts[i]?.date ?? "2000-01-01"}
+                      index={i}
+                    >
+                      {comp}
+                    </BlogPreview>
+                  );
+                }
+              } else {
+                  return (
+                    <BlogPreview
+                      path={`/blog_posts/${posts[i]?.fileName.split(".")[0] ?? ""}`}
+                      key={`blog-post-${i}`}
+                      date={posts[i]?.date ?? "2000-01-01"}
+                      index={i}
+                    >
+                      {comp}
+                    </BlogPreview>
+                  );
+              }
             })}
           </ScrollContext.Provider>
         </div>
