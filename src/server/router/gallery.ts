@@ -80,7 +80,9 @@ export const galleryRouter = createRouter()
       categoryName: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
-      const imgs = await ctx.prisma.galleryImage.findMany({orderBy: { displayIndex: "asc" }});
+      const imgs = await ctx.prisma.galleryImage.findMany({
+        orderBy: { displayIndex: "asc" },
+      });
       for (let i = 0; i < imgs.length; i++) {
         const now = new Date();
         now.setHours(now.getHours() + 1);
@@ -311,7 +313,7 @@ export const galleryRouter = createRouter()
         const thmb = await sharp(`/tmp/1${baseName}`).metadata();
 
         const biggestDisplayIndex = await ctx.prisma.galleryImage.findFirst({
-          orderBy: { displayIndex: "desc" }
+          orderBy: { displayIndex: "desc" },
         });
 
         await ctx.prisma.galleryImage.create({
@@ -323,7 +325,7 @@ export const galleryRouter = createRouter()
             thmb_w: thmb.width,
             thmb_h: thmb.height,
             categoryId: input.categoryId,
-            displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1
+            displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
           },
         });
 

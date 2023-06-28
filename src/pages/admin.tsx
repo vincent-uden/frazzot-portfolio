@@ -11,6 +11,7 @@ import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
+  const [filterCategory, setFilterCategory] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [uploadData, setUploadData] = useState<FileList | null>();
   const [jwt, setJwt] = useState<string | null>(null);
@@ -96,17 +97,23 @@ const Admin = () => {
   }, []);
 
   function moveUp(i: number) {
+    let imgs = images?.filter(
+      (img) => img.categoryId == categories?.at(filterCategory)?.id
+    );
     if (i > 0) {
-      if (images != null) {
-        swapOrder(images[i] as GalleryImage, images[i-1] as GalleryImage);
+      if (imgs != null) {
+        swapOrder(imgs[i] as GalleryImage, imgs[i - 1] as GalleryImage);
       }
     }
   }
 
   function moveDown(i: number) {
-    if (i < (images?.length ?? 0) - 1) {
-      if (images != null) {
-        swapOrder(images[i] as GalleryImage, images[i+1] as GalleryImage);
+    let imgs = images?.filter(
+      (img) => img.categoryId == categories?.at(filterCategory)?.id
+    );
+    if (i < (imgs?.length ?? 0) - 1) {
+      if (imgs != null) {
+        swapOrder(imgs[i] as GalleryImage, imgs[i + 1] as GalleryImage);
       }
     }
   }
@@ -329,6 +336,26 @@ const Admin = () => {
               TABLE OF GALLERY DATA_
             </h2>
           </div>
+          <div className="mb-4 flex flex-row gap-8 px-8">
+            {categories?.map((category, i) => {
+              return (
+                <div
+                  className={`flex w-full cursor-pointer flex-col justify-around border-2 border-lilac transition-colors ${
+                    filterCategory === i ? "bg-greyblack" : "bg-lilac"
+                  }`}
+                  onClick={(e) => setFilterCategory(i)}
+                >
+                  <p
+                    className={`no-ligature my-auto py-4 text-center font-stretch text-base transition-transform hover:scale-110 ${
+                      filterCategory === i ? "text-lilac" : "text-greyblack"
+                    }`}
+                  >
+                    {category.name}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
           <div className="z-10 mt-8 px-8">
             <table className="mx-auto">
               <tbody className="w-full">
@@ -355,85 +382,94 @@ const Admin = () => {
                     Category
                   </th>
                 </tr>
-                {images?.map((img, i) => {
-                  return (
-                    <tr
-                      className=""
-                      key={img.id}
-                      onMouseEnter={(_) => setHoveredImage(img)}
-                      onMouseLeave={(_) => setHoveredImage(null)}
-                      onMouseMove={(e) => {
-                        setHoveredImageX(e.clientX);
-                        setHoveredImageY(e.clientY);
-                      }}
-                    >
-                      <td className="py-4 text-white">
-                        {img.createdAt.toDateString()}
-                      </td>
-                      <td className="font-neuo px-2 font-thin text-white">
-                        <input
-                          className="text-input transition-colors focus:border-lilac"
-                          type="text"
-                          placeholder={img.name}
-                          value={uiImageNames[i]}
-                          onChange={(e) => {
-                            const imgNames = uiImageNames.map((name, j) => {
-                              if (i === j) {
-                                return e.target.value;
-                              } else {
-                                return name;
+                {images
+                  ?.filter(
+                    (img) =>
+                      img.categoryId == categories?.at(filterCategory)?.id
+                  )
+                  ?.map((img, i, allImgs) => {
+                    return (
+                      <tr
+                        className=""
+                        key={img.id}
+                        onMouseEnter={(_) => setHoveredImage(img)}
+                        onMouseLeave={(_) => setHoveredImage(null)}
+                        onMouseMove={(e) => {
+                          setHoveredImageX(e.clientX);
+                          setHoveredImageY(e.clientY);
+                        }}
+                      >
+                        <td className="py-4 text-white">
+                          {img.createdAt.toDateString()}
+                        </td>
+                        <td className="font-neuo px-2 font-thin text-white">
+                          <input
+                            className="text-input transition-colors focus:border-lilac"
+                            type="text"
+                            placeholder={img.name}
+                            value={uiImageNames[i]}
+                            onChange={(e) => {
+                              const imgNames = uiImageNames.map((name, j) => {
+                                if (i === j) {
+                                  return e.target.value;
+                                } else {
+                                  return name;
+                                }
+                              });
+                              setUiImagesNames(imgNames);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                console.log("ALSKJD");
+                                updateImageNames();
                               }
-                            });
-                            setUiImagesNames(imgNames);
-                          }}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              console.log("ALSKJD");
-                              updateImageNames();
-                            }
-                          }}
-                        />
-                      </td>
-                      <td className="font-neuo px-2 font-thin text-white">
-                        {img.w}
-                      </td>
-                      <td className="font-neuo px-2 font-thin text-white">
-                        {img.h}
-                      </td>
-                      <td className="font-neuo px-2 font-thin text-white">
-                        {img.thmb_w}
-                      </td>
-                      <td className="font-neuo px-2 font-thin text-white">
-                        {img.thmb_h}
-                      </td>
-                      <td className="font-neuo font-thin text-white">
-                        {img.category?.name}
-                      </td>
-                      <td
-                        className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
-                        onClick={() => deleteById(img.id)}
-                      >
-                        Delete
-                      </td>
-                      <td
-                        className="cursor-pointer px-4 transition-transform hover:scale-125"
-                        onClick={() => moveUp(i)}
-                      >
-                      <IoChevronUpSharp
-                        className="h-8 w-8 cursor-pointer text-lilac"
-                      />
-                      </td>
-                      <td
-                        className="cursor-pointer px-4 transition-transform hover:scale-125"
-                        onClick={() => moveDown(i)}
-                      >
-                      <IoChevronDownSharp
-                        className="h-8 w-8 cursor-pointer text-lilac"
-                      />
-                      </td>
-                    </tr>
-                  );
-                })}
+                            }}
+                          />
+                        </td>
+                        <td className="font-neuo px-2 font-thin text-white">
+                          {img.w}
+                        </td>
+                        <td className="font-neuo px-2 font-thin text-white">
+                          {img.h}
+                        </td>
+                        <td className="font-neuo px-2 font-thin text-white">
+                          {img.thmb_w}
+                        </td>
+                        <td className="font-neuo px-2 font-thin text-white">
+                          {img.thmb_h}
+                        </td>
+                        <td className="font-neuo font-thin text-white">
+                          {img.category?.name}
+                        </td>
+                        <td
+                          className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
+                          onClick={() => deleteById(img.id)}
+                        >
+                          Delete
+                        </td>
+                        <td
+                          className="cursor-pointer px-4 transition-transform hover:scale-125"
+                          onClick={() => moveUp(i)}
+                        >
+                          <IoChevronUpSharp
+                            className={`h-8 w-8 cursor-pointer text-lilac ${
+                              i == 0 ? "hidden" : "block"
+                            }`}
+                          />
+                        </td>
+                        <td
+                          className="cursor-pointer px-4 transition-transform hover:scale-125"
+                          onClick={() => moveDown(i)}
+                        >
+                          <IoChevronDownSharp
+                            className={`h-8 w-8 cursor-pointer text-lilac ${
+                              i == allImgs.length - 1 ? "hidden" : "block"
+                            }`}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
 

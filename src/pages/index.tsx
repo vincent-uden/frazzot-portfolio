@@ -76,10 +76,10 @@ const Home: NextPageWithLayout = () => {
         <div className="h-8"></div>
       </div>
 
-      <div className="h-8 md:h-24"/>
+      <div className="h-8 md:h-24" />
       <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:768px_150px] bg-bottom bg-repeat-x pb-44 md:bg-[length:1920px_320px] md:pb-64">
-        <div className="index-grid mx-[5vw] md:mx-[10vw] w-[90vw] md:w-[80vw] overflow-x-hidden">
-          <div className="col-start-1 col-end-3 row-span-1 w-full scale-x-125 overflow-x-hidden bg-holo p-4 shadow-panel my-4 md:my-12 lg:my-0 lg:col-end-2 lg:row-span-2 lg:scale-x-100 lg:p-8">
+        <div className="index-grid mx-[5vw] w-[90vw] overflow-x-hidden md:mx-[10vw] md:w-[80vw]">
+          <div className="col-start-1 col-end-3 row-span-1 my-4 w-full scale-x-125 overflow-x-hidden bg-holo p-4 shadow-panel md:my-12 lg:col-end-2 lg:row-span-2 lg:my-0 lg:scale-x-100 lg:p-8">
             <div className="scale-x-[80%] lg:scale-x-100">
               <Link href={"https://discord.gg/MAQm86a3Xw"}>
                 <a
