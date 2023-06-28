@@ -204,7 +204,7 @@ const Contact = () => {
         </aside>
         <div className="row-start-2 row-end-3 h-24"></div>
       </div>
-      <div className="hidden h-40 md:block"></div>
+      <div className="hidden h-24 md:block"></div>
       <Link href={"https://discord.gg/MAQm86a3Xw"}>
         <div className="hidden w-full cursor-pointer flex-row md:flex">
           <aside className="bg-pastelpink px-12 py-12 lg:px-24">

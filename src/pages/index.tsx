@@ -72,7 +72,7 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:h-[50vw]">
+      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:bg-[length:1440px_480px] lg:h-[50vw]">
         <FadeIn>
           <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:left-32 lg:h-[40vw] lg:w-[40vw]">
             <Image src={"/img/moi3.png"} layout="fill" alt="Self portrait" />
@@ -172,14 +172,14 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-start-2 row-end-3 bg-holo p-[2px] lg:col-start-2">
             <div className="h-full bg-greyblack p-4 md:p-8">
               <Link href="/projects">
-                <a aria-label="Projects page">
+                <a aria-label="Blog">
                   <h3 className="text-holo mb-2 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:mb-6 md:text-4xl">
-                    PROJECTS &gt;
+                    BLOG &gt;
                   </h3>
                 </a>
               </Link>
               <p className="font-gothic text-sm text-white md:text-lg">
-                MY OTHER PROJECTS LIKE COMICS, PAINTED CLOTHING, MODS AND MORE.
+                POSTS ABOUT MY PROJECTS AND OTHER THINGS I'M UP TO.
               </p>
             </div>
           </div>
