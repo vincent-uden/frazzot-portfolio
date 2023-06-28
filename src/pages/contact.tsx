@@ -15,6 +15,8 @@ const Contact = () => {
   const [errors, setErrors] = useState<EmailError[]>([]);
   const [success, setSuccess] = useState<boolean>(false);
 
+  const [hoveringDiscord, setHoveringDiscord] = useState<boolean>(false);
+
   const submitFormMut = trpc.useMutation(["email.submitContact"], {
     onSuccess: (data) => {
       setErrors(data.errors);
@@ -53,23 +55,23 @@ const Contact = () => {
         </div>
       </div>
       <div className="grid grid-cols-1 px-4 md:flex md:flex-row xl:px-32 2xl:px-48">
-        <div className="mb-24 flex w-screen -translate-x-4 flex-row md:hidden">
-          <aside className="bg-pastelpink px-6 py-4">
-            <FontAwesomeIcon
-              icon={faDiscord}
-              className="h-20 w-20 text-greyblack"
-            />
-          </aside>
-          <aside className="relative flex-grow bg-holo bg-cover shadow-left">
-            <Link href={"https://discord.gg/MAQm86a3Xw"}>
+        <Link href={"https://discord.gg/MAQm86a3Xw"}>
+          <div className="mb-24 flex w-screen -translate-x-4 cursor-pointer flex-row md:hidden">
+            <aside className="bg-pastelpink px-6 py-4">
+              <FontAwesomeIcon
+                icon={faDiscord}
+                className="h-20 w-20 text-greyblack"
+              />
+            </aside>
+            <aside className="relative flex-grow bg-holo bg-cover shadow-left">
               <h2 className="no-ligature absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-xl text-greyblack transition-transform hover:scale-110">
                 <span className="block">JOIN MY</span>
                 <span className="block">COMMUNITY</span>
                 <span className="block">HERE &gt;</span>
               </h2>
-            </Link>
-          </aside>
-        </div>
+            </aside>
+          </div>
+        </Link>
         <div className="mb-24 h-[2.65rem] w-screen -translate-x-4 bg-pastelpink md:hidden">
           <div className="ml-[10%] w-fit bg-greyblack px-8">
             <h1 className="relative -top-[.40rem] text-center font-stretch text-6xl text-pastelpink">
@@ -203,18 +205,41 @@ const Contact = () => {
         <div className="row-start-2 row-end-3 h-24"></div>
       </div>
       <div className="hidden h-40 md:block"></div>
-      <div className="hidden w-full flex-row md:flex">
-        <aside className="bg-pastelpink px-24 py-12">
-          <img src="/DiscordBrand.svg" alt="" />
-        </aside>
-        <aside className="relative flex-grow bg-holo bg-cover shadow-left">
-          <h2 className="no-ligature absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-3xl text-greyblack transition-transform hover:scale-110">
-            <Link href={"https://discord.gg/MAQm86a3Xw"}>
-              JOIN MY COMMUNITY HERE &gt;
-            </Link>
-          </h2>
-        </aside>
-      </div>
+      <Link href={"https://discord.gg/MAQm86a3Xw"}>
+        <div className="hidden w-full cursor-pointer flex-row md:flex">
+          <aside className="bg-pastelpink px-12 py-12 lg:px-24">
+            <img
+              className="transition-transform hover:scale-110"
+              src="/DiscordBrand.svg"
+              alt=""
+            />
+          </aside>
+          <aside
+            className="relative flex-grow bg-holo bg-cover shadow-left"
+            onMouseOver={() => setHoveringDiscord(true)}
+            onMouseOut={() => setHoveringDiscord(false)}
+          >
+            <p
+              className={`absolute top-1/2 left-1/2 max-w-xl -translate-x-1/2 -translate-y-1/2 text-center font-gothic text-lg font-normal text-greyblack transition-opacity xl:text-xl ${
+                hoveringDiscord ? "pointer-events-auto" : "pointer-events-none"
+              }`}
+              style={{ opacity: hoveringDiscord ? 100 : 0 }}
+              onTouchStart={() => {
+                setHoveringDiscord(false);
+              }}
+            >
+              JOIN MY DISCORD SERVER AND PARTICIPATE IN STREAMS. DISCUSS ART AND
+              CONNECT WITH OTHER ARTISTS
+            </p>
+            <h2
+              className={`no-ligature pointer-events-none absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-3xl text-greyblack transition-opacity`}
+              style={{ opacity: hoveringDiscord ? 0 : 100 }}
+            >
+              JOIN MY COMMUNITY HERE&nbsp;&gt;
+            </h2>
+          </aside>
+        </div>
+      </Link>
 
       <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
     </>
