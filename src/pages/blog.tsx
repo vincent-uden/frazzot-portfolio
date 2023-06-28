@@ -108,6 +108,7 @@ function scrollTo(el: HTMLDivElement) {
   const elLeft = el.offsetLeft + el.offsetWidth / 2;
   // @ts-ignore: next-line
   el.parentNode.scroll({
+    // @ts-ignore: next-line
     left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft,
     behavior: "smooth",
   });
@@ -300,7 +301,7 @@ const Blog = ({ posts }: Props) => {
             <CategoriesFilter />
           </div>
 
-          <div className="timeline-mobile mx-auto max-w-screen-md px-4 my-8">
+          <div className="timeline-mobile mx-auto my-8 max-w-screen-md px-4">
             <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
             <div
               className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"

@@ -24,6 +24,7 @@ export const galleryRouter = createRouter()
     async resolve({ ctx }) {
       return await ctx.prisma.galleryImage.findMany({
         include: { category: true },
+        orderBy: { displayIndex: "asc" },
       });
     },
   })
@@ -79,7 +80,9 @@ export const galleryRouter = createRouter()
       categoryName: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
-      const imgs = await ctx.prisma.galleryImage.findMany();
+      const imgs = await ctx.prisma.galleryImage.findMany({
+        orderBy: { displayIndex: "asc" },
+      });
       for (let i = 0; i < imgs.length; i++) {
         const now = new Date();
         now.setHours(now.getHours() + 1);
@@ -130,6 +133,7 @@ export const galleryRouter = createRouter()
           include: {
             category: true,
           },
+          orderBy: { displayIndex: "asc" },
         });
       } else {
         let category = await ctx.prisma.imageCategory.findUnique({
@@ -144,6 +148,7 @@ export const galleryRouter = createRouter()
           include: {
             category: true,
           },
+          orderBy: { displayIndex: "asc" },
         });
       }
     },
@@ -166,27 +171,48 @@ export const galleryRouter = createRouter()
     }
     return next();
   })
-  .mutation("insertOne", {
+  .mutation("updateOne", {
     input: z.object({
-      name: z.string(),
-      path: z.string(),
-      w: z.number(),
-      h: z.number(),
-      thmb_w: z.number(),
-      thmb_h: z.number(),
-      categoryId: z.string().nullish(),
+      id: z.string(),
+      name: z.string().optional(),
+      path: z.string().optional(),
+      w: z.number().optional(),
+      h: z.number().optional(),
+      thmb_w: z.number().optional(),
+      thmb_h: z.number().optional(),
+      categoryId: z.string().nullish().optional(),
+      displayIndex: z.number().optional(),
     }),
     resolve: async ({ input, ctx }) => {
-      return await ctx.prisma.galleryImage.create({
-        data: {
-          name: input.name,
-          path: input.path,
-          w: input.w,
-          h: input.h,
-          thmb_w: input.thmb_w,
-          thmb_h: input.thmb_h,
-          categoryId: input.categoryId,
-        },
+      const data: Record<string, any> = {};
+      if (input.name != null) {
+        data.name = input.name;
+      }
+      if (input.path != null) {
+        data.path = input.path;
+      }
+      if (input.w != null) {
+        data.w = input.w;
+      }
+      if (input.h != null) {
+        data.h = input.h;
+      }
+      if (input.thmb_w != null) {
+        data.thmb_w = input.thmb_w;
+      }
+      if (input.thmb_h != null) {
+        data.thmb_h = input.thmb_h;
+      }
+      if (input.categoryId != null) {
+        data.categoryId = input.categoryId;
+      }
+      if (input.displayIndex != null) {
+        data.displayIndex = input.displayIndex;
+      }
+
+      return await ctx.prisma.galleryImage.update({
+        data,
+        where: { id: input.id },
       });
     },
   })
@@ -211,13 +237,6 @@ export const galleryRouter = createRouter()
       type: z.string(),
     }),
     async resolve({ input, ctx }) {
-      const fileParams = {
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: input.name,
-        Expires: 600,
-        ContentType: input.type,
-      };
-
       return await s3.createPresignedPost({
         Bucket: process.env.S3_BUCKET_NAME,
         Fields: {
@@ -293,6 +312,10 @@ export const galleryRouter = createRouter()
         const img = await sharp(tmpPath).metadata();
         const thmb = await sharp(`/tmp/1${baseName}`).metadata();
 
+        const biggestDisplayIndex = await ctx.prisma.galleryImage.findFirst({
+          orderBy: { displayIndex: "desc" },
+        });
+
         await ctx.prisma.galleryImage.create({
           data: {
             name: input.name,
@@ -302,6 +325,7 @@ export const galleryRouter = createRouter()
             thmb_w: thmb.width,
             thmb_h: thmb.height,
             categoryId: input.categoryId,
+            displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
           },
         });
 
