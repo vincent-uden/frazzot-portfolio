@@ -108,6 +108,7 @@ function scrollTo(el: HTMLDivElement) {
   const elLeft = el.offsetLeft + el.offsetWidth / 2;
   // @ts-ignore: next-line
   el.parentNode.scroll({
+  // @ts-ignore: next-line
     left: elLeft - el.parentNode.offsetWidth / 2 - el.parentNode.offsetLeft,
     behavior: "smooth",
   });
@@ -120,8 +121,6 @@ function bottomPadding(bottomEl: HTMLDivElement) {
   } else {
     return 100 + (topOfBottom - window.innerHeight);
   }
-  console.log(topOfBottom, window.innerHeight);
-  return topOfBottom;
 }
 
 const ScrollContext = createContext({
@@ -138,6 +137,7 @@ const Blog = ({ posts }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
   const [categoryWidth, setCategoryWidth] = useState<number>(100);
+  const [viewportWidth, setViewportWidth] = useState<number>(0);
 
   const [autoScrolling, setAutoScrolling] = useState<boolean>(false);
 
@@ -156,6 +156,7 @@ const Blog = ({ posts }: Props) => {
   const handleResize = async () => {
     setCategoryWidth(categoryRef.current?.scrollWidth ?? 0);
     setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
+    setViewportWidth(window.innerWidth);
   };
 
   useEffect(() => {
@@ -163,6 +164,8 @@ const Blog = ({ posts }: Props) => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
+
+    handleResize();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -276,9 +279,9 @@ const Blog = ({ posts }: Props) => {
       </Head>
 
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
-        <div className="h-64"></div>
+        <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-sky">BLOG</h1>
-        <div className="mt-8 mb-16 bg-holo bg-cover py-2">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
           <h2 className="page-sub-header hidden text-greyblack lg:block">
             PROJECT ARCHIVE AND POSTS_
           </h2>
@@ -292,13 +295,13 @@ const Blog = ({ posts }: Props) => {
         {/* Mobile */}
         <div className="2xl:hidden">
           <div className="mx-auto max-w-screen-md border-4 border-sky  p-4 pb-0">
-            <h3 className="no-ligatures text-center font-stretch text-xl text-sky lg:text-3xl">
+            <h3 className="no-ligatures text-center font-stretch text-2xl text-sky lg:text-3xl">
               CATEGORIES &gt;
             </h3>
             <CategoriesFilter />
           </div>
 
-          <div className="timeline-mobile mx-auto max-w-screen-md px-4">
+          <div className="timeline-mobile mx-auto max-w-screen-md px-4 my-8">
             <div className="pointer-events-none relative top-[2.25rem] h-2 w-full bg-sky" />
             <div
               className="no-scrollbar my-4 flex select-none flex-row gap-8 overflow-y-hidden overflow-x-scroll"
@@ -341,18 +344,26 @@ const Blog = ({ posts }: Props) => {
           <div className="blog-previews-mobile lg:hidden">
             <ScrollContext.Provider value={{ intoViewCallback }}>
               {postComponents.map((comp, i) => {
-                return (
-                  <BlogPreview
-                    path={`/blog_posts/${
-                      posts[i]?.fileName.split(".")[0] ?? ""
-                    }`}
-                    key={`blog-post-${i}`}
-                    date={posts[i]?.date ?? "2000-01-01"}
-                    index={i}
-                  >
-                    {comp}
-                  </BlogPreview>
-                );
+                const postDate = new Date(posts[i]?.date ?? "2000-01-01");
+                const activeDate = months[activeMonth];
+
+                if (
+                  postDate.getUTCFullYear() == activeDate?.getUTCFullYear() &&
+                  postDate.getMonth() == activeDate.getMonth()
+                ) {
+                  return (
+                    <BlogPreview
+                      path={`/blog_posts/${
+                        posts[i]?.fileName.split(".")[0] ?? ""
+                      }`}
+                      key={`blog-post-${i}`}
+                      date={posts[i]?.date ?? "2000-01-01"}
+                      index={i}
+                    >
+                      {comp}
+                    </BlogPreview>
+                  );
+                }
               })}
             </ScrollContext.Provider>
           </div>
@@ -415,30 +426,53 @@ const Blog = ({ posts }: Props) => {
           <div className="blog-previews col-span-1" ref={previewRef}>
             <ScrollContext.Provider value={{ intoViewCallback }}>
               {postComponents.map((comp, i) => {
-                return (
-                  <BlogPreview
-                    path={`/blog_posts/${
-                      posts[i]?.fileName.split(".")[0] ?? ""
-                    }`}
-                    key={`blog-post-${i}`}
-                    date={posts[i]?.date ?? "2000-01-01"}
-                    index={i}
-                  >
-                    {comp}
-                  </BlogPreview>
-                );
+                if (viewportWidth < 1536) {
+                  const postDate = new Date(posts[i]?.date ?? "2000-01-01");
+                  const activeDate = months[activeMonth];
+                  if (
+                    postDate.getUTCFullYear() == activeDate?.getUTCFullYear() &&
+                    postDate.getMonth() == activeDate.getMonth()
+                  ) {
+                    return (
+                      <BlogPreview
+                        path={`/blog_posts/${
+                          posts[i]?.fileName.split(".")[0] ?? ""
+                        }`}
+                        key={`blog-post-${i}`}
+                        date={posts[i]?.date ?? "2000-01-01"}
+                        index={i}
+                      >
+                        {comp}
+                      </BlogPreview>
+                    );
+                  }
+                } else {
+                  return (
+                    <BlogPreview
+                      path={`/blog_posts/${
+                        posts[i]?.fileName.split(".")[0] ?? ""
+                      }`}
+                      key={`blog-post-${i}`}
+                      date={posts[i]?.date ?? "2000-01-01"}
+                      index={i}
+                    >
+                      {comp}
+                    </BlogPreview>
+                  );
+                }
               })}
             </ScrollContext.Provider>
           </div>
-          <div className="col-span-1" ref={categoryRef} />
+          <div className="col-span-1 w-96" ref={categoryRef} />
           <div
-            className="fixed right-0 pt-24"
+            className="fixed pt-24"
             style={{
               top:
                 scrollPosition > 336
                   ? bottomPadding(bottomRef.current!!)
                   : 336 + 100 - scrollPosition,
               width: categoryWidth,
+              left: categoryRef.current?.getBoundingClientRect().x,
             }}
           >
             <div className="absolute left-0 hidden w-full 2xl:block">
@@ -451,7 +485,7 @@ const Blog = ({ posts }: Props) => {
             </div>
           </div>
         </div>
-        <div className="h-72" ref={bottomRef} />
+        <div className="h-40 lg:h-72" ref={bottomRef} />
       </div>
     </>
   );
@@ -519,7 +553,7 @@ const CategoriesFilter = () => {
             <div
               className={`mb-4 border-2 border-${color} cursor-pointer bg-${
                 openAcc[i] ? "greyblack" : color
-              } w-full py-2 px-4 2xl:py-4`}
+              } w-full py-4 px-4 2xl:py-4`}
               key={`acc-main-${i}`}
               onMouseEnter={(_) => {
                 const openSections = [...openAcc];
@@ -539,7 +573,7 @@ const CategoriesFilter = () => {
               }}
             >
               <h3
-                className={`no-ligatures whitespace-nowrap text-center font-stretch text-base transition-colors text-${
+                className={`no-ligatures whitespace-nowrap text-center font-stretch text-lg transition-colors text-${
                   openAcc[i] ? color : "greyblack"
                 }`}
               >
@@ -555,7 +589,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     openAcc[i] ? color : "greyblack"
-                  } pt-4 text-center font-gothic text-xs lg:text-sm`}
+                  } pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
                 >
                   {body}
                 </p>
@@ -577,7 +611,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     true ? color : "greyblack"
-                  } pointer-events-none pt-4 text-center font-gothic text-sm`}
+                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg`}
                 >
                   {body}
                 </p>

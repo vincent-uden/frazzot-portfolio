@@ -2,7 +2,6 @@
 import { withTRPC } from "@trpc/next";
 import type { AppRouter } from "../server/router";
 import superjson from "superjson";
-import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import "../styles/markdown.css";
 import "../styles/blog.css";
@@ -31,11 +30,9 @@ const MyApp = ({
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </SessionProvider>
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   );
 };
 
@@ -66,9 +63,7 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       headers() {
-        return {
-          session_token: cookies.get("session_token"),
-        };
+        return {};
       },
     };
   },

@@ -41,11 +41,14 @@ const Contact = () => {
       </Head>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="hidden stroke-pastelpink hover:text-pastelpink"></div>
-        <div className="h-64"></div>
+        <div className="h-48 md:h-64"></div>
         <h1 className="page-header text-pastelpink">CONTACT</h1>
-        <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
-          <h2 className="page-sub-header no-ligature">
+        <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
+          <h2 className="page-sub-header no-ligature hidden lg:block">
             CONTACT & CONNECT WITH ME_
+          </h2>
+          <h2 className="page-sub-header no-ligature lg:hidden">
+            CONNECT WITH ME_
           </h2>
         </div>
       </div>
@@ -83,7 +86,7 @@ const Contact = () => {
               COLLABORATION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               IF YOU WISH TO COLLABORATE, REACH OUT TO ME THROUGH EMAIL OR
               DISCORD.
             </p>
@@ -93,13 +96,13 @@ const Contact = () => {
               PHYSICAL COPIES ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               SINCE I HAVE NO STORE, THERE ARE NO SET PRICES ON MY PHYSICAL
               COPIES. YOU CAN REACH OUT TO ME THROUGH EMAIL IF YOU'RE
               INTERESTED.
             </p>
             <div className="h-4"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               IF YOU'RE INTERESTED IN ORDERING OTHER PRODUCTS I CREATE LIKE
               PAINTED CLOTHING OR PAINTINGS, REACH OUT TO ME THROUGH EMAIL.
             </p>
@@ -109,7 +112,7 @@ const Contact = () => {
               <span className="no-ligature">COMM</span>ISSION ?
             </h2>
             <div className="h-8"></div>
-            <p className="font-gothic text-xs text-pastelpink md:text-lg">
+            <p className="font-gothic text-sm text-pastelpink md:text-lg">
               READ MORE ABOUT MY COMMISSIONS ON THE{" "}
               <Link href="/commissions">
                 <span className="cursor-pointer font-gothic font-bold">
@@ -213,7 +216,7 @@ const Contact = () => {
         </aside>
       </div>
 
-      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
+      <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
     </>
   );
 };

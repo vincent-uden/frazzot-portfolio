@@ -1,18 +1,6 @@
-import type { NextPage } from "next";
-
-import Image from "next/image";
 import { trpc } from "../utils/trpc";
 
-import {
-  MutableRefObject,
-  ReactElement,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { GalleryImage } from "@prisma/client";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
@@ -127,9 +115,10 @@ const Gallery = () => {
         <div className="h-48 md:h-64"></div>
         <h1 className="page-header no-ligature text-mint">GALLERY</h1>
         <div className="mt-2 mb-8 bg-holo bg-cover py-2 md:mt-8 md:mb-16">
-          <h2 className="page-sub-header">
+          <h2 className="page-sub-header hidden lg:block">
             A SELECTION OF MY DIGITAL ARTWORKS_
           </h2>
+          <h2 className="page-sub-header lg:hidden">MY DIGITAL ARTWORKS_</h2>
         </div>
       </div>
       <div className="flex w-full flex-col items-center">
@@ -208,7 +197,7 @@ const Gallery = () => {
           })}
         </div>
       </div>
-      <div className="h-72 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px]"></div>
+      <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
       {openImage == null ? (
         <></>
       ) : (
