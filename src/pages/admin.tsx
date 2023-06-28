@@ -7,6 +7,7 @@ import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
 import { GalleryImage } from "@prisma/client";
+import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
@@ -33,6 +34,7 @@ const Admin = () => {
         for (const _ of data) {
           names.push("");
         }
+        console.log("SUCCESSFULLY REFETCHED IMAGES");
         setUiImagesNames(names);
       },
     }
@@ -75,12 +77,14 @@ const Admin = () => {
 
   const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
     onSuccess: () => {
+      console.log("INSERTED");
       refetchImgs();
     },
   });
 
   const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
     onSuccess: () => {
+      console.log("GENERATED THUMBNAILS");
       refetchImgs();
     },
   });
@@ -90,6 +94,31 @@ const Admin = () => {
       id: id,
     });
   }, []);
+
+  function moveUp(i: number) {
+    if (i > 0) {
+      if (images != null) {
+        swapOrder(images[i] as GalleryImage, images[i-1] as GalleryImage);
+      }
+    }
+  }
+
+  function moveDown(i: number) {
+    if (i < (images?.length ?? 0) - 1) {
+      if (images != null) {
+        swapOrder(images[i] as GalleryImage, images[i+1] as GalleryImage);
+      }
+    }
+  }
+
+  function swapOrder(img1: GalleryImage, img2: GalleryImage) {
+    const tmpIndex = img1.displayIndex;
+    img1.displayIndex = img2.displayIndex;
+    img2.displayIndex = tmpIndex;
+
+    imageUpdateOneMut.mutateAsync(img1);
+    imageUpdateOneMut.mutateAsync(img2);
+  }
 
   const updateImageNames = useCallback(() => {
     for (let i = 0; i < uiImageNames.length; i++) {
@@ -385,6 +414,22 @@ const Admin = () => {
                         onClick={() => deleteById(img.id)}
                       >
                         Delete
+                      </td>
+                      <td
+                        className="cursor-pointer px-4 transition-transform hover:scale-125"
+                        onClick={() => moveUp(i)}
+                      >
+                      <IoChevronUpSharp
+                        className="h-8 w-8 cursor-pointer text-lilac"
+                      />
+                      </td>
+                      <td
+                        className="cursor-pointer px-4 transition-transform hover:scale-125"
+                        onClick={() => moveDown(i)}
+                      >
+                      <IoChevronDownSharp
+                        className="h-8 w-8 cursor-pointer text-lilac"
+                      />
                       </td>
                     </tr>
                   );

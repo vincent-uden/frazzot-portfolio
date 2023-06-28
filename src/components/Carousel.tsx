@@ -2,7 +2,6 @@ import React, {
   useEffect,
   useRef,
   useState,
-  useSyncExternalStore,
 } from "react";
 
 import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";

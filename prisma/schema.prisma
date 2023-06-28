@@ -74,6 +74,7 @@ model GalleryImage {
   urlExpires DateTime       @default(now())
   urlLg        String?
   urlLgExpires DateTime       @default(now())
+  displayIndex Int @default(0)
 }
 
 model ImageCategory {
