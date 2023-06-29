@@ -148,7 +148,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
                 ref={activeRef}
                 style={{
                   transform: `${
-                    i === activeIndex ? "scale(125%)" : ""
+                    i === activeIndex ? "scale(1.25)" : ""
                   } rotateX(${
                     i === activeIndex && width > 768 ? xRotation : 0
                   }deg) rotateY(${

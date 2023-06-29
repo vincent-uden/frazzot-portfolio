@@ -177,7 +177,7 @@ const Sketchbook = () => {
               GALLERY
             </span>
           </h1>
-          <h2 className="h-0 pl-4 font-gothic text-lg translate-y-2 text-yellowpeach lg:text-2xl xl:text-4xl">
+          <h2 className="h-0 translate-y-2 pl-4 font-gothic text-lg text-yellowpeach lg:text-2xl xl:text-4xl">
             {selectedCategory === 0
               ? "WARM-UPS // JUST FOR FUN"
               : selectedCategory === 1
@@ -192,7 +192,10 @@ const Sketchbook = () => {
         <div className="w-full" ref={imgHolderRef}>
           {imageTiling.map((row, r) => {
             return (
-              <div className="gallery-row w-[90%] overflow-clip md:w-[80%] pl-[5%] md:pl-[10%]" key={`row-${r}`}>
+              <div
+                className="gallery-row w-[90%] overflow-clip pl-[5%] md:w-[80%] md:pl-[10%]"
+                key={`row-${r}`}
+              >
                 {row.indices.map((i, n) => {
                   return (
                     <div className="inline-block h-full" key={`space-${n}`}>

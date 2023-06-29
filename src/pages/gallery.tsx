@@ -33,12 +33,10 @@ export function tileImages(
       scale: 1,
     };
 
-    console.log(maxW, window.innerWidth);
     while (w < maxW && i < imgs.length) {
       row.indices.push(i);
       w += (imgs[i]?.thmb_w ?? 0) * imgMod;
       i++;
-      console.log(row);
     }
 
     row.scale =
@@ -48,6 +46,40 @@ export function tileImages(
 
   return rows;
 }
+
+type ImageData = {
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
+// Polyfill for Ipad Air 4
+function at(n: any) {
+  // ToInteger() abstract op
+  n = Math.trunc(n) || 0;
+  // Allow negative indexing from the end
+  //@ts-ignore
+  if (n < 0) n += this.length;
+  // OOB access is guaranteed to return undefined
+  //@ts-ignore
+  if (n < 0 || n >= this.length) return undefined;
+  // Otherwise, this is just normal property access
+  //@ts-ignore
+  return this[n];
+}
+
+const TypedArray = Reflect.getPrototypeOf(Int8Array);
+for (const C of [Array, String, TypedArray]) {
+  //@ts-ignore
+  Object.defineProperty(C.prototype, "at", {
+    value: at,
+    writable: true,
+    enumerable: false,
+    configurable: true,
+  });
+}
+// End of polyfill
 
 const Gallery = () => {
   const { data: images, refetch } = trpc.useQuery([
@@ -61,8 +93,9 @@ const Gallery = () => {
 
   useEffect(() => {
     if (images != null) {
-      console.log(images);
-      setImageTiling(tileImages(images, imgHolderRef, gap));
+      const x = tileImages(images, imgHolderRef, gap);
+      console.log(x.at);
+      setImageTiling(x);
     }
   }, [images]);
 
