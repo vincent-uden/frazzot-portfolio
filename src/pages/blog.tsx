@@ -463,7 +463,7 @@ const Blog = ({ posts }: Props) => {
               })}
             </ScrollContext.Provider>
           </div>
-          <div className="col-span-1 w-96" ref={categoryRef} />
+          <div className="col-span-1 2xl:w-96" ref={categoryRef} />
           <div
             className="fixed pt-24"
             style={{
