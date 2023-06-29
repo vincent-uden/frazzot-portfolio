@@ -21,7 +21,7 @@ function getWindowDimensions() {
   if (typeof window !== "undefined") {
     const {
       scrollX: scrollX,
-      scrollY : scrollY,
+      scrollY: scrollY,
       innerHeight: height,
       innerWidth: width,
     } = window;
@@ -57,12 +57,15 @@ const Home: NextPageWithLayout = () => {
   const [discordOffset, setDiscordOffset] = useState<number>(0);
   const dims = useWindowDimensions();
 
-  const measuredRef = useCallback((node: any) => {
-    if (node != null) {
-      const rect = node.getBoundingClientRect()
-      setDiscordOffset(rect.top + rect.height / 2 + window.scrollY);
-    }
-  }, [dims]);
+  const measuredRef = useCallback(
+    (node: any) => {
+      if (node != null) {
+        const rect = node.getBoundingClientRect();
+        setDiscordOffset(rect.top + rect.height / 2 + window.scrollY);
+      }
+    },
+    [dims]
+  );
 
   return (
     <>
@@ -72,7 +75,7 @@ const Home: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:bg-[length:1440px_480px] lg:h-[50vw]">
+      <div className="relative h-[150vw] w-screen overflow-x-hidden overflow-y-hidden bg-pattern-holo-inv bg-[length:768px_300px] bg-repeat-x md:h-[80vh] md:bg-[length:1920px_640px] lg:h-[50vw] lg:bg-[length:1440px_480px]">
         <FadeIn>
           <div className="absolute left-[10vw] bottom-0 z-0 h-[80vw] w-[80vw] md:h-[60vh] md:w-[60vh] lg:left-32 lg:h-[40vw] lg:w-[40vw]">
             <Image src={"/img/moi3.png"} layout="fill" alt="Self portrait" />
@@ -125,7 +128,10 @@ const Home: NextPageWithLayout = () => {
       <div className="h-8 md:h-24" />
       <div className="w-full overflow-y-hidden bg-pattern-holo-short bg-[length:768px_150px] bg-bottom bg-repeat-x pb-44 md:bg-[length:1920px_320px] md:pb-64">
         <div className="index-grid mx-[5vw] w-[90vw] overflow-x-hidden md:mx-[10vw] md:w-[80vw]">
-          <div className="invisible lg:visible col-start-1 col-end-3 row-span-1 my-4 w-full overflow-x-hidden bg-holo p-4 shadow-panel md:my-12 lg:col-end-2 lg:row-span-2 lg:my-0 lg:p-8" ref={measuredRef}>
+          <div
+            className="invisible col-start-1 col-end-3 row-span-1 my-4 w-full overflow-x-hidden bg-holo p-4 shadow-panel md:my-12 lg:visible lg:col-end-2 lg:row-span-2 lg:my-0 lg:p-8"
+            ref={measuredRef}
+          >
             <div className="">
               <Link href={"https://discord.gg/MAQm86a3Xw"}>
                 <a
@@ -260,17 +266,20 @@ const Home: NextPageWithLayout = () => {
       </div>
 
       <Link href={"https://discord.gg/MAQm86a3Xw"}>
-        <div className="absolute mb-24 flex w-screen cursor-pointer flex-row lg:hidden -translate-y-1/2" style={{ top: discordOffset }}>
+        <div
+          className="absolute mb-24 flex w-screen -translate-y-1/2 cursor-pointer flex-row lg:hidden"
+          style={{ top: discordOffset }}
+        >
           <aside className="bg-pastelpink px-6 py-4">
             <FontAwesomeIcon
               icon={faDiscord}
               className="h-20 w-20 text-greyblack md:hidden"
             />
-                  <img
-                    className="hidden md:block transition-transform hover:scale-110 py-4 px-12"
-                    src="/DiscordBrand.svg"
-                    alt=""
-                  />
+            <img
+              className="hidden py-4 px-12 transition-transform hover:scale-110 md:block"
+              src="/DiscordBrand.svg"
+              alt=""
+            />
           </aside>
           <aside className="relative flex-grow bg-holo bg-cover shadow-left">
             <h2 className="no-ligature absolute top-1/2 w-full -translate-y-1/2 cursor-pointer py-4 text-center font-stretch text-xl text-greyblack transition-transform hover:scale-110">
