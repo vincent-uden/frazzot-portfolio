@@ -611,7 +611,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     true ? color : "greyblack"
-                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg`}
+                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
                 >
                   {body}
                 </p>
