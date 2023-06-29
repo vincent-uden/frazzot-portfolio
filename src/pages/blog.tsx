@@ -463,7 +463,7 @@ const Blog = ({ posts }: Props) => {
               })}
             </ScrollContext.Provider>
           </div>
-          <div className="col-span-1 w-96" ref={categoryRef} />
+          <div className="col-span-1 2xl:w-96" ref={categoryRef} />
           <div
             className="fixed pt-24"
             style={{
@@ -611,7 +611,7 @@ const CategoriesFilter = () => {
                 <p
                   className={`text-${
                     true ? color : "greyblack"
-                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg`}
+                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
                 >
                   {body}
                 </p>
