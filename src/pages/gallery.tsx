@@ -33,10 +33,12 @@ export function tileImages(
       scale: 1,
     };
 
+    console.log(maxW, window.innerWidth);
     while (w < maxW && i < imgs.length) {
       row.indices.push(i);
       w += (imgs[i]?.thmb_w ?? 0) * imgMod;
       i++;
+      console.log(row);
     }
 
     row.scale =
