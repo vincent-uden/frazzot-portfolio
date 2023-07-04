@@ -177,7 +177,7 @@ const Home: NextPageWithLayout = () => {
           </div>
           <div className="col-start-1 col-end-3 row-start-2 row-end-3 bg-holo p-[2px] lg:col-start-2">
             <div className="h-full bg-greyblack p-4 md:p-8">
-              <Link href="/projects">
+              <Link href="/blog">
                 <a aria-label="Blog">
                   <h3 className="text-holo mb-2 origin-left bg-cover font-stretch text-xl transition-transform hover:scale-105 md:mb-6 md:text-4xl">
                     BLOG &gt;
