@@ -105,8 +105,8 @@ const Sketchbook = () => {
             </p>
             <div className="h-4 md:h-8"></div>
             <p className="font-gothic text-sm text-yellowpeach md:text-lg">
-              YOU CAN SORT THEM BY CATEGORY AND FLIP THROUGH SOME HIGHLIGHTS
-              BELOW. IF YOU WISH TO SEE THEM ALL AT ONCE, KEEP SCROLLING!
+              YOU CAN FILTER THE SKETCHES BY CATEGORY WITH THE BUTTONS BELOW
+              AND THE GALLERY CAN BE FOUND FURTHER DOWN ON THIS PAGE!
             </p>
           </div>
         </div>
