@@ -48,6 +48,10 @@
   height: auto;
 }
 
+.blog-post .quote p {
+  margin-bottom: 0;
+}
+
 @media screen and (min-width: 768px) {
   .blog-post .split-stack {
     display: flex;

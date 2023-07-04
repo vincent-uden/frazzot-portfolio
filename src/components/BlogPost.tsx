@@ -60,3 +60,14 @@ export const LeftStack = ({ children, masterWidth }: any) => {
     </div>
   );
 };
+
+export const QuoteBlock = ({ children }: any) => {
+  return (
+    <div className="flex flex-row gap-4 quote mb-4 bg-periwinkle bg-opacity-10">
+      <div className="w-2 bg-periwinkle"/>
+      <div className="grow italic">
+        {children}
+      </div>
+    </div>
+  )
+}
