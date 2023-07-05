@@ -29,7 +29,7 @@
   @apply font-bold text-lilac underline;
 }
 
-.blog-post .date-header p {
+.date-header {
   @apply border-b-4 border-sky font-gothic text-base text-sky;
 }
 

@@ -137,6 +137,7 @@ const Blog = ({ posts }: Props) => {
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [timelineHeight, setTimelineHeight] = useState<number>(0);
   const [categoryWidth, setCategoryWidth] = useState<number>(100);
+  const [categoryX, setCategoryX] = useState<number>(0);
   const [viewportWidth, setViewportWidth] = useState<number>(0);
 
   const [autoScrolling, setAutoScrolling] = useState<boolean>(false);
@@ -154,18 +155,25 @@ const Blog = ({ posts }: Props) => {
   };
 
   const handleResize = async () => {
+    setCategoryX(categoryRef.current?.getBoundingClientRect().x ?? 0);
     setCategoryWidth(categoryRef.current?.scrollWidth ?? 0);
     setTimelineHeight(timelineContainer.current?.scrollHeight ?? 0);
     setViewportWidth(window.innerWidth);
   };
 
   useEffect(() => {
+    console.log("Importing posts");
     importPosts();
+    console.log("imported posts");
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize, { passive: true });
 
-    handleResize();
+    setTimeout(() => {
+      handleResize();
+      console.log("handled resize");
+    }, 500);
+    //handleResize();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -186,6 +194,7 @@ const Blog = ({ posts }: Props) => {
 
   useEffect(() => {
     handleResize();
+    handleScroll();
   }, [postComponents]);
 
   const changeActiveMonth = (i: number, onMobile = false) => {
@@ -294,9 +303,9 @@ const Blog = ({ posts }: Props) => {
       <div className="bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x md:bg-[length:1920px_330px]">
         {/* Mobile */}
         <div className="2xl:hidden">
-          <div className="mx-auto max-w-screen-md border-4 border-sky  p-4 pb-0">
-            <h3 className="no-ligatures text-center font-stretch text-2xl text-sky lg:text-3xl">
-              CATEGORIES &gt;
+          <div className="mx-auto max-w-screen-md border-0 border-sky p-4  pb-0 md:border-4">
+            <h3 className="no-ligatures text-center font-stretch text-2xl text-sky md:text-3xl">
+              HIGHLIGHTS &gt;
             </h3>
             <CategoriesFilter />
           </div>
@@ -352,16 +361,19 @@ const Blog = ({ posts }: Props) => {
                   postDate.getMonth() == activeDate.getMonth()
                 ) {
                   return (
-                    <BlogPreview
-                      path={`/blog_posts/${
-                        posts[i]?.fileName.split(".")[0] ?? ""
-                      }`}
-                      key={`blog-post-${i}`}
-                      date={posts[i]?.date ?? "2000-01-01"}
-                      index={i}
-                    >
-                      {comp}
-                    </BlogPreview>
+                    <>
+                      <BlogPreview
+                        path={`/blog_posts/${
+                          posts[i]?.fileName.split(".")[0] ?? ""
+                        }`}
+                        key={`blog-post-${i}`}
+                        date={posts[i]?.date ?? "2000-01-01"}
+                        index={i}
+                      >
+                        {comp}
+                      </BlogPreview>
+                      <div className="h-16" />
+                    </>
                   );
                 }
               })}
@@ -434,6 +446,24 @@ const Blog = ({ posts }: Props) => {
                     postDate.getMonth() == activeDate.getMonth()
                   ) {
                     return (
+                      <>
+                        <BlogPreview
+                          path={`/blog_posts/${
+                            posts[i]?.fileName.split(".")[0] ?? ""
+                          }`}
+                          key={`blog-post-${i}`}
+                          date={posts[i]?.date ?? "2000-01-01"}
+                          index={i}
+                        >
+                          {comp}
+                        </BlogPreview>
+                        <div className="h-16" />
+                      </>
+                    );
+                  }
+                } else {
+                  return (
+                    <>
                       <BlogPreview
                         path={`/blog_posts/${
                           posts[i]?.fileName.split(".")[0] ?? ""
@@ -444,20 +474,8 @@ const Blog = ({ posts }: Props) => {
                       >
                         {comp}
                       </BlogPreview>
-                    );
-                  }
-                } else {
-                  return (
-                    <BlogPreview
-                      path={`/blog_posts/${
-                        posts[i]?.fileName.split(".")[0] ?? ""
-                      }`}
-                      key={`blog-post-${i}`}
-                      date={posts[i]?.date ?? "2000-01-01"}
-                      index={i}
-                    >
-                      {comp}
-                    </BlogPreview>
+                      <div className="h-16" />
+                    </>
                   );
                 }
               })}
@@ -472,12 +490,12 @@ const Blog = ({ posts }: Props) => {
                   ? bottomPadding(bottomRef.current!!)
                   : 336 + 100 - scrollPosition,
               width: categoryWidth,
-              left: categoryRef.current?.getBoundingClientRect().x,
+              left: categoryX,
             }}
           >
             <div className="absolute left-0 hidden w-full 2xl:block">
               <h3 className="no-ligatures text-center font-stretch text-3xl text-sky">
-                CATEGORIES &gt;
+                HIGHLIGHTS &gt;
               </h3>
             </div>
             <div className="hidden 2xl:block">
@@ -517,27 +535,34 @@ const BlogPreview: React.FC<BlogPreviewProps> = ({
 const CategoriesFilter = () => {
   const accHeightRef = useRef<HTMLDivElement>(null);
   const accordionRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
 
   const [accHeights, setAccHeights] = useState<number[]>([]);
   const [openAcc, setOpenAcc] = useState<boolean[]>([]);
+  const [boxW, setBoxW] = useState<number>(0);
 
-  const getHeights = async () => {
+  const getHeights = () => {
     const container = accHeightRef.current;
     if (container != null) {
       const heights = [];
       const opens = [];
 
       for (let i = 0; i < container.childElementCount; i++) {
+        console.log(container.children[i]!!);
         heights.push(container.children[i]!!.children[0]!!.clientHeight);
         opens.push(false);
       }
       setAccHeights(heights);
       setOpenAcc(opens);
+      setBoxW(boxRef.current?.getBoundingClientRect().width ?? 0);
+
+      console.log(heights)
     }
+
   };
 
   useEffect(() => {
-    getHeights();
+    setTimeout(getHeights, 200)
 
     window.addEventListener("resize", getHeights);
   }, []);
@@ -545,7 +570,7 @@ const CategoriesFilter = () => {
   return (
     <>
       <div
-        className="mt-8 flex flex-col items-center 2xl:mx-8 2xl:mt-12"
+        className="mt-4 flex flex-col items-center 2xl:mx-8 2xl:mt-12"
         ref={accordionRef}
       >
         {CATEGORIES.map(({ header, body, color }, i) => {
@@ -555,6 +580,7 @@ const CategoriesFilter = () => {
                 openAcc[i] ? "greyblack" : color
               } w-full py-4 px-4 2xl:py-4`}
               key={`acc-main-${i}`}
+              ref={i == 0 ? boxRef : null}
               onMouseEnter={(_) => {
                 const openSections = [...openAcc];
                 for (let j = 0; j < openSections.length; j++) {
@@ -593,27 +619,42 @@ const CategoriesFilter = () => {
                 >
                   {body}
                 </p>
+                <p
+                  className={`text-${
+                    true ? color : "greyblack"
+                  } pointer-events-none pt-4 text-center font-gothic text-sm font-semibold md:text-lg lg:text-sm`}
+                >
+                  COMING SOON
+                </p>
               </div>
             </div>
           );
         })}
       </div>
-      <div className="pointer-events-none fixed opacity-0" ref={accHeightRef}>
+      <div className="pointer-events-none absolute opacity-0 mt-4 flex flex-col items-center 2xl:mx-8 2xl:mt-12" ref={accHeightRef}>
         {CATEGORIES.map(({ header, body, color }, i) => {
           return (
             <div
               className={`mb-4 border-2 border-${color} cursor-pointer bg-${
                 true ? "greyblack" : color
-              } py-0 px-20`}
+              } py-0 px-4`}
               key={`acc-hidden-${i}`}
+              style={{width: boxW}}
             >
-              <div className={"overflow-hidden transition-all"}>
+              <div className={""}>
                 <p
                   className={`text-${
                     true ? color : "greyblack"
-                  } pointer-events-none pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
+                  } pt-4 text-center font-gothic text-sm md:text-lg lg:text-sm`}
                 >
                   {body}
+                </p>
+                <p
+                  className={`text-${
+                    true ? color : "greyblack"
+                  } pointer-events-none pt-4 text-center font-gothic text-sm font-semibold md:text-lg lg:text-sm`}
+                >
+                  COMING SOON
                 </p>
               </div>
             </div>
