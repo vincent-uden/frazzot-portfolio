@@ -39,7 +39,7 @@ export const emailRouter = createRouter()
       if (errors.length == 0) {
         client.sendMail({
           from: "nextjsvralin@gmail.com",
-          to: "vincentuden@gmail.com",
+          to: "frazzoot@gmail.com",
           subject: "Frazzot - Contact",
           text: `
                 Name: ${input?.name}
@@ -135,7 +135,7 @@ export const emailRouter = createRouter()
       if (errors.length == 0) {
         client.sendMail({
           from: "nextjsvralin@gmail.com",
-          to: "vincentuden@gmail.com",
+          to: "frazzoot@gmail.com",
           subject: "Frazzot - Commission",
           text: `
                 Name: ${input?.name}
