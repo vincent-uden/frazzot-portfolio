@@ -206,21 +206,23 @@ const Gallery = () => {
                   })}
                 </div>
                 {r == 1 ? (
-                  <div key={`carousel-${r}`}>
+                  <div className="mb-8" key={`carousel-${r}`}>
                     <Carousel
                       imgPaths={[
-                        "/thumbnail/hange_zoeclip.png",
-                        "/thumbnail_lg/team7.png",
-                        "/thumbnail/TK_red_spider_lily.png",
-                        "/thumbnail/gyro_zeppeli_finished.png",
-                        "/thumbnail/Dabi_final.png",
+                        "/img/gallery_carousel/de_nile_sisters_by_frazzot.png",
+                        "/img/gallery_carousel/diluc_genshin_impact_blur.png",
+                        "/img/gallery_carousel/gwen_final.png",
+                        "/img/gallery_carousel/part7_trio_signed_blur_by_frazzot_v2.png",
+                        "/img/gallery_carousel/stone_ocean_poster_final_070622.png",
+                        "/img/gallery_carousel/yuji_itadori_final.png",
                       ]}
                       imgDescs={[
-                        "HANGE ZOE",
-                        "Team 7",
-                        "TK",
-                        "GYRO ZEPPELI",
-                        "DABI",
+                        "De Nile Sisters: Monster High",
+                        "Diluc: Genshin Impact",
+                        "Gwen: LoL",
+                        "Steel Ball Tri: JoJo Part 7",
+                        "Stone Ocean: JoJo Part 6",
+                        "Itadori Yuji: JK",
                       ]}
                       key={`carousel-comp-${r}`}
                     />

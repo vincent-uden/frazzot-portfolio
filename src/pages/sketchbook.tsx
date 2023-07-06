@@ -105,8 +105,8 @@ const Sketchbook = () => {
             </p>
             <div className="h-4 md:h-8"></div>
             <p className="font-gothic text-sm text-yellowpeach md:text-lg">
-              YOU CAN FILTER THE SKETCHES BY CATEGORY WITH THE BUTTONS BELOW
-              AND THE GALLERY CAN BE FOUND FURTHER DOWN ON THIS PAGE!
+              YOU CAN FILTER THE SKETCHES BY CATEGORY WITH THE BUTTONS BELOW AND
+              THE GALLERY CAN BE FOUND FURTHER DOWN ON THIS PAGE!
             </p>
           </div>
         </div>
@@ -159,13 +159,13 @@ const Sketchbook = () => {
       </div>
       <Carousel
         imgPaths={[
-          "/thumbnail/hange_zoeclip.png",
-          "/thumbnail_lg/team7.png",
-          "/thumbnail/TK_red_spider_lily.png",
-          "/thumbnail/gyro_zeppeli_finished.png",
-          "/thumbnail/Dabi_final.png",
+          "/img/sketchbook_carousel/ayanami_rei.png",
+          "/img/sketchbook_carousel/gyro_zeppeli_sketch2.png",
+          "/img/sketchbook_carousel/IMG_0112.PNG",
+          "/img/sketchbook_carousel/javier_arthur_sketch.png",
+          "/img/sketchbook_carousel/naruto_sketch_.png",
         ]}
-        imgDescs={["HANGE ZOE", "Team 7", "TK", "GYRO ZEPPELI", "DABI"]}
+        imgDescs={["Ayanami Rei: Evangelion", "Gyro Zeppeli: JoJo Part 7", "Pinterest Male // Portrait Study", "Javier Arthur: RDR2", "Uzumaki"]}
       />
       <div className="h-20"></div>
 

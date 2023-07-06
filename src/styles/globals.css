@@ -21,6 +21,12 @@
   right: 1em;
 
   overflow: hidden;
+
+  transition: transform .2s ease-in-out;
+}
+
+.hamburger-react:hover {
+  transform: scale(1.1);
 }
 
 .holo-panel {
@@ -210,14 +216,15 @@ div.splide__arrows {
   left: 0;
   object-fit: cover;
   height: 100%;
+  opacity: 0;
 }
 
 @keyframes img-show-1 {
   0% {
-    opacity: 100%;
+    opacity: 0%;
   }
   20% {
-    opacity: 0%;
+    opacity: 100%;
   }
   40% {
     opacity: 0%;
@@ -228,39 +235,6 @@ div.splide__arrows {
   80% {
     opacity: 0%;
   }
-}
-span:nth-child(1) > .gallery-show-img {
-  animation-name: img-show-1;
-  animation-iteration-count: infinite;
-  animation-duration: 20s;
-}
-
-span:nth-child(2) > .gallery-show-img {
-  animation-name: img-show-1;
-  animation-iteration-count: infinite;
-  animation-duration: 20s;
-  animation-delay: 4s;
-}
-
-span:nth-child(3) > .gallery-show-img {
-  animation-name: img-show-1;
-  animation-iteration-count: infinite;
-  animation-duration: 20s;
-  animation-delay: 8s;
-}
-
-span:nth-child(4) > .gallery-show-img {
-  animation-name: img-show-1;
-  animation-iteration-count: infinite;
-  animation-duration: 20s;
-  animation-delay: 12s;
-}
-
-span:nth-child(5) > .gallery-show-img {
-  animation-name: img-show-1;
-  animation-iteration-count: infinite;
-  animation-duration: 20s;
-  animation-delay: 16s;
 }
 
 .index-grid {
@@ -321,6 +295,46 @@ span:nth-child(4) > .menu-show-img {
 
 .menu-show-img {
   opacity: 0;
+}
+
+span:nth-child(1) > .gallery-show-img {
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: -20s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(2) > .gallery-show-img {
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: -4s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(3) > .gallery-show-img {
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: -8s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(4) > .gallery-show-img {
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: -12s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(5) > .gallery-show-img {
+  animation-name: img-show-1;
+  animation-iteration-count: infinite;
+  animation-duration: 20s;
+  animation-delay: -16s;
+  animation-timing-function: ease-in-out;
 }
 
 :root {
