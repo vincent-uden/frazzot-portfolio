@@ -154,7 +154,7 @@ const Layout = ({ children }: Props) => {
             </Link>
           </MenuPageItem>
 
-          <div className="menu-socials mb:mt-20 mb-4 hidden grow flex-row items-end justify-around lg:flex lg:justify-start">
+          <div className="menu-socials mb:mt-20 mt-4 hidden grow flex-row items-end justify-around lg:flex lg:justify-start">
             <InstagramIcon color="fuchsia-200" size="8" />
             <YoutubeIcon color="fuchsia-200" size="8" />
             <PatreonIcon color="fuchsia-200" size="8" />
