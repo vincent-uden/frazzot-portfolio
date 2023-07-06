@@ -238,11 +238,11 @@ const Home: NextPageWithLayout = () => {
                 <div className="flex h-full w-full flex-col bg-greyblack p-4 md:p-8">
                   <div className="relative top-0 left-0 grow overflow-x-hidden">
                     {[
-                        "/img/gallery_carousel/de_nile_sisters_by_frazzot.png",
-                        "/img/gallery_carousel/diluc_genshin_impact_blur.png",
-                        "/img/gallery_carousel/gwen_final.png",
-                        "/img/gallery_carousel/part7_trio_signed_blur_by_frazzot_v2.png",
-                        "/img/gallery_carousel/stone_ocean_poster_final_070622.png",
+                      "/img/gallery_carousel/de_nile_sisters_by_frazzot.png",
+                      "/img/gallery_carousel/diluc_genshin_impact_blur.png",
+                      "/img/gallery_carousel/gwen_final.png",
+                      "/img/gallery_carousel/part7_trio_signed_blur_by_frazzot_v2.png",
+                      "/img/gallery_carousel/stone_ocean_poster_final_070622.png",
                     ].map((path, i) => {
                       return (
                         <Image

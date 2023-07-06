@@ -33,7 +33,7 @@
   margin-top: 4rem;
 }
 
-.blog-previews .blog-container > div:nth-child(2){
+.blog-previews .blog-container > div:nth-child(2) {
   box-shadow: none;
   margin-bottom: 0;
   padding-bottom: 0;

@@ -21,7 +21,7 @@ export const BlogPost = ({ content, data }: any) => {
             </div>
           </div>
         </div>
-        <h1 className="text-holo no-ligature mx-auto max-w-[920px] px-8 mt-2 text-center font-stretch text-xl md:text-left md:text-2xl">
+        <h1 className="text-holo no-ligature mx-auto mt-2 max-w-[920px] px-8 text-center font-stretch text-xl md:text-left md:text-2xl">
           {data.title.toUpperCase()}
         </h1>
       </div>

@@ -556,13 +556,12 @@ const CategoriesFilter = () => {
       setOpenAcc(opens);
       setBoxW(boxRef.current?.getBoundingClientRect().width ?? 0);
 
-      console.log(heights)
+      console.log(heights);
     }
-
   };
 
   useEffect(() => {
-    setTimeout(getHeights, 200)
+    setTimeout(getHeights, 200);
 
     window.addEventListener("resize", getHeights);
   }, []);
@@ -631,7 +630,10 @@ const CategoriesFilter = () => {
           );
         })}
       </div>
-      <div className="pointer-events-none absolute opacity-0 mt-4 flex flex-col items-center 2xl:mx-8 2xl:mt-12" ref={accHeightRef}>
+      <div
+        className="pointer-events-none absolute mt-4 flex flex-col items-center opacity-0 2xl:mx-8 2xl:mt-12"
+        ref={accHeightRef}
+      >
         {CATEGORIES.map(({ header, body, color }, i) => {
           return (
             <div
@@ -639,7 +641,7 @@ const CategoriesFilter = () => {
                 true ? "greyblack" : color
               } py-0 px-4`}
               key={`acc-hidden-${i}`}
-              style={{width: boxW}}
+              style={{ width: boxW }}
             >
               <div className={""}>
                 <p

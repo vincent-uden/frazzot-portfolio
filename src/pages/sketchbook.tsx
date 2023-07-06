@@ -165,7 +165,13 @@ const Sketchbook = () => {
           "/img/sketchbook_carousel/javier_arthur_sketch.png",
           "/img/sketchbook_carousel/naruto_sketch_.png",
         ]}
-        imgDescs={["Ayanami Rei: Evangelion", "Gyro Zeppeli: JoJo Part 7", "Pinterest Male // Portrait Study", "Javier Arthur: RDR2", "Uzumaki"]}
+        imgDescs={[
+          "Ayanami Rei: Evangelion",
+          "Gyro Zeppeli: JoJo Part 7",
+          "Pinterest Male // Portrait Study",
+          "Javier Arthur: RDR2",
+          "Uzumaki",
+        ]}
       />
       <div className="h-20"></div>
 
@@ -243,7 +249,7 @@ const Sketchbook = () => {
         >
           <img
             src={images?.at(openImage)?.urlLg ?? ""}
-            className="z-50 max-h-[80vh] max-w-screen-xl"
+            className="z-50 max-h-[80vh] max-w-[90vw] xl:max-w-screen-xl"
           />
         </div>
       )}
