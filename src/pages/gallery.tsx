@@ -142,7 +142,7 @@ const Gallery = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Gallery</title>
+        <title>FRAZZOT ⋄ GALLERY</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

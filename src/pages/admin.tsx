@@ -169,7 +169,7 @@ const Admin = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Admin</title>
+        <title>FRAZZOT ⋄ ADMIN</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

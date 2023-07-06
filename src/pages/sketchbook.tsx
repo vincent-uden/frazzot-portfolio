@@ -75,7 +75,7 @@ const Sketchbook = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Sketchbook</title>
+        <title>FRAZZOT ⋄ SKETCHBOOK</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -186,7 +186,7 @@ const Sketchbook = () => {
           </h2>
         </div>
       </div>
-      <div className="h-32"></div>
+      <div className="h-16 md:h-24 xl:h-32"></div>
 
       <div className="flex w-full flex-col items-center">
         <div className="w-full" ref={imgHolderRef}>

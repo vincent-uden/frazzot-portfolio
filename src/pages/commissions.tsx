@@ -41,7 +41,7 @@ const Comissions = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Commissions</title>
+        <title>FRAZZOT ⋄ COMMISSIONS</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

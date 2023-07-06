@@ -282,7 +282,7 @@ const Blog = ({ posts }: Props) => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Blog</title>
+        <title>FRAZZOT ⋄ BLOG</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -37,7 +37,7 @@ const Contact = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - Contact</title>
+        <title>FRAZZOT ⋄ CONTACT</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

@@ -6,7 +6,7 @@ const About: NextPage = () => {
   return (
     <>
       <Head>
-        <title>FRAZZOT - About</title>
+        <title>FRAZZOT ⋄ ABOUT</title>
         <meta name="description" content="Portfolio of Frazzot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
