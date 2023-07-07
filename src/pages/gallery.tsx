@@ -94,7 +94,6 @@ const Gallery = () => {
   useEffect(() => {
     if (images != null) {
       const x = tileImages(images, imgHolderRef, gap);
-      console.log(x.at);
       setImageTiling(x);
     }
   }, [images]);
@@ -137,7 +136,11 @@ const Gallery = () => {
     }
 
     window.addEventListener("resize", handleResize);
-  });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [images]);
 
   return (
     <>
@@ -159,8 +162,17 @@ const Gallery = () => {
       </div>
       <div className="flex w-full flex-col items-center">
         <div className="w-full" ref={imgHolderRef}>
-          {imageTiling.slice(0,2).map((row, r) => {
-            return <GalleryRow row={row} r={r} images={images} gap={gap} openSetter={setOpenImage} key={`gallery-row-${r}`}/>;
+          {imageTiling.slice(0, 2).map((row, r) => {
+            return (
+              <GalleryRow
+                row={row}
+                r={r}
+                images={images}
+                gap={gap}
+                openSetter={setOpenImage}
+                key={`gallery-row-${r}`}
+              />
+            );
           })}
           <div className="mb-8">
             <Carousel
@@ -183,7 +195,16 @@ const Gallery = () => {
             />
           </div>
           {imageTiling.slice(2).map((row, r) => {
-            return <GalleryRow row={row} r={r} images={images} gap={gap} openSetter={setOpenImage} key={`gallery-row-${r}`}/>;
+            return (
+              <GalleryRow
+                row={row}
+                r={r}
+                images={images}
+                gap={gap}
+                openSetter={setOpenImage}
+                key={`gallery-row-${r}`}
+              />
+            );
           })}
         </div>
       </div>
@@ -206,7 +227,7 @@ const Gallery = () => {
   );
 };
 
-const GalleryRow = ({
+export const GalleryRow = ({
   row,
   r,
   images,

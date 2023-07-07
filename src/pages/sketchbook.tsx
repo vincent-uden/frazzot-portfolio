@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Carousel from "../components/Carousel";
 import { trpc } from "../utils/trpc";
-import { ImageRow, tileImages } from "./gallery";
+import { ImageRow, tileImages, GalleryRow } from "./gallery";
 
 //import "@splidejs/react-splide/css";
 
@@ -52,19 +52,27 @@ const Sketchbook = () => {
     }
   }, [images, imageTiling, imgHolderRef]);
 
+  function onResize() {
+    if (images != null) {
+      setImageTiling(tileImages(images, imgHolderRef, gap));
+    }
+  }
+
   useEffect(() => {
     let doit: NodeJS.Timeout | undefined;
     function handleResize() {
       clearTimeout(doit);
       doit = setTimeout(() => {
-        if (images != null) {
-          setImageTiling(tileImages(images, imgHolderRef, gap));
-        }
+        onResize();
       }, 100);
     }
 
     window.addEventListener("resize", handleResize);
-  });
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [images]);
 
   useEffect(() => {
     if (router.query.tab != null) {
@@ -198,43 +206,14 @@ const Sketchbook = () => {
         <div className="w-full" ref={imgHolderRef}>
           {imageTiling.map((row, r) => {
             return (
-              <div
-                className="gallery-row w-[90%] overflow-clip pl-[5%] md:w-[80%] md:pl-[10%]"
-                key={`row-${r}`}
-              >
-                {row.indices.map((i, n) => {
-                  return (
-                    <div className="inline-block h-full" key={`space-${n}`}>
-                      <div
-                        className={`inline-block`}
-                        style={{
-                          width: `${n == 0 ? 0 : gap}px`,
-                          height: "100%",
-                        }}
-                      ></div>
-                      <div
-                        className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
-                        key={n}
-                      >
-                        <img
-                          src={images?.at(i)?.url ?? ""}
-                          width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
-                          height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
-                        />
-                        <div
-                          className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
-                          style={{ transform: `translateY(-${gap}px)` }}
-                          onClick={(e) => setOpenImage(i)}
-                        >
-                          <p className="absolute bottom-4 left-4 text-lg text-white">
-                            {images?.at(i)?.name}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <GalleryRow
+                row={row}
+                r={r}
+                images={images}
+                gap={gap}
+                openSetter={setOpenImage}
+                key={`gallery-row-${r}`}
+              />
             );
           })}
         </div>
