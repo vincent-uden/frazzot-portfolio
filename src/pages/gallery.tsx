@@ -159,79 +159,31 @@ const Gallery = () => {
       </div>
       <div className="flex w-full flex-col items-center">
         <div className="w-full" ref={imgHolderRef}>
-          {imageTiling.map((row, r) => {
-            return (
-              <>
-                <div
-                  className="gallery-row w-[90%] overflow-x-clip pl-[5%] md:w-[80%] md:pl-[10%]"
-                  key={`row-${r}`}
-                >
-                  {row.indices.map((i, n) => {
-                    return (
-                      <div
-                        className="inline-block h-full"
-                        key={`space-${r}-${n}`}
-                      >
-                        <div
-                          className={`inline-block`}
-                          style={{
-                            width: `${n == 0 ? 0 : gap}px`,
-                            height: "100%",
-                          }}
-                        ></div>
-                        <div
-                          className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
-                          key={`image-${n}`}
-                        >
-                          <img
-                            src={images?.at(i)?.url ?? ""}
-                            width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
-                            height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
-                            key={`img-${r}-${n}`}
-                            alt={images?.at(i)?.name ?? "Thumbnail"}
-                            className="shadow-xl"
-                          />
-                          <div
-                            className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
-                            style={{ transform: `translateY(-${gap}px)` }}
-                            onClick={(_) => setOpenImage(i)}
-                          >
-                            <p className="absolute bottom-4 left-4 text-lg text-white">
-                              {images?.at(i)?.name}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-                {r == 1 ? (
-                  <div className="mb-8" key={`carousel-${r}`}>
-                    <Carousel
-                      imgPaths={[
-                        "/img/gallery_carousel/de_nile_sisters_by_frazzot.png",
-                        "/img/gallery_carousel/diluc_genshin_impact_blur.png",
-                        "/img/gallery_carousel/gwen_final.png",
-                        "/img/gallery_carousel/part7_trio_signed_blur_by_frazzot_v2.png",
-                        "/img/gallery_carousel/stone_ocean_poster_final_070622.png",
-                        "/img/gallery_carousel/yuji_itadori_final.png",
-                      ]}
-                      imgDescs={[
-                        "De Nile Sisters: Monster High",
-                        "Diluc: Genshin Impact",
-                        "Gwen: LoL",
-                        "Steel Ball Tri: JoJo Part 7",
-                        "Stone Ocean: JoJo Part 6",
-                        "Itadori Yuji: JK",
-                      ]}
-                      key={`carousel-comp-${r}`}
-                    />
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </>
-            );
+          {imageTiling.slice(0,2).map((row, r) => {
+            return <GalleryRow row={row} r={r} images={images} gap={gap} openSetter={setOpenImage} key={`gallery-row-${r}`}/>;
+          })}
+          <div className="mb-8">
+            <Carousel
+              imgPaths={[
+                "/img/gallery_carousel/de_nile_sisters_by_frazzot.png",
+                "/img/gallery_carousel/diluc_genshin_impact_blur.png",
+                "/img/gallery_carousel/gwen_final.png",
+                "/img/gallery_carousel/part7_trio_signed_blur_by_frazzot_v2.png",
+                "/img/gallery_carousel/stone_ocean_poster_final_070622.png",
+                "/img/gallery_carousel/yuji_itadori_final.png",
+              ]}
+              imgDescs={[
+                "De Nile Sisters: Monster High",
+                "Diluc: Genshin Impact",
+                "Gwen: LoL",
+                "Steel Ball Tri: JoJo Part 7",
+                "Stone Ocean: JoJo Part 6",
+                "Itadori Yuji: JK",
+              ]}
+            />
+          </div>
+          {imageTiling.slice(2).map((row, r) => {
+            return <GalleryRow row={row} r={r} images={images} gap={gap} openSetter={setOpenImage} key={`gallery-row-${r}`}/>;
           })}
         </div>
       </div>
@@ -242,6 +194,7 @@ const Gallery = () => {
         <div
           className="fixed z-50 flex h-full w-full animate-fadein-fast items-center justify-center bg-[#000000aa]"
           onClick={(e) => setOpenImage(null)}
+          key={`image-hover`}
         >
           <img
             src={images?.at(openImage)?.urlLg ?? ""}
@@ -250,6 +203,63 @@ const Gallery = () => {
         </div>
       )}
     </>
+  );
+};
+
+const GalleryRow = ({
+  row,
+  r,
+  images,
+  gap,
+  openSetter: setOpenImage,
+}: {
+  row: ImageRow;
+  r: number;
+  images: any;
+  gap: number;
+  openSetter: any;
+}) => {
+  return (
+    <div
+      className="gallery-row w-[90%] overflow-x-clip pl-[5%] md:w-[80%] md:pl-[10%]"
+      key={`row-${r}`}
+    >
+      {row.indices.map((i, n) => {
+        return (
+          <div className="inline-block h-full" key={`space-${r}-${n}`}>
+            <div
+              className={`inline-block`}
+              style={{
+                width: `${n == 0 ? 0 : gap}px`,
+                height: "100%",
+              }}
+            ></div>
+            <div
+              className="relative top-0 m-0 inline-block h-full cursor-pointer p-0"
+              key={`image-${n}`}
+            >
+              <img
+                src={images?.at(i)?.url ?? ""}
+                width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
+                height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
+                key={`img-${r}-${n}`}
+                alt={images?.at(i)?.name ?? "Thumbnail"}
+                className="shadow-xl"
+              />
+              <div
+                className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
+                style={{ transform: `translateY(-${gap}px)` }}
+                onClick={(_) => setOpenImage(i)}
+              >
+                <p className="absolute bottom-4 left-4 text-lg text-white">
+                  {images?.at(i)?.name}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

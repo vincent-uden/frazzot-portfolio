@@ -44,7 +44,7 @@ const Carousel = ({ imgPaths, imgDescs }: Props) => {
   const [yRotation, setYRotation] = useState<number>(0);
   const [touchStart, setTouchStart] = useState<[number, number] | null>(null);
   const [touchEnd, setTouchEnd] = useState<[number, number] | null>(null);
-  const [transitionActive, setTransitionActive] = useState<boolean>(false);
+  const [transitionActive, setTransitionActive] = useState<boolean>(true);
 
   const { width, height } = useWindowDimensions();
 
