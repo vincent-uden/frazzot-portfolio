@@ -2,23 +2,23 @@
 }
 
 .blog-post h2 {
-  @apply mb-8 font-gothic text-2xl font-bold text-periwinkle;
+  @apply my-5 font-gothic text-2xl font-bold text-periwinkle;
 }
 
 .blog-post h3 {
-  @apply mb-8 font-gothic text-xl font-bold text-periwinkle;
+  @apply my-5 font-gothic text-xl font-bold text-periwinkle;
 }
 
 .blog-post h4 {
-  @apply mb-8 font-gothic text-lg font-bold text-periwinkle;
+  @apply my-5 font-gothic text-lg font-bold text-periwinkle;
 }
 
 .blog-post h5 {
-  @apply mb-8 font-gothic text-base font-bold italic text-periwinkle;
+  @apply my-5 font-gothic text-base font-bold italic text-periwinkle;
 }
 
 .blog-post h6 {
-  @apply mb-8 font-gothic text-base font-bold text-periwinkle;
+  @apply my-5 font-gothic text-base font-bold text-periwinkle;
 }
 
 .blog-post p {
@@ -27,6 +27,18 @@
 
 .blog-post a {
   @apply font-bold text-lilac underline;
+}
+
+.blog-post ul li {
+  @apply mb-2 font-gothic py-2 text-base text-sky;
+}
+
+.blog-post ol li {
+
+}
+
+.blog-post span {
+  @apply mb-2 font-gothic py-2 text-base text-sky;
 }
 
 .date-header {
