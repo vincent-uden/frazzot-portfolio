@@ -12,12 +12,12 @@ export const data = {
   time: "23:23 PM",
 };
 
-There's an absolutely gigantic jungle out there with mods and custom content for The Sims 4. But how does it all work, and how do we download mods? Today, I'll do my very best to explain 
+There's an absolutely gigantic jungle out there with mods and custom content for The Sims 4. But how does it all work, and how do we download it? Today, I'll do my very best to explain 
 it all to you!
 
 ## What is a mod?
 
-So, what exactly is a mod? Well, a mod is a shortened term for modification. In our case, it specifically refers to modifying a game. Users, who aren't developers, make these modifications 
+So, what exactly is a mod? Well, a mod is a shortened term for modification. In our case, it specifically refers to modifying a game. Users, who aren't developers, create these modifications 
 to change the appearance or function of the game. The level of ease when it comes to modifying games can vary but usually it's easier to modify single-player experiences. Games like The Sims, 
 Skyrim, Fallout, and Minecraft are famous for their passionate modding communities and the vast assortment of mods and add-ons available. 
 
@@ -41,55 +41,93 @@ To keep things organized, create a new folder in this directory and name it **"M
 this folder by creating sub-folders to categorize your content. Doing so will come in handy when you need to locate specific mods or clean out ones you no longer want.
 
 <QuoteBlock>
-**Note,** After running the game with a mods folder, the game will automatically generate a file called "Resource.cfg." This file tells your game how many folders deep it should search for your
+**Note,** After running the game with a "Mods" folder, the game will automatically generate a file called "Resource.cfg." This file tells your game how many folders deep it should search for your
 mods. It allows for up to five nested folders inside your "Mods" folder. If, for some reason, this file goes missing, don't worry! Running your game again will usually recreate it.
 </QuoteBlock>
 
-However, if you find yourself not receive this file, head over to [this](https://help.thesimsresource.com/article/37-the-sims-4-resource-cfg-file) website and simply download a new one.
+However, if you find yourself without this file, head over to [this](https://help.thesimsresource.com/article/37-the-sims-4-resource-cfg-file) website and simply download a new one.
 
 ### File Types
 
-In The Sims 4, there are two different file types that the game reads as mods: **.package** and **.ts4script**. Additionally, there are .txt and .cfg files that often come with mods.
+In The Sims 4, there are two different file types that the game reads as mods: **.package** and **.ts4script**. Additionally, there are .txt and .cfg files that often come with mods. I'll also
+briefly cover files extensions you could stumble upon when downloading sims and lots.
 
 #### .TS4SCRIPT
+<LeftStack masterWidth="45%">
+![Menu showing options to toggle CC](/img/blog/blog_post_images/game-options-other-mods-enabled.png)
 
-A .ts4script file is an archive that contains a .PY script (*python*). It is commonly used to add or modify interactions, animations, and menus in the game. Mods with .ts4script files are 
-usually compressed into zip files. To install them, you need to unzip the file and place it directly into the mods folder. However, since these files modify the game's data, you must grant 
-the game access to run them. This can be done by enabling custom content and mods in the Game Options menu under "Other." Once enabled, save your changes and restart the game.
-{/* <RightStack> */}
-![Menu showing options to toggle CC](/img/blog/blog_post_images/the-sims-4-game-options-enable-mod.jpg)
-Image source: [EA Help: The Sims 4 - Mods and game updates](https://help.ea.com/en/help/the-sims/the-sims-4/mods-and-the-sims-4-game-updates/)
-{/* </RightStack> */}
+A .ts4script file is an archive that contains a .PY script (*python*). It is commonly used to add or modify interactions, animations, and menus in the game. 
+
+Mods with .ts4script files are usually compressed into zip files. To install them, you need to unzip the file and place it directly into the "Mods" folder. However, since these files modify 
+the game's data, you must grant the game access to run them. This can be done by enabling custom content and mods/script mods in the Game Options menu under "Other." Once enabled, save your 
+changes and restart the game.
+
+</LeftStack>
 
 #### .PACKAGE
 
 On the other hand, .package files are the standard format for custom content (CC). These files typically include new items like clothes, hairstyles, furniture, and objects. They can be 
-organized within the Mods folder, allowing for up to five nested folders. Unlike .ts4script files, .package files usually have a lighter impact on the game and do not alter existing game 
+organized within the "Mods" folder, allowing for up to five nested folders. Unlike .ts4script files, .package files usually have a lighter impact on the game and do not alter existing game 
 features.
+
+<QuoteBlock>
+**Fun fact!** Have you ever wanted to personalize the music in The Sims 4? Well, here's a cool trick for you! You can actually add your own custom music to play on the stereos in the game. 
+Here's how you can do it:
+
+1. Locate the Documents/​Electronic Arts/​The Sims 4/Custom Music folder on your computer.
+2. Add your .mp3 files to one of the pre-exsisting categories within the "Custom Music" folder.
+3. Once added, the game will automatically integrate your songs with the existing music library.
+</QuoteBlock>
 
 #### .TXT/.CFG
 
 In addition to the mods themselves, many mods come with accompanying **.txt** and **.cfg** files. .txt files may contain logs or information about the mod, while .cfg files serve as configuration 
-settings for the mods. As previously mentioned, The Sims 4 automatically generates the "Resource.cfg" file when launching the game after you create the mods folder. Just like this file, mods 
+settings for the mods. As previously mentioned, The Sims 4 automatically generates the "Resource.cfg" file when launching the game after you create the "Mods" folder. Just like this file, mods 
 .cfg files are also created when you launch the game. **If you delete a .cfg file, all the associated settings for that mod will be lost.**
 
-So, when installing mods and custom content for The Sims 4, keep these file types in mind and ensure they are placed correctly in the designated folders. &nbsp;
+#### Sims, lots and the mighty Tray folder
+
+If you've ever come across a folder named "Tray" within your Sims 4 documents folder, you might have initially felt a bit intimidated and closed it right away. But fear not! This folder is 
+where all your library's Sims and Lots are stored. Deleting them from this folder will make them disappear from your library, so I strongly advise against deleting them directly from here.
+
+Now, you may be wondering, what do Tray files have to do with modding? Well, if you've ever come across a beautifully designed house or an exceptionally attractive Sim 
+(*[cough, cough](https://www.reddit.com/r/Sims4/comments/11e95e6/goth_family_remake/)*) that you'd love to have in your game, you'll need more than just custom content (CC) to bring them into
+your world. To do this, you'll require a few additional files, which may have the following extensions:
+
+<QuoteBlock>
+- ► **.trayitem**
+- ► **.householdbinary**
+- ► **.blueprint**
+- ► **.room**
+- ► **.bpi**
+</QuoteBlock>
+
+All of these files should be placed directly into the "Tray" folder, without any sub-folders. Once you launch your game, the Sims and Lots should appear in your library. And don't forget 
+to download any necessary CC as well!
+
+### Summary
+
+Fantastic! Just remember to keep these file types in mind and ensure they are correctly placed in the designated folders when installing mods and custom content for The Sims 4. Now, 
+let's quickly recap before wrapping up.
 
 <QuoteBlock>
 **To summarize:** 
 
 - ► Mods are made of **.PACKAGE** & **.TS4SCRIPT** files.
-- ► They're placed in a "Mods" folder typically at *Documents/​Electronic Arts/​The Sims 4*
+- ► They're placed in a "Mods" folder, typically at *Documents/​Electronic Arts/​The Sims 4*
 - ► After running the game with a "Mods" folder created, a file called **Resource.cfg** will appear. Don't delete it. Alltough, if missing you can replace it with a new one.
 - ► .PACKAGE files can be placed within **five nested folders**, .TS4SCRIPT files **one**.
 - ► To use .TS4SCRIPT files you need to enable Custom Content and Mods in the game options menu.
 - ► .PACKAGE files are better known as CC or Custom Content.
 - ► Mods can also come with .TXT files and .CFG files.
+- ► The "Tray" folder is where all your library's Sims and Lots are stored - don't delete the files from here.
+- ► You'll need "tray files" to add custom sims/builds to your game, they may have the following extensions: **.trayitem**, **.householdbinary**, **.blueprint**, **.room** and **.bpi**
 
 </QuoteBlock>
-Lastly, remember to keep your mods updated, especially script mods after bigger game updates, you'll also have to re-enable Custom Content and Mods in the game options menu. 
 
-Also, if you haven't already, now's the time to check out my [master archive](/blog_posts/master_archive_sims_4_mods) with my most essential mods!
+If you haven't already, now's the time to check out my [master archive](/blog_posts/master_archive_sims_4_mods) with my most essential mods! And lastly, remember to keep your mods updated, 
+especially script mods after bigger game updates. (*You'll also have to re-enable Custom Content and Mods in the game options menu after updates, the game will notify you when they have been 
+disabled.*)
 
 And there you have it! Now you know the ins and outs of downloading and managing mods for The Sims 4. So go ahead, dive into that gigantic jungle of mods, and unleash your creativity in 
 the game!

@@ -34,7 +34,11 @@
 }
 
 .blog-post ol li {
+  @apply my-2 font-gothic text-base text-sky;
+}
 
+.blog-post ol {
+  @apply pl-4 my-4 list-decimal;
 }
 
 .blog-post span {
