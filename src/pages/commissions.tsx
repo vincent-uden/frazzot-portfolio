@@ -98,7 +98,7 @@ const Comissions = () => {
         </div>
         <div className="h-12"></div>
 
-        <div className="border-2 border-periwinkle px-8 pt-12 pb-12 md:border-[12px] md:px-24 md:pt-24">
+        <div className="border-2 border-periwinkle px-8 pt-12 pb-16 md:pb-12 md:border-[12px] md:px-24 md:pt-24">
           <h2 className="mb-12 font-stretch text-xl text-periwinkle md:mb-4 md:text-2xl">
             GENERAL INFO
           </h2>

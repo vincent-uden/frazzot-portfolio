@@ -15,9 +15,9 @@ const SubmitButton = ({ color, text, onClick, success }: Props) => {
       >
         {text}
       </button>
-      {success ? (
+      {(success || true) ? (
         <svg
-          className={`checkmark absolute top-0 left-full h-full`}
+          className={`checkmark absolute left-1/2 -translate-x-1/2 md:top-0 md:left-full md:translate-x-0 h-full`}
           viewBox="0 0 52 52"
         >
           <path
