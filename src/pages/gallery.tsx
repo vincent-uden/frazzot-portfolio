@@ -93,6 +93,7 @@ const Gallery = () => {
 
   useEffect(() => {
     if (images != null) {
+      console.log(images);
       const x = tileImages(images, imgHolderRef, gap);
       setImageTiling(x);
     }

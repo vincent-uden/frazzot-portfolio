@@ -6,9 +6,12 @@ import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
 import { S3 } from "aws-sdk";
 import path from "path";
+import { db } from "../../db/drizzle";
 
 import * as fs from "fs";
 import * as https from "https";
+import { galleryImages, imageCategories } from "../../db/schema";
+import { asc, eq } from "drizzle-orm";
 
 const sharp = require("sharp");
 
@@ -80,14 +83,12 @@ export const galleryRouter = createRouter()
       categoryName: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
-      const imgs = await ctx.prisma.galleryImage.findMany({
-        orderBy: { displayIndex: "asc" },
-      });
+      const imgs = await db.select().from(galleryImages).orderBy(asc(galleryImages.displayIndex));
       for (let i = 0; i < imgs.length; i++) {
         const now = new Date();
         now.setHours(now.getHours() + 1);
 
-        if ((imgs[i]?.urlExpires ?? 0) < now) {
+        if ((imgs[i]?.urlExpires ?? 0) < now && false) {
           const url = await s3.getSignedUrlPromise("getObject", {
             Bucket: process.env.S3_BUCKET_NAME,
             Key: `thumbnail/${imgs[i]!!.path}`,
@@ -107,7 +108,7 @@ export const galleryRouter = createRouter()
             },
           });
         }
-        if ((imgs[i]?.urlLgExpires ?? 0) < now) {
+        if ((imgs[i]?.urlLgExpires ?? 0) < now && false) {
           const url = await s3.getSignedUrlPromise("getObject", {
             Bucket: process.env.S3_BUCKET_NAME,
             Key: `thumbnail_lg/${imgs[i]!!.path}`,
@@ -129,27 +130,9 @@ export const galleryRouter = createRouter()
         }
       }
       if (input.categoryName == null) {
-        return await ctx.prisma.galleryImage.findMany({
-          include: {
-            category: true,
-          },
-          orderBy: { displayIndex: "asc" },
-        });
+        return await db.select().from(galleryImages).orderBy(asc(galleryImages.displayIndex));
       } else {
-        let category = await ctx.prisma.imageCategory.findUnique({
-          where: {
-            name: input.categoryName,
-          },
-        });
-        return await ctx.prisma.galleryImage.findMany({
-          where: {
-            categoryId: category!!.id,
-          },
-          include: {
-            category: true,
-          },
-          orderBy: { displayIndex: "asc" },
-        });
+        return (await db.select().from(galleryImages).leftJoin(imageCategories, eq(galleryImages.categoryId, imageCategories.id)).orderBy(asc(galleryImages.displayIndex))).map((row: any) => row.GalleryImage);
       }
     },
   })
