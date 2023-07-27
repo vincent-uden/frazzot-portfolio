@@ -1,16 +1,20 @@
-import {createRequire as __$$createRequireN} from 'module';var require=__$$createRequireN(import.meta.url);
+import { createRequire as __$$createRequireN } from "module";
+var require = __$$createRequireN(import.meta.url);
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-};
+var __esm = (fn, res) =>
+  function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])((fn = 0))), res;
+  };
 
 // node_modules/tsno/dist/client.js
 import { createRequire as __$$createRequire } from "module";
 var require2;
 var init_client = __esm({
   "node_modules/tsno/dist/client.js"() {
-    require2 = __$$createRequire("file://E:\\Github\\frazzot-portfolio\\node_modules\\tsno\\dist\\client.js");
-  }
+    require2 = __$$createRequire(
+      "file://E:\\Github\\frazzot-portfolio\\node_modules\\tsno\\dist\\client.js"
+    );
+  },
 });
 
 // src/db/prismaToDrizzle.ts
@@ -19,9 +23,11 @@ init_client();
 // src/server/db/client.ts
 init_client();
 import { PrismaClient } from "@prisma/client";
-var prisma = global.prisma || new PrismaClient({
-  log: ["error"]
-});
+var prisma =
+  global.prisma ||
+  new PrismaClient({
+    log: ["error"],
+  });
 if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma;
 }
@@ -30,7 +36,8 @@ if (process.env.NODE_ENV !== "production") {
 init_client();
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-var drizzle_client = global.drizzle_client || postgres(process.env.DATABASE_URL);
+var drizzle_client =
+  global.drizzle_client || postgres(process.env.DATABASE_URL);
 var db = global.db || drizzle(drizzle_client);
 
 // src/db/prismaToDrizzle.ts
@@ -43,7 +50,7 @@ import {
   text,
   integer,
   timestamp,
-  uniqueIndex
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 var galleryImages = pgTable("GalleryImage", {
   id: text("id").primaryKey().notNull(),
@@ -53,27 +60,33 @@ var galleryImages = pgTable("GalleryImage", {
   h: integer("h").notNull(),
   thmb_w: integer("thmb_w").notNull(),
   thmb_h: integer("thmb_h").notNull(),
-  createdAt: timestamp("createdAt", { precision: 3, mode: "date" }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
   categoryId: text("categoryId").references(() => imageCategories.id, {
     onDelete: "cascade",
-    onUpdate: "cascade"
+    onUpdate: "cascade",
   }),
   url: text("url"),
-  urlExpires: timestamp("urlExpires", { precision: 3, mode: "date" }).defaultNow().notNull(),
+  urlExpires: timestamp("urlExpires", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
   urlLg: text("urlLg"),
-  urlLgExpires: timestamp("urlLgExpires", { precision: 3, mode: "date" }).defaultNow().notNull(),
-  displayIndex: integer("displayIndex").default(0).notNull()
+  urlLgExpires: timestamp("urlLgExpires", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
+  displayIndex: integer("displayIndex").default(0).notNull(),
 });
 var adminPasswords = pgTable(
   "AdminPassword",
   {
     id: text("id").primaryKey().notNull(),
     name: text("name").notNull(),
-    hash: text("hash").notNull()
+    hash: text("hash").notNull(),
   },
   (table) => {
     return {
-      name_key: uniqueIndex("AdminPassword_name_key").on(table.name)
+      name_key: uniqueIndex("AdminPassword_name_key").on(table.name),
     };
   }
 );
@@ -81,11 +94,11 @@ var imageCategories = pgTable(
   "ImageCategory",
   {
     id: text("id").primaryKey().notNull(),
-    name: text("name").notNull()
+    name: text("name").notNull(),
   },
   (table) => {
     return {
-      name_key: uniqueIndex("ImageCategory_name_key").on(table.name)
+      name_key: uniqueIndex("ImageCategory_name_key").on(table.name),
     };
   }
 );
@@ -94,11 +107,13 @@ var sessionTokens = pgTable(
   {
     id: text("id").primaryKey().notNull(),
     token: text("token").notNull(),
-    expires: timestamp("expires", { precision: 3, mode: "date" }).defaultNow().notNull()
+    expires: timestamp("expires", { precision: 3, mode: "date" })
+      .defaultNow()
+      .notNull(),
   },
   (table) => {
     return {
-      token_key: uniqueIndex("SessionToken_token_key").on(table.token)
+      token_key: uniqueIndex("SessionToken_token_key").on(table.token),
     };
   }
 );

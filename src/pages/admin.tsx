@@ -36,6 +36,7 @@ const Admin = () => {
           names.push("");
         }
         console.log("SUCCESSFULLY REFETCHED IMAGES");
+        console.log(data);
         setUiImagesNames(names);
       },
     }
@@ -98,22 +99,22 @@ const Admin = () => {
 
   function moveUp(i: number) {
     let imgs = images?.filter(
-      (img) => img.categoryId == categories?.at(filterCategory)?.id
+      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
     );
     if (i > 0) {
       if (imgs != null) {
-        swapOrder(imgs[i] as GalleryImage, imgs[i - 1] as GalleryImage);
+        swapOrder(imgs[i]!!.GalleryImage, imgs[i - 1]!!.GalleryImage);
       }
     }
   }
 
   function moveDown(i: number) {
     let imgs = images?.filter(
-      (img) => img.categoryId == categories?.at(filterCategory)?.id
+      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
     );
     if (i < (imgs?.length ?? 0) - 1) {
       if (imgs != null) {
-        swapOrder(imgs[i] as GalleryImage, imgs[i + 1] as GalleryImage);
+        swapOrder(imgs[i]!!.GalleryImage, imgs[i + 1]!!.GalleryImage);
       }
     }
   }
@@ -132,7 +133,7 @@ const Admin = () => {
       if (uiImageNames[i] != "") {
         //images[i]!!.name = uiImageNames[i];
         imageUpdateOneMut.mutate({
-          id: images!![i]!!.id,
+          id: images!![i]!!.GalleryImage.id,
           name: uiImageNames[i],
         });
       }
@@ -385,14 +386,15 @@ const Admin = () => {
                 {images
                   ?.filter(
                     (img) =>
-                      img.categoryId == categories?.at(filterCategory)?.id
+                      img.GalleryImage.categoryId ==
+                      categories?.at(filterCategory)?.id
                   )
                   ?.map((img, i, allImgs) => {
                     return (
                       <tr
                         className=""
-                        key={img.id}
-                        onMouseEnter={(_) => setHoveredImage(img)}
+                        key={img.GalleryImage.id}
+                        onMouseEnter={(_) => setHoveredImage(img.GalleryImage)}
                         onMouseLeave={(_) => setHoveredImage(null)}
                         onMouseMove={(e) => {
                           setHoveredImageX(e.clientX);
@@ -400,13 +402,13 @@ const Admin = () => {
                         }}
                       >
                         <td className="py-4 text-white">
-                          {img.createdAt.toDateString()}
+                          {img.GalleryImage.createdAt.toDateString()}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
                           <input
                             className="text-input transition-colors focus:border-lilac"
                             type="text"
-                            placeholder={img.name}
+                            placeholder={img.GalleryImage.name}
                             value={uiImageNames[i]}
                             onChange={(e) => {
                               const imgNames = uiImageNames.map((name, j) => {
@@ -427,23 +429,23 @@ const Admin = () => {
                           />
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.w}
+                          {img.GalleryImage.w}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.h}
+                          {img.GalleryImage.h}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.thmb_w}
+                          {img.GalleryImage.thmb_w}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.thmb_h}
+                          {img.GalleryImage.thmb_h}
                         </td>
                         <td className="font-neuo font-thin text-white">
-                          {img.category?.name}
+                          {img.ImageCategory?.name ?? ""}
                         </td>
                         <td
                           className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
-                          onClick={() => deleteById(img.id)}
+                          onClick={() => deleteById(img.GalleryImage.id)}
                         >
                           Delete
                         </td>

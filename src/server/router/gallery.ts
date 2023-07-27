@@ -1,17 +1,17 @@
 import { z } from "zod";
 import * as jwt from "jsonwebtoken";
 import { TRPCError } from "@trpc/server";
+import { S3 } from "aws-sdk";
 
 import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
-import { S3 } from "aws-sdk";
 import path from "path";
 import { db } from "../../db/drizzle";
 
 import * as fs from "fs";
 import * as https from "https";
-import { galleryImages, imageCategories } from "../../db/schema";
-import { asc, eq } from "drizzle-orm";
+import { galleryImages, sessionTokens, imageCategories } from "../../db/schema";
+import { asc, desc, eq } from "drizzle-orm";
 
 const sharp = require("sharp");
 
@@ -24,53 +24,57 @@ const s3 = new S3({
 
 export const galleryRouter = createRouter()
   .query("getAll", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.galleryImage.findMany({
-        include: { category: true },
-        orderBy: { displayIndex: "asc" },
-      });
+    async resolve({}) {
+      return await db
+        .select()
+        .from(galleryImages)
+        .leftJoin(
+          imageCategories,
+          eq(galleryImages.categoryId, imageCategories.id)
+        )
+        .orderBy(asc(galleryImages.displayIndex));
     },
   })
   .query("getImages", {
     input: z.object({
       categoryName: z.string(),
     }),
-    resolve: async ({ input, ctx }) => {
-      let category = await ctx.prisma.imageCategory.findUnique({
-        where: {
-          name: input.categoryName,
-        },
-      });
-      return await ctx.prisma.galleryImage.findMany({
-        where: {
-          categoryId: category!!.id,
-        },
-        include: {
-          category: true,
-        },
-      });
+    resolve: async ({ input }) => {
+      return await db
+        .select()
+        .from(galleryImages)
+        .leftJoin(
+          imageCategories,
+          eq(galleryImages.categoryId, imageCategories.id)
+        )
+        .where(eq(imageCategories.name, input.categoryName))
+        .orderBy(asc(galleryImages.displayIndex));
     },
   })
   .query("getAllCategories", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.imageCategory.findMany();
+    async resolve({}) {
+      return await db.select().from(imageCategories);
     },
   })
   .query("getCategory", {
     input: z.object({
       name: z.string(),
     }),
-    resolve: async ({ input, ctx }) => {
-      return await ctx.prisma.imageCategory.findUnique({
-        where: { name: input.name },
-      });
+    resolve: async ({ input }) => {
+      return (
+        await db
+          .select()
+          .from(imageCategories)
+          .where(eq(imageCategories.name, input.name))
+          .limit(1)
+      )[0];
     },
   })
   .query("getS3ImageUrl", {
     input: z.object({
       src: z.string(),
     }),
-    resolve: async ({ input, ctx }) => {
+    resolve: async ({ input }) => {
       return await s3.getSignedUrlPromise("getObject", {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: input.src,
@@ -82,68 +86,102 @@ export const galleryRouter = createRouter()
     input: z.object({
       categoryName: z.string().nullish(),
     }),
-    resolve: async ({ input, ctx }) => {
-      const imgs = await db.select().from(galleryImages).orderBy(asc(galleryImages.displayIndex));
+    resolve: async ({ input }) => {
+      let imgs = [];
+      if (input.categoryName == null) {
+        imgs = await db
+          .select()
+          .from(galleryImages)
+          .orderBy(asc(galleryImages.displayIndex));
+      } else {
+        imgs = (
+          await db
+            .select()
+            .from(galleryImages)
+            .leftJoin(
+              imageCategories,
+              eq(galleryImages.categoryId, imageCategories.id)
+            )
+            .where(eq(imageCategories.name, input.categoryName))
+            .orderBy(asc(galleryImages.displayIndex))
+        ).map((row: any) => row.GalleryImage);
+      }
+
+      const urlPromises = [];
+      const now = new Date();
+      now.setHours(now.getHours() + 1);
       for (let i = 0; i < imgs.length; i++) {
-        const now = new Date();
-        now.setHours(now.getHours() + 1);
+        if (
+          (imgs[i]?.urlExpires ?? 0) < now ||
+          (imgs[i]?.urlLgExpires ?? 0) < now
+        ) {
+          const requests = {
+            index: i,
+            url: s3.getSignedUrlPromise("getObject", {
+              Bucket: process.env.S3_BUCKET_NAME,
+              Key: `thumbnail/${imgs[i]!!.path}`,
+              Expires: 604800, // 7 days, which is the max
+            }),
+            urlLg: s3.getSignedUrlPromise("getObject", {
+              Bucket: process.env.S3_BUCKET_NAME,
+              Key: `thumbnail_lg/${imgs[i]!!.path}`,
+              Expires: 604800, // 7 days, which is the max
+            }),
+          };
 
-        if ((imgs[i]?.urlExpires ?? 0) < now && false) {
-          const url = await s3.getSignedUrlPromise("getObject", {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: `thumbnail/${imgs[i]!!.path}`,
-            Expires: 604800, // 7 days, which is the max
-          });
-
-          const expires = new Date();
-          expires.setDate(expires.getDate() + 7);
-
-          await ctx.prisma.galleryImage.update({
-            where: {
-              id: imgs[i]!!.id,
-            },
-            data: {
-              url: url,
-              urlExpires: expires,
-            },
-          });
-        }
-        if ((imgs[i]?.urlLgExpires ?? 0) < now && false) {
-          const url = await s3.getSignedUrlPromise("getObject", {
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: `thumbnail_lg/${imgs[i]!!.path}`,
-            Expires: 604800, // 7 days, which is the max
-          });
-
-          const expires = new Date();
-          expires.setDate(expires.getDate() + 7);
-
-          await ctx.prisma.galleryImage.update({
-            where: {
-              id: imgs[i]!!.id,
-            },
-            data: {
-              urlLg: url,
-              urlLgExpires: expires,
-            },
-          });
+          urlPromises.push(requests);
         }
       }
-      if (input.categoryName == null) {
-        return await db.select().from(galleryImages).orderBy(asc(galleryImages.displayIndex));
+
+      const expires = new Date();
+      expires.setDate(expires.getDate() + 7);
+      for (let j = 0; j < urlPromises.length; j++) {
+        const url = await urlPromises[j]?.url;
+        const urlLg = await urlPromises[j]?.urlLg;
+
+        await db
+          .update(galleryImages)
+          .set({
+            url: url,
+            urlLg: urlLg,
+            urlExpires: expires,
+            urlLgExpires: expires,
+          })
+          .where(eq(galleryImages.id, imgs[urlPromises[j]!!.index]!!.id));
+      }
+
+      if (urlPromises.length == 0) {
+        return imgs;
+      } else if (input.categoryName == null) {
+        return await db
+          .select()
+          .from(galleryImages)
+          .orderBy(asc(galleryImages.displayIndex));
       } else {
-        return (await db.select().from(galleryImages).leftJoin(imageCategories, eq(galleryImages.categoryId, imageCategories.id)).orderBy(asc(galleryImages.displayIndex))).map((row: any) => row.GalleryImage);
+        return (
+          await db
+            .select()
+            .from(galleryImages)
+            .leftJoin(
+              imageCategories,
+              eq(galleryImages.categoryId, imageCategories.id)
+            )
+            .where(eq(imageCategories.name, input.categoryName))
+            .orderBy(asc(galleryImages.displayIndex))
+        ).map((row: any) => row.GalleryImage);
       }
     },
   })
   .middleware(async ({ ctx, next }) => {
     let token = ctx.req?.headers.session_token;
     if (token != null && typeof token === "string") {
-      let server_token = await ctx.prisma.sessionToken.findUnique({
-        where: {
-          token,
-        },
-      });
+      let server_token = (
+        await db
+          .select()
+          .from(sessionTokens)
+          .where(eq(sessionTokens.token, token))
+          .limit(1)
+      )[0];
       if (server_token == null || server_token!!.expires < new Date()) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
@@ -166,7 +204,7 @@ export const galleryRouter = createRouter()
       categoryId: z.string().nullish().optional(),
       displayIndex: z.number().optional(),
     }),
-    resolve: async ({ input, ctx }) => {
+    resolve: async ({ input }) => {
       const data: Record<string, any> = {};
       if (input.name != null) {
         data.name = input.name;
@@ -193,25 +231,25 @@ export const galleryRouter = createRouter()
         data.displayIndex = input.displayIndex;
       }
 
-      return await ctx.prisma.galleryImage.update({
-        data,
-        where: { id: input.id },
-      });
+      return await db
+        .update(galleryImages)
+        .set(data)
+        .where(eq(galleryImages.id, input.id));
     },
   })
   .mutation("deleteAll", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.galleryImage.deleteMany();
+    async resolve({}) {
+      return await db.delete(galleryImages);
     },
   })
   .mutation("deleteById", {
     input: z.object({
       id: z.string(),
     }),
-    async resolve({ input, ctx }) {
-      return await ctx.prisma.galleryImage.deleteMany({
-        where: { id: { equals: input.id } },
-      });
+    async resolve({ input }) {
+      return await db
+        .delete(galleryImages)
+        .where(eq(galleryImages.id, input.id));
     },
   })
   .mutation("s3InsertOne", {
@@ -219,7 +257,7 @@ export const galleryRouter = createRouter()
       name: z.string(),
       type: z.string(),
     }),
-    async resolve({ input, ctx }) {
+    async resolve({ input }) {
       return await s3.createPresignedPost({
         Bucket: process.env.S3_BUCKET_NAME,
         Fields: {
@@ -237,7 +275,7 @@ export const galleryRouter = createRouter()
       name: z.string(),
       categoryId: z.string().nullish(),
     }),
-    async resolve({ input, ctx }) {
+    async resolve({ input }) {
       const url = await s3.getSignedUrlPromise("getObject", {
         Bucket: process.env.S3_BUCKET_NAME,
         Key: input.src,
@@ -295,21 +333,24 @@ export const galleryRouter = createRouter()
         const img = await sharp(tmpPath).metadata();
         const thmb = await sharp(`/tmp/1${baseName}`).metadata();
 
-        const biggestDisplayIndex = await ctx.prisma.galleryImage.findFirst({
-          orderBy: { displayIndex: "desc" },
-        });
+        const biggestDisplayIndex = (
+          await db
+            .select()
+            .from(galleryImages)
+            .orderBy(desc(galleryImages.displayIndex))
+            .limit(1)
+        )[0];
 
-        await ctx.prisma.galleryImage.create({
-          data: {
-            name: input.name,
-            path: baseName,
-            w: img.width,
-            h: img.height,
-            thmb_w: thmb.width,
-            thmb_h: thmb.height,
-            categoryId: input.categoryId,
-            displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
-          },
+        //@ts-ignore
+        await db.insert(galleryImages).values({
+          name: input.name,
+          path: baseName,
+          w: img.width as number,
+          h: img.height as number,
+          thmb_w: thmb.width as number,
+          thmb_h: thmb.height as number,
+          categoryId: input.categoryId!!,
+          displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
         });
 
         fs.unlink(`/tmp/1${baseName}`, () => {});
