@@ -4,12 +4,13 @@ import {
   integer,
   timestamp,
   uniqueIndex,
+  uuid,
 } from "drizzle-orm/pg-core";
 
 import { InferModel, sql } from "drizzle-orm";
 
 export const galleryImages = pgTable("GalleryImage", {
-  id: text("id").primaryKey().notNull(),
+  id: uuid("id").defaultRandom().primaryKey(),
   name: text("name").notNull(),
   path: text("path").notNull(),
   w: integer("w").notNull(),
@@ -19,7 +20,7 @@ export const galleryImages = pgTable("GalleryImage", {
   createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
     .defaultNow()
     .notNull(),
-  categoryId: text("categoryId").references(() => imageCategories.id, {
+  categoryId: uuid("categoryId").references(() => imageCategories.id, {
     onDelete: "cascade",
     onUpdate: "cascade",
   }),
@@ -37,7 +38,7 @@ export const galleryImages = pgTable("GalleryImage", {
 export const adminPasswords = pgTable(
   "AdminPassword",
   {
-    id: text("id").primaryKey().notNull(),
+    id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
     hash: text("hash").notNull(),
   },
@@ -51,7 +52,7 @@ export const adminPasswords = pgTable(
 export const imageCategories = pgTable(
   "ImageCategory",
   {
-    id: text("id").primaryKey().notNull(),
+    id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
   },
   (table) => {
@@ -64,7 +65,7 @@ export const imageCategories = pgTable(
 export const sessionTokens = pgTable(
   "SessionToken",
   {
-    id: text("id").primaryKey().notNull(),
+    id: uuid("id").defaultRandom().primaryKey(),
     token: text("token").notNull(),
     expires: timestamp("expires", { precision: 3, mode: "date" })
       .defaultNow()

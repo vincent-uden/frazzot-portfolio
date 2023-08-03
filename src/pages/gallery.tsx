@@ -1,9 +1,9 @@
 import { trpc } from "../utils/trpc";
 
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { GalleryImage } from "@prisma/client";
 import Carousel from "../components/Carousel";
 import Head from "next/head";
+import { GalleryImage } from "../db/schema";
 
 export type ImageRow = {
   indices: number[];

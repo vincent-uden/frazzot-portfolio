@@ -13,9 +13,4 @@ export const exampleRouter = createRouter()
         greeting: `Hello ${input?.text ?? "world"}`,
       };
     },
-  })
-  .query("getAll", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.example.findMany();
-    },
   });

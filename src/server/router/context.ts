@@ -2,7 +2,6 @@
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
 import { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../db/client";
 
 export const createContext = async (
   opts?: trpcNext.CreateNextContextOptions
@@ -16,7 +15,6 @@ export const createContext = async (
     req,
     res,
     session,
-    prisma,
   };
 };
 
@@ -39,9 +37,6 @@ async function getServerSession(
   // --
   // How to handle invalid tokens? Do something to the response?
   // HTTP 403?
-
-  console.log("GETTING SERVER SESSION");
-  console.log(req.headers);
 
   req;
 

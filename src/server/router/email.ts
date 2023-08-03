@@ -14,7 +14,6 @@ export const emailRouter = createRouter()
       })
       .nullish(),
     resolve({ input }) {
-      console.log(process.env.GMAIL_KEY);
       let client = nodemailer.createTransport({
         service: "Gmail",
         auth: {

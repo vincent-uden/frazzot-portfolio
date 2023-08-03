@@ -341,7 +341,6 @@ export const galleryRouter = createRouter()
             .limit(1)
         )[0];
 
-        //@ts-ignore
         await db.insert(galleryImages).values({
           name: input.name,
           path: baseName,

@@ -6,8 +6,8 @@ import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
-import { GalleryImage } from "@prisma/client";
 import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
+import { GalleryImage } from "../db/schema";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");

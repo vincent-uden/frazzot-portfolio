@@ -3,6 +3,9 @@ import { z } from "zod";
 import { EmailError } from "../../utils/errortypes";
 import { createRouter } from "./context";
 import * as jwt from "jsonwebtoken";
+import { db } from "../../db/drizzle";
+import { adminPasswords, sessionTokens } from "../../db/schema";
+import { eq } from "drizzle-orm";
 
 export interface AuthJwt {
   authLevel: number;
@@ -24,23 +27,20 @@ export const adminRouter = createRouter().mutation("submitLogin", {
       errors.push(EmailError.EmptyPassword);
     }
     if (errors.length === 0) {
-      let user = await ctx.prisma.adminPassword.findUnique({
-        where: { name: input.name },
-      });
-      if (user == null) {
+      let users = await db.select().from(adminPasswords).where(eq(adminPasswords.name, input.name)).limit(1);
+      if (users.length == 0) {
         errors.push(EmailError.IncorrectUserDetails);
       } else {
+        let user = users[0]!!;
         if (await argon2.verify(user.hash, input.password)) {
-          console.log(process.env.SHA_SECRET);
           token = jwt.sign({ authLevel: 0 }, process.env.SHA_SECRET!!);
 
           let expires = new Date();
           expires.setHours(expires.getHours() + 2);
-          await ctx.prisma.sessionToken.create({
-            data: {
-              token,
-              expires,
-            },
+          // WHY IS THIS INSERT NOT WORKING AND THINK IT NEEDS AN ID????
+          await db.insert(sessionTokens).values({
+            token: token,
+            expires: expires,
           });
         } else {
           errors.push(EmailError.IncorrectUserDetails);
