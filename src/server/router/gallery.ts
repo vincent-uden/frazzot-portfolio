@@ -113,7 +113,7 @@ export const galleryRouter = createRouter()
       for (let i = 0; i < imgs.length; i++) {
         if (
           (imgs[i]?.urlExpires ?? 0) < now ||
-          (imgs[i]?.urlLgExpires ?? 0) < now
+          (imgs[i]?.urlLgExpires ?? 0) < now || true
         ) {
           const requests = {
             index: i,
@@ -150,6 +150,8 @@ export const galleryRouter = createRouter()
           .where(eq(galleryImages.id, imgs[urlPromises[j]!!.index]!!.id));
       }
 
+      await (new Promise((resolve) => setTimeout(resolve, 1000)));
+
       if (urlPromises.length == 0) {
         return imgs;
       } else if (input.categoryName == null) {
@@ -170,6 +172,33 @@ export const galleryRouter = createRouter()
             .orderBy(asc(galleryImages.displayIndex))
         ).map((row: any) => row.GalleryImage);
       }
+    },
+  })
+  .query("getAllS3ThumbnailsFast", {
+    input: z.object({
+      categoryName: z.string().nullish(),
+    }),
+    resolve: async ({ input }) => {
+      let imgs = [];
+      if (input.categoryName == null) {
+        imgs = await db
+          .select()
+          .from(galleryImages)
+          .orderBy(asc(galleryImages.displayIndex));
+      } else {
+        imgs = (
+          await db
+            .select()
+            .from(galleryImages)
+            .leftJoin(
+              imageCategories,
+              eq(galleryImages.categoryId, imageCategories.id)
+            )
+            .where(eq(imageCategories.name, input.categoryName))
+            .orderBy(asc(galleryImages.displayIndex))
+        ).map((row: any) => row.GalleryImage);
+      }
+      return imgs;
     },
   })
   .middleware(async ({ ctx, next }) => {

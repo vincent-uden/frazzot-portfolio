@@ -1,8 +1,9 @@
-import { trpc } from "../utils/trpc";
 
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import Carousel from "../components/Carousel";
 import Head from "next/head";
+
+import { trpc } from "../utils/trpc";
+import Carousel from "../components/Carousel";
 import { GalleryImage } from "../db/schema";
 
 export type ImageRow = {
@@ -47,13 +48,6 @@ export function tileImages(
   return rows;
 }
 
-type ImageData = {
-  url: string;
-  width: number;
-  height: number;
-  alt: string;
-};
-
 // Polyfill for Ipad Air 4
 function at(n: any) {
   // ToInteger() abstract op
@@ -82,24 +76,36 @@ for (const C of [Array, String, TypedArray]) {
 // End of polyfill
 
 const Gallery = () => {
-  const { data: images, refetch } = trpc.useQuery([
+  const { data: fastImages } = trpc.useQuery([
+    "gallery.getAllS3ThumbnailsFast",
+    { categoryName: "Gallery" },
+  ], { context: {skipBatch: true}});
+  const { data: slowImages, refetch } = trpc.useQuery([
     "gallery.getAllS3Thumbnails",
     { categoryName: "Gallery" },
-  ]);
+  ], {context: { skipBatch: true}});
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
+  const [images, setImages] = useState<any[] | undefined>(undefined);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
 
   useEffect(() => {
-    if (images != null) {
-      console.log(images);
-      const x = tileImages(images, imgHolderRef, gap);
+    if (slowImages !== undefined) {
+      console.log("Using slow images");
+      setImages(slowImages);
+      const x = tileImages(slowImages, imgHolderRef, gap);
+      setImageTiling(x);
+    } else if (fastImages !== undefined)  {
+      console.log("Using fast images");
+      setImages(fastImages);
+      const x = tileImages(fastImages, imgHolderRef, gap);
       setImageTiling(x);
     }
-  }, [images]);
+  }, [slowImages, fastImages]);
 
   useEffect(() => {
+    console.log("HELLO!")
     if (imgHolderRef.current != null) {
       let j = 0;
       for (let i = 0; i < imgHolderRef.current?.children.length; i++) {
@@ -264,9 +270,23 @@ export const GalleryRow = ({
                 src={images?.at(i)?.url ?? ""}
                 width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                 height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
+                style={{
+                  height:(images?.at(i)?.thmb_h ?? 0) * row.scale,
+                  width:(images?.at(i)?.thmb_w ?? 0) * row.scale,
+                }}
                 key={`img-${r}-${n}`}
                 alt={images?.at(i)?.name ?? "Thumbnail"}
                 className="shadow-xl"
+                onError={(e) => {
+                  e.currentTarget.src = "/img/blank.png"
+                  e.currentTarget.classList.add("animate-pulse");
+                }}
+                onLoad={(e) => {
+                  console.log(e?.currentTarget?.src);
+                  if (!e?.currentTarget?.src.endsWith("/img/blank.png")) {
+                    e.currentTarget.classList.remove("animate-pulse");
+                  }
+                }}
               />
               <div
                 className="gallery-overlay absolute left-0 top-0 h-full w-full bg-gradient-to-t from-neutral-900 to-transparent opacity-0 transition-opacity hover:opacity-80"
