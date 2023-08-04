@@ -1,7 +1,7 @@
 import { z } from "zod";
 import * as jwt from "jsonwebtoken";
 import { TRPCError } from "@trpc/server";
-import { S3 } from "aws-sdk";
+import S3 from "aws-sdk/clients/s3";
 
 import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
