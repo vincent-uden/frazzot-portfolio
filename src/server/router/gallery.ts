@@ -19,7 +19,7 @@ import { db } from "../../db/drizzle";
 import * as fs from "fs";
 import * as https from "https";
 import { galleryImages, sessionTokens, imageCategories } from "../../db/schema";
-import { ConsoleLogWriter, asc, desc, eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 
 const sharp = require("sharp");
 
@@ -124,7 +124,7 @@ export const galleryRouter = createRouter()
       for (let i = 0; i < imgs.length; i++) {
         if (
           (imgs[i]?.urlExpires ?? 0) < now ||
-          (imgs[i]?.urlLgExpires ?? 0) < now || true
+          (imgs[i]?.urlLgExpires ?? 0) < now
         ) {
           const command = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail/${imgs[i]!!.path}`});
           const commandLg = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail_lg/${imgs[i]!!.path}`});
@@ -158,8 +158,6 @@ export const galleryRouter = createRouter()
           })
           .where(eq(galleryImages.id, imgs[urlPromises[j]!!.index]!!.id));
       }
-
-      await (new Promise((resolve) => setTimeout(resolve, 1000)));
 
       if (urlPromises.length == 0) {
         return imgs;

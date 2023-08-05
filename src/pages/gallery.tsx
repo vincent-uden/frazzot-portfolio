@@ -75,6 +75,38 @@ for (const C of [Array, String, TypedArray]) {
 }
 // End of polyfill
 
+function randomInt(low: number, high: number): number {
+  return Math.floor(Math.random() * (high - low)) + low;
+}
+
+function randomFakeImages(amount: number): GalleryImage[] {
+  let output = [];
+
+  for (let i = 0; i < amount; i++) {
+    let w = randomInt(200, 300);
+    let h = 240;
+    let img: GalleryImage =   {
+      path: "/img/asd",
+      name: "",
+      id: "",
+      w: w,
+      h: h,
+      thmb_w: w,
+      thmb_h: h,
+      createdAt: new Date(),
+      categoryId: null,
+      url: null,
+      urlExpires: new Date(),
+      urlLg: null,
+      urlLgExpires: new Date(),
+      displayIndex: 0
+    };
+    output.push(img);
+  }
+
+  return output;
+}
+
 const Gallery = () => {
   const { data: fastImages } = trpc.useQuery([
     "gallery.getAllS3ThumbnailsFast",
@@ -85,19 +117,17 @@ const Gallery = () => {
     { categoryName: "Gallery" },
   ], {context: { skipBatch: true}});
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
-  const [images, setImages] = useState<any[] | undefined>(undefined);
+  const [images, setImages] = useState<any[] | undefined >(undefined);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
 
   useEffect(() => {
     if (slowImages !== undefined) {
-      console.log("Using slow images");
       setImages(slowImages);
       const x = tileImages(slowImages, imgHolderRef, gap);
       setImageTiling(x);
     } else if (fastImages !== undefined)  {
-      console.log("Using fast images");
       setImages(fastImages);
       const x = tileImages(fastImages, imgHolderRef, gap);
       setImageTiling(x);
@@ -105,7 +135,14 @@ const Gallery = () => {
   }, [slowImages, fastImages]);
 
   useEffect(() => {
-    console.log("HELLO!")
+    let imgs = randomFakeImages(20);
+    setImages(imgs)
+    const x = tileImages(imgs, imgHolderRef, gap);
+    setImageTiling(x);
+    console.log("HELLO");
+  }, []);
+
+  useEffect(() => {
     if (imgHolderRef.current != null) {
       let j = 0;
       for (let i = 0; i < imgHolderRef.current?.children.length; i++) {
@@ -282,7 +319,6 @@ export const GalleryRow = ({
                   e.currentTarget.classList.add("animate-pulse");
                 }}
                 onLoad={(e) => {
-                  console.log(e?.currentTarget?.src);
                   if (!e?.currentTarget?.src.endsWith("/img/blank.png")) {
                     e.currentTarget.classList.remove("animate-pulse");
                   }
