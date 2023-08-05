@@ -1,7 +1,15 @@
 import { z } from "zod";
 import * as jwt from "jsonwebtoken";
 import { TRPCError } from "@trpc/server";
-import S3 from "aws-sdk/clients/s3";
+
+import {
+  S3Client,
+  GetObjectCommand,
+  PutObjectCommand,
+  S3ClientConfig,
+} from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 
 import { AuthJwt } from "./admin";
 import { createRouter } from "./context";
@@ -11,16 +19,19 @@ import { db } from "../../db/drizzle";
 import * as fs from "fs";
 import * as https from "https";
 import { galleryImages, sessionTokens, imageCategories } from "../../db/schema";
-import { asc, desc, eq } from "drizzle-orm";
+import { ConsoleLogWriter, asc, desc, eq } from "drizzle-orm";
 
 const sharp = require("sharp");
 
-const s3 = new S3({
-  region: process.env.S3_REGION,
-  accessKeyId: process.env.S3_ACCESS_KEY,
-  secretAccessKey: process.env.S3_SECRET_KEY,
-  signatureVersion: "v4",
-});
+const s3Config: S3ClientConfig = {
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY!!,
+    secretAccessKey: process.env.S3_SECRET_KEY!!,
+  },
+  region: process.env.S3_REGION!!,
+}
+
+const s3 = new S3Client(s3Config);
 
 export const galleryRouter = createRouter()
   .query("getAll", {
@@ -75,11 +86,11 @@ export const galleryRouter = createRouter()
       src: z.string(),
     }),
     resolve: async ({ input }) => {
-      return await s3.getSignedUrlPromise("getObject", {
-        Bucket: process.env.S3_BUCKET_NAME,
+      const command = new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
-        Expires: 900, // Default
       });
+      return await getSignedUrl(s3, command, { expiresIn: 604800})
     },
   })
   .query("getAllS3Thumbnails", {
@@ -115,17 +126,15 @@ export const galleryRouter = createRouter()
           (imgs[i]?.urlExpires ?? 0) < now ||
           (imgs[i]?.urlLgExpires ?? 0) < now || true
         ) {
+          const command = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail/${imgs[i]!!.path}`});
+          const commandLg = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail_lg/${imgs[i]!!.path}`});
           const requests = {
             index: i,
-            url: s3.getSignedUrlPromise("getObject", {
-              Bucket: process.env.S3_BUCKET_NAME,
-              Key: `thumbnail/${imgs[i]!!.path}`,
-              Expires: 604800, // 7 days, which is the max
+            url: getSignedUrl(s3, command, {
+              expiresIn: 604800, // 7 days, which is the max
             }),
-            urlLg: s3.getSignedUrlPromise("getObject", {
-              Bucket: process.env.S3_BUCKET_NAME,
-              Key: `thumbnail_lg/${imgs[i]!!.path}`,
-              Expires: 604800, // 7 days, which is the max
+            urlLg: getSignedUrl(s3, commandLg, {
+              expiresIn: 604800, // 7 days, which is the max
             }),
           };
 
@@ -287,15 +296,16 @@ export const galleryRouter = createRouter()
       type: z.string(),
     }),
     async resolve({ input }) {
-      return await s3.createPresignedPost({
-        Bucket: process.env.S3_BUCKET_NAME,
+      return await createPresignedPost(s3, {
+        Bucket: process.env.S3_BUCKET_NAME!!,
+        Key: input.name,
         Fields: {
-          key: input.name,
-          "Content-type": input.type,
+          "Content-Type": input.type,
         },
-        Expires: 60,
-        Conditions: [["content-length-range", 0, 104857600]],
-      });
+        Conditions: [
+          [ "content-length-range", 0, 10485760 ],
+        ]
+      })
     },
   })
   .mutation("s3GenThumbnails", {
@@ -305,11 +315,11 @@ export const galleryRouter = createRouter()
       categoryId: z.string().nullish(),
     }),
     async resolve({ input }) {
-      const url = await s3.getSignedUrlPromise("getObject", {
-        Bucket: process.env.S3_BUCKET_NAME,
+      const command = new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
-        Expires: 900, // Default
       });
+      const url = await getSignedUrl(s3, command, { expiresIn: 900})
 
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;
@@ -334,30 +344,29 @@ export const galleryRouter = createRouter()
           Key: `thumbnail/${baseName}`,
           Body: upFs,
         };
-
-        s3.upload(uploadParams, (err: any, _: any) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+        try {
+          await s3.send(new PutObjectCommand(uploadParams));
+        } catch (err) {
+          console.log(err);
+        }
 
         let upFs2 = fs.createReadStream(`/tmp/2${baseName}`);
         uploadParams.Key = `thumbnail_md/${baseName}`;
         uploadParams.Body = upFs2;
-        s3.upload(uploadParams, (err: any, _: any) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+        try {
+          await s3.send(new PutObjectCommand(uploadParams));
+        } catch (err) {
+          console.log(err);
+        }
 
         let upFs3 = fs.createReadStream(`/tmp/3${baseName}`);
         uploadParams.Key = `thumbnail_lg/${baseName}`;
         uploadParams.Body = upFs3;
-        s3.upload(uploadParams, (err: any, _: any) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+        try {
+          await s3.send(new PutObjectCommand(uploadParams));
+        } catch (err) {
+          console.log(err);
+        }
 
         const img = await sharp(tmpPath).metadata();
         const thmb = await sharp(`/tmp/1${baseName}`).metadata();

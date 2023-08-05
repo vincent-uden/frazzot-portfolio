@@ -35,8 +35,6 @@ const Admin = () => {
         for (const _ of data) {
           names.push("");
         }
-        console.log("SUCCESSFULLY REFETCHED IMAGES");
-        console.log(data);
         setUiImagesNames(names);
       },
     }
@@ -79,14 +77,12 @@ const Admin = () => {
 
   const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
     onSuccess: () => {
-      console.log("INSERTED");
       refetchImgs();
     },
   });
 
   const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
     onSuccess: () => {
-      console.log("GENERATED THUMBNAILS");
       refetchImgs();
     },
   });
@@ -149,7 +145,7 @@ const Admin = () => {
 
     const formData = new FormData();
     Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      formData.append(key, value as unknown as string);
     });
 
     const upload = await fetch(url, {
@@ -422,7 +418,6 @@ const Admin = () => {
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
-                                console.log("ALSKJD");
                                 updateImageNames();
                               }
                             }}
