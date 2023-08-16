@@ -1,0 +1,20 @@
+{
+    "crons": [
+        {
+            "path": "/api/generateS3Urls/Gallery",
+            "schedule": "0 5 * * *"
+        },
+        {
+            "path": "/api/generateS3Urls/WARM-UPS",
+            "schedule": "0 5 * * *"
+        },
+        {
+            "path": "/api/generateS3Urls/ILLUSTRATION%20SKETCHES",
+            "schedule": "0 5 * * *"
+        },
+        {
+            "path": "/api/generateS3Urls/STUDIES",
+            "schedule": "0 5 * * *"
+        }
+    ]
+}
