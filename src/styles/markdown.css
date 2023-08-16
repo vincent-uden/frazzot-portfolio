@@ -30,7 +30,7 @@
 }
 
 .blog-post ul li {
-  @apply mb-2 font-gothic py-2 text-base text-sky;
+  @apply mb-2 py-2 font-gothic text-base text-sky;
 }
 
 .blog-post ol li {
@@ -38,11 +38,11 @@
 }
 
 .blog-post ol {
-  @apply pl-4 my-4 list-decimal;
+  @apply my-4 list-decimal pl-4;
 }
 
 .blog-post span {
-  @apply mb-2 font-gothic py-2 text-base text-sky;
+  @apply mb-2 py-2 font-gothic text-base text-sky;
 }
 
 .date-header {

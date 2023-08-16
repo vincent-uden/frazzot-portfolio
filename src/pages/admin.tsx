@@ -6,8 +6,8 @@ import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
-import { GalleryImage } from "@prisma/client";
 import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
+import { GalleryImage } from "../db/schema";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
@@ -35,7 +35,6 @@ const Admin = () => {
         for (const _ of data) {
           names.push("");
         }
-        console.log("SUCCESSFULLY REFETCHED IMAGES");
         setUiImagesNames(names);
       },
     }
@@ -78,14 +77,12 @@ const Admin = () => {
 
   const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
     onSuccess: () => {
-      console.log("INSERTED");
       refetchImgs();
     },
   });
 
   const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
     onSuccess: () => {
-      console.log("GENERATED THUMBNAILS");
       refetchImgs();
     },
   });
@@ -98,22 +95,22 @@ const Admin = () => {
 
   function moveUp(i: number) {
     let imgs = images?.filter(
-      (img) => img.categoryId == categories?.at(filterCategory)?.id
+      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
     );
     if (i > 0) {
       if (imgs != null) {
-        swapOrder(imgs[i] as GalleryImage, imgs[i - 1] as GalleryImage);
+        swapOrder(imgs[i]!!.GalleryImage, imgs[i - 1]!!.GalleryImage);
       }
     }
   }
 
   function moveDown(i: number) {
     let imgs = images?.filter(
-      (img) => img.categoryId == categories?.at(filterCategory)?.id
+      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
     );
     if (i < (imgs?.length ?? 0) - 1) {
       if (imgs != null) {
-        swapOrder(imgs[i] as GalleryImage, imgs[i + 1] as GalleryImage);
+        swapOrder(imgs[i]!!.GalleryImage, imgs[i + 1]!!.GalleryImage);
       }
     }
   }
@@ -132,7 +129,7 @@ const Admin = () => {
       if (uiImageNames[i] != "") {
         //images[i]!!.name = uiImageNames[i];
         imageUpdateOneMut.mutate({
-          id: images!![i]!!.id,
+          id: images!![i]!!.GalleryImage.id,
           name: uiImageNames[i],
         });
       }
@@ -148,7 +145,7 @@ const Admin = () => {
 
     const formData = new FormData();
     Object.entries({ ...fields, file }).forEach(([key, value]) => {
-      formData.append(key, value as string);
+      formData.append(key, value as unknown as string);
     });
 
     const upload = await fetch(url, {
@@ -329,6 +326,35 @@ const Admin = () => {
             <img src={getS3ImgUrl} alt="" />
           </div>
 
+          <div className="mx-auto mt-8 grid max-w-screen-md gap-8">
+            <SubmitButton
+              color="periwinkle"
+              text="Regenerate all S3 Urls"
+              success={false}
+              onClick={(_) => {
+                var req1 = new XMLHttpRequest();
+                req1.open("GET", "/api/generateS3Urls/Gallery", false);
+                req1.send( null );
+                console.log("Gallery query");
+
+                var req2 = new XMLHttpRequest();
+                req2.open("GET", "/api/generateS3Urls/WARM-UPS", false);
+                req2.send( null );
+                console.log("WARM-UPS query");
+
+                var req3 = new XMLHttpRequest();
+                req3.open("GET", "/api/generateS3Urls/ILLUSTRATION%20SKETCHES", false);
+                req3.send( null );
+                console.log("Illustration Sketches query");
+
+                var req4 = new XMLHttpRequest();
+                req4.open("GET", "/api/generateS3Urls/STUDIES", false);
+                req4.send( null );
+                console.log("STUDIES query");
+              }}
+            />
+          </div>
+
           {/* Image table */}
           <div className="h-16"></div>
           <div className="mt-8 mb-16 bg-holo bg-cover py-2">
@@ -385,14 +411,15 @@ const Admin = () => {
                 {images
                   ?.filter(
                     (img) =>
-                      img.categoryId == categories?.at(filterCategory)?.id
+                      img.GalleryImage.categoryId ==
+                      categories?.at(filterCategory)?.id
                   )
                   ?.map((img, i, allImgs) => {
                     return (
                       <tr
                         className=""
-                        key={img.id}
-                        onMouseEnter={(_) => setHoveredImage(img)}
+                        key={img.GalleryImage.id}
+                        onMouseEnter={(_) => setHoveredImage(img.GalleryImage)}
                         onMouseLeave={(_) => setHoveredImage(null)}
                         onMouseMove={(e) => {
                           setHoveredImageX(e.clientX);
@@ -400,13 +427,13 @@ const Admin = () => {
                         }}
                       >
                         <td className="py-4 text-white">
-                          {img.createdAt.toDateString()}
+                          {img.GalleryImage.createdAt.toDateString()}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
                           <input
                             className="text-input transition-colors focus:border-lilac"
                             type="text"
-                            placeholder={img.name}
+                            placeholder={img.GalleryImage.name}
                             value={uiImageNames[i]}
                             onChange={(e) => {
                               const imgNames = uiImageNames.map((name, j) => {
@@ -420,30 +447,29 @@ const Admin = () => {
                             }}
                             onKeyDown={(e) => {
                               if (e.key === "Enter") {
-                                console.log("ALSKJD");
                                 updateImageNames();
                               }
                             }}
                           />
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.w}
+                          {img.GalleryImage.w}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.h}
+                          {img.GalleryImage.h}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.thmb_w}
+                          {img.GalleryImage.thmb_w}
                         </td>
                         <td className="font-neuo px-2 font-thin text-white">
-                          {img.thmb_h}
+                          {img.GalleryImage.thmb_h}
                         </td>
                         <td className="font-neuo font-thin text-white">
-                          {img.category?.name}
+                          {img.ImageCategory?.name ?? ""}
                         </td>
                         <td
                           className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
-                          onClick={() => deleteById(img.id)}
+                          onClick={() => deleteById(img.GalleryImage.id)}
                         >
                           Delete
                         </td>

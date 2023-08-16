@@ -68,7 +68,7 @@ export const QuoteBlock = ({ children }: any) => {
   return (
     <div className="quote mb-5 grid grid-cols-[4px_1fr] gap-4 bg-periwinkle bg-opacity-10">
       <div className="bg-periwinkle" />
-      <div className="italic my-2">{children}</div>
+      <div className="my-2 italic">{children}</div>
     </div>
   );
 };

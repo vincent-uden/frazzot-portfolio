@@ -59,4 +59,7 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: [
+    "animate-pulse",
+  ]
 };
