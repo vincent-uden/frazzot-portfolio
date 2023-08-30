@@ -1,10 +1,10 @@
-
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import Head from "next/head";
 
 import { trpc } from "../utils/trpc";
 import Carousel from "../components/Carousel";
 import { GalleryImage } from "../db/schema";
+import { useAnalytics } from "../utils/useAnalytics";
 
 export type ImageRow = {
   indices: number[];
@@ -85,7 +85,7 @@ function randomFakeImages(amount: number): GalleryImage[] {
   for (let i = 0; i < amount; i++) {
     let w = randomInt(200, 300);
     let h = 240;
-    let img: GalleryImage =   {
+    let img: GalleryImage = {
       path: "/img/asd",
       name: "",
       id: "",
@@ -99,7 +99,7 @@ function randomFakeImages(amount: number): GalleryImage[] {
       urlExpires: new Date(),
       urlLg: null,
       urlLgExpires: new Date(),
-      displayIndex: 0
+      displayIndex: 0,
     };
     output.push(img);
   }
@@ -108,16 +108,16 @@ function randomFakeImages(amount: number): GalleryImage[] {
 }
 
 const Gallery = () => {
-  const { data: fastImages } = trpc.useQuery([
-    "gallery.getAllS3ThumbnailsFast",
-    { categoryName: "Gallery" },
-  ], { context: {skipBatch: true}});
-  const { data: slowImages, refetch } = trpc.useQuery([
-    "gallery.getAllS3Thumbnails",
-    { categoryName: "Gallery" },
-  ], {context: { skipBatch: true}});
+  const { data: fastImages } = trpc.useQuery(
+    ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
+    { context: { skipBatch: true } }
+  );
+  const { data: slowImages, refetch } = trpc.useQuery(
+    ["gallery.getAllS3Thumbnails", { categoryName: "Gallery" }],
+    { context: { skipBatch: true } }
+  );
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
-  const [images, setImages] = useState<any[] | undefined >(undefined);
+  const [images, setImages] = useState<any[] | undefined>(undefined);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
@@ -127,7 +127,7 @@ const Gallery = () => {
       setImages(slowImages);
       const x = tileImages(slowImages, imgHolderRef, gap);
       setImageTiling(x);
-    } else if (fastImages !== undefined)  {
+    } else if (fastImages !== undefined) {
       setImages(fastImages);
       const x = tileImages(fastImages, imgHolderRef, gap);
       setImageTiling(x);
@@ -136,7 +136,7 @@ const Gallery = () => {
 
   useEffect(() => {
     let imgs = randomFakeImages(20);
-    setImages(imgs)
+    setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
     setImageTiling(x);
     console.log("HELLO");
@@ -185,6 +185,8 @@ const Gallery = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [images]);
+
+  useAnalytics("/gallery");
 
   return (
     <>
@@ -308,14 +310,14 @@ export const GalleryRow = ({
                 width={(images?.at(i)?.thmb_w ?? 0) * row.scale}
                 height={(images?.at(i)?.thmb_h ?? 0) * row.scale}
                 style={{
-                  height:(images?.at(i)?.thmb_h ?? 0) * row.scale,
-                  width:(images?.at(i)?.thmb_w ?? 0) * row.scale,
+                  height: (images?.at(i)?.thmb_h ?? 0) * row.scale,
+                  width: (images?.at(i)?.thmb_w ?? 0) * row.scale,
                 }}
                 key={`img-${r}-${n}`}
                 alt={images?.at(i)?.name ?? "Thumbnail"}
                 className="shadow-xl"
                 onError={(e) => {
-                  e.currentTarget.src = "/img/blank.png"
+                  e.currentTarget.src = "/img/blank.png";
                   e.currentTarget.classList.add("animate-pulse");
                 }}
                 onLoad={(e) => {

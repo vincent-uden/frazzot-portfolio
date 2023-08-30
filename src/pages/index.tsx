@@ -16,6 +16,7 @@ import {
   DeviantartIcon,
 } from "../components/SocialIcons";
 import Link from "next/link";
+import { useAnalytics } from "../utils/useAnalytics";
 
 function getWindowDimensions() {
   if (typeof window !== "undefined") {
@@ -66,6 +67,8 @@ const Home: NextPageWithLayout = () => {
     },
     [dims]
   );
+
+  useAnalytics("/");
 
   return (
     <>

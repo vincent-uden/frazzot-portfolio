@@ -1,8 +1,8 @@
 // src/pages/_app.tsx
 import { withTRPC } from "@trpc/next";
 import { splitLink } from "@trpc/client/links/splitLink";
-import { httpLink } from "@trpc/client/links/httpLink"
-import { httpBatchLink } from "@trpc/client/links/httpBatchLink"
+import { httpLink } from "@trpc/client/links/httpLink";
+import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import type { AppRouter } from "../server/router";
 import superjson from "superjson";
 import "../styles/globals.css";
@@ -74,13 +74,13 @@ export default withTRPC<AppRouter>({
             return op.context.skipBatch === true;
           },
           true: httpLink({
-            url
+            url,
           }),
           false: httpBatchLink({
             url,
-          })
-        })
-      ]
+          }),
+        }),
+      ],
     };
   },
   /**

@@ -11,6 +11,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { GetStaticProps } from "next";
 import Link from "next/link";
+import { useAnalytics } from "../utils/useAnalytics";
 
 type Post = {
   title: string;
@@ -278,6 +279,8 @@ const Blog = ({ posts }: Props) => {
     setPostComponents(output);
     setMonths(outMonths);
   };
+
+  useAnalytics("/blog");
 
   return (
     <>

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import Carousel from "../components/Carousel";
 import { trpc } from "../utils/trpc";
 import { ImageRow, tileImages, GalleryRow } from "./gallery";
+import { useAnalytics } from "../utils/useAnalytics";
 
 //import "@splidejs/react-splide/css";
 
@@ -79,6 +80,8 @@ const Sketchbook = () => {
       setSelectedCategory(parseInt(router.query.tab!! as string));
     }
   }, [router.query]);
+
+  useAnalytics("/sketchbook");
 
   return (
     <>

@@ -33,3 +33,5 @@ public/thumbnail
 .vscode
 
 prisma
+
+src/pages/blog_posts

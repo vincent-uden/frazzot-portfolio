@@ -29,7 +29,7 @@ const s3Config: S3ClientConfig = {
     secretAccessKey: process.env.S3_SECRET_KEY!!,
   },
   region: process.env.S3_REGION!!,
-}
+};
 
 const s3 = new S3Client(s3Config);
 
@@ -90,7 +90,7 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
       });
-      return await getSignedUrl(s3, command, { expiresIn: 604800})
+      return await getSignedUrl(s3, command, { expiresIn: 604800 });
     },
   })
   .query("getAllS3Thumbnails", {
@@ -126,8 +126,14 @@ export const galleryRouter = createRouter()
           (imgs[i]?.urlExpires ?? 0) < now ||
           (imgs[i]?.urlLgExpires ?? 0) < now
         ) {
-          const command = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail/${imgs[i]!!.path}`});
-          const commandLg = new GetObjectCommand({Bucket: process.env.S3_BUCKET_NAME!!, Key: `thumbnail_lg/${imgs[i]!!.path}`});
+          const command = new GetObjectCommand({
+            Bucket: process.env.S3_BUCKET_NAME!!,
+            Key: `thumbnail/${imgs[i]!!.path}`,
+          });
+          const commandLg = new GetObjectCommand({
+            Bucket: process.env.S3_BUCKET_NAME!!,
+            Key: `thumbnail_lg/${imgs[i]!!.path}`,
+          });
           const requests = {
             index: i,
             url: getSignedUrl(s3, command, {
@@ -300,10 +306,8 @@ export const galleryRouter = createRouter()
         Fields: {
           "Content-Type": input.type,
         },
-        Conditions: [
-          [ "content-length-range", 0, 10485760 ],
-        ]
-      })
+        Conditions: [["content-length-range", 0, 10485760]],
+      });
     },
   })
   .mutation("s3GenThumbnails", {
@@ -317,7 +321,7 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
       });
-      const url = await getSignedUrl(s3, command, { expiresIn: 900})
+      const url = await getSignedUrl(s3, command, { expiresIn: 900 });
 
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;

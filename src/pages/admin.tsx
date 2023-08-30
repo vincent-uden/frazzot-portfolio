@@ -8,6 +8,7 @@ import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
 import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 import { GalleryImage } from "../db/schema";
+import { useAnalytics } from "../utils/useAnalytics";
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
@@ -162,6 +163,8 @@ const Admin = () => {
       });
     }
   };
+
+  useAnalytics("/admin");
 
   return (
     <>
@@ -334,22 +337,26 @@ const Admin = () => {
               onClick={(_) => {
                 var req1 = new XMLHttpRequest();
                 req1.open("GET", "/api/generateS3Urls/Gallery", false);
-                req1.send( null );
+                req1.send(null);
                 console.log("Gallery query");
 
                 var req2 = new XMLHttpRequest();
                 req2.open("GET", "/api/generateS3Urls/WARM-UPS", false);
-                req2.send( null );
+                req2.send(null);
                 console.log("WARM-UPS query");
 
                 var req3 = new XMLHttpRequest();
-                req3.open("GET", "/api/generateS3Urls/ILLUSTRATION%20SKETCHES", false);
-                req3.send( null );
+                req3.open(
+                  "GET",
+                  "/api/generateS3Urls/ILLUSTRATION%20SKETCHES",
+                  false
+                );
+                req3.send(null);
                 console.log("Illustration Sketches query");
 
                 var req4 = new XMLHttpRequest();
                 req4.open("GET", "/api/generateS3Urls/STUDIES", false);
-                req4.send( null );
+                req4.send(null);
                 console.log("STUDIES query");
               }}
             />
