@@ -1,9 +1,9 @@
 # Frazzot Portfolio
 
-Welcome to the source code for the art portfolio belonging to [Frazzot](https://instagram.com/frazzotart).
+Welcome to the source code for the [art portfolio](https://frazzot.com) belonging to [Frazzot](https://instagram.com/frazzotart).
 
 ## Quick Start
-To get the repo and install the required node packages for development run: 
+To get the repo and install the required node packages for development run:
 ```Bash
 git clone https://github.com/vincent-uden/frazzot-portfolio
 cd frazzot-portfolio
