@@ -4,6 +4,7 @@ import { trpc } from "../utils/trpc";
 import InputLabel from "../components/InputLabel";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
+import { useAnalytics } from "../utils/useAnalytics";
 
 const Comissions = () => {
   const [name, setName] = useState<string>("");
@@ -37,6 +38,8 @@ const Comissions = () => {
       console.log(data.errors);
     },
   });
+
+  useAnalytics("/commissions");
 
   return (
     <>

@@ -8,9 +8,9 @@ import { env } from "process";
 export default createNextApiHandler({
   router: appRouter,
   createContext: createContext,
-  onError: ({path, error}) => {
+  onError: ({ path, error }) => {
     if (env.NODE_ENV == "development") {
       console.error(error);
     }
-  }
+  },
 });

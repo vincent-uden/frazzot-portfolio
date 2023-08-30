@@ -7,6 +7,7 @@ import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAnalytics } from "../utils/useAnalytics";
 
 const Contact = () => {
   const [name, setName] = useState<string>("");
@@ -33,6 +34,7 @@ const Contact = () => {
       }
     },
   });
+  useAnalytics("/contact");
 
   return (
     <>

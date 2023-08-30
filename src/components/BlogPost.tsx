@@ -1,6 +1,13 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { useAnalytics } from "../utils/useAnalytics";
 
 export const BlogPost = ({ content, data }: any) => {
+  const router = useRouter();
+  if (router.pathname.startsWith("/blog_posts/")) {
+    useAnalytics(router.pathname);
+  }
+
   return (
     <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
       <div className="h-48 md:h-64" />

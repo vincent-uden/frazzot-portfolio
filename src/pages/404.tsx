@@ -1,7 +1,10 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import { useAnalytics } from "../utils/useAnalytics";
 
 const Custom404: NextPage = () => {
+  useAnalytics("/404");
+
   return (
     <>
       <Head>

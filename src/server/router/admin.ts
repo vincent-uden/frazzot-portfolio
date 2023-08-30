@@ -27,7 +27,11 @@ export const adminRouter = createRouter().mutation("submitLogin", {
       errors.push(EmailError.EmptyPassword);
     }
     if (errors.length === 0) {
-      let users = await db.select().from(adminPasswords).where(eq(adminPasswords.name, input.name)).limit(1);
+      let users = await db
+        .select()
+        .from(adminPasswords)
+        .where(eq(adminPasswords.name, input.name))
+        .limit(1);
       if (users.length == 0) {
         errors.push(EmailError.IncorrectUserDetails);
       } else {
