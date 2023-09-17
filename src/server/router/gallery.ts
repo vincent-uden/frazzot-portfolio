@@ -321,13 +321,16 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
       });
+      console.log(command);
       const url = await getSignedUrl(s3, command, { expiresIn: 900 });
+      console.log(url);
 
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;
       const fileStream = fs.createWriteStream(tmpPath);
 
       https.get(url, async (res) => {
+        console.log("Response from S3");
         res.pipe(fileStream);
 
         await new Promise((fulfill) => fileStream.on("finish", fulfill));
@@ -338,6 +341,8 @@ export const galleryRouter = createRouter()
         await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
 
         await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
+
+        console.log("Converted images");
 
         let upFs = fs.createReadStream(`/tmp/1${baseName}`);
 
@@ -370,6 +375,8 @@ export const galleryRouter = createRouter()
           console.log(err);
         }
 
+        console.log("Uploaded thmbs to S3")
+
         const img = await sharp(tmpPath).metadata();
         const thmb = await sharp(`/tmp/1${baseName}`).metadata();
 
@@ -391,6 +398,8 @@ export const galleryRouter = createRouter()
           categoryId: input.categoryId!!,
           displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
         });
+
+        console.log("Done!")
 
         fs.unlink(`/tmp/1${baseName}`, () => {});
         fs.unlink(`/tmp/2${baseName}`, () => {});
