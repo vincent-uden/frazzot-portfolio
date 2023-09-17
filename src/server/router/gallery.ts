@@ -329,84 +329,106 @@ export const galleryRouter = createRouter()
       const fileStream = fs.createWriteStream(tmpPath);
       console.log("Filestream created");
 
-      https.get(url, async (res) => {
-        console.log("Response from S3");
-        res.pipe(fileStream);
-
-        await new Promise((fulfill) => fileStream.on("finish", fulfill));
-        fileStream.close();
-
-        await sharp(tmpPath).resize(null, 240).toFile(`/tmp/1${baseName}`);
-
-        await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
-
-        await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
-
-        console.log("Converted images");
-
-        let upFs = fs.createReadStream(`/tmp/1${baseName}`);
-
-        let uploadParams = {
-          Bucket: process.env.S3_BUCKET_NAME!!,
-          Key: `thumbnail/${baseName}`,
-          Body: upFs,
-        };
-        try {
-          await s3.send(new PutObjectCommand(uploadParams));
-        } catch (err) {
-          console.log(err);
-        }
-
-        let upFs2 = fs.createReadStream(`/tmp/2${baseName}`);
-        uploadParams.Key = `thumbnail_md/${baseName}`;
-        uploadParams.Body = upFs2;
-        try {
-          await s3.send(new PutObjectCommand(uploadParams));
-        } catch (err) {
-          console.log(err);
-        }
-
-        let upFs3 = fs.createReadStream(`/tmp/3${baseName}`);
-        uploadParams.Key = `thumbnail_lg/${baseName}`;
-        uploadParams.Body = upFs3;
-        try {
-          await s3.send(new PutObjectCommand(uploadParams));
-        } catch (err) {
-          console.log(err);
-        }
-
-        console.log("Uploaded thmbs to S3")
-
-        const img = await sharp(tmpPath).metadata();
-        const thmb = await sharp(`/tmp/1${baseName}`).metadata();
-
-        const biggestDisplayIndex = (
-          await db
-            .select()
-            .from(galleryImages)
-            .orderBy(desc(galleryImages.displayIndex))
-            .limit(1)
-        )[0];
-
-        await db.insert(galleryImages).values({
-          name: input.name,
-          path: baseName,
-          w: img.width as number,
-          h: img.height as number,
-          thmb_w: thmb.width as number,
-          thmb_h: thmb.height as number,
-          categoryId: input.categoryId!!,
-          displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
-        });
-
-        console.log("Done!");
-
-        fs.unlink(`/tmp/1${baseName}`, () => {});
-        fs.unlink(`/tmp/2${baseName}`, () => {});
-        fs.unlink(`/tmp/3${baseName}`, () => {});
-        fs.unlink(`/tmp/${baseName}`, () => {});
-      });
+      await convertThumbnails(
+        url,
+        fileStream,
+        baseName,
+        tmpPath,
+        input.name,
+        input.categoryId!!
+      );
 
       console.log("After async https get");
     },
   });
+
+async function convertThumbnails(
+  url: string,
+  fileStream: fs.WriteStream,
+  baseName: string,
+  tmpPath: string,
+  inputName: string,
+  categoryId: string
+) {
+  return new Promise((resolve) => {
+    https.get(url, async (res) => {
+      console.log("Response from S3");
+      res.pipe(fileStream);
+
+      await new Promise((fulfill) => fileStream.on("finish", fulfill));
+      fileStream.close();
+
+      await sharp(tmpPath).resize(null, 240).toFile(`/tmp/1${baseName}`);
+
+      await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
+
+      await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
+
+      console.log("Converted images");
+
+      let upFs = fs.createReadStream(`/tmp/1${baseName}`);
+
+      let uploadParams = {
+        Bucket: process.env.S3_BUCKET_NAME!!,
+        Key: `thumbnail/${baseName}`,
+        Body: upFs,
+      };
+      try {
+        await s3.send(new PutObjectCommand(uploadParams));
+      } catch (err) {
+        console.log(err);
+      }
+
+      let upFs2 = fs.createReadStream(`/tmp/2${baseName}`);
+      uploadParams.Key = `thumbnail_md/${baseName}`;
+      uploadParams.Body = upFs2;
+      try {
+        await s3.send(new PutObjectCommand(uploadParams));
+      } catch (err) {
+        console.log(err);
+      }
+
+      let upFs3 = fs.createReadStream(`/tmp/3${baseName}`);
+      uploadParams.Key = `thumbnail_lg/${baseName}`;
+      uploadParams.Body = upFs3;
+      try {
+        await s3.send(new PutObjectCommand(uploadParams));
+      } catch (err) {
+        console.log(err);
+      }
+
+      console.log("Uploaded thmbs to S3");
+
+      const img = await sharp(tmpPath).metadata();
+      const thmb = await sharp(`/tmp/1${baseName}`).metadata();
+
+      const biggestDisplayIndex = (
+        await db
+          .select()
+          .from(galleryImages)
+          .orderBy(desc(galleryImages.displayIndex))
+          .limit(1)
+      )[0];
+
+      await db.insert(galleryImages).values({
+        name: inputName,
+        path: baseName,
+        w: img.width as number,
+        h: img.height as number,
+        thmb_w: thmb.width as number,
+        thmb_h: thmb.height as number,
+        categoryId: categoryId,
+        displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
+      });
+
+      console.log("Done!");
+
+      fs.unlink(`/tmp/1${baseName}`, () => {});
+      fs.unlink(`/tmp/2${baseName}`, () => {});
+      fs.unlink(`/tmp/3${baseName}`, () => {});
+      fs.unlink(`/tmp/${baseName}`, () => {});
+
+      resolve(() => {});
+    });
+  });
+}
