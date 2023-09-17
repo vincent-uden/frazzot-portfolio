@@ -399,7 +399,7 @@ export const galleryRouter = createRouter()
           displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
         });
 
-        console.log("Done!")
+        console.log("Done!");
 
         fs.unlink(`/tmp/1${baseName}`, () => {});
         fs.unlink(`/tmp/2${baseName}`, () => {});
