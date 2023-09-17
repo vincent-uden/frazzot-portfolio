@@ -322,12 +322,10 @@ export const galleryRouter = createRouter()
         Key: input.src,
       });
       const url = await getSignedUrl(s3, command, { expiresIn: 900 });
-      console.log(url);
 
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;
       const fileStream = fs.createWriteStream(tmpPath);
-      console.log("Filestream created");
 
       await convertThumbnails(
         url,
@@ -337,8 +335,6 @@ export const galleryRouter = createRouter()
         input.name,
         input.categoryId!!
       );
-
-      console.log("After async https get");
     },
   });
 
@@ -352,7 +348,6 @@ async function convertThumbnails(
 ) {
   return new Promise((resolve) => {
     https.get(url, async (res) => {
-      console.log("Response from S3");
       res.pipe(fileStream);
 
       await new Promise((fulfill) => fileStream.on("finish", fulfill));
@@ -363,8 +358,6 @@ async function convertThumbnails(
       await sharp(tmpPath).resize(null, 400).toFile(`/tmp/2${baseName}`);
 
       await sharp(tmpPath).resize(null, 1000).toFile(`/tmp/3${baseName}`);
-
-      console.log("Converted images");
 
       let upFs = fs.createReadStream(`/tmp/1${baseName}`);
 
@@ -397,8 +390,6 @@ async function convertThumbnails(
         console.log(err);
       }
 
-      console.log("Uploaded thmbs to S3");
-
       const img = await sharp(tmpPath).metadata();
       const thmb = await sharp(`/tmp/1${baseName}`).metadata();
 
@@ -420,8 +411,6 @@ async function convertThumbnails(
         categoryId: categoryId,
         displayIndex: (biggestDisplayIndex?.displayIndex ?? -1) + 1,
       });
-
-      console.log("Done!");
 
       fs.unlink(`/tmp/1${baseName}`, () => {});
       fs.unlink(`/tmp/2${baseName}`, () => {});
