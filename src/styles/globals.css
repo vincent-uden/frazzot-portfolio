@@ -254,10 +254,10 @@ div.splide__arrows {
   3.5% {
     opacity: 100%;
   }
-  25% {
+  16.67% {
     opacity: 100%;
   }
-  27% {
+  18.67% {
     opacity: 0%;
   }
 }
@@ -265,14 +265,14 @@ div.splide__arrows {
 span:nth-child(1) > .menu-show-img {
   animation-name: img-show-2;
   animation-iteration-count: infinite;
-  animation-duration: 20s;
+  animation-duration: 30s;
   animation-timing-function: ease-in-out;
 }
 
 span:nth-child(2) > .menu-show-img {
   animation-name: img-show-2;
   animation-iteration-count: infinite;
-  animation-duration: 20s;
+  animation-duration: 30s;
   animation-delay: 5s;
   animation-timing-function: ease-in-out;
 }
@@ -280,7 +280,7 @@ span:nth-child(2) > .menu-show-img {
 span:nth-child(3) > .menu-show-img {
   animation-name: img-show-2;
   animation-iteration-count: infinite;
-  animation-duration: 20s;
+  animation-duration: 30s;
   animation-delay: 10s;
   animation-timing-function: ease-in-out;
 }
@@ -288,8 +288,24 @@ span:nth-child(3) > .menu-show-img {
 span:nth-child(4) > .menu-show-img {
   animation-name: img-show-2;
   animation-iteration-count: infinite;
-  animation-duration: 20s;
+  animation-duration: 30s;
   animation-delay: 15s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(5) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
+  animation-delay: 20s;
+  animation-timing-function: ease-in-out;
+}
+
+span:nth-child(6) > .menu-show-img {
+  animation-name: img-show-2;
+  animation-iteration-count: infinite;
+  animation-duration: 30s;
+  animation-delay: 25s;
   animation-timing-function: ease-in-out;
 }
 

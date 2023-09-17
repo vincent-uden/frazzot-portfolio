@@ -182,17 +182,19 @@ const Layout = ({ children }: Props) => {
         </div>
 
         <div className="absolute top-20 right-16 hidden h-[calc(100vh-10rem)] w-[calc((100vh-10rem)*0.58333)] 2xl:block">
-          {["penelope", "izabelle", "winter", "hannah"].map((name, i) => {
-            return (
-              <Image
-                className="menu-show-img pointer-events-none"
-                src={`/img/${name}.png`}
-                key={`menuSlideShow-${i}`}
-                layout="fill"
-                priority={true}
-              />
-            );
-          })}
+          {["nawisha", "elric", "winter", "penelope", "izabelle", "hannah"].map(
+            (name, i) => {
+              return (
+                <Image
+                  className="menu-show-img pointer-events-none"
+                  src={`/img/${name}.png`}
+                  key={`menuSlideShow-${i}`}
+                  layout="fill"
+                  priority={true}
+                />
+              );
+            }
+          )}
         </div>
       </div>
     </>
