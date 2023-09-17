@@ -321,7 +321,7 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
       });
-      console.log(command);
+      console.log(command)
       const url = await getSignedUrl(s3, command, { expiresIn: 900 });
       console.log(url);
 
