@@ -321,13 +321,13 @@ export const galleryRouter = createRouter()
         Bucket: process.env.S3_BUCKET_NAME!!,
         Key: input.src,
       });
-      console.log(command)
       const url = await getSignedUrl(s3, command, { expiresIn: 900 });
       console.log(url);
 
       const baseName = path.basename(input.src);
       const tmpPath = `/tmp/${baseName}`;
       const fileStream = fs.createWriteStream(tmpPath);
+      console.log("Filestream created");
 
       https.get(url, async (res) => {
         console.log("Response from S3");
@@ -406,5 +406,7 @@ export const galleryRouter = createRouter()
         fs.unlink(`/tmp/3${baseName}`, () => {});
         fs.unlink(`/tmp/${baseName}`, () => {});
       });
+
+      console.log("After async https get");
     },
   });
