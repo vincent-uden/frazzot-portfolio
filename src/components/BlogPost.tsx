@@ -3,10 +3,14 @@ import { useRouter } from "next/router";
 import { useAnalytics } from "../utils/useAnalytics";
 import { useEffect, useState } from "react";
 import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
+import { trpc } from "../utils/trpc";
 
 const UAParser = require("ua-parser-js");
 
 function generateFingerprint() {
+  if (typeof navigator === "undefined") {
+    return "";
+  }
   const hardwareThreads = navigator.hardwareConcurrency;
   const languages = navigator.languages.reduce((acc, x) => acc + x + ",", "");
 
@@ -45,17 +49,56 @@ export const BlogPost = ({ content, data }: any) => {
     useAnalytics(router.pathname);
   }
 
-  useEffect(() => {
-    generateFingerprint();
-  }, []);
-
   const [liked, setLiked] = useState<boolean>(false);
-
   const [likes, setLikes] = useState<number>(0);
+  const [likesFetched, setLikesFetched] = useState<boolean>(false);
+  const [likedFetched, setLikedFetched] = useState<boolean>(false);
+
+  const { data: likesServer, refetch: refetchLikes } = trpc.useQuery(
+    ["admin.getLikes", { blogPost: router.pathname }],
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      enabled: !likesFetched && router.pathname != "/blog",
+      onSuccess: (data) => {
+        if (!likesFetched) {
+          setLikes(parseInt((data[0]?.count ?? 0) as any));
+          setLikesFetched(true);
+        }
+      },
+    }
+  );
+
+  const { data: likedServer, refetch: refetchLiked } = trpc.useQuery(
+    [
+      "admin.hasLiked",
+      { blogPost: router.pathname, fingerprint: generateFingerprint() },
+    ],
+    {
+      staleTime: Infinity,
+      cacheTime: Infinity,
+      enabled: !likedFetched && router.pathname != "/blog",
+      onSuccess: (data) => {
+        if (!likedFetched) {
+          setLiked(data);
+          setLikedFetched(true);
+        }
+      },
+    }
+  );
+
+  const likeMut = trpc.useMutation(["admin.like"]);
 
   const likeClick = () => {
     if (!liked) {
-      setLikes(likes+1);
+      setLikes(likes + 1);
+
+      likeMut.mutate({
+        blogPost: router.pathname,
+        fingerprint: generateFingerprint(),
+      });
+    } else {
+      setLikes(likes - 1);
     }
     setLiked(!liked);
   };
@@ -81,25 +124,40 @@ export const BlogPost = ({ content, data }: any) => {
       </div>
 
       <div className="h-8" />
-      <div className="blog-end mx-auto grid max-w-[920px] justify-center px-32 md:flex md:px-8 lg:px-0 gap-8">
-        <div className="grow flex flex-row items-center justify-center md:justify-end lg:justify-start gap-4 md:pl-0 lg:pl-8 lg:-translate-y-2">
-          <div className="relative hover:scale-125 transition-transform w-12 h-12 text-pastelpink" onClick={() => {likeClick()}}>
-            <div className={`absolute ${liked ? "opacity-0" : "opacity-100"} transition-opacity`}>
+      <div className="blog-end mx-auto grid max-w-[920px] justify-center gap-8 px-32 md:flex md:px-8 lg:px-0">
+        <div className="flex grow flex-row items-center justify-center gap-4 md:justify-end md:pl-0 lg:-translate-y-2 lg:justify-start lg:pl-8">
+          <div
+            className="relative h-12 w-12 text-pastelpink transition-transform hover:scale-125"
+            onClick={() => {
+              likeClick();
+            }}
+          >
+            <div
+              className={`absolute ${
+                liked ? "opacity-0" : "opacity-100"
+              } transition-opacity`}
+            >
               <HiOutlineHeart size={48} />
             </div>
-            <div className={`absolute ${liked ? "opacity-100" : "opacity-0"} transition-opacity`}>
+            <div
+              className={`absolute ${
+                liked ? "opacity-100" : "opacity-0"
+              } transition-opacity`}
+            >
               <HiHeart size={48} />
             </div>
           </div>
-          <p className="text-3xl font-gothic text-pastelpink select-none">{likes}</p>
+          <p className="select-none font-gothic text-3xl text-pastelpink">
+            {likes}
+          </p>
         </div>
         <Link href="/blog">
-          <a className="inline-block w-full bg-holo bg-[length:800px_600px] py-6 px-28 text-center font-stretch text-xl text-greyblack md:text-2xl md:w-fit select-none">
+          <a className="inline-block w-full select-none bg-holo bg-[length:800px_600px] py-6 px-28 text-center font-stretch text-xl text-greyblack md:w-fit md:text-2xl">
             BACK
           </a>
         </Link>
       </div>
-      <div className="h-[200px] md:h-[330px] w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-[center_top_-4rem] md:bg-top bg-repeat-x" />
+      <div className="h-[200px] w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1920px_330px] bg-[center_top_-4rem] bg-repeat-x md:h-[330px] md:bg-top" />
     </div>
   );
 };

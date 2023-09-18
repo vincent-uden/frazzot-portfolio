@@ -5,7 +5,7 @@ import { createRouter } from "./context";
 import * as jwt from "jsonwebtoken";
 import { db } from "../../db/drizzle";
 import { adminPasswords, sessionTokens, blogLikes } from "../../db/schema";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 export interface AuthJwt {
   authLevel: number;
@@ -24,13 +24,45 @@ export const adminRouter = createRouter()
         .where(eq(blogLikes.blogPost, input.blogPost));
     },
   })
+  .query("hasLiked", {
+    input: z.object({
+      fingerprint: z.string(),
+      blogPost: z.string(),
+    }),
+    resolve: async ({ input }) => {
+      const matchingLikes = await db
+        .select()
+        .from(blogLikes)
+        .where(
+          and(
+            eq(blogLikes.fingerprint, input.fingerprint),
+            eq(blogLikes.blogPost, input.blogPost)
+          )
+        );
+      return matchingLikes.length > 0;
+    },
+  })
   .mutation("like", {
     input: z.object({
       fingerprint: z.string(),
       blogPost: z.string(),
     }),
     resolve: async ({ input }) => {
-      const matchingLikes = db.select().from(blogLikes).where(eq(blogLikes.fingerprint, input.fingerprint));
+      const matchingLikes = await db
+        .select()
+        .from(blogLikes)
+        .where(
+          and(
+            eq(blogLikes.fingerprint, input.fingerprint),
+            eq(blogLikes.blogPost, input.blogPost)
+          )
+        );
+
+      if (matchingLikes.length == 0) {
+        await db
+          .insert(blogLikes)
+          .values({ blogPost: input.blogPost, fingerprint: input.fingerprint });
+      }
     },
   })
   .mutation("submitLogin", {
