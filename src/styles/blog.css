@@ -6,6 +6,10 @@
   @apply shadow-blog-panel;
 }
 
+.blog-previews .blog-container .blog-end {
+  display: none;
+}
+
 .blog-previews .blog-container > div:last-child {
   background: none;
   display: none;
@@ -124,6 +128,10 @@
   max-height: 120px;
 }
 
+.blog-previews-mobile .blog-container .blog-end {
+  display: none;
+}
+
 .blog-previews-mobile .blog-container > div > a {
   display: none;
 }
@@ -167,4 +175,14 @@
     rgba(0, 0, 0, 1) 0px,
     rgba(0, 0, 0, 0) 115px
   );
+}
+
+.blog-container .blog-end > div:first-child {
+  grid-row: 2 / 3;
+}
+
+@media (min-width: 640px) {
+  .blog-container .blog-end > div:first-child {
+    grid-row: 1 / 2;
+  }
 }
