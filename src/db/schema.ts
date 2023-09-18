@@ -78,15 +78,14 @@ export const sessionTokens = pgTable(
   }
 );
 
-export const blogLikes = pgTable(
-  "BlogLikes",
-  {
-    id: uuid("id").defaultRandom().primaryKey(),
-    fingerprint: text("fingerprint").notNull(),
-    blogPost: text("blogPost").notNull(),
-    createdAt: timestamp("createdAt", { precision: 3, mode: "date" }).defaultNow().notNull(),
-  },
-);
+export const blogLikes = pgTable("BlogLikes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  fingerprint: text("fingerprint").notNull(),
+  blogPost: text("blogPost").notNull(),
+  createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
+});
 
 export type GalleryImage = InferModel<typeof galleryImages>;
 export type AdminPassword = InferModel<typeof adminPasswords>;

@@ -1,16 +1,20 @@
-import {createRequire as __$$createRequireN} from 'module';var require=__$$createRequireN(import.meta.url);
+import { createRequire as __$$createRequireN } from "module";
+var require = __$$createRequireN(import.meta.url);
 var __getOwnPropNames = Object.getOwnPropertyNames;
-var __esm = (fn, res) => function __init() {
-  return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-};
+var __esm = (fn, res) =>
+  function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])((fn = 0))), res;
+  };
 
 // node_modules/tsno/dist/client.js
 import { createRequire as __$$createRequire } from "module";
 var require2;
 var init_client = __esm({
   "node_modules/tsno/dist/client.js"() {
-    require2 = __$$createRequire("file:///media/hdd/github/frazzot-portfolio/node_modules/tsno/dist/client.js");
-  }
+    require2 = __$$createRequire(
+      "file:///media/hdd/github/frazzot-portfolio/node_modules/tsno/dist/client.js"
+    );
+  },
 });
 
 // src/db/migrate.ts
@@ -28,7 +32,7 @@ import {
   integer,
   timestamp,
   uniqueIndex,
-  uuid
+  uuid,
 } from "drizzle-orm/pg-core";
 var galleryImages = pgTable("GalleryImage", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -38,27 +42,33 @@ var galleryImages = pgTable("GalleryImage", {
   h: integer("h").notNull(),
   thmb_w: integer("thmb_w").notNull(),
   thmb_h: integer("thmb_h").notNull(),
-  createdAt: timestamp("createdAt", { precision: 3, mode: "date" }).defaultNow().notNull(),
+  createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
   categoryId: uuid("categoryId").references(() => imageCategories.id, {
     onDelete: "cascade",
-    onUpdate: "cascade"
+    onUpdate: "cascade",
   }),
   url: text("url"),
-  urlExpires: timestamp("urlExpires", { precision: 3, mode: "date" }).defaultNow().notNull(),
+  urlExpires: timestamp("urlExpires", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
   urlLg: text("urlLg"),
-  urlLgExpires: timestamp("urlLgExpires", { precision: 3, mode: "date" }).defaultNow().notNull(),
-  displayIndex: integer("displayIndex").default(0).notNull()
+  urlLgExpires: timestamp("urlLgExpires", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
+  displayIndex: integer("displayIndex").default(0).notNull(),
 });
 var adminPasswords = pgTable(
   "AdminPassword",
   {
     id: uuid("id").defaultRandom().primaryKey(),
     name: text("name").notNull(),
-    hash: text("hash").notNull()
+    hash: text("hash").notNull(),
   },
   (table) => {
     return {
-      name_key: uniqueIndex("AdminPassword_name_key").on(table.name)
+      name_key: uniqueIndex("AdminPassword_name_key").on(table.name),
     };
   }
 );
@@ -66,11 +76,11 @@ var imageCategories = pgTable(
   "ImageCategory",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-    name: text("name").notNull()
+    name: text("name").notNull(),
   },
   (table) => {
     return {
-      name_key: uniqueIndex("ImageCategory_name_key").on(table.name)
+      name_key: uniqueIndex("ImageCategory_name_key").on(table.name),
     };
   }
 );
@@ -79,23 +89,24 @@ var sessionTokens = pgTable(
   {
     id: uuid("id").defaultRandom().primaryKey(),
     token: text("token").notNull(),
-    expires: timestamp("expires", { precision: 3, mode: "date" }).defaultNow().notNull()
+    expires: timestamp("expires", { precision: 3, mode: "date" })
+      .defaultNow()
+      .notNull(),
   },
   (table) => {
     return {
-      token_key: uniqueIndex("SessionToken_token_key").on(table.token)
+      token_key: uniqueIndex("SessionToken_token_key").on(table.token),
     };
   }
 );
-var blogLikes = pgTable(
-  "BlogLikes",
-  {
-    id: uuid("id").defaultRandom().primaryKey(),
-    fingerprint: text("fingerprint").notNull(),
-    blogPost: text("blogPost").notNull(),
-    createdAt: timestamp("createdAt", { precision: 3, mode: "date" }).defaultNow().notNull()
-  }
-);
+var blogLikes = pgTable("BlogLikes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  fingerprint: text("fingerprint").notNull(),
+  blogPost: text("blogPost").notNull(),
+  createdAt: timestamp("createdAt", { precision: 3, mode: "date" })
+    .defaultNow()
+    .notNull(),
+});
 
 // src/db/migrate.ts
 dotenv.config();

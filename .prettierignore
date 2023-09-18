@@ -34,4 +34,4 @@ public/thumbnail
 
 prisma
 
-src/pages/blog_posts/*/*
+src/pages/blog_posts/**/*
