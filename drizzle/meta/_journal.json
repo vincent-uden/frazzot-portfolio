@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1695036069220,
+      "tag": "0000_concerned_valeria_richards",
+      "breakpoints": true
+    }
+  ]
+}

@@ -50,6 +50,7 @@
     "sharp": "^0.30.7",
     "superjson": "^1.9.1",
     "tsno": "^2.0.0",
+    "ua-parser-js": "^1.0.36",
     "universal-cookie": "^4.0.4",
     "zod": "^3.17.3"
   },

@@ -1,6 +1,42 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAnalytics } from "../utils/useAnalytics";
+import { useEffect } from "react";
+
+const UAParser = require("ua-parser-js");
+
+function generateFingerprint() {
+  const hardwareThreads = navigator.hardwareConcurrency;
+  const languages = navigator.languages.reduce((acc, x) => acc + x + ",", "");
+
+  let userAgent = UAParser(navigator.userAgent);
+
+  const idString =
+    userAgent?.cpu?.architecture +
+    " " +
+    hardwareThreads +
+    " " +
+    userAgent?.browser?.name +
+    " " +
+    userAgent?.browser?.major +
+    " " +
+    userAgent?.engine?.name +
+    " " +
+    userAgent?.os?.name +
+    " " +
+    userAgent?.os?.version +
+    " " +
+    languages +
+    " " +
+    Intl.DateTimeFormat().resolvedOptions().timeZone +
+    " " +
+    window.screen.width +
+    "x" +
+    window.screen.height +
+    " ";
+
+    return idString;
+}
 
 export const BlogPost = ({ content, data }: any) => {
   const router = useRouter();
@@ -8,17 +44,13 @@ export const BlogPost = ({ content, data }: any) => {
     useAnalytics(router.pathname);
   }
 
+  useEffect(() => {
+    generateFingerprint();
+  }, []);
+
   return (
     <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
       <div className="h-48 md:h-64" />
-      {/*
-      <p className="text-center font-stretch text-3xl text-sky md:text-4xl lg:text-6xl">
-        BLOG
-      </p>
-      <div className="mt-2 mb-16 bg-holo bg-cover py-2 md:mt-8">
-        <p className="page-sub-header no-ligature">ARCHIVE AND POSTS_</p>
-      </div>
-      */}
       <div className="pt-2 pb-8 shadow-blog-panel">
         <div className="mx-auto max-w-[920px] px-8">
           <div className="date-header mt-8 ">
