@@ -306,7 +306,7 @@ export const galleryRouter = createRouter()
         Fields: {
           "Content-Type": input.type,
         },
-        Conditions: [["content-length-range", 0, 10485760]],
+        Conditions: [["content-length-range", 0, 100485760]],
       });
     },
   })
