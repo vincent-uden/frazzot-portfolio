@@ -54,14 +54,14 @@ export const BlogPost = ({ content, data }: any) => {
   const [likesFetched, setLikesFetched] = useState<boolean>(false);
   const [likedFetched, setLikedFetched] = useState<boolean>(false);
 
+  console.log(router.pathname);
+
   const { data: likesServer, refetch: refetchLikes } = trpc.useQuery(
     ["admin.getLikes", { blogPost: router.pathname }],
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
       enabled: !likesFetched && router.pathname != "/blog",
       onSuccess: (data) => {
-        if (!likesFetched) {
+        if (!likesFetched && router.pathname != "/blog") {
           setLikes(parseInt((data[0]?.count ?? 0) as any));
           setLikesFetched(true);
         }
@@ -75,11 +75,9 @@ export const BlogPost = ({ content, data }: any) => {
       { blogPost: router.pathname, fingerprint: generateFingerprint() },
     ],
     {
-      staleTime: Infinity,
-      cacheTime: Infinity,
       enabled: !likedFetched && router.pathname != "/blog",
       onSuccess: (data) => {
-        if (!likedFetched) {
+        if (!likedFetched && router.pathname != "/blog") {
           setLiked(data);
           setLikedFetched(true);
         }
