@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAnalytics } from "../utils/useAnalytics";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { HiHeart, HiOutlineHeart } from "react-icons/hi2";
 
 const UAParser = require("ua-parser-js");
 
@@ -35,7 +36,7 @@ function generateFingerprint() {
     window.screen.height +
     " ";
 
-    return idString;
+  return idString;
 }
 
 export const BlogPost = ({ content, data }: any) => {
@@ -47,6 +48,8 @@ export const BlogPost = ({ content, data }: any) => {
   useEffect(() => {
     generateFingerprint();
   }, []);
+
+  const [liked, setLiked] = useState<boolean>(false);
 
   return (
     <div className="blog-container min-h-screen w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1090px_220px] bg-[center_top_4rem] bg-repeat-x md:bg-[length:1920px_330px]">
@@ -69,9 +72,20 @@ export const BlogPost = ({ content, data }: any) => {
       </div>
 
       <div className="h-8" />
-      <div className="mx-auto grid max-w-[920px] justify-center px-32 md:block lg:px-0">
+      <div className="mx-auto grid max-w-[920px] justify-center px-32 md:flex lg:px-0">
+        <div className="grow flex flex-row items-center gap-4 pl-8">
+          <div className="relative hover:scale-110 transition-transform w-12 h-12 text-pastelpink" onClick={() => {setLiked(!liked)}}>
+            <div className={`absolute ${liked ? "opacity-0" : "opacity-100"} transition-opacity`}>
+              <HiHeart size={48} />
+            </div>
+            <div className={`absolute ${liked ? "opacity-100" : "opacity-0"} transition-opacity`}>
+              <HiOutlineHeart size={48} />
+            </div>
+          </div>
+          <p className="text-3xl font-gothic text-pastelpink">0</p>
+        </div>
         <Link href="/blog">
-          <a className="inline-block w-full bg-holo bg-[length:800px_600px] py-6 px-28 text-center font-stretch text-xl text-greyblack md:text-2xl lg:float-right lg:w-fit">
+          <a className="inline-block w-full bg-holo bg-[length:800px_600px] py-6 px-28 text-center font-stretch text-xl text-greyblack md:text-2xl lg:w-fit select-none">
             BACK
           </a>
         </Link>
