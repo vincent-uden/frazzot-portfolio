@@ -1,0 +1,252 @@
+import {
+  BlogPost,
+  RightStack,
+  LeftStack,
+  QuoteBlock,
+} from "../../components/BlogPost.tsx";
+
+export const data = {
+  title: "Get started with 3D",
+  author: "Ida",
+  date: "2023-09-26",
+  time: "04:41 PM",
+};
+
+For someone new to digital 3D modelling, it can seem a bit daunting. There doesn't appear to be a one-size-fits-all program or workflow, 
+and many of the available programs come with steep learning curves and hefty price tags. And then there's the mountain of steps, rules, 
+and potential technical issues that tend to pop up quite frequently.
+
+Today, drawing from two years of full-time studies as a Game Art student, I want to share what I've learned about navigating the world of 
+3D art. My goal is to make it as accessible as possible, therefore focusing especially on free programs like Blender. 
+
+You can use the table of contents below to navigate the post, re-read or search for the things you're interested in. 
+
+<QuoteBlock>
+  ### **Table of Contents**
+  - ► [Introduction to 3D Modelling](#)
+  - ⊳ What is 3D modelling?
+  - ⊳ Why can 3D modelling be beneficial to learn?
+  - ► [Hardware Recommedations](#)
+  - ► [Choosing the right software](#)
+  - ⊳ Blender - all in one for almost everyone 
+  - ► [Get started with Blender](#)
+  - ⊳ Navigating the Interface
+  - ⊳ Basic Tools and Shortcuts
+  - ⊳ Modelling Techniques
+</QuoteBlock>
+
+## Introduction to 3D Modeling
+Welcome, I hope you're ready - because we have a lot to cover! But before we delve deep into the jungle of the digital third dimension, we have to define what 3D 
+modelling really is, and why you should even bother learning it.
+
+### What is 3D modelling?
+In short and quite restricted terms, is 3D modelling the process of creating digital representations of three-dimensional objects or environments. 
+It involves using specialized software to manipulate geometric shapes, textures, and materials to simulate real-world objects or create entirely imaginary ones.
+
+The resulting 3D models can be viewed and manipulated from any angle, providing a comprehensive understanding of the object's shape, size, and 
+structure. It's a powerful tool since the technology has revolutionized industries by allowing designers and artists to visualize and prototype complex concepts in 
+a virtual environment before actual production or implementation.
+
+### Why can 3D modelling be beneficial to learn?
+3D models can be used in various industries, including animation, game development, architecture, product design, movies and more. Their broad use and future 
+proof apllications makes it not only a great addition for your CV to learn 3D modelling, but it's also an absolutley amazing hobby.
+
+Can you imagine the powerful combination of owning a 3D printer and having the knowledge of 3D modelling? You could create your own toys, figurines, or even solutions 
+for specific problems in your home. 
+
+<LeftStack masterWidth="53%">
+![3D Printed monitor stand support](/img/blog/blog_post_images/monitor_support.png)
+
+![Prusa 3D Printer](/img/blog/blog_post_images/prusa_3d_printer.png)
+</LeftStack>
+
+<QuoteBlock>
+Here's a perfect example: my partner 3D printed support pillars for my PC monitors to give me a more comfortable viewing angle. The printer, as you can see on the picture,
+occupies no more than a corner in our closet. Isn't that quite amazing?
+</QuoteBlock>
+
+## Hardware Recommendations
+
+You absolutley don't need a monster-setup to do some 3D modelling, but it's worth to mention that depending on the complexity of your work (polycount etc.) you might need to consider your workstation.
+Following are some general things to keep in mind if you're looking for an upgrade.
+
+<QuoteBlock>
+- ⊳ A multi-core processor is recommended, preferably with a clock speed of 3.0 GHz or higher. Processors from Intel (i5, i7, i9 series) or AMD (Ryzen 5, Ryzen 7, Ryzen 9 series) are suitable.
+- ⊳ A dedicated graphics card with **good OpenGL support** is crucial for 3D modeling. NVIDIA and AMD GPUs are commonly used for this purpose. Look for models with higher VRAM for 
+better performance.
+- ⊳ 16 GB of RAM is generally considered a minimum for 3D modeling. I worked with 16 GB for quite some time, and **I'm sure it's enough to begin with.** However, for more complex and detailed work, 
+32 GB or more may be beneficial.
+- ⊳ A SSD or M.2 disk is highly recommended for faster loading times of large files and smoother overall performance. It's advisable to have at least 256 GB of storage since the 
+project files can get quite big.
+- ⊳ A 3-button mouse with a scroll wheel is essential for precise navigation and selection in 3D modeling software. Additionally, a stylus tablet can be useful for sculpting and painting tasks 
+if you're interested in that.
+- ⊳ Most 3D modeling software supports both Windows and macOS. Linux can also be used, but support may vary depending on the software. If you'll use Blender only, Linux should be no problem. 
+</QuoteBlock>
+
+These are of course some general guidelines based upon my own experience. I have the privilage of being quite picky with my hardware, but even if you're not, there's no hard cap on the hardware, 
+and I'm sure you'll be able to adjust settings and workflow accordingly.
+
+## Choosing the right software
+
+While there are many options of 3D softwares on the market, there are not many free of charge options. It all comes down to what you wish to create. Technical constructions
+usually works best with CAD programs like the ones from [Autodesk](https://www.autodesk.com/), they usually cost a lot but programs like [Autodesk Fusion 360](https://www.autodesk.com/products/fusion-360/) 
+comes with a trial mode. Looking at the game industry we have [ZBrush](https://www.maxon.net/en/zbrush), [Maya](https://www.autodesk.se/products/maya/overview?term=1-YEAR&tab=subscription) 
+and the array of [Adobe](https://www.adobe.com/) programs which licenses would ruin any non-millionaire. Of course, this is not sustainable in my opinion and that's where [Blender](https://www.blender.org/about/) comes in.
+
+### Blender - all in one for almost everyone
+
+On their website, they state: 
+
+*"Blender is the free and open source 3D creation suite. It supports the entirety of the 3D pipeline—modeling, rigging, animation, simulation, 
+rendering, compositing and motion tracking, even video editing and game creation."*
+
+And it's absolutely true. While Blender may not be the industry standard yet, it's a step in the right direction - and it's not far off. Blender is not only [Open Source](https://opensource.com/resources/what-open-source), 
+but it's also [Free Software](https://www.fsf.org/about/). This means you are free to use the program however you like, including for commercial or educational purposes. Take a look at their 
+GPL License [here](https://www.blender.org/about/license/), and as a side note, I'd also suggest exploring other open-source and free software options for various programs.
+
+However, if Blender being free wasn't enough to catch your attention, it's worth mentioning its user-friendly interface. Since I started using Blender, a lot has changed for the better. 
+The software is under constant development, and every year brings exciting new updates.
+
+![Maya Interface 2023](/img/blog/blog_post_images/maya_interface_2023.png)
+
+<QuoteBlock>
+Above is the interface of Maya 2023. It has certainly improved, but I still have some issues with the top-heavy toolbar and cluttered interface with buttons. It's not beginner-friendly,
+ and it's very expensive.
+</QuoteBlock>
+
+![Blender 3.5 interface](/img/blog/blog_post_images/blender_3_5_interface.png)
+
+<QuoteBlock>
+On the other hand, this is the interface of Blender 3.5. It's not as overwhelming, and you can easily navigate between workflows by changing tabs on the top row. Best of all, it's completely free!
+</QuoteBlock>
+
+Since my initial intention was to keep this a simple guide, I won't delve further into my argumentation about why I believe Blender is superior. It's a matter of taste, and by now, you should have a sense of your options.
+
+There are many other software options out there, of course, but **as a beginner, I'm confident you'll do just fine with Blender, no matter your purpose.**
+
+## Get started with Blender
+
+Let's get to work. You'll find the download site [here](https://www.blender.org/download/) you can either download the portable (.zip) or the regular installer. If you're working on a Windows PC
+I'd recommend the regular installer. 
+
+Pick a suitable location and install the program wherever you like. Then it's time to launch!
+
+### Navigating the Interface
+
+To begin with, we need to get to know the interface. I have colour coded and numbered each segment and we'll breifly go through them all below. If you need to go more into detail about the interface
+I'd recommend you to read their [documentaion on user interface](https://docs.blender.org/manual/en/latest/interface/index.html) as it's a deep dive into all the elements in the interface. 
+
+![Colour coded Blender Interface](/img/blog/blog_post_images/blender_startup_coded_interface.png)
+
+#### 1: The Editor
+
+The editor is your workspace, this is where the magic happens. It consists of the **toolbar** *(to the leftmost side in the pink area, press **T** to toggle)*, **the main region** *(in this case the 3D viewport)*, **the sidebar** 
+*(Press **N** to toggle or the small arrow next to the gizmo)*, **the Header** *(the bar along the top of the pink area)* and some other handy tools like the **gizmo and navigation buttons** *(top right corner of the pink area)* and also the **Adjust Last Operation** region,
+*(it allows you to tweak a operation after running it. This region shows therefore up when you do something with the object like resize, rotate or move)*.
+
+#### 2: The Outliner
+
+The outliner is like the layers when painting digitally. It's a collection with all the objects in your scene, in our case we have a cube, camera and point light sorted in a folder called "Collection". 
+Just like when drawing, here you can toggle visibility by pressing the eye icon next to the name of the object. The camera icon doesn't chage the preview visibility, but instead it toggles the visibility in the rendered output.
+
+#### 3: The Context Menu
+
+The context menu provides with settings and adjustments for the selected object in your outliner. Theres a lot of things you can do here, and if you'd like to read more about it check out the Blender documentation 
+on [Tabs & Panels](https://docs.blender.org/manual/en/latest/interface/window_system/tabs_panels.html).
+
+#### 4: The Topbar
+
+The topbar consists of **the Blender menu** *(this is where you manage the files, access the edit menu, render menu and window menu and help menu)*, your **workspaces** *(A set of editors with different predefined layouts suitable 
+for the task namned on the workspace tab)* and finally the **Scenes & Layers** (data-block menus to set the current scene and view layer, you don't need to worry to much about this now.)
+
+#### 5: Extra Editor
+
+This is basically a vertical split, predefined as a timeline for animation. The great thing about the Blender interface is that you can split and rejoin areas as you like to create your own workspace. 
+To clean things up a little, I'd recommend you to close the area for now by **right click > Area > Close Area**. 
+
+### Basic Tools and Shortcuts
+
+The beauty of working in blender is the shorcut workflow. I once had a colleauge who previously had been working in Maya, and he couldn't wrap his head around how I managed to just press a few buttons to achieve the same 
+result as digging through several menus. It's quite a lot to learn, but so is the whole 3D workflow. If you practice it enough, you'll realise how quick and smooth you can create basic things. I'll provide you with a list
+of the most common shortcuts I use in the editor.
+
+#### General
+
+<QuoteBlock>
+- **Navigation:**
+- ⊳ **Scroll**: Zoom
+- ⊳ **MMB / MMB + ALT**: Rotate View / Rotate view and snap to nearest axis in ortogonal view.
+- ⊳ **SHIFT + MMB**: Pan
+- More on navigation [here](https://docs.blender.org/manual/en/latest/editors/3dview/navigate/navigation.html).
+</QuoteBlock>
+
+<QuoteBlock>
+- **Selection:**
+- ⊳ **A**: Selects all objects in the viewport (Object mode) / Selects all verticies in the selected object (Edit mode)
+- ⊳ **B**: Press B, then hold and drag to box-select
+- ⊳ **W**: Cycle between selection modes (top left in the tool bar)
+- ⊳ **LMB**: Hold and drag to select with current select mode
+- ⊳ **CTRL + L**: Select linked geometry (edit mode)
+- ⊳ **ALT + LMB**: Select loops (edit mode)
+- ⊳ **SHIFT + LMB**: Select several (edit mode)
+- ⊳ **CTRL + LMB**: Select linked geometry by shortest path (edit mode)
+- More on selection [here](https://docs.blender.org/manual/en/latest/editors/3dview/selecting.html#object-mode).
+</QuoteBlock>
+
+#### Object- and Edit Mode
+
+When you're working in blender you're going to stumble upon something called modes. Switching between Object Mode and Edit Mode allows you to work on both the overall composition of 
+your scene and the specific details of individual objects. It's a fundamental aspect of 3D modeling in Blender.
+
+<QuoteBlock>
+- **Modes:** 
+- ⊳ **TAB**: Toggle between your two most recent modes (by default edit mode / object mode)
+</QuoteBlock>
+
+**Object Mode:**
+
+In Blender's Object Mode, you work with entire objects as a whole - you can select, move, rotate, and scale objects in this mode. This is where you position, arrange, 
+and organize your 3D models in the scene. You can also perform operations that affect the object as a whole, like applying modifiers or parenting.
+
+<QuoteBlock>
+- **Edit - Object Mode:**
+- ⊳ **G / G + (X/Y/Z)**: Moves selected object / Moves object along selected axis. Ex G + Z moves the selected object along the z-axis
+- ⊳ **R / R + (X/Y/Z)**: Rotates selected object / Rotates object around the selected axis
+- ⊳ **S / S + (X/Y/Z)**: Scales selected object / Scales object along the selected axis
+- ⊳ **SHIFT + D**: Creates a copy of the selected object
+- ⊳ **SHIFT + A**: Opens a menu where you can add a new object to the scene
+- ⊳ **CTRL + A**: Opens the [Apply menu](https://docs.blender.org/manual/en/3.5/scene_layout/object/editing/apply.html#apply)
+- ⊳ **CTRL + J**: Joins the selected objects to the same objects.
+- ⊳ **X**: Delete selected objects
+</QuoteBlock>
+
+**Edit Mode:**
+
+Edit Mode, on the other hand, allows you to work with the individual components (vertices, edges, and faces) that make up an object. It's used for detailed 
+editing and shaping of a model's geometry, you can also perform actions like extruding, merging vertices, or sculpting the mesh. It's the mode you use for fine-tuning 
+the form and structure of your 3D model.
+
+In edit mode you can also toggle between vertex, edge and face selection by pressing 1, 2 or 3 respectively on the keyboard.
+
+<QuoteBlock>
+- **Edit - Edit Mode:**
+- ⊳ **G / G + (X/Y/Z)**: Moves selected object / Moves object along selected axis. Ex G + Z moves the selected object along the z-axis
+- ⊳ **R / R + (X/Y/Z)**: Rotates selected object / Rotates object around the selected axis
+- ⊳ **S / S + (X/Y/Z)**: Scales selected object / Scales object along the selected axis
+- ⊳ **E**: Extrudes from the selected vertex, edge or face
+- ⊳ **I**: Inset the selected geometry
+- ⊳ **X**: Delete selected geometry
+- ⊳ **M**: Merge the selected geometry
+- ⊳ **CTRL + B**: Bevel the selected geometry (use the Adjust Last Operation pop-up in the bottom left corner to adjust the segments and shape)
+- ⊳ **CTRL + R**: Loop cut the selected geometry
+- ⊳ **F**: Fill the space between selected geometry
+</QuoteBlock>
+
+You can read more about all the available shortcuts [here](https://docs.blender.org/manual/en/3.5/interface/keymap/blender_default.html#default-keymap). The shortcuts stated above are just a small 
+selection of the available ones, but it's a great selection to start with. You'll learn more tools as you go and when you're ready to try and explore it on your own.
+
+### Modelling Techniques
+
+Using some of the shortcuts above, [this video](https://youtu.be/kejQ8nX5YZA?si=h2ocrxHlZiUV8cK2) is a great example of how you can achive a great result with few tools. 
+
+export default ({ children }) => <BlogPost content={children} data={data} />;
