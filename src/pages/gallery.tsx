@@ -110,11 +110,11 @@ function randomFakeImages(amount: number): GalleryImage[] {
 const Gallery = () => {
   const { data: fastImages } = trpc.useQuery(
     ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
-    { context: { skipBatch: true } }
+    { context: { skipBatch: true }, enabled: true }
   );
   const { data: slowImages, refetch } = trpc.useQuery(
     ["gallery.getAllS3Thumbnails", { categoryName: "Gallery" }],
-    { context: { skipBatch: true } }
+    { context: { skipBatch: true }, enabled: false, ssr: false }
   );
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
   const [images, setImages] = useState<any[] | undefined>(undefined);
@@ -136,10 +136,9 @@ const Gallery = () => {
 
   useEffect(() => {
     let imgs = randomFakeImages(20);
-    setImages(imgs);
+    //setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
-    setImageTiling(x);
-    console.log("HELLO");
+    //setImageTiling(x);
   }, []);
 
   useEffect(() => {
