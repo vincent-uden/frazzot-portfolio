@@ -51,11 +51,7 @@ const getBaseUrl = () => {
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    const url = `${getBaseUrl()}/api/trpc`;
+    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:3000/api/trpc`;
     const cookies = new Cookies();
 
     return {
@@ -66,6 +62,16 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       headers() {
+        if (ctx?.req) {
+          const {
+            connection: _connection,
+            ...headers
+          } = ctx.req.headers;
+          return {
+            ...headers,
+            'x-ssr': '1',
+          };
+        }
         return {};
       },
       links: [
@@ -83,8 +89,5 @@ export default withTRPC<AppRouter>({
       ],
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
-  ssr: false,
+  ssr: true,
 })(MyApp);
