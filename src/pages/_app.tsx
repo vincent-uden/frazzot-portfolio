@@ -51,7 +51,12 @@ const getBaseUrl = () => {
 
 export default withTRPC<AppRouter>({
   config({ ctx }) {
-    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:3000/api/trpc`;
+    const url = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/api/trpc`
+      : (
+      process.env.NEXT_PUBLIC_VERCEL_URL ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/trpc` :
+      `http://localhost:3000/api/trpc`
+      );
     const cookies = new Cookies();
 
     return {
@@ -63,12 +68,10 @@ export default withTRPC<AppRouter>({
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       headers() {
         if (ctx?.req) {
-          const {
-            ...headers
-          } = ctx.req.headers;
+          const { connection: _connection, ...headers } = ctx.req.headers;
           return {
             ...headers,
-            'x-ssr': '1',
+            "x-ssr": "1",
           };
         }
         return {};
