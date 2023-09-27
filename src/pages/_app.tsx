@@ -67,11 +67,12 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       headers() {
+        console.log("HLLEOEEOEO");
         if (ctx?.req) {
           const { connection: _connection, ...headers } = ctx.req.headers;
           return {
-            ...headers,
             "x-ssr": "1",
+            ...headers,
           };
         }
         return {};

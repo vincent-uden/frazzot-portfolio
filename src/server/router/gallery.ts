@@ -93,12 +93,45 @@ export const galleryRouter = createRouter()
       return await getSignedUrl(s3, command, { expiresIn: 604800 });
     },
   })
+  .query("getAllS3ThumbnailsFast", {
+    input: z.object({
+      categoryName: z.string().nullish(),
+    }),
+    resolve: async ({ input, ctx }) => {
+      console.log("getAllS3ThumbnailsFast");
+      console.log(ctx?.req?.headers);
+      //console.log(ctx?.req?.headers["x-ssr"]);
+
+      let imgs = [];
+      if (input.categoryName == null) {
+        imgs = await db
+          .select()
+          .from(galleryImages)
+          .orderBy(asc(galleryImages.displayIndex));
+      } else {
+        imgs = (
+          await db
+            .select()
+            .from(galleryImages)
+            .leftJoin(
+              imageCategories,
+              eq(galleryImages.categoryId, imageCategories.id)
+            )
+            .where(eq(imageCategories.name, input.categoryName))
+            .orderBy(asc(galleryImages.displayIndex))
+        ).map((row: any) => row.GalleryImage);
+      }
+      return imgs;
+    },
+  })
   .query("getAllS3Thumbnails", {
     input: z.object({
       categoryName: z.string().nullish(),
     }),
     resolve: async ({ input, ctx }) => {
-      console.log(ctx.req?.headers["x-ssr"]);
+      console.log("getAllS3Thumbnails");
+      console.log(ctx?.req?.headers);
+      console.log(ctx?.req?.headers["x-ssr"]);
       let imgs = [];
       if (input.categoryName == null) {
         imgs = await db
@@ -186,34 +219,6 @@ export const galleryRouter = createRouter()
             .orderBy(asc(galleryImages.displayIndex))
         ).map((row: any) => row.GalleryImage);
       }
-    },
-  })
-  .query("getAllS3ThumbnailsFast", {
-    input: z.object({
-      categoryName: z.string().nullish(),
-    }),
-    resolve: async ({ input, ctx }) => {
-      console.log(ctx?.req?.headers["x-ssr"]);
-      let imgs = [];
-      if (input.categoryName == null) {
-        imgs = await db
-          .select()
-          .from(galleryImages)
-          .orderBy(asc(galleryImages.displayIndex));
-      } else {
-        imgs = (
-          await db
-            .select()
-            .from(galleryImages)
-            .leftJoin(
-              imageCategories,
-              eq(galleryImages.categoryId, imageCategories.id)
-            )
-            .where(eq(imageCategories.name, input.categoryName))
-            .orderBy(asc(galleryImages.displayIndex))
-        ).map((row: any) => row.GalleryImage);
-      }
-      return imgs;
     },
   })
   .middleware(async ({ ctx, next }) => {
