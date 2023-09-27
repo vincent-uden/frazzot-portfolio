@@ -192,7 +192,8 @@ export const galleryRouter = createRouter()
     input: z.object({
       categoryName: z.string().nullish(),
     }),
-    resolve: async ({ input }) => {
+    resolve: async ({ input, ctx }) => {
+      console.log(ctx?.req?.headers["x-ssr"]);
       let imgs = [];
       if (input.categoryName == null) {
         imgs = await db
