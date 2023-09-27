@@ -22,9 +22,10 @@ const Layout = ({ children }: Props) => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [greyMenuOpen, setGreyMenuOpen] = useState<boolean>(false);
 
+  const [prefetchImages, setPrefetchImages] = useState<boolean>(false);
   const { data: fastImages } = trpc.useQuery(
     ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
-    { context: { skipBatch: true }, enabled: false }
+    { context: { skipBatch: true }, enabled: prefetchImages }
   );
 
   const menuOnClick = useCallback(async () => {
@@ -103,6 +104,7 @@ const Layout = ({ children }: Props) => {
               <a
                 className="no-ligature flex h-full flex-col justify-center"
                 aria-label="Gallery"
+                onMouseEnter={() => setPrefetchImages(true)}
               >
                 GALLERY
               </a>

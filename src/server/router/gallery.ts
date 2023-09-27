@@ -99,8 +99,7 @@ export const galleryRouter = createRouter()
     }),
     resolve: async ({ input, ctx }) => {
       console.log("getAllS3ThumbnailsFast");
-      console.log(ctx?.req?.headers);
-      //console.log(ctx?.req?.headers["x-ssr"]);
+      console.log(ctx?.req?.headers["x-ssr"]);
 
       let imgs = [];
       if (input.categoryName == null) {
@@ -130,7 +129,7 @@ export const galleryRouter = createRouter()
     }),
     resolve: async ({ input, ctx }) => {
       console.log("getAllS3Thumbnails");
-      console.log(ctx?.req?.headers);
+      //console.log(ctx?.req?.headers);
       console.log(ctx?.req?.headers["x-ssr"]);
       let imgs = [];
       if (input.categoryName == null) {

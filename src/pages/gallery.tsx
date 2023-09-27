@@ -108,25 +108,26 @@ function randomFakeImages(amount: number): GalleryImage[] {
 }
 
 const Gallery = () => {
-  const { data: fastImages, refetch: fastRefetch } = trpc.useQuery(
+  const { data: fastImages, refetch: fastRefetch, isLoading, isFetching } = trpc.useQuery(
     ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
-    { context: { skipBatch: true }}
+    { context: { skipBatch: false }}
   );
-  /*
   const { data: slowImages, refetch: slowRefetch } = trpc.useQuery(
     ["gallery.getAllS3Thumbnails", { categoryName: "Gallery" }],
-    { context: { skipBatch: true }, enabled: true }
+    { context: { skipBatch: false }}
   );
-  */
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
   const [images, setImages] = useState<any[] | undefined>(undefined);
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
 
-  let slowImages: any = undefined;
+  let y = 0;
 
   useEffect(() => {
+    console.log("Slow images: ", slowImages);
+    console.log("Fast images: ", fastImages);
+    console.log(y);
     if (slowImages !== undefined) {
       setImages(slowImages);
       const x = tileImages(slowImages, imgHolderRef, gap);
@@ -138,6 +139,7 @@ const Gallery = () => {
       setImageTiling(x);
       console.log("Using fast images");
     }
+    y += 1;
   }, [slowImages, fastImages]);
 
   useEffect(() => {
@@ -145,7 +147,13 @@ const Gallery = () => {
     //setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
     //setImageTiling(x);
+    console.log("Using fake images");
+    console.log(y);
+    console.log(images);
     console.log(fastImages);
+    console.log(slowImages);
+    console.log(isLoading);
+    console.log(isFetching);
   }, []);
 
   useEffect(() => {

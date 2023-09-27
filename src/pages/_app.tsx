@@ -39,18 +39,15 @@ const MyApp = ({
   );
 };
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") {
-    return "";
-  }
-  if (process.browser) return ""; // Browser should use current path
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
-
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
-
 export default withTRPC<AppRouter>({
   config({ ctx }) {
+    if (typeof window !== "undefined") {
+      return {
+        transformer: superjson,
+        url: "/api/trpc",
+      };
+    }
+
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
       : (
@@ -67,8 +64,9 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       headers() {
-        console.log("HLLEOEEOEO");
+        console.log("SSR?:");
         if (ctx?.req) {
+          console.log("YES");
           const { connection: _connection, ...headers } = ctx.req.headers;
           return {
             "x-ssr": "1",
