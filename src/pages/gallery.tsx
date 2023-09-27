@@ -142,9 +142,9 @@ const Gallery = () => {
 
   useEffect(() => {
     let imgs = randomFakeImages(20);
-    setImages(imgs);
+    //setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
-    setImageTiling(x);
+    //setImageTiling(x);
     console.log(fastImages);
   }, []);
 
