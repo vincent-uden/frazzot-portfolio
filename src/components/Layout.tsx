@@ -12,12 +12,19 @@ import {
   PatreonIcon,
   YoutubeIcon,
 } from "./SocialIcons";
+import { trpc } from "../utils/trpc";
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout = ({ children }: Props) => {
+  const { data: fastImages } = trpc.useQuery(
+    ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
+  );
+  const { data: slowImages } = trpc.useQuery(
+    ["gallery.getAllS3Thumbnails", { categoryName: "Gallery" }],
+  );
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [greyMenuOpen, setGreyMenuOpen] = useState<boolean>(false);
 
