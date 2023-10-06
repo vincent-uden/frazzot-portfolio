@@ -20,6 +20,7 @@ const Sketchbook = () => {
     { categoryName: categoryNames[selectedCategory]!! },
   ]);
   const imgHolderRef = useRef<HTMLDivElement | null>(null);
+  const subTitleRef = useRef<HTMLDivElement | null>(null);
   const gap = 8;
 
   const router = useRouter();
@@ -127,7 +128,13 @@ const Sketchbook = () => {
             className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 0 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
-            onClick={(e) => setSelectedCategory(0)}
+            onClick={(_) => {
+              setSelectedCategory(0);
+              subTitleRef.current?.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+              });
+            }}
           >
             <h2
               className={`my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
@@ -141,7 +148,13 @@ const Sketchbook = () => {
             className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 1 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
-            onClick={(e) => setSelectedCategory(1)}
+            onClick={(_) => {
+              setSelectedCategory(1);
+              subTitleRef.current?.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+              });
+            }}
           >
             <h2
               className={`no-ligature my-auto py-4 text-center font-stretch text-base transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
@@ -155,7 +168,13 @@ const Sketchbook = () => {
             className={`flex w-full cursor-pointer flex-col justify-around border-2 border-yellowpeach transition-colors ${
               selectedCategory === 2 ? "bg-greyblack" : "bg-yellowpeach"
             }`}
-            onClick={(e) => setSelectedCategory(2)}
+            onClick={(_) => {
+              setSelectedCategory(2);
+              subTitleRef.current?.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+              });
+            }}
           >
             <h2
               className={`my-auto py-4 text-center font-stretch text-lg transition-transform hover:scale-110 md:text-2xl lg:py-8 ${
@@ -188,7 +207,7 @@ const Sketchbook = () => {
 
       <div className="bg-yellowpeach">
         <div className="ml-8 w-fit md:mx-auto">
-          <h1 className="relative grid w-auto grid-cols-1 grid-rows-2 text-left font-stretch text-2xl text-yellowpeach md:block md:bg-greyblack md:text-center md:text-3xl lg:text-4xl xl:text-6xl">
+          <h1 className="relative grid w-auto grid-cols-1 grid-rows-2 text-left font-stretch text-2xl text-yellowpeach md:block md:bg-greyblack md:text-center md:text-3xl lg:text-4xl xl:text-6xl" ref={subTitleRef}>
             <span className="bg-greyblack pl-4 pr-4 md:pr-0">SKETCHBOOK</span>{" "}
             <span className="no-ligature bg-greyblack px-4 md:px-0 md:pr-4">
               GALLERY
