@@ -180,7 +180,7 @@ const Sketchbook = () => {
           "Ayanami Rei: Evangelion",
           "Gyro Zeppeli: JoJo Part 7",
           "Pinterest Male // Portrait Study",
-          "Javier Arthur: RDR2",
+          "Javier Escuella: RDR2",
           "Uzumaki",
         ]}
       />

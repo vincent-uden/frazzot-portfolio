@@ -10,6 +10,11 @@ import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
 import { GalleryImage } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
 
+type UiName = {
+  id: string;
+  name: string;
+};
+
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
   const [filterCategory, setFilterCategory] = useState<number>(0);
@@ -22,7 +27,8 @@ const Admin = () => {
   const [hoveredImage, setHoveredImage] = useState<GalleryImage | null>(null);
   const [hoveredImageX, setHoveredImageX] = useState(0);
   const [hoveredImageY, setHoveredImageY] = useState(0);
-  const [uiImageNames, setUiImagesNames] = useState<string[]>([]);
+
+  const [uiImageNames, setUiImagesNames] = useState<UiName[]>([]);
 
   const [loginErrors, setLoginErrors] = useState<EmailError[]>([]);
 
@@ -33,8 +39,8 @@ const Admin = () => {
     {
       onSuccess: (data) => {
         const names = [];
-        for (const _ of data) {
-          names.push("");
+        for (const x of data) {
+          names.push({ id: x.GalleryImage.id, name: "" });
         }
         setUiImagesNames(names);
       },
@@ -127,11 +133,10 @@ const Admin = () => {
 
   const updateImageNames = useCallback(() => {
     for (let i = 0; i < uiImageNames.length; i++) {
-      if (uiImageNames[i] != "") {
-        //images[i]!!.name = uiImageNames[i];
+      if (uiImageNames[i]?.name != "") {
         imageUpdateOneMut.mutate({
-          id: images!![i]!!.GalleryImage.id,
-          name: uiImageNames[i],
+          id: uiImageNames[i]!!.id,
+          name: uiImageNames[i]!!.name,
         });
       }
     }
@@ -416,11 +421,6 @@ const Admin = () => {
                   </th>
                 </tr>
                 {images
-                  ?.filter(
-                    (img) =>
-                      img.GalleryImage.categoryId ==
-                      categories?.at(filterCategory)?.id
-                  )
                   ?.map((img, i, allImgs) => {
                     return (
                       <tr
@@ -441,13 +441,16 @@ const Admin = () => {
                             className="text-input transition-colors focus:border-lilac"
                             type="text"
                             placeholder={img.GalleryImage.name}
-                            value={uiImageNames[i]}
+                            value={uiImageNames[i]!!.name}
                             onChange={(e) => {
-                              const imgNames = uiImageNames.map((name, j) => {
-                                if (i === j) {
-                                  return e.target.value;
+                              const imgNames = uiImageNames.map((uiName) => {
+                                if (uiName.id == img.GalleryImage.id) {
+                                  return {
+                                    id: uiName.id,
+                                    name: e.target.value,
+                                  };
                                 } else {
-                                  return name;
+                                  return uiName;
                                 }
                               });
                               setUiImagesNames(imgNames);
@@ -502,7 +505,12 @@ const Admin = () => {
                         </td>
                       </tr>
                     );
-                  })}
+                  })
+                  ?.filter(
+                    (_, i) =>
+                      images[i]?.GalleryImage?.categoryId ==
+                      categories?.at(filterCategory)?.id
+                  )}
               </tbody>
             </table>
 
