@@ -1,0 +1,215 @@
+import {
+  BlogPost,
+  RightStack,
+  LeftStack,
+  QuoteBlock,
+} from "../../components/BlogPost.tsx";
+
+export const data = {
+  title: "Graduation Project",
+  author: "Ida",
+  date: "2023-10-17",
+  time: "05:51 PM",
+};
+
+In June 2023, I graduated from a game art school here in Sweden. The final year was packed with projects and hands-on learning. Just before my internship, I had seven weeks for my graduation project.  Without a group, creating my own game felt like a shot in the dark. Still, I aimed to create something useful and shareable to play with in real time. This led me to develop my own Custom Content pack for The Sims 4. For those unfamiliar, I've written a blog post about The Sims 4 modding and CC [right here](/blog_posts/guide_the_sims_4_modding). This undertaking proved to be quite challenging due to my limited prior knowledge about modding. Despite that, the final product turned out pretty good and I learned a lot.
+
+Now, I thought, why not share this experience with a wider audience? There's no need for my dissertation to continue "collect digital dust" if I can offer valuable insights into the creative process. *However*, I must acknowledge that this may not be regarded as a wholly reliable tutorial. This given that I completed the project some time ago, and certain methods have been updated since then. I do intend to craft a more comprehensive CC creation guide at a later date though.
+
+![MWR Logo](/img/blog/blog_post_images/logo_orange_.png)
+
+The purpose of this project was to explore the process of creating CC (Custom Content) for The Sims 4. This would be accomplished in the form of a themed collection of various functional and decorative interior items for the game. The scope was difficult to specify at the beginning of the project, as it was uncertain how much time would be spent learning the programs. However, it was crucial that all objects imitated the aesthetic of The Sims 4, both in shape and texture. 
+
+A set of goals was established at the outset of the project:
+
+<QuoteBlock>
+- ⊳ Create a collection of functional and aesthetically imitative objects.
+- ⊳ Render images/screenshots from the game with functioning objects.
+- ⊳ Individual renderings of all objects.
+- ⊳ Promo material for the final presentation and upload.
+</QuoteBlock>
+
+Early in the planning phase, the style of a modern and rustic winter-themed collection was established, hence the name "Modern Winter Rustics." Tools for planning and structuring the project were set up using [Trello](https://trello.com/). This greatly facilitated the work, as it involved many components and switches between programs in the creation of an object. 
+
+Once the style and approximate scope for the project were established, I studied and investigated S4S (Sims 4 Studio) and its interactions with Blender. It was crucial to use the correct version of Blender because S4S only supported a limited number of older versions of Blender.  
+
+Therefore, an object underwent two versions of Blender: v.3.1 for modeling and UV mapping, followed by export to .obj and then import into v.2.78. Production of objects was deemed to progress significantly faster in v.3.1, making it not worthwhile to work exclusively in v.2.78. 
+
+As of the state when writing this blog post, there is a new version of S4S that supports later versions of Blender, making this much simpler.
+
+## Sims 4 Studio
+
+Sims 4 Studio is a third-party program created by players and modders. This program packages Blender files into a .package file. This is the format for all modded files aside from script files used in TS4 (The Sims 4). The program also handles the management of textures, palettes, descriptions, rigging, placement, and other functions that objects require. 
+
+### The problem I had with cut numbers
+
+*“Cut numbers are what Sims 4 Studio uses to determine which mesh group in
+your .blend will be used to replace an EA mesh group in the original LOD. If the
+EA item you cloned has multiple mesh groups, you need to have a
+corresponding mesh group for each and your mesh group must have the cut
+number of the EA mesh group you want it to replace. If you are missing a cut
+number, Studio will not replace the EA mesh group that has that cut number,
+and it will stay in the package, show in the Studio model viewer, and be visible
+in the game.”*
+
+Quoted from a post on Sims 4 Studio's official forum by admin Orangemittens. Throughout this project, primarily cut numbers 0, 1, and 2 have been used, though there are others, including those used to conceal various regions of items like parts of clothing that need to be covered, etc.
+
+The issue with these numbers is the lack of comprehensive documentation regarding their specific purposes. As Orangemittens also pointed out, the portion of the item won't be replaced if the cut number is incorrect or missing. This naturally led to some troubleshooting, which proved relatively challenging to find any logical patterns in. The most pragmatic solution to this was to use an EA item with similar attributes as a base to ensure the final item had the right characteristics. Cut numbers can be adjusted through a setting under "Scene" in Blender. Accessing this setting requires a plugin, along with a link to the file path for Blender's program file in S4S.
+
+<RightStack masterWidth="70%">
+
+- After extensive testing, it became evident that the majority of base items used cut 0 for shadows and cut 1 for the actual model. 
+- The shadow is represented by a plane mapped with various standard textures, see the attached image. However, TS4 uses different types of light baking, meaning the item also requires a shadow model. This is achieved by removing the shadow plane and changing the cut from 1 to 0 on the item, then saving it as a separate .blend file. This file is then imported into S4S as a distinct file for each LOD level.
+
+![Shadow textures](/img/blog/blog_post_images/shadow.png)
+*[Image Source](https://sims4studio.com/thread/22030/change-texture-floor-shadow)*
+
+</RightStack>
+
+## Progress Log
+
+During the project, each day was documented in the form of a logbook. Below is a summarized version, week by week, of the progress made.
+
+### Week 1
+
+The week began with a review of materials, an exploration of the potential scope for the project, and the establishment of a style for the items to be created. Some issues arose in the program workflow, particularly regarding which versions of Blender were compatible with S4S.
+
+During the first week, a draft of the dining table was produced, along with a low-poly model and UVs for a kitchen chair.
+
+<RightStack masterWidth="66.5%">
+
+![Table in the sims 4](/img/blog/blog_post_images/table.png)
+*First draft of the dining table.*
+
+![3D model of chair](/img/blog/blog_post_images/chair.png)
+*3D model of the dining chair*
+
+</RightStack>
+
+### Week 2
+
+At the beginning of week two, all alternative colour schemes for the dining table and kitchen chair were addressed. New smart materials were set up in Substance Painter to be able to apply material settings to upcoming furniture.
+
+Towards the end of the week, a painting with various colour schemes was created, and the beginnings of a couple of curtains were initiated. There were several issues with the curtains due to incorrect animation settings in S4S. I therefore later on decided to scrap them.
+
+<RightStack masterWidth="46.5%">
+
+![Dining setup](/img/blog/blog_post_images/dining_setup.png)
+*Dining setup with finished textures*
+
+![S4S swatches](/img/blog/blog_post_images/swatches_painting.png)
+*Painting with swatches in S4S.*
+
+</RightStack>
+
+### Week 3
+
+Continued investigation into the issues with the curtains. They were textured and finalized in hopes that a setting in S4S would solve the problem. A vase with rowan berries was also initiated. It was challenging to maintain a sufficiently low polygon count, but this was eventually resolved.
+
+The vase with rowan berries became an experiment and a challenge of style. Ultimately, it was not included in the collection, but it proved to be a rewarding technical challenge for efficient work in Blender.
+
+Towards the end of the week, a simple table decoration in the form of a fir tree was also started.
+
+<RightStack masterWidth="65.3%">
+
+![Rowan berry vase](/img/blog/blog_post_images/rowan.png)
+*Vase with rowan berries.*
+
+![Tree Deco](/img/blog/blog_post_images/tree_deco.png)
+*3D model of tree decoration.*
+
+</RightStack>
+
+### Week 4
+
+During this week, I began working on a model for a shelf. It proved to be a valuable challenge to emulate the style of the previously created dining table.
+
+Some issues arose with glossy effects in TS4 on the model. This led to spending my whole Friday in the company of S4S documentation in order to comprehend all the additional maps and effects in the game.
+
+<RightStack masterWidth="31.5%">
+
+![3D shelf](/img/blog/blog_post_images/shelf.png)
+*3D model of the shelf.*
+
+![Shadow shelf](/img/blog/blog_post_images/shadow_shelf.png)
+*Texture map of the shadow for the shelf, projected on a plane.*
+
+</RightStack>
+
+### Week 5
+
+<RightStack masterWidth="70%">
+
+- Early in week five, the issue with the effect on the shelf was resolved. Ultimately, a different base mesh was used as a starting point, as it was highly likely that the problem lay with the original reference mesh.
+- All colour schemes for the shelf were sorted out this week - a total of 50! An afternoon was spent re-rigging and adjusting the height where items are placed on the shelf.
+
+![Rig shelf](/img/blog/blog_post_images/rig_shelf.png)
+*S4S rig display*
+
+</RightStack>
+
+### Week 6
+
+During week six, a new table decoration representing text in "Simlish" was created. This was accomplished in a single day - a notable efficiency improvement this week!
+
+Additionally, a wall decoration in the form of a snowflake was created from start to finish.
+
+<RightStack masterWidth="75%">
+
+![Text deco in-game](/img/blog/blog_post_images/text_deco.png)
+*Text deco in-game.*
+
+![Snowflake](/img/blog/blog_post_images/snowflake.png)
+*S4S snowflake.*
+
+</RightStack>
+
+### Week 7
+
+Final week! This week involved a substantial amount of dissertation writing, and surprisingly, two more items were added to the collection: an armchair and a small side table. Like the shelf, the side table required a new rig and height adjustments for the items.
+
+These items truly put my skills to the test with great success, demonstrating that practice leads to proficiency and efficiency!
+
+In addition to this, all materials for the presentation were prepared, including final renders and graphic designs to match the aesthetic.
+
+<RightStack masterWidth="52.2%">
+
+![3D armchair](/img/blog/blog_post_images/3D_armchair.png)
+*Armchair mesh in Blender.*
+
+![3D sidetable](/img/blog/blog_post_images/3D_sidetable.png)
+*Sidetable mesh in Blender.*
+
+</RightStack>
+
+## Results
+
+Finally, there were a total of 9 game-ready original items for Sims 4. I have made these available for the public on my [second patreon](https://www.patreon.com/posts/modern-winter-cc-75112014?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link) for you to play with. Below are numerous renderings and a video showcasing how the items look in the game.
+
+The collection includes many more swatches than those presented below, in order to shorten rendering time... 
+
+![Collection wide](/img/blog/blog_post_images/wide_logo.png)
+
+<RightStack masterWidth="48.7%">
+
+![Combined split colours](/img/blog/blog_post_images/combined.png)
+
+![Collage swatches](/img/blog/blog_post_images/combined_4_.png)
+
+</RightStack>
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/showcase_gp_1.mp4" type="video/mp4"></source>
+</video>
+
+## Conclusion
+
+In reflecting on this project, It is clear that the weeks were marked by both challenges and achievements. From the outset, defining goals and navigating through unexpected hurdles required a blend of creativity, technical skill, and problem-solving.
+
+I was committed to improvement during the whole project, and I'd say that the most of my issues with compatibility and aesthetics were successfully overcome. The iterative process not only honed my technical proficiency but also reinforced the value of adaptability and resourcefulness in the face of unforeseen complications. Because there were times when I had to start over with new strategies very frequently.
+
+By sharing these creations, both for the purpose of community engagement and as a testament to the learning journey, I am definitely satisfied with this project.
+
+Thank you for reading, I hope you found it somewhat interesting!
+
+export default ({ children }) => <BlogPost content={children} data={data} />;
