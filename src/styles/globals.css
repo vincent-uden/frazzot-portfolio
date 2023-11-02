@@ -353,6 +353,126 @@ span:nth-child(5) > .gallery-show-img {
   animation-timing-function: ease-in-out;
 }
 
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideTopToBottom {
+    from {
+        transform: translateY(-100vh);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slideBottomToTop {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slideLeftToRight {
+    from {
+        transform: translateX(-100vw);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes slideRightToLeft {
+    from {
+        transform: translateX(100vw);
+    }
+
+    to {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-fadein {
+    animation-name: fade-in;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.animate-slideTopToBottom {
+    animation-name: slideTopToBottom;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.animate-slideBottomToTop {
+    animation-name: slideBottomToTop;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.animate-slideLeftToRight {
+    animation-name: slideLeftToRight;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.animate-slideRightToLeft {
+    animation-name: slideRightToLeft;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.animate-slideLeftToRightFast {
+    animation-name: slideLeftToRight;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.05,.74,.26,.96);
+}
+
+.animate-slideRightToLeftFast {
+    animation-name: slideRightToLeft;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.05,.74,.26,.96);
+}
+
+.animate-pulse {
+    animation-name: pulse;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
 :root {
   color-scheme: dark;
 }
