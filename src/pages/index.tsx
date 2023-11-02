@@ -17,6 +17,7 @@ import {
 } from "../components/SocialIcons";
 import Link from "next/link";
 import { useAnalytics } from "../utils/useAnalytics";
+import { ScrollAnimation } from "../components/ScrollAnimation";
 
 function getWindowDimensions() {
   if (typeof window !== "undefined") {
@@ -100,9 +101,9 @@ const Home: NextPageWithLayout = () => {
 
       <div className="holo-panel z-10 shadow-panel">
         <div className="h-8"></div>
-        <h2 className="text-center font-stretch text-4xl text-greyblack md:text-6xl">
-          WELCOME
-        </h2>
+          <h2 className="text-center font-stretch text-4xl text-greyblack md:text-6xl">
+            WELCOME
+          </h2>
         <div className="h-8"></div>
         <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-gothic text-lg text-greyblack md:max-w-[60vw] md:px-0 md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
