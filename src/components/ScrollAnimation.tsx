@@ -6,6 +6,8 @@ type AnimationType =
   | "slideBottomToTop"
   | "slideLeftToRight"
   | "slideRightToLeft"
+  | "slideLeftToRightFast"
+  | "slideRightToLeftFast"
   | "pulse"
   | "debug";
 
@@ -15,6 +17,7 @@ interface Props {
   scrollOffset?: number;
   repeat?: boolean;
   animLength?: string;
+  className?: string;
 }
 
 export const ScrollAnimation = ({
@@ -23,6 +26,7 @@ export const ScrollAnimation = ({
   scrollOffset,
   repeat,
   animLength,
+  className,
 }: Props) => {
   const [onScreen, setOnScreen] = useState(false);
 
@@ -56,7 +60,8 @@ export const ScrollAnimation = ({
       if ((entries[0]?.intersectionRatio ?? 0.0) > 0.0) {
         setBotOnScreen(true);
       } else {
-        if (repeat === true) { setBotOnScreen(false);
+        if (repeat === true) {
+          setBotOnScreen(false);
         }
       }
     });
@@ -68,8 +73,12 @@ export const ScrollAnimation = ({
     <div
       className={`relative ${type == "debug" ? "transition-colors" : ""} ${
         onScreen ? "animate-" + type : ""
-      } ${type == "debug" && onScreen ? "bg-green-500" : ""}`}
-      style={{animationDuration: animLength ?? "1s"}}
+      } ${type == "debug" && onScreen ? "bg-green-500" : ""} ${
+        type != "pulse" && type != "debug" && !onScreen
+          ? "invisible"
+          : "visible"
+      } `  + (className ?? "")}
+      style={{ animationDuration: animLength ?? "1s" }}
     >
       {/* Upper and lower offset intersection detection divs */}
       <div

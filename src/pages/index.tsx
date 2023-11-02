@@ -88,11 +88,13 @@ const Home: NextPageWithLayout = () => {
             <h1 className="md:mr-30 my-4 font-stretch text-7xl text-mint lg:mr-48">
               FRAZZOT
             </h1>
-            <div className="h-8 w-full bg-holo">
-              <h2 className="relative top-1/2 ml-4 -translate-y-1/2 font-stretch text-xl text-greyblack">
-                DIGITAL ARTIST_
-              </h2>
-            </div>
+            <ScrollAnimation type="slideRightToLeftFast" animLength="0.4s">
+              <div className="h-8 w-full bg-holo">
+                <h2 className="relative top-1/2 ml-4 -translate-y-1/2 font-stretch text-xl text-greyblack">
+                  DIGITAL ARTIST_
+                </h2>
+              </div>
+            </ScrollAnimation>
           </aside>
         </FadeIn>
 
@@ -101,9 +103,11 @@ const Home: NextPageWithLayout = () => {
 
       <div className="holo-panel z-10 shadow-panel">
         <div className="h-8"></div>
+        <ScrollAnimation type="pulse" animLength="0.3s" scrollOffset={400}>
           <h2 className="text-center font-stretch text-4xl text-greyblack md:text-6xl">
             WELCOME
           </h2>
+        </ScrollAnimation>
         <div className="h-8"></div>
         <p className="relative left-1/2 -translate-x-1/2 px-[15vw] text-center font-gothic text-lg text-greyblack md:max-w-[60vw] md:px-0 md:text-2xl">
           THIS IS MY PERSONAL CREATIVE CORNER. HERE YOU CAN FIND EVERYTHING FROM
@@ -131,7 +135,7 @@ const Home: NextPageWithLayout = () => {
 
       <div className="h-8 md:h-24" />
       <div className="w-full overflow-x-hidden overflow-y-hidden bg-pattern-holo-short bg-[length:768px_150px] bg-bottom bg-repeat-x pb-44 md:bg-[length:1920px_320px] md:pb-64">
-        <div className="index-grid mx-[5vw] w-[90vw] overflow-x-hidden md:mx-[10vw] md:w-[80vw]">
+        <div className="index-grid mx-[5vw] w-[90vw] overflow-x-hidden md:overflow-x-visible md:mx-[10vw] md:w-[80vw]">
           <div
             className="invisible col-start-1 col-end-3 row-span-1 my-4 w-full overflow-x-hidden bg-holo p-4 shadow-panel md:my-12 lg:visible lg:col-end-2 lg:row-span-2 lg:my-0 lg:p-8"
             ref={measuredRef}
@@ -193,7 +197,11 @@ const Home: NextPageWithLayout = () => {
               </p>
             </div>
           </div>
-          <div className="col-start-1 col-end-3 row-start-3 row-end-4 my-auto h-2 w-full bg-mint md:h-8"></div>
+          <div className="col-start-1 col-end-3 row-start-3 row-end-4 my-auto h-2 w-full md:h-8">
+            <ScrollAnimation type="slideLeftToRight" animLength="0.5s" scrollOffset={200}>
+              <div className="bg-mint h-2 md:h-8 w-full"></div>
+            </ScrollAnimation>
+          </div>
           <div className="col-start-1 col-end-3 row-start-4 row-end-5 bg-holo p-[2px] md:col-start-1">
             <div className="grid h-full bg-greyblack p-4 md:p-8">
               <Link href={"/sketchbook"}>
@@ -235,10 +243,11 @@ const Home: NextPageWithLayout = () => {
           <div className="col-start-1 col-end-3 row-start-5 row-end-6 my-auto hidden h-2 w-full bg-mint lg:block lg:h-8 xl:hidden"></div>
           <Link href={"/gallery"}>
             <a
-              className="col-start-1 col-end-3 row-start-6 row-end-7 flex xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5"
+              className="col-start-1 col-end-3 row-start-6 row-end-7 md:flex xl:col-start-3 xl:col-end-3 xl:row-start-1 xl:row-end-5"
               aria-label="Gallery"
             >
-              <div className="h-[80vh] w-full bg-holo p-[2px] xl:h-auto">
+            <ScrollAnimation type="slideRightToLeft" animLength="0.5s" scrollOffset={-400} className="w-full">
+              <div className="h-[80vh] w-full bg-holo p-[2px] xl:h-full">
                 <div className="flex h-full w-full flex-col bg-greyblack p-4 md:p-8">
                   <div className="relative top-0 left-0 grow overflow-x-hidden">
                     {[
@@ -264,6 +273,7 @@ const Home: NextPageWithLayout = () => {
                   </h3>
                 </div>
               </div>
+            </ScrollAnimation>
             </a>
           </Link>
         </div>

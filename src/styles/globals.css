@@ -365,7 +365,7 @@ span:nth-child(5) > .gallery-show-img {
 
 @keyframes slideTopToBottom {
     from {
-        transform: translateY(-100%);
+        transform: translateY(-100vh);
     }
 
     to {
@@ -375,7 +375,7 @@ span:nth-child(5) > .gallery-show-img {
 
 @keyframes slideBottomToTop {
     from {
-        transform: translateY(100%);
+        transform: translateY(100vh);
     }
 
     to {
@@ -385,7 +385,7 @@ span:nth-child(5) > .gallery-show-img {
 
 @keyframes slideLeftToRight {
     from {
-        transform: translateX(-100%);
+        transform: translateX(-100vw);
     }
 
     to {
@@ -395,7 +395,7 @@ span:nth-child(5) > .gallery-show-img {
 
 @keyframes slideRightToLeft {
     from {
-        transform: translateX(100%);
+        transform: translateX(100vw);
     }
 
     to {
@@ -409,7 +409,7 @@ span:nth-child(5) > .gallery-show-img {
     }
 
     50% {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 
     100% {
@@ -450,6 +450,20 @@ span:nth-child(5) > .gallery-show-img {
     animation-iteration-count: 1;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
+}
+
+.animate-slideLeftToRightFast {
+    animation-name: slideLeftToRight;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.05,.74,.26,.96);
+}
+
+.animate-slideRightToLeftFast {
+    animation-name: slideRightToLeft;
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-timing-function: cubic-bezier(.05,.74,.26,.96);
 }
 
 .animate-pulse {
