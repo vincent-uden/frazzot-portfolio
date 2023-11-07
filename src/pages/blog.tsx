@@ -59,7 +59,7 @@ const CATEGORIES = [
     color: "sky",
   },
   {
-    header: "EGROUKORA",
+    header: "MELAVONITH",
     body: "A WORLDBUILDING PROJECT WITH THE AMBITION OF BECOMING A COMIC, YOU CAN READ MORE ABOUT THE CHARACTERS, WORLD AND STORY HERE.",
     color: "sky",
   },
