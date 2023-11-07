@@ -25,9 +25,10 @@ const About: NextPage = () => {
 
       <div className="bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x md:bg-[length:1920px_330px]">
         <div className="relative mx-auto grid max-w-screen-xl grid-cols-7 gap-x-2 px-8 md:px-16">
-          <div className="absolute top-32 left-16 mr-0 h-min translate-y-20 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0">
+          <div className="absolute top-32 left-16 mr-0 h-min translate-y-96 bg-holo md:static md:col-span-3 md:mr-16 md:h-full md:translate-y-0 invisible md:visible">
             <div className="w-[30vw] scale-125 md:h-[300px] md:w-[300px]">
               <Image
+                className="invisible md:visible"
                 src="/img/moi2.png"
                 width="1246px"
                 height="2000px"
@@ -42,21 +43,24 @@ const About: NextPage = () => {
               </h2>
               <div className="h-4 md:h-8"></div>
               <p className="font-gothic text-sm text-lilac md:text-lg">
-                WELCOME TO MY WEBSITE! I'M FRAZZOT A{" "}
-                <span className="font-neou-bold">22</span>-YEAR-OLD ARTIST AND
-                STUDENT BASED IN GOTHENBURG, SWEDEN. I LIKE TO PLAY VIDEO GAMES,
-                WORKOUT AND CREATE STUFF.
+                WELCOME TO MY WEBSITE! ALLOW ME TO INTRODUCE MYSELF. MY NAME IS IDA, BUT YOU CAN ALSO CALL ME FRAZZOT. I'M A 22-YEAR-OLD ARTIST BASED IN GOTHENBURG, SWEDEN. 
+                WITH A FRESHLY EARNED DEGREE IN GAME ART AND PREVIOUS EXPERIENCE WITH VARIOUS KINDS OF TECHNOLOGY, I WORK WITH A BROAD AIM TOWARD DIGITAL ART AND CREATIONS.
+              </p>
+              <div className="h-4 md:h-8"></div>
+              <p className="font-gothic text-sm text-lilac md:text-lg">
+                BEYOND DIGITAL ART, I ALSO FIND MYSELF AS AN OCCASIONAL WEB DEVELOPER, 
+                BREAKING A SWEAT AT THE GYM, AND QUITE OFTEN, LOSING MYSELF INTO THE CAPTIVATING WORLD OF VIDEO GAMES.
               </p>
               <div className="h-4"></div>
-              <p className="pl-[calc(40%+48px)] font-gothic text-sm text-lilac md:pl-0 md:text-lg">
+              <p className="font-gothic text-sm text-lilac md:pl-0 md:text-lg">
                 ON THIS SITE YOU CAN FIND SOME OF MY WORKS, WAYS TO SUPPORT AND
                 HOW TO GET IN TOUCH WITH ME.
               </p>
               <div className="h-4"></div>
-              <p className="pl-[calc(40%+48px)] font-gothic text-sm text-lilac md:pl-0 md:text-lg">
+              <p className="font-gothic text-sm text-lilac md:pl-0 md:text-lg">
                 THANK YOU FOR STOPPING BY!
               </p>
-              <div className="hidden h-32 md:block"></div>
+              <div className="hidden h-22 md:block"></div>
             </div>
           </div>
           <div className="col-span-7 h-[calc(100vw-300px)] md:h-16"></div>
