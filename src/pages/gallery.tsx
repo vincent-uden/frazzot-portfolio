@@ -5,6 +5,8 @@ import { trpc } from "../utils/trpc";
 import Carousel from "../components/Carousel";
 import { GalleryImage } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
+import { useSwipeable } from "react-swipeable";
 
 export type ImageRow = {
   indices: number[];
@@ -107,6 +109,30 @@ function randomFakeImages(amount: number): GalleryImage[] {
   return output;
 }
 
+function animationStateImageLoading(
+  animationStage: number | null,
+  swipingRight: boolean | null
+): string {
+  if (animationStage == 1) {
+    if (swipingRight) {
+      return "translate-x-[100vw] transition-transform";
+    } else {
+      return "-translate-x-[100vw] transition-transform";
+    }
+  } else if (animationStage == 2) {
+    if (swipingRight) {
+      return "-translate-x-[100vw]";
+    } else {
+      return "translate-x-[100vw]";
+    }
+  } else if (animationStage == 3) {
+    return "translate-x-0 transition-transform";
+  } else if (animationStage == 4) {
+  }
+
+  return "";
+}
+
 const Gallery = () => {
   const { data: fastImages } = trpc.useQuery(
     ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
@@ -121,6 +147,30 @@ const Gallery = () => {
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
+  const swipeHandlers = useSwipeable({
+    onSwipedRight: () => {
+      if (animationStage != null) {
+        return;
+      }
+      setOpenImage(Math.max(openImage!! - 1, 0));
+      setAnimationStage(1);
+      setSwipingRight(true);
+      setAnimStart(Date.now());
+    },
+    onSwipedLeft: () => {
+      if (animationStage != null) {
+        return;
+      }
+      setOpenImage(Math.min(openImage!! + 1, images!!.length - 1));
+      setAnimationStage(1);
+      setSwipingRight(false);
+      setAnimStart(Date.now());
+    },
+    delta: 5,
+  });
+  const [animationStage, setAnimationStage] = useState<number | null>(null);
+  const [swipingRight, setSwipingRight] = useState<boolean | null>(null);
+  const [animStart, setAnimStart] = useState(0);
 
   useEffect(() => {
     if (slowImages !== undefined) {
@@ -139,7 +189,6 @@ const Gallery = () => {
     setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
     setImageTiling(x);
-    console.log("HELLO");
   }, []);
 
   useEffect(() => {
@@ -167,6 +216,10 @@ const Gallery = () => {
       }
     }
   }, [images, imageTiling, imgHolderRef]);
+
+  useEffect(() => {
+    // Maybe swipe TODO
+  }, [openImage]);
 
   useEffect(() => {
     let doit: NodeJS.Timeout | undefined;
@@ -259,14 +312,55 @@ const Gallery = () => {
         <></>
       ) : (
         <div
-          className="fixed z-50 flex h-full w-full animate-fadein-fast items-center justify-center bg-[#000000aa]"
-          onClick={(e) => setOpenImage(null)}
+          className="fixed z-50 flex h-full w-full animate-fadein-fast flex-col items-center justify-around bg-[#000000aa]"
+          onClick={(_) => setOpenImage(null)}
           key={`image-hover`}
+          {...swipeHandlers}
         >
-          <img
-            src={images?.at(openImage)?.urlLg ?? ""}
-            className="z-50 max-h-[80vh] max-w-[90vw] xl:max-w-screen-xl"
-          />
+          <div className="h-16 grow-0" />
+          <div className="grid items-center justify-center">
+            <img
+              src={images?.at(openImage)?.urlLg ?? ""}
+              className={`z-50 max-h-[80vh] max-w-[90vw] select-none xl:max-w-screen-xl ${animationStateImageLoading(
+                animationStage,
+                swipingRight
+              )}`}
+              onLoad={() => {
+                setTimeout(() => {
+                  setAnimationStage(2);
+                  setTimeout(() => {
+                    setAnimationStage(3);
+                    setSwipingRight(null);
+                    setTimeout(() => setAnimationStage(null), 150);
+                  }, 10);
+                }, Date.now() - animStart);
+              }}
+            />
+          </div>
+          <div className="pointer-events-none grid w-full grow-0 grid-cols-2 opacity-0 lg:pointer-events-auto lg:opacity-100">
+            <div
+              className="flex cursor-pointer flex-row items-center justify-end opacity-0 transition-opacity hover:opacity-100"
+              onClick={(e) => {
+                setOpenImage(openImage - 1);
+                e.stopPropagation();
+              }}
+              style={{ display: openImage != 0 ? "flex" : "none" }}
+            >
+              <IoChevronBackSharp className="h-16 w-16 text-mint/50" />
+            </div>
+            <div
+              className="flex cursor-pointer flex-row items-center opacity-0 transition-opacity hover:opacity-100"
+              onClick={(e) => {
+                setOpenImage(openImage + 1);
+                e.stopPropagation();
+              }}
+              style={{
+                display: openImage != images!!.length - 1 ? "flex" : "none",
+              }}
+            >
+              <IoChevronForwardSharp className="h-16 w-16 text-mint/50" />
+            </div>
+          </div>
         </div>
       )}
     </>
