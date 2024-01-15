@@ -47,6 +47,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
     "react-query": "^3.39.2",
+    "react-swipeable": "^7.0.1",
     "recma-nextjs-static-props": "^1.0.0",
     "sharp": "^0.30.7",
     "superjson": "^1.9.1",

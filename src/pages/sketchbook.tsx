@@ -6,6 +6,7 @@ import Carousel from "../components/Carousel";
 import { trpc } from "../utils/trpc";
 import { ImageRow, tileImages, GalleryRow } from "./gallery";
 import { useAnalytics } from "../utils/useAnalytics";
+import { ImageDialog } from "../components/ImageDialog";
 
 //import "@splidejs/react-splide/css";
 
@@ -241,19 +242,7 @@ const Sketchbook = () => {
         </div>
       </div>
       <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
-      {openImage == null ? (
-        <></>
-      ) : (
-        <div
-          className="fixed z-50 flex h-full w-full animate-fadein-fast items-center justify-center bg-[#000000aa]"
-          onClick={(_) => setOpenImage(null)}
-        >
-          <img
-            src={images?.at(openImage)?.urlLg ?? ""}
-            className="z-50 max-h-[80vh] max-w-[90vw] xl:max-w-screen-xl"
-          />
-        </div>
-      )}
+      <ImageDialog images={images} openImage={openImage} setOpenImage={setOpenImage} />
     </>
   );
 };

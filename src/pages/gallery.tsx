@@ -5,6 +5,9 @@ import { trpc } from "../utils/trpc";
 import Carousel from "../components/Carousel";
 import { GalleryImage } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
+import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
+import { useSwipeable } from "react-swipeable";
+import { ImageDialog } from "../components/ImageDialog";
 
 export type ImageRow = {
   indices: number[];
@@ -107,6 +110,30 @@ function randomFakeImages(amount: number): GalleryImage[] {
   return output;
 }
 
+function animationStateImageLoading(
+  animationStage: number | null,
+  swipingRight: boolean | null
+): string {
+  if (animationStage == 1) {
+    if (swipingRight) {
+      return "translate-x-[100vw] transition-transform";
+    } else {
+      return "-translate-x-[100vw] transition-transform";
+    }
+  } else if (animationStage == 2) {
+    if (swipingRight) {
+      return "-translate-x-[100vw]";
+    } else {
+      return "translate-x-[100vw]";
+    }
+  } else if (animationStage == 3) {
+    return "translate-x-0 transition-transform";
+  } else if (animationStage == 4) {
+  }
+
+  return "";
+}
+
 const Gallery = () => {
   const { data: fastImages } = trpc.useQuery(
     ["gallery.getAllS3ThumbnailsFast", { categoryName: "Gallery" }],
@@ -139,7 +166,6 @@ const Gallery = () => {
     setImages(imgs);
     const x = tileImages(imgs, imgHolderRef, gap);
     setImageTiling(x);
-    console.log("HELLO");
   }, []);
 
   useEffect(() => {
@@ -167,6 +193,10 @@ const Gallery = () => {
       }
     }
   }, [images, imageTiling, imgHolderRef]);
+
+  useEffect(() => {
+    // Maybe swipe TODO
+  }, [openImage]);
 
   useEffect(() => {
     let doit: NodeJS.Timeout | undefined;
@@ -255,20 +285,7 @@ const Gallery = () => {
         </div>
       </div>
       <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
-      {openImage == null ? (
-        <></>
-      ) : (
-        <div
-          className="fixed z-50 flex h-full w-full animate-fadein-fast items-center justify-center bg-[#000000aa]"
-          onClick={(e) => setOpenImage(null)}
-          key={`image-hover`}
-        >
-          <img
-            src={images?.at(openImage)?.urlLg ?? ""}
-            className="z-50 max-h-[80vh] max-w-[90vw] xl:max-w-screen-xl"
-          />
-        </div>
-      )}
+      <ImageDialog images={images} openImage={openImage} setOpenImage={setOpenImage} />
     </>
   );
 };
