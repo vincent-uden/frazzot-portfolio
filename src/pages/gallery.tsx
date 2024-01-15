@@ -7,6 +7,7 @@ import { GalleryImage } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
 import { IoChevronBackSharp, IoChevronForwardSharp } from "react-icons/io5";
 import { useSwipeable } from "react-swipeable";
+import { ImageDialog } from "../components/ImageDialog";
 
 export type ImageRow = {
   indices: number[];
@@ -147,30 +148,6 @@ const Gallery = () => {
   const [imageTiling, setImageTiling] = useState<ImageRow[]>([]);
   const [openImage, setOpenImage] = useState<number | null>(null);
   const gap = 8;
-  const swipeHandlers = useSwipeable({
-    onSwipedRight: () => {
-      if (animationStage != null) {
-        return;
-      }
-      setOpenImage(Math.max(openImage!! - 1, 0));
-      setAnimationStage(1);
-      setSwipingRight(true);
-      setAnimStart(Date.now());
-    },
-    onSwipedLeft: () => {
-      if (animationStage != null) {
-        return;
-      }
-      setOpenImage(Math.min(openImage!! + 1, images!!.length - 1));
-      setAnimationStage(1);
-      setSwipingRight(false);
-      setAnimStart(Date.now());
-    },
-    delta: 5,
-  });
-  const [animationStage, setAnimationStage] = useState<number | null>(null);
-  const [swipingRight, setSwipingRight] = useState<boolean | null>(null);
-  const [animStart, setAnimStart] = useState(0);
 
   useEffect(() => {
     if (slowImages !== undefined) {
@@ -308,61 +285,7 @@ const Gallery = () => {
         </div>
       </div>
       <div className="h-40 w-screen overflow-y-hidden bg-pattern-holo-short bg-[length:1090px_220px] bg-bottom bg-repeat-x px-[20%] pt-12 md:bg-[length:1920px_330px] lg:h-72"></div>
-      {openImage == null ? (
-        <></>
-      ) : (
-        <div
-          className="fixed z-50 flex h-full w-full animate-fadein-fast flex-col items-center justify-around bg-[#000000aa]"
-          onClick={(_) => setOpenImage(null)}
-          key={`image-hover`}
-          {...swipeHandlers}
-        >
-          <div className="h-16 grow-0" />
-          <div className="grid items-center justify-center">
-            <img
-              src={images?.at(openImage)?.urlLg ?? ""}
-              className={`z-50 max-h-[80vh] max-w-[90vw] select-none xl:max-w-screen-xl ${animationStateImageLoading(
-                animationStage,
-                swipingRight
-              )}`}
-              onLoad={() => {
-                setTimeout(() => {
-                  setAnimationStage(2);
-                  setTimeout(() => {
-                    setAnimationStage(3);
-                    setSwipingRight(null);
-                    setTimeout(() => setAnimationStage(null), 150);
-                  }, 10);
-                }, Date.now() - animStart);
-              }}
-            />
-          </div>
-          <div className="pointer-events-none grid w-full grow-0 grid-cols-2 opacity-0 lg:pointer-events-auto lg:opacity-100">
-            <div
-              className="flex cursor-pointer flex-row items-center justify-end opacity-0 transition-opacity hover:opacity-100"
-              onClick={(e) => {
-                setOpenImage(openImage - 1);
-                e.stopPropagation();
-              }}
-              style={{ display: openImage != 0 ? "flex" : "none" }}
-            >
-              <IoChevronBackSharp className="h-16 w-16 text-mint/50" />
-            </div>
-            <div
-              className="flex cursor-pointer flex-row items-center opacity-0 transition-opacity hover:opacity-100"
-              onClick={(e) => {
-                setOpenImage(openImage + 1);
-                e.stopPropagation();
-              }}
-              style={{
-                display: openImage != images!!.length - 1 ? "flex" : "none",
-              }}
-            >
-              <IoChevronForwardSharp className="h-16 w-16 text-mint/50" />
-            </div>
-          </div>
-        </div>
-      )}
+      <ImageDialog images={images} openImage={openImage} setOpenImage={setOpenImage} />
     </>
   );
 };
