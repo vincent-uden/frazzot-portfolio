@@ -6,17 +6,28 @@ import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
-import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
-import { GalleryImage } from "../db/schema";
+import { GalleryImage, ImageCategory } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
+import { SortableList } from "../components/SortableList";
+import { DragHandle, SortableItem } from "../components/SortableItem";
+import { cn } from "../utils/cn";
 
 type UiName = {
   id: string;
   name: string;
 };
 
+// TODO: Fetch each category individually!
+//       Trigger mutation for re-ordering
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
+  const [images, setImages] = useState<
+    {
+      id: string;
+      GalleryImage: GalleryImage;
+      ImageCategory: ImageCategory | null;
+    }[]
+  >([]);
   const [filterCategory, setFilterCategory] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [uploadData, setUploadData] = useState<FileList | null>();
@@ -27,6 +38,7 @@ const Admin = () => {
   const [hoveredImage, setHoveredImage] = useState<GalleryImage | null>(null);
   const [hoveredImageX, setHoveredImageX] = useState(0);
   const [hoveredImageY, setHoveredImageY] = useState(0);
+  const [draggingRow, setDraggingRow] = useState(false);
 
   const [uiImageNames, setUiImagesNames] = useState<UiName[]>([]);
 
@@ -34,7 +46,7 @@ const Admin = () => {
 
   const cookies = new Cookies();
 
-  const { data: images, refetch: refetchImgs } = trpc.useQuery(
+  const { data: fetchedImages, refetch: refetchImgs } = trpc.useQuery(
     ["gallery.getAll"],
     {
       onSuccess: (data) => {
@@ -43,6 +55,10 @@ const Admin = () => {
           names.push({ id: x.GalleryImage.id, name: "" });
         }
         setUiImagesNames(names);
+        const imgs = data.map((x) => {
+          return { id: x.GalleryImage.id, ...x };
+        });
+        setImages(imgs);
       },
     }
   );
@@ -100,37 +116,6 @@ const Admin = () => {
     });
   }, []);
 
-  function moveUp(i: number) {
-    let imgs = images?.filter(
-      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
-    );
-    if (i > 0) {
-      if (imgs != null) {
-        swapOrder(imgs[i]!!.GalleryImage, imgs[i - 1]!!.GalleryImage);
-      }
-    }
-  }
-
-  function moveDown(i: number) {
-    let imgs = images?.filter(
-      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
-    );
-    if (i < (imgs?.length ?? 0) - 1) {
-      if (imgs != null) {
-        swapOrder(imgs[i]!!.GalleryImage, imgs[i + 1]!!.GalleryImage);
-      }
-    }
-  }
-
-  function swapOrder(img1: GalleryImage, img2: GalleryImage) {
-    const tmpIndex = img1.displayIndex;
-    img1.displayIndex = img2.displayIndex;
-    img2.displayIndex = tmpIndex;
-
-    imageUpdateOneMut.mutateAsync(img1);
-    imageUpdateOneMut.mutateAsync(img2);
-  }
-
   const updateImageNames = useCallback(() => {
     for (let i = 0; i < uiImageNames.length; i++) {
       if (uiImageNames[i]?.name != "") {
@@ -167,6 +152,66 @@ const Admin = () => {
         categoryId: categories?.at(selectedCategory)?.id,
       });
     }
+  };
+
+  const renderImage = (
+    img: { GalleryImage: GalleryImage; ImageCategory: ImageCategory | null },
+    i: number
+  ) => {
+    return (
+      <>
+        <td className="py-4 text-white">
+          {img.GalleryImage.createdAt.toDateString()}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          <input
+            className="text-input transition-colors focus:border-lilac"
+            type="text"
+            placeholder={img.GalleryImage.name}
+            value={uiImageNames[i]?.name ?? ""}
+            onChange={(e) => {
+              const imgNames = uiImageNames.map((uiName) => {
+                if (uiName.id == img.GalleryImage.id) {
+                  return {
+                    id: uiName.id,
+                    name: e.target.value,
+                  };
+                } else {
+                  return uiName;
+                }
+              });
+              setUiImagesNames(imgNames);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                updateImageNames();
+              }
+            }}
+          />
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.w}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.h}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.thmb_w}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.thmb_h}
+        </td>
+        <td className="font-neuo font-thin text-white">
+          {img.ImageCategory?.name ?? ""}
+        </td>
+        <td
+          className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
+          onClick={() => deleteById(img.GalleryImage.id)}
+        >
+          Delete
+        </td>
+      </>
+    );
   };
 
   useAnalytics("/admin");
@@ -396,7 +441,7 @@ const Admin = () => {
           </div>
           <div className="z-10 mt-8 px-8">
             <table className="mx-auto">
-              <tbody className="w-full">
+              <thead>
                 <tr className="border-b-2 border-white">
                   <th className="pr-4 text-left font-gothic text-white">
                     Upload Date
@@ -420,108 +465,51 @@ const Admin = () => {
                     Category
                   </th>
                 </tr>
-                {images
-                  ?.map((img, i, allImgs) => {
-                    return (
-                      <tr
-                        className=""
-                        key={img.GalleryImage.id}
-                        onMouseEnter={(_) => setHoveredImage(img.GalleryImage)}
-                        onMouseLeave={(_) => setHoveredImage(null)}
-                        onMouseMove={(e) => {
-                          setHoveredImageX(e.clientX);
-                          setHoveredImageY(e.clientY);
-                        }}
-                      >
-                        <td className="py-4 text-white">
-                          {img.GalleryImage.createdAt.toDateString()}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          <input
-                            className="text-input transition-colors focus:border-lilac"
-                            type="text"
-                            placeholder={img.GalleryImage.name}
-                            value={uiImageNames[i]!!.name}
-                            onChange={(e) => {
-                              const imgNames = uiImageNames.map((uiName) => {
-                                if (uiName.id == img.GalleryImage.id) {
-                                  return {
-                                    id: uiName.id,
-                                    name: e.target.value,
-                                  };
-                                } else {
-                                  return uiName;
-                                }
-                              });
-                              setUiImagesNames(imgNames);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                updateImageNames();
-                              }
-                            }}
-                          />
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.w}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.h}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.thmb_w}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.thmb_h}
-                        </td>
-                        <td className="font-neuo font-thin text-white">
-                          {img.ImageCategory?.name ?? ""}
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
-                          onClick={() => deleteById(img.GalleryImage.id)}
-                        >
-                          Delete
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 transition-transform hover:scale-125"
-                          onClick={() => moveUp(i)}
-                        >
-                          <IoChevronUpSharp
-                            className={`h-8 w-8 cursor-pointer text-lilac ${
-                              i == 0 ? "hidden" : "block"
-                            }`}
-                          />
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 transition-transform hover:scale-125"
-                          onClick={() => moveDown(i)}
-                        >
-                          <IoChevronDownSharp
-                            className={`h-8 w-8 cursor-pointer text-lilac ${
-                              i == allImgs.length - 1 ? "hidden" : "block"
-                            }`}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })
-                  ?.filter(
-                    (_, i) =>
-                      images[i]?.GalleryImage?.categoryId ==
-                      categories?.at(filterCategory)?.id
-                  )}
-              </tbody>
+              </thead>
+              {/* TODO: Trpc to fetch only one category -> store in state variable since we souldnt modify react query state */}
+              <SortableList
+                element="tbody"
+                items={images}
+                onChange={setImages}
+                onDragStart={() => setDraggingRow(true)}
+                onDragEnd={() => setDraggingRow(false)}
+                renderItem={({ i, item }) => (
+                  <SortableItem
+                    id={item.id}
+                    className=""
+                    element="tr"
+                    onMouseEnter={(_) => setHoveredImage(item.GalleryImage)}
+                    onMouseLeave={(_) => setHoveredImage(null)}
+                    onMouseMove={(e) => {
+                      setHoveredImageX(e.clientX);
+                      setHoveredImageY(e.clientY);
+                    }}
+                  >
+                    {renderImage(item, i)}
+                    <td className="">
+                      <DragHandle className="scale-150 rounded fill-periwinkle-light py-2 px-1 transition-colors hover:bg-white/10" />
+                    </td>
+                  </SortableItem>
+                )}
+              />
+              <tbody className="w-full">{}</tbody>
             </table>
 
             <div className="h-16"></div>
           </div>
 
           <div
-            className="pointer-events-none fixed top-0 left-0 z-10 h-fit w-fit shadow-lg"
+            className={cn(
+              "pointer-events-none fixed top-0 left-0 z-10 h-fit w-fit shadow-lg transition-opacity",
+              draggingRow ? "opacity-0" : "opacity-100"
+            )}
             style={{ top: hoveredImageY + 10, left: hoveredImageX }}
           >
-            <img src={hoveredImage?.url ?? ""} alt="" className="h-auto w-48" />
+            <img
+              src={hoveredImage?.url ?? ""}
+              alt=""
+              className={"h-auto w-48"}
+            />
           </div>
         </>
       )}
