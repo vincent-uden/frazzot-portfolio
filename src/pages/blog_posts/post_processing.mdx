@@ -1,0 +1,91 @@
+import { DeleteMarkerReplicationStatus } from "@aws-sdk/client-s3";
+import {
+  BlogPost,
+  RightStack,
+  LeftStack,
+  QuoteBlock,
+} from "../../components/BlogPost.tsx";
+
+import { isTable } from "drizzle-orm";
+export const data = {
+  title: "Digital Art: Editing Insights",
+  author: "Ida",
+  date: "2024-01-25",
+  time: "11:34 AM",
+};
+
+There are ways to edit and enhance art without the tedious rendering procedures of modern masterpieces like the League of Legends splash arts. I'd even say my art is kind of simple,
+I've never been particularly great with colour theory nor how to enhance eyecatching contrasts with colours. Though I have to say that you learn to work with what you know, and for me
+that has been post processing and a more technical approach to editing and rendering. 
+
+In this post I'll talk you through the editing of one of my recent works and how I usually approach this phase of the project.
+
+![Before and after edits](/img/blog/blog_post_images/edits_laniakea_by_frazzot.png/)
+*A preview of how the before and after edits can look.*
+
+## Identify and prepare the artwork
+
+I usually identify my need for edits and post processing when I'm done with my usual routine of the painting. The steps until this phase therefore usually looks quite the same between pieces.
+Having a "checklist" could make it easier to understand when to move on, create your own or copy mine. It all depends on style and how you usually draw, but this is focusing on the cel-shaded 
+and lined artstyle.
+
+<QuoteBlock>
+- ⊳ **Sketch**: Split up into several phases, I create a new copy when I'm satisfied with whatever I'm working on. For example, if the gesture is great, then I create a new copy to try out 
+hairstyles, faces, clothes and so on. This makes it easier to try new things, work messy and destructive while still keeping versions of what you're satisfied with saved.
+- ⊳ **Shillouette test** I cant stress the importance of this enough! I always make sure the shapes read clearly, to make sure the compsosition makes sence with the style and setting I'm going for. 
+To do this, I need more dimension. A quick way to achieve dimension is to lasso tool and greyscale colour areas of your painting. This makes it easier to catch misstakes that would arise 
+during coloring otherwise. Then I usually revise the sketch if needed before moving on to cleaning up. *I'll attach an example below this list.*
+- ⊳ **Clean-up or Lineart** Depending on how clean my final sketch is, I tend to either tidy it up or create a new layer with the lineart. This also depends on how much effort I tent to put in,
+the style and so on. It's more a question of time management than how it affects the final results.
+- ⊳ **Base colours** Fill in the base colours, make sure they work alright together. If I have a background to colour I usually wait until I have the basic shading figured out, but the procedure 
+is pretty similar.
+- ⊳ **Shading and light** I usually do two levels of shading, one lighter and one darker. The first one is done by filling the whole page, clip it to a folder with the base colours and work subtractive. The 
+second layer is done additative by filling the areas I wish to be the darkest. I work similar with light, overlay/add/add glow and then add it to the areas I intend to be light. When the basics is 
+done, I lock the layers and play around with colours and opacity until im kind of satisfied. *Don't worry too much if it still looks bland in this state though.*
+- ⊳ **Details** Hair strands, eye reflections, you name it. I usually take some time to zoom out and adjust things I'm not satisfied with that has to do with shape.
+</QuoteBlock>
+
+<RightStack masterWidth="65%">
+
+The steps above are of course subject to change, but my key point is to not bother too much with light, colour and mood before the composition is "done". Looking at the two comparisons above you 
+could of course be satisfied with the non-edited version. But I like to play around with the colours and mood after I'm "done" because I find it easier to identify and understand how to make it
+look more apealing rather than doing it from the beginning. This is why I would encourage people who never edit or render ther artworks to try this, it's much more approachable and technical.
+
+![Example of shillouette test results](/img/blog/blog_post_images/laniakea_sketch.png/)
+*An example of what my shillouette test usually looks like.*
+
+</RightStack>
+
+## A straight forward breakdown
+
+A concrete example is always easier to follow, lets break down the image we're currently analyzing.
+
+### Background blur
+After tweaking a few details I begin my editing by exporting the background., reimport it and blur it. This shift the focus to the foreground and lets me play around with different dynamics 
+of motion blur. Easy yet very effective!
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/background_blur-1.mp4" type="video/mp4"></source>
+</video>
+
+### Colour grading
+
+Moving on to colour grading, I'm altering the colours in a more destructive workflow to achieve more depth. This could be done by locking base colour layers and vary the colours. In
+the artwork here I'm changing her hair and shirt colour a bit to achieve a more vibrant look. 
+
+When this is done I try to figure out the light and mood setting, a simple trick is to create a gradient from a cool colour to a warm, lay it on top of everything in blend mode "overlay", then 
+**lower the opacity**, remeber that less is more in all the steps here.
+
+You can probably see that I have the foreground *(character)* and the background coloured in two separate folders? This makes it easier to colour grade them individually. You'll see that I'm working
+a lot with adjusting the colours of the background to feel "cooler" and less visually important.
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/colour_grading.mp4" type="video/mp4"></source>
+</video>
+
+### Grain and chromatic abberation
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/grain_ca.mp4" type="video/mp4"></source>
+</video>
+
+export default ({ children }) => <BlogPost content={children} data={data} />;
