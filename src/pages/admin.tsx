@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { trpc } from "../utils/trpc";
 import Cookies from "universal-cookie";
 
@@ -72,6 +72,13 @@ const Admin = () => {
     }
   );
 
+  useEffect(() => {
+    let token = cookies.get("session_token");
+    if (token != null) {
+      setJwt(token);
+    }
+  }, []);
+
   const submitLoginMut = trpc.useMutation(["admin.submitLogin"], {
     onSuccess: ({ errors, token }) => {
       setLoginErrors(errors);
@@ -83,7 +90,12 @@ const Admin = () => {
         }, 300);
       } else {
         setJwt(token);
-        cookies.set("session_token", token);
+        let expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 30);
+        cookies.set("session_token", token, {
+          secure: true,
+          expires: expirationDate,
+        });
 
         refetchImgs();
       }
@@ -228,6 +240,7 @@ const Admin = () => {
       <div className="h-16"></div>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
+        { jwt == null ? (
         <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
           <InputLabel
             htmlFor="name"
@@ -302,12 +315,12 @@ const Admin = () => {
             }}
           />
         </div>
+        ) : null}
       </div>
 
       {/* Gallery Management */}
       {jwt != null && (
         <>
-          <div className="h-32"></div>
           <div className="w-full">
             <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
               <input

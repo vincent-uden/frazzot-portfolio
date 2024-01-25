@@ -6,10 +6,29 @@ import * as jwt from "jsonwebtoken";
 import { db } from "../../db/drizzle";
 import { adminPasswords, sessionTokens, blogLikes } from "../../db/schema";
 import { and, eq, sql } from "drizzle-orm";
+import { TRPCError } from "@trpc/server";
 
-export interface AuthJwt {
-  authLevel: number;
-  iat: number;
+export const AuthJwtSchema = z.object({
+  authLevel: z.number().int(),
+  expires: z.date(),
+  userId: z.string().uuid(),
+});
+
+export type AuthJwt = z.infer<typeof AuthJwtSchema>;
+
+export function authenticate(token: string) {
+    const decoded = AuthJwtSchema.parse(
+      jwt.verify(token, process.env.SHA_SECRET!!)
+    );
+
+    if (decoded.expires < new Date()) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Session token has expired",
+      });
+    }
+
+    return decoded;
 }
 
 export const adminRouter = createRouter()
@@ -90,15 +109,14 @@ export const adminRouter = createRouter()
         } else {
           let user = users[0]!!;
           if (await argon2.verify(user.hash, input.password)) {
-            token = jwt.sign({ authLevel: 0 }, process.env.SHA_SECRET!!);
-
             let expires = new Date();
-            expires.setHours(expires.getHours() + 2);
-            // WHY IS THIS INSERT NOT WORKING AND THINK IT NEEDS AN ID????
-            await db.insert(sessionTokens).values({
-              token: token,
-              expires: expires,
-            });
+            expires.setDate(expires.getDate() + 30);
+            const toEncode: AuthJwt = {
+                authLevel: 0,
+                expires,
+                userId: user.id,
+            };
+            token = jwt.sign(toEncode, process.env.SHA_SECRET!!);
           } else {
             errors.push(EmailError.IncorrectUserDetails);
           }
