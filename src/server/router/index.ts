@@ -6,12 +6,14 @@ import { exampleRouter } from "./example";
 import { galleryRouter } from "./gallery";
 import { emailRouter } from "./email";
 import { adminRouter } from "./admin";
+import { manageRouter } from "./manage";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("example.", exampleRouter)
   .merge("gallery.", galleryRouter)
   .merge("admin.", adminRouter)
+  .merge("manage.", manageRouter)
   .merge("email.", emailRouter);
 
 console.log(

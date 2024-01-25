@@ -102,21 +102,21 @@ const Admin = () => {
     },
   });
 
-  const imageDeleteOneMut = trpc.useMutation(["gallery.deleteById"], {
+  const imageDeleteOneMut = trpc.useMutation(["manage.deleteById"], {
     onSuccess: () => refetchImgs(),
   });
 
-  const imageUpdateOneMut = trpc.useMutation(["gallery.updateOne"], {
+  const imageUpdateOneMut = trpc.useMutation(["manage.updateOne"], {
     onSuccess: () => refetchImgs(),
   });
 
-  const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
+  const s3ImageInsertMut = trpc.useMutation(["manage.s3InsertOne"], {
     onSuccess: () => {
       refetchImgs();
     },
   });
 
-  const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
+  const s3GenThmbs = trpc.useMutation(["manage.s3GenThumbnails"], {
     onSuccess: () => {
       refetchImgs();
     },
