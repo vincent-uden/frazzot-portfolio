@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { trpc } from "../utils/trpc";
 import Cookies from "universal-cookie";
 
@@ -6,9 +6,11 @@ import InputLabel from "../components/InputLabel";
 import { EmailError } from "../utils/errortypes";
 import SubmitButton from "../components/SubmitButton";
 import Head from "next/head";
-import { IoChevronDownSharp, IoChevronUpSharp } from "react-icons/io5";
-import { GalleryImage } from "../db/schema";
+import { GalleryImage, ImageCategory } from "../db/schema";
 import { useAnalytics } from "../utils/useAnalytics";
+import { SortableList } from "../components/SortableList";
+import { DragHandle, SortableItem } from "../components/SortableItem";
+import { cn } from "../utils/cn";
 
 type UiName = {
   id: string;
@@ -17,6 +19,13 @@ type UiName = {
 
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
+  const [images, setImages] = useState<
+    {
+      id: string;
+      GalleryImage: GalleryImage;
+      ImageCategory: ImageCategory | null;
+    }[]
+  >([]);
   const [filterCategory, setFilterCategory] = useState<number>(0);
   const [selectedCategory, setSelectedCategory] = useState<number>(0);
   const [uploadData, setUploadData] = useState<FileList | null>();
@@ -27,6 +36,7 @@ const Admin = () => {
   const [hoveredImage, setHoveredImage] = useState<GalleryImage | null>(null);
   const [hoveredImageX, setHoveredImageX] = useState(0);
   const [hoveredImageY, setHoveredImageY] = useState(0);
+  const [draggingRow, setDraggingRow] = useState(false);
 
   const [uiImageNames, setUiImagesNames] = useState<UiName[]>([]);
 
@@ -34,8 +44,12 @@ const Admin = () => {
 
   const cookies = new Cookies();
 
-  const { data: images, refetch: refetchImgs } = trpc.useQuery(
-    ["gallery.getAll"],
+  const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
+  const { data: fetchedImages, refetch: refetchImgs } = trpc.useQuery(
+    [
+      "gallery.getImages",
+      { categoryName: categories?.at(filterCategory)?.name ?? null },
+    ],
     {
       onSuccess: (data) => {
         const names = [];
@@ -43,11 +57,14 @@ const Admin = () => {
           names.push({ id: x.GalleryImage.id, name: "" });
         }
         setUiImagesNames(names);
+        const imgs = data.map((x) => {
+          return { id: x.GalleryImage.id, ...x };
+        });
+        setImages(imgs);
       },
     }
   );
 
-  const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(
     ["gallery.getS3ImageUrl", { src: imgS3Key }],
     {
@@ -55,6 +72,13 @@ const Admin = () => {
       refetchOnWindowFocus: false,
     }
   );
+
+  useEffect(() => {
+    let token = cookies.get("session_token");
+    if (token != null) {
+      setJwt(token);
+    }
+  }, []);
 
   const submitLoginMut = trpc.useMutation(["admin.submitLogin"], {
     onSuccess: ({ errors, token }) => {
@@ -67,31 +91,39 @@ const Admin = () => {
         }, 300);
       } else {
         setJwt(token);
-        cookies.set("session_token", token);
+        let expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 30);
+        cookies.set("session_token", token, {
+          secure: true,
+          expires: expirationDate,
+        });
 
         refetchImgs();
       }
     },
   });
 
-  const imageDeleteOneMut = trpc.useMutation(["gallery.deleteById"], {
+  const imageDeleteOneMut = trpc.useMutation(["manage.deleteById"], {
     onSuccess: () => refetchImgs(),
   });
 
-  const imageUpdateOneMut = trpc.useMutation(["gallery.updateOne"], {
+  const imageUpdateOneMut = trpc.useMutation(["manage.updateOne"], {
     onSuccess: () => refetchImgs(),
   });
 
-  const s3ImageInsertMut = trpc.useMutation(["gallery.s3InsertOne"], {
+  const s3ImageInsertMut = trpc.useMutation(["manage.s3InsertOne"], {
     onSuccess: () => {
       refetchImgs();
     },
   });
 
-  const s3GenThmbs = trpc.useMutation(["gallery.s3GenThumbnails"], {
+  const s3GenThmbs = trpc.useMutation(["manage.s3GenThumbnails"], {
     onSuccess: () => {
       refetchImgs();
     },
+  });
+
+  const moveImageDisplayIndex = trpc.useMutation(["manage.moveImageDisplayOrder"], {
   });
 
   const deleteById = useCallback((id: string) => {
@@ -99,37 +131,6 @@ const Admin = () => {
       id: id,
     });
   }, []);
-
-  function moveUp(i: number) {
-    let imgs = images?.filter(
-      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
-    );
-    if (i > 0) {
-      if (imgs != null) {
-        swapOrder(imgs[i]!!.GalleryImage, imgs[i - 1]!!.GalleryImage);
-      }
-    }
-  }
-
-  function moveDown(i: number) {
-    let imgs = images?.filter(
-      (img) => img.GalleryImage.categoryId == categories?.at(filterCategory)?.id
-    );
-    if (i < (imgs?.length ?? 0) - 1) {
-      if (imgs != null) {
-        swapOrder(imgs[i]!!.GalleryImage, imgs[i + 1]!!.GalleryImage);
-      }
-    }
-  }
-
-  function swapOrder(img1: GalleryImage, img2: GalleryImage) {
-    const tmpIndex = img1.displayIndex;
-    img1.displayIndex = img2.displayIndex;
-    img2.displayIndex = tmpIndex;
-
-    imageUpdateOneMut.mutateAsync(img1);
-    imageUpdateOneMut.mutateAsync(img2);
-  }
 
   const updateImageNames = useCallback(() => {
     for (let i = 0; i < uiImageNames.length; i++) {
@@ -169,6 +170,66 @@ const Admin = () => {
     }
   };
 
+  const renderImage = (
+    img: { GalleryImage: GalleryImage; ImageCategory: ImageCategory | null },
+    i: number
+  ) => {
+    return (
+      <>
+        <td className="py-4 text-white">
+          {img.GalleryImage.createdAt.toDateString()}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          <input
+            className="text-input transition-colors focus:border-lilac"
+            type="text"
+            placeholder={img.GalleryImage.name}
+            value={uiImageNames[i]?.name ?? ""}
+            onChange={(e) => {
+              const imgNames = uiImageNames.map((uiName) => {
+                if (uiName.id == img.GalleryImage.id) {
+                  return {
+                    id: uiName.id,
+                    name: e.target.value,
+                  };
+                } else {
+                  return uiName;
+                }
+              });
+              setUiImagesNames(imgNames);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                updateImageNames();
+              }
+            }}
+          />
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.w}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.h}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.thmb_w}
+        </td>
+        <td className="font-neuo px-2 font-thin text-white">
+          {img.GalleryImage.thmb_h}
+        </td>
+        <td className="font-neuo font-thin text-white">
+          {img.ImageCategory?.name ?? ""}
+        </td>
+        <td
+          className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
+          onClick={() => deleteById(img.GalleryImage.id)}
+        >
+          Delete
+        </td>
+      </>
+    );
+  };
+
   useAnalytics("/admin");
 
   return (
@@ -183,86 +244,78 @@ const Admin = () => {
       <div className="h-16"></div>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
-        <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
-          <InputLabel
-            htmlFor="name"
-            text="YOUR NAME"
-            color="periwinkle-light"
-            errors={loginErrors}
-            errorCodes={[
-              { code: EmailError.EmptyName, message: "Can't be empty" },
-            ]}
-          />
-          <input
-            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
+        {jwt == null ? (
+          <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
+            <InputLabel
+              htmlFor="name"
+              text="YOUR NAME"
+              color="periwinkle-light"
+              errors={loginErrors}
+              errorCodes={[
+                { code: EmailError.EmptyName, message: "Can't be empty" },
+              ]}
+            />
+            <input
+              className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+              type="text"
+              name="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitLoginMut.mutate({
+                    name,
+                    password,
+                  });
+                }
+              }}
+            />
+            <InputLabel
+              htmlFor="password"
+              text="PASSWORD"
+              color="periwinkle-light"
+              errors={loginErrors}
+              errorCodes={[
+                { code: EmailError.EmptyPassword, message: "Can't be empty" },
+              ]}
+            />
+            <input
+              className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+              type="password"
+              name="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitLoginMut.mutate({
+                    name,
+                    password,
+                  });
+                }
+              }}
+            />
+            <div className="h-8"></div>
+            <SubmitButton
+              color="mint"
+              text="LOG IN"
+              success={loginErrors.length > 0 && jwt != null}
+              onClick={(_) =>
                 submitLoginMut.mutate({
                   name,
                   password,
-                });
+                })
               }
-            }}
-          />
-          <InputLabel
-            htmlFor="password"
-            text="PASSWORD"
-            color="periwinkle-light"
-            errors={loginErrors}
-            errorCodes={[
-              { code: EmailError.EmptyPassword, message: "Can't be empty" },
-            ]}
-          />
-          <input
-            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                submitLoginMut.mutate({
-                  name,
-                  password,
-                });
-              }
-            }}
-          />
-          <div className="h-8"></div>
-          <SubmitButton
-            color="mint"
-            text="LOG IN"
-            success={loginErrors.length > 0 && jwt != null}
-            onClick={(_) =>
-              submitLoginMut.mutate({
-                name,
-                password,
-              })
-            }
-          />
-          <div className="h-8"></div>
-          <SubmitButton
-            color="pastelpink"
-            text="LOG OUT"
-            success={loginErrors.length > 0 && jwt != null}
-            onClick={(_) => {
-              setJwt(null);
-              cookies.remove("session_token");
-            }}
-          />
-        </div>
+            />
+            <div className="h-8"></div>
+          </div>
+        ) : null}
       </div>
 
       {/* Gallery Management */}
       {jwt != null && (
         <>
-          <div className="h-32"></div>
           <div className="w-full">
             <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
               <input
@@ -396,7 +449,7 @@ const Admin = () => {
           </div>
           <div className="z-10 mt-8 px-8">
             <table className="mx-auto">
-              <tbody className="w-full">
+              <thead>
                 <tr className="border-b-2 border-white">
                   <th className="pr-4 text-left font-gothic text-white">
                     Upload Date
@@ -420,109 +473,72 @@ const Admin = () => {
                     Category
                   </th>
                 </tr>
-                {images
-                  ?.map((img, i, allImgs) => {
-                    return (
-                      <tr
-                        className=""
-                        key={img.GalleryImage.id}
-                        onMouseEnter={(_) => setHoveredImage(img.GalleryImage)}
-                        onMouseLeave={(_) => setHoveredImage(null)}
-                        onMouseMove={(e) => {
-                          setHoveredImageX(e.clientX);
-                          setHoveredImageY(e.clientY);
-                        }}
-                      >
-                        <td className="py-4 text-white">
-                          {img.GalleryImage.createdAt.toDateString()}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          <input
-                            className="text-input transition-colors focus:border-lilac"
-                            type="text"
-                            placeholder={img.GalleryImage.name}
-                            value={uiImageNames[i]!!.name}
-                            onChange={(e) => {
-                              const imgNames = uiImageNames.map((uiName) => {
-                                if (uiName.id == img.GalleryImage.id) {
-                                  return {
-                                    id: uiName.id,
-                                    name: e.target.value,
-                                  };
-                                } else {
-                                  return uiName;
-                                }
-                              });
-                              setUiImagesNames(imgNames);
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") {
-                                updateImageNames();
-                              }
-                            }}
-                          />
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.w}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.h}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.thmb_w}
-                        </td>
-                        <td className="font-neuo px-2 font-thin text-white">
-                          {img.GalleryImage.thmb_h}
-                        </td>
-                        <td className="font-neuo font-thin text-white">
-                          {img.ImageCategory?.name ?? ""}
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 font-bold text-red-500 transition-colors hover:bg-red-500 hover:text-greyblack"
-                          onClick={() => deleteById(img.GalleryImage.id)}
-                        >
-                          Delete
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 transition-transform hover:scale-125"
-                          onClick={() => moveUp(i)}
-                        >
-                          <IoChevronUpSharp
-                            className={`h-8 w-8 cursor-pointer text-lilac ${
-                              i == 0 ? "hidden" : "block"
-                            }`}
-                          />
-                        </td>
-                        <td
-                          className="cursor-pointer px-4 transition-transform hover:scale-125"
-                          onClick={() => moveDown(i)}
-                        >
-                          <IoChevronDownSharp
-                            className={`h-8 w-8 cursor-pointer text-lilac ${
-                              i == allImgs.length - 1 ? "hidden" : "block"
-                            }`}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })
-                  ?.filter(
-                    (_, i) =>
-                      images[i]?.GalleryImage?.categoryId ==
-                      categories?.at(filterCategory)?.id
-                  )}
-              </tbody>
+              </thead>
+              {/* TODO: Trpc to fetch only one category -> store in state variable since we souldnt modify react query state */}
+              <SortableList
+                element="tbody"
+                items={images}
+                onChange={setImages}
+                onDragStart={() => setDraggingRow(true)}
+                onDragEnd={(i, newI) => {
+                  setDraggingRow(false);
+                  if (newI != null && i != null) {
+                    if (images[i] != null) {
+                      moveImageDisplayIndex.mutate({ id: images[i]!!.id, newI });
+                    }
+                  }
+                }}
+                renderItem={({ i, item }) => (
+                  <SortableItem
+                    id={item.id}
+                    className=""
+                    element="tr"
+                    onMouseEnter={(_) => setHoveredImage(item.GalleryImage)}
+                    onMouseLeave={(_) => setHoveredImage(null)}
+                    onMouseMove={(e) => {
+                      setHoveredImageX(e.clientX);
+                      setHoveredImageY(e.clientY);
+                    }}
+                  >
+                    {renderImage(item, i)}
+                    <td className="">
+                      <DragHandle className="scale-150 rounded fill-periwinkle-light py-2 px-1 transition-colors hover:bg-white/10" />
+                    </td>
+                  </SortableItem>
+                )}
+              />
+              <tbody className="w-full">{}</tbody>
             </table>
 
             <div className="h-16"></div>
           </div>
 
           <div
-            className="pointer-events-none fixed top-0 left-0 z-10 h-fit w-fit shadow-lg"
+            className={cn(
+              "pointer-events-none fixed top-0 left-0 z-10 h-fit w-fit shadow-lg transition-opacity",
+              draggingRow ? "opacity-0" : "opacity-100"
+            )}
             style={{ top: hoveredImageY + 10, left: hoveredImageX }}
           >
-            <img src={hoveredImage?.url ?? ""} alt="" className="h-auto w-48" />
+            <img
+              src={hoveredImage?.url ?? ""}
+              alt=""
+              className={"h-auto w-48"}
+            />
           </div>
+
+          <div className="max-w-72 mx-auto">
+            <SubmitButton
+              color="pastelpink"
+              text="LOG OUT"
+              success={loginErrors.length > 0 && jwt != null}
+              onClick={(_) => {
+                setJwt(null);
+                cookies.remove("session_token");
+              }}
+            />
+          </div>
+          <div className="h-16"></div>
         </>
       )}
     </>

@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { appendFileSync, existsSync, unlinkSync } from "fs";
 import * as jwt from "jsonwebtoken";
 
-import { AuthJwt } from "../../server/router/admin";
+import { AuthJwt, AuthJwtSchema } from "../../server/router/admin";
 
 const sharp = require("sharp");
 
@@ -97,12 +97,12 @@ export default async function handler(
 ): Promise<void> {
   let completed = false;
   let pi;
-  let decoded = jwt.verify(
+  let decoded = AuthJwtSchema.parse(jwt.verify(
     req.body["token"],
     process.env.SHA_SECRET!!
-  ) as AuthJwt;
+  ));
   /* This technically doesnt check for token expiration but that's allright */
-  if (decoded.authLevel == null || decoded.authLevel > 0) {
+  if (decoded.authLevel == null || decoded.authLevel > 0 || decoded.expires < new Date()) {
     res.status(403).json({
       message: JSON.stringify({
         msg: "UNAUTHORIZED",
