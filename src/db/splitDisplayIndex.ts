@@ -36,7 +36,7 @@ async function generateNewDisplayOrder(category: ImageCategory) {
         await tx
           .update(galleryImages)
           .set({ displayIndex: i })
-          .where(eq(galleryImages.id, out[i].id));
+          .where(eq(galleryImages.id, out[i]!!.id));
       }
     }
   });

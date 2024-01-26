@@ -3,7 +3,7 @@ import { z } from "zod";
 import path from "path";
 import * as fs from "fs";
 import * as https from "https";
-import { asc, desc, eq } from "drizzle-orm";
+import { asc, desc, eq, gt, gte, sql } from "drizzle-orm";
 import {
   S3Client,
   GetObjectCommand,
@@ -157,7 +157,24 @@ export const manageRouter = createRouter()
         input.categoryId!!
       );
     },
-  });
+  })
+  .mutation("moveImageDisplayOrder", {
+    input: z.object({
+      id: z.string().uuid(),
+      newI: z.number().int(),
+    }),
+    async resolve({ input }) {
+      await db.transaction(async (tx) => {
+        let img = await tx.select().from(galleryImages).where(eq(galleryImages.id, input.id));
+        if (img.length > 0) {
+          await tx.update(galleryImages).set({ displayIndex: sql`${galleryImages.displayIndex} - 1` }).where(gt(galleryImages.displayIndex, img[0]!!.displayIndex));
+          await tx.update(galleryImages).set({ displayIndex: sql`${galleryImages.displayIndex} + 1` }).where(gte(galleryImages.displayIndex, input.newI));
+          await tx.update(galleryImages).set({ displayIndex: input.newI }).where(eq(galleryImages.id, img[0]!!.id));
+        }
+      });
+    }
+  })
+  ;
 
 async function convertThumbnails(
   url: string,

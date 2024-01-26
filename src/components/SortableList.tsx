@@ -27,7 +27,7 @@ interface Props<T extends BaseItem> {
   onChange(items: T[]): void;
   renderItem(x: { i: number; item: T }): ReactNode;
   onDragStart?(): void;
-  onDragEnd?(): void;
+  onDragEnd?(i: number | null, newI: number | null): void;
 }
 
 export function SortableList<T extends BaseItem>({
@@ -56,7 +56,7 @@ export function SortableList<T extends BaseItem>({
           onDragStart();
           document.addEventListener("mouseup", () => {
             if (onDragEnd !== undefined) {
-              onDragEnd();
+              onDragEnd(null, null);
             }
           }, { once: true });
         }
@@ -65,6 +65,9 @@ export function SortableList<T extends BaseItem>({
         if (over && active.id !== over?.id) {
           const activeIndex = items.findIndex(({ id }) => id === active.id);
           const overIndex = items.findIndex(({ id }) => id === over.id);
+          if (onDragEnd !== undefined) {
+            onDragEnd(activeIndex, overIndex);
+          }
 
           onChange(arrayMove(items, activeIndex, overIndex));
         }

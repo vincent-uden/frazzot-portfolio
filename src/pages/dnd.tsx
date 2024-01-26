@@ -8,7 +8,7 @@ import { DragHandle, SortableItem } from "../components/SortableItem";
 function getMockItems() {
   const ids = [];
   for (let i = 0; i < 20; i++) {
-    ids.push({ id: i+1 });
+    ids.push({ id: i + 1 });
   }
   return ids;
 }
@@ -30,15 +30,21 @@ const Dnd: NextPage = () => {
           <h2 className="page-sub-header">AN EXAMPLE OF DND-KIT</h2>
         </div>
       </div>
-      <div className="max-w-screen-lg mx-auto">
+      <div className="mx-auto max-w-screen-lg">
         <SortableList
           className={"flex flex-col gap-2"}
           items={items}
           onChange={setItems}
           renderItem={(item) => (
-            <SortableItem id={item.id} className="w-32 border border-lilac rounded-lg py-2 px-4 flex flex-row gap-4 bg-greyblack">
-              <p className="grow">{item.id}</p>
-              <DragHandle className="fill-periwinkle-light py-2 px-1 rounded hover:bg-white/10 transition-colors"/>
+            <SortableItem
+              id={item.i}
+              className="flex w-32 flex-row gap-4 rounded-lg border border-lilac bg-greyblack py-2 px-4"
+              onMouseMove={() => {}}
+              onMouseEnter={() => {}}
+              onMouseLeave={() => {}}
+            >
+              <p className="grow">{item.i}</p>
+              <DragHandle className="rounded fill-periwinkle-light py-2 px-1 transition-colors hover:bg-white/10" />
             </SortableItem>
           )}
         />

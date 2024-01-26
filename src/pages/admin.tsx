@@ -17,8 +17,6 @@ type UiName = {
   name: string;
 };
 
-// TODO: Fetch each category individually!
-//       Trigger mutation for re-ordering
 const Admin = () => {
   const [imageName, setImageName] = useState<string>("");
   const [images, setImages] = useState<
@@ -48,7 +46,10 @@ const Admin = () => {
 
   const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: fetchedImages, refetch: refetchImgs } = trpc.useQuery(
-    ["gallery.getImages", {categoryName: categories?.at(filterCategory)?.name ?? null }],
+    [
+      "gallery.getImages",
+      { categoryName: categories?.at(filterCategory)?.name ?? null },
+    ],
     {
       onSuccess: (data) => {
         const names = [];
@@ -120,6 +121,9 @@ const Admin = () => {
     onSuccess: () => {
       refetchImgs();
     },
+  });
+
+  const moveImageDisplayIndex = trpc.useMutation(["manage.moveImageDisplayOrder"], {
   });
 
   const deleteById = useCallback((id: string) => {
@@ -228,7 +232,6 @@ const Admin = () => {
 
   useAnalytics("/admin");
 
-
   return (
     <>
       <Head>
@@ -241,75 +244,74 @@ const Admin = () => {
       <div className="h-16"></div>
       <div className="w-screen overflow-y-hidden bg-pattern-holo-short-inv bg-[length:1920px_330px] bg-repeat-x">
         <div className="h-64"></div>
-        { jwt == null ? (
-        <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
-          <InputLabel
-            htmlFor="name"
-            text="YOUR NAME"
-            color="periwinkle-light"
-            errors={loginErrors}
-            errorCodes={[
-              { code: EmailError.EmptyName, message: "Can't be empty" },
-            ]}
-          />
-          <input
-            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
-            type="text"
-            name="name"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
+        {jwt == null ? (
+          <div className="mx-auto flex h-full max-w-screen-sm flex-col items-stretch justify-around">
+            <InputLabel
+              htmlFor="name"
+              text="YOUR NAME"
+              color="periwinkle-light"
+              errors={loginErrors}
+              errorCodes={[
+                { code: EmailError.EmptyName, message: "Can't be empty" },
+              ]}
+            />
+            <input
+              className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+              type="text"
+              name="name"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitLoginMut.mutate({
+                    name,
+                    password,
+                  });
+                }
+              }}
+            />
+            <InputLabel
+              htmlFor="password"
+              text="PASSWORD"
+              color="periwinkle-light"
+              errors={loginErrors}
+              errorCodes={[
+                { code: EmailError.EmptyPassword, message: "Can't be empty" },
+              ]}
+            />
+            <input
+              className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
+              type="password"
+              name="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  submitLoginMut.mutate({
+                    name,
+                    password,
+                  });
+                }
+              }}
+            />
+            <div className="h-8"></div>
+            <SubmitButton
+              color="mint"
+              text="LOG IN"
+              success={loginErrors.length > 0 && jwt != null}
+              onClick={(_) =>
                 submitLoginMut.mutate({
                   name,
                   password,
-                });
+                })
               }
-            }}
-          />
-          <InputLabel
-            htmlFor="password"
-            text="PASSWORD"
-            color="periwinkle-light"
-            errors={loginErrors}
-            errorCodes={[
-              { code: EmailError.EmptyPassword, message: "Can't be empty" },
-            ]}
-          />
-          <input
-            className="text-input w-full border-periwinkle text-periwinkle-light transition-colors focus:border-lilac"
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                submitLoginMut.mutate({
-                  name,
-                  password,
-                });
-              }
-            }}
-          />
-          <div className="h-8"></div>
-          <SubmitButton
-            color="mint"
-            text="LOG IN"
-            success={loginErrors.length > 0 && jwt != null}
-            onClick={(_) =>
-              submitLoginMut.mutate({
-                name,
-                password,
-              })
-            }
-          />
-          <div className="h-8"></div>
-        </div>
+            />
+            <div className="h-8"></div>
+          </div>
         ) : null}
       </div>
-
 
       {/* Gallery Management */}
       {jwt != null && (
@@ -478,7 +480,14 @@ const Admin = () => {
                 items={images}
                 onChange={setImages}
                 onDragStart={() => setDraggingRow(true)}
-                onDragEnd={() => setDraggingRow(false)}
+                onDragEnd={(i, newI) => {
+                  setDraggingRow(false);
+                  if (newI != null && i != null) {
+                    if (images[i] != null) {
+                      moveImageDisplayIndex.mutate({ id: images[i]!!.id, newI });
+                    }
+                  }
+                }}
                 renderItem={({ i, item }) => (
                   <SortableItem
                     id={item.id}
@@ -518,15 +527,18 @@ const Admin = () => {
             />
           </div>
 
-          <SubmitButton
-            color="pastelpink"
-            text="LOG OUT"
-            success={loginErrors.length > 0 && jwt != null}
-            onClick={(_) => {
-              setJwt(null);
-              cookies.remove("session_token");
-            }}
-          />
+          <div className="max-w-72 mx-auto">
+            <SubmitButton
+              color="pastelpink"
+              text="LOG OUT"
+              success={loginErrors.length > 0 && jwt != null}
+              onClick={(_) => {
+                setJwt(null);
+                cookies.remove("session_token");
+              }}
+            />
+          </div>
+          <div className="h-16"></div>
         </>
       )}
     </>
