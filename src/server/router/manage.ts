@@ -30,15 +30,24 @@ const s3Config: S3ClientConfig = {
 
 const s3 = new S3Client(s3Config);
 
+function getSessionToken(rawHeaders: string[] | null | undefined): string | null {
+  if (rawHeaders == null) {
+    return null;
+  }
+  for (const header of rawHeaders) {
+    if (header.startsWith("session_token")) {
+      const [_, token] = header.split("=");
+      return token ?? null;
+    }
+  }
+  return null;
+}
 
 export const manageRouter = createRouter()
   .middleware(async ({ ctx, next }) => {
-    let token = ctx.req?.headers.session_token;
-    console.log("Token: ", token);
+    let token = getSessionToken(ctx.req?.rawHeaders);
     if (token != null && typeof token === "string") {
       let decoded = authenticate(token);
-      console.log("Token: ", token);
-      console.log("Decoded: ", decoded);
       if (decoded.authLevel == null || decoded.authLevel > 0 || decoded.expires < new Date()) {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
@@ -210,6 +219,7 @@ async function convertThumbnails(
           .select()
           .from(galleryImages)
           .orderBy(desc(galleryImages.displayIndex))
+          .where(eq(galleryImages.categoryId, categoryId))
           .limit(1)
       )[0];
 

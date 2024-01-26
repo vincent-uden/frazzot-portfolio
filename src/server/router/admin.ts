@@ -10,7 +10,7 @@ import { TRPCError } from "@trpc/server";
 
 export const AuthJwtSchema = z.object({
   authLevel: z.number().int(),
-  expires: z.date(),
+  expires: z.coerce.date(),
   userId: z.string().uuid(),
 });
 

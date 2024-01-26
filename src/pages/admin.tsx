@@ -46,8 +46,9 @@ const Admin = () => {
 
   const cookies = new Cookies();
 
+  const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: fetchedImages, refetch: refetchImgs } = trpc.useQuery(
-    ["gallery.getAll"],
+    ["gallery.getImages", {categoryName: categories?.at(filterCategory)?.name ?? null }],
     {
       onSuccess: (data) => {
         const names = [];
@@ -63,7 +64,6 @@ const Admin = () => {
     }
   );
 
-  const { data: categories } = trpc.useQuery(["gallery.getAllCategories"]);
   const { data: getS3ImgUrl, refetch: refetchS3 } = trpc.useQuery(
     ["gallery.getS3ImageUrl", { src: imgS3Key }],
     {
@@ -228,6 +228,7 @@ const Admin = () => {
 
   useAnalytics("/admin");
 
+
   return (
     <>
       <Head>
@@ -305,18 +306,10 @@ const Admin = () => {
             }
           />
           <div className="h-8"></div>
-          <SubmitButton
-            color="pastelpink"
-            text="LOG OUT"
-            success={loginErrors.length > 0 && jwt != null}
-            onClick={(_) => {
-              setJwt(null);
-              cookies.remove("session_token");
-            }}
-          />
         </div>
         ) : null}
       </div>
+
 
       {/* Gallery Management */}
       {jwt != null && (
@@ -524,6 +517,16 @@ const Admin = () => {
               className={"h-auto w-48"}
             />
           </div>
+
+          <SubmitButton
+            color="pastelpink"
+            text="LOG OUT"
+            success={loginErrors.length > 0 && jwt != null}
+            onClick={(_) => {
+              setJwt(null);
+              cookies.remove("session_token");
+            }}
+          />
         </>
       )}
     </>

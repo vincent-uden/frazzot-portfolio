@@ -3,21 +3,15 @@ import { z } from "zod";
 import {
   S3Client,
   GetObjectCommand,
-  PutObjectCommand,
   S3ClientConfig,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 
-import { AuthJwt, authenticate } from "./admin";
 import { createRouter } from "./context";
-import path from "path";
 import { db } from "../../db/drizzle";
 
-import * as fs from "fs";
-import * as https from "https";
-import { galleryImages, sessionTokens, imageCategories } from "../../db/schema";
-import { asc, desc, eq } from "drizzle-orm";
+import { galleryImages, imageCategories } from "../../db/schema";
+import { asc, eq } from "drizzle-orm";
 
 
 const s3Config: S3ClientConfig = {
@@ -45,9 +39,12 @@ export const galleryRouter = createRouter()
   })
   .query("getImages", {
     input: z.object({
-      categoryName: z.string(),
+      categoryName: z.string().nullish(),
     }),
     resolve: async ({ input }) => {
+      if (input.categoryName == null) {
+        return [];
+      }
       return await db
         .select()
         .from(galleryImages)
@@ -66,9 +63,12 @@ export const galleryRouter = createRouter()
   })
   .query("getCategory", {
     input: z.object({
-      name: z.string(),
+      name: z.string().nullish(),
     }),
     resolve: async ({ input }) => {
+      if (input.name == null) {
+        return null;
+      }
       return (
         await db
           .select()
