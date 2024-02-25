@@ -34,10 +34,6 @@ function generateFingerprint() {
     languages +
     " " +
     Intl.DateTimeFormat().resolvedOptions().timeZone +
-    " " +
-    window.screen.width +
-    "x" +
-    window.screen.height +
     " ";
 
   return idString;
@@ -53,8 +49,6 @@ export const BlogPost = ({ content, data }: any) => {
   const [likes, setLikes] = useState<number>(0);
   const [likesFetched, setLikesFetched] = useState<boolean>(false);
   const [likedFetched, setLikedFetched] = useState<boolean>(false);
-
-  console.log(router.pathname);
 
   const { data: likesServer, refetch: refetchLikes } = trpc.useQuery(
     ["admin.getLikes", { blogPost: router.pathname }],
