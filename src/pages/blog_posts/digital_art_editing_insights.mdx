@@ -1,0 +1,140 @@
+import {
+  BlogPost,
+  RightStack,
+  LeftStack,
+  QuoteBlock,
+} from "../../components/BlogPost.tsx";
+
+export const data = {
+  title: "Digital Art: Editing Insights",
+  author: "Ida",
+  date: "2024-01-26",
+  time: "11:12 AM",
+};
+
+There are methods to edit and improve art without diving into the tedious rendering processes seen in modern masterpieces like the League of Legends splash arts. I'd admit, my art tends 
+to be on the simpler side. I've never been particularly adept at colour theory or enhancing eye-catching contrasts with colours. Nevertheless, I've learned to make the most of what I know, 
+focusing on post-processing and taking a more technical approach to editing and rendering.
+
+In this post, I'll guide you through the editing process of one of my recent works and share my typical approach to this phase of the project.
+
+![Before and after edits](/img/blog/blog_post_images/edits_laniakea_by_frazzot.png/)
+*A preview of how the before and after edits can look.*
+
+## Identify and Prepare the Artwork
+
+
+I typically identify the need for edits and post-processing once I've completed my usual routine for painting. The steps leading up to this phase tend to look quite similar across different 
+pieces. Having a "checklist" can streamline the process and help determine when to proceed. You can create your own checklist or use mine as a reference. The approach varies based on individual 
+style and drawing habits, but this checklist is tailored to the cel-shaded and lined art style.
+
+<QuoteBlock>
+- ⊳ **Sketch**: I break this phase into several stages, creating a new copy once I'm content with each aspect. For instance, if I'm pleased with the gesture, I duplicate it to experiment with 
+hairstyles, faces, clothes, and so forth. This allows for exploration while preserving versions of elements I'm satisfied with.
+- ⊳ **Silhouette Test** I cant stress the importance of this enough! Ensuring clear shapes helps maintain coherence with the style and setting I aim for. To achieve dimension quickly, I use the 
+lasso tool to grayscale areas of the painting. This method aids in identifying potential mistakes that might arise during coloring. Following this, I review the sketch if necessary before 
+proceeding to clean up. *See the attached example below this list.*
+- ⊳ **Clean-up or Lineart** Depending on the cleanliness of my final sketch, I either refine it or create a new layer for the lineart. This decision also considers factors like time management 
+and desired style.
+- ⊳ **Base colours** Apply the base colours and ensure they harmonize with each other. If there's a background to colour, I typically wait until I've figured out the basic shading, although the 
+process remains similar.
+- ⊳ **Shading and light** I usually create two levels of shading, one lighter and one darker. The first layer involves filling the entire canvas, clipping it to a folder with the base colours, 
+and working subtractively. The second layer, an additive approach, focuses on filling the areas I want to be the darkest. I handle light similarly, working in Overlay, Add, or Add Glow blend modes
+then applying them to the intended light areas. Once the fundamentals are in place, I lock the layers and adjust colours and opacity until I'm reasonably satisfied. *It's normal if the piece 
+still appears bland at this stage.*
+- ⊳ **Details** This phase involves refining elements like hair strands and eye reflections. I take time to zoom out and address any shape-related issues I'm unsatisfied with.
+</QuoteBlock>
+
+<RightStack masterWidth="65%">
+
+
+The steps above are of course subject to change. But my key point is not to focus too much on light, colour and mood before the composition is "done". While you may find satisfaction with 
+the non-edited version in the comparisons above, I prefer to experiment with colours and mood after reaching this stage. I find it easier to identify and understand how to enhance the appeal 
+of the artwork when I approach it this way, rather than attempting to achieve the desired effect from the beginning. This is why I encourage people who don't typically edit or render their 
+artworks to give it a try; it's much more approachable and technical.
+
+![Example of shillouette test results](/img/blog/blog_post_images/laniakea_sketch.png/)
+*An example of what my silhouette test usually looks like.*
+
+</RightStack>
+
+## A Straightforward Breakdown
+
+A concrete example is always easier to follow. Let's break down the image we're currently analyzing.
+
+### Background Blur
+
+
+After tweaking a few details, I start my editing process by exporting the background, re-importing it, and applying a blur effect. This shifts the focus to the foreground and allows me to 
+experiment with various dynamics of motion blur. It's an easy yet very effective technique!
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/background_blur-1.mp4" type="video/mp4"></source>
+</video>
+
+### Colour Grading
+
+Moving on to colour grading, I'm altering the colours in a more destructive workflow to achieve greater depth. This could be achieved by locking the base colour layers and varying the colours. 
+In the artwork here, I'm adjusting her hair and shirt colours slightly to achieve a more vibrant look.
+
+Once this is done, I try to establish the lighting and mood settings. A simple trick is to create a gradient from a cool colour to a warm one, lay it on top of everything in blend mode "overlay," 
+then **reduce the opacity.** Remember, less is more in all the steps here.
+
+You may notice that I have the foreground *(character)* and the background coloured in two separate folders. This makes it easier to colour grade them individually. You'll see that I'm primarily 
+working on adjusting the colours of the background to feel "cooler" and less visually prominent.
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/colour_grading.mp4" type="video/mp4"></source>
+</video>
+
+### Grain and Chromatic Aberration
+
+This step enhances the polished appearance of your artwork, unifying and adding depth and variation to the colours. Chromatic aberration, typically considered a flaw in photography, occurs when 
+a lens fails to focus all colours to the same point due to dispersion. It manifests as lines of colour along boundaries that separate dark and bright parts of an image. Similarly, grain, blur, 
+and lens flares could be perceived as technical limitations of a camera. However, by intentionally incorporating these flaws into your artwork, you infuse it with life and personality, despite 
+the counterintuitive nature of the process.
+
+In the video, I demonstrate how to add grain and chromatic aberration in Clip Studio Paint. The process is relatively simple, although you may want to consider implementing a naming system for the 
+unfinished versions of your artwork since this process involves some export/import steps.
+
+#### Chromatic Aberration - Step By Step
+
+<QuoteBlock>
+
+- ⊳ Begin by creating a new empty layer on top of your image.
+- ⊳ Select one of the images and navigate to **Edit > Tonal Correction > Level Correction**
+- ⊳  In the new window, choose two of the colour channels and drag the Output arrow towards the black. This action disables the output of the selected colour channel, aiming to have only 
+one colour for each image.
+- ⊳ Repeat this process until you have one blue, one green, and one red coloured image.
+- ⊳ Now, set the blending mode to "Lighten" on all the images. If done correctly, they should resemble the original image when all three images are visible.
+
+</QuoteBlock>
+
+#### Grain - Step By Step
+
+<QuoteBlock>
+
+- ⊳ Start by opening a new file and adding your image. Create copies so that you have three identical images.
+- ⊳ Navigate to **Filter > Render > Perlin Noise**
+- ⊳ Experiment with the sliders to achieve the desired effect. Smaller grain typically yields better results when zooming in on the image.
+- ⊳ Set the blending mode to Overlay and adjust the opacity. Remember, less is more! Ensure to zoom in and out to ensure the effect looks good both up close and from a distance.
+
+</QuoteBlock>
+
+<video class="w-full h-auto" controls>
+  <source src="/img/blog/blog_post_images/grain_ca.mp4" type="video/mp4"></source>
+</video>
+
+### Summary
+
+The ways to approach post-processing are endless, as different styles require different methods, and it won't always look perfect. But that's okay! Don't be afraid to experiment, 
+learn, fail, and try again. I believe that finishing an illustration, signing it, and exporting it is very relieving—even if I'm not entirely satisfied with the results. You can 
+always move on and try again.
+
+Remember that "less is more" and aim for many subtle changes instead of using a few drastic filters to alter the appearance. Zoom out—this phase is about tying everything together, 
+polishing, and packaging the illustration in a nice presentation. Enhance with light, diffuse with darkness, and use photography flaws to your advantage to give your illustrations character 
+and interest.
+
+Good luck, and keep drawing!
+
+export default ({ children }) => <BlogPost content={children} data={data} />;
