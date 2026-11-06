@@ -43,8 +43,8 @@ const About: NextPage = () => {
               </h2>
               <div className="h-4 md:h-8"></div>
               <p className="font-gothic text-sm text-lilac md:text-lg">
-                WELCOME TO MY WEBSITE! ALLOW ME TO INTRODUCE MYSELF. MY NAME IS IDA, BUT YOU CAN ALSO CALL ME FRAZZOT. I'M A 22-YEAR-OLD ARTIST BASED IN GOTHENBURG, SWEDEN. 
-                WITH A FRESHLY EARNED DEGREE IN GAME ART AND PREVIOUS EXPERIENCE WITH VARIOUS KINDS OF TECHNOLOGY, I WORK WITH A BROAD AIM TOWARD DIGITAL ART AND CREATIONS.
+                WELCOME TO MY WEBSITE! MY NAME IS IDA, BUT I ALSO GO BY FRAZZOT. I'M A 25-YEAR-OLD ARTIST BASED IN GOTHENBURG, SWEDEN. WITH A DEGREE IN GAME ART AND
+                CURRENT STUDIES IN COMPUTER ENGINEERING AT CHALMERS, I THRIVE TO CREATE AND EXPLORE. 
               </p>
               <div className="h-4 md:h-8"></div>
               <p className="font-gothic text-sm text-lilac md:text-lg">
@@ -54,7 +54,7 @@ const About: NextPage = () => {
               <div className="h-4"></div>
               <p className="font-gothic text-sm text-lilac md:pl-0 md:text-lg">
                 ON THIS SITE YOU CAN FIND SOME OF MY WORKS, WAYS TO SUPPORT AND
-                HOW TO GET IN TOUCH WITH ME.
+                HOW TO GET IN TOUCH WITH ME. I'M STRONGLY AGAINST AI AND NEVER USE IT IN ANY OF MY WORKS.
               </p>
               <div className="h-4"></div>
               <p className="font-gothic text-sm text-lilac md:pl-0 md:text-lg">

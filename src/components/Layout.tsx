@@ -64,7 +64,7 @@ const Layout = ({ children }: Props) => {
 
         <div className="h-8"></div>
         <p className="text-center font-gothic text-xl text-greyblack">
-          © 2023 FRAZZOT
+          © 2026 FRAZZOT
         </p>
         <div className="h-16"></div>
       </div>
